@@ -1,47 +1,51 @@
 import React, { useState } from 'react';
-import Pane from './Pane';
-import { WidgetProps } from '../interfaces/WidgetProps'
-import { methodPane} from '../panes/methodPane';
-import { donorPane } from '../panes/donorPane';
-import { donationPane} from '../panes/donationPane';
-import { PaneProps } from '../interfaces/PaneProps';
+import MethodPane from './panes/MethodPane';
+import DonorPane from './panes/DonorPane';
+import DonationPane from './panes/DonationPane';
 
 function Widget() {
-  const [paneNumber, setPaneNumber] = useState(0);
-  const [donorName, setDonorName] = useState("");
+  const [paneNumber, setPaneNumber] = useState(0)
+  const [donorName, setDonorName] = useState("")
+  const [method, setMethod] = useState("")
   const [email, setEmail] = useState("")
+  const [SSN, setSSN] = useState("")
 
-  function nextPane() {
-    setPaneNumber(paneNumber + 1)
+  let widget = {
+    state: {
+      paneNumber: paneNumber,
+      donorName: donorName,
+      method: method,
+      email: email,
+      SSN: SSN,
+      setPaneNumber: setPaneNumber,
+      setDonorName: setDonorName,
+      setMethod: setMethod,
+      setEmail: setEmail,
+      setSSN: setSSN
+    },
+    nextPane: nextPane,
+    prevPane: prevPane
   }
 
-  function previousPane() {
+  function nextPane() {
+    if (paneNumber < panes.length) {
+      setPaneNumber(paneNumber + 1)
+    }
+  }
+
+  function prevPane() {
     setPaneNumber(paneNumber - 1)
   }
 
-  const panes: PaneProps[] = [
-    methodPane,
-    donorPane,
-    donationPane
+  const panes: JSX.Element[] = [
+    <MethodPane widget={widget}/>,
+    <DonorPane widget={widget} />,
+    <DonationPane widget={widget} />
   ]
-
-  function renderPane(pane: PaneProps) {
-    return (
-      <Pane 
-        name={pane.name} 
-        title={pane.title} 
-        content={pane.content} 
-        forwardButton={pane.forwardButton} 
-        backwardButton={pane.backwardButton} 
-        nextPane={nextPane} 
-        previousPane={previousPane}
-      />
-    )
-  }
 
   return (
     <div className="Widget">
-      {renderPane(panes[paneNumber])}
+      {panes[paneNumber]}
     </div>
   );
 }

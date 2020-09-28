@@ -1,16 +1,12 @@
-import React from 'react'
-import {PaneProps} from '../interfaces/PaneProps'
+import React from 'react';
+import { PaneProps } from './PaneProps';
+import './Pane.css'
 
-export const donationPane: PaneProps  = {
-    name: "DonorPane",
-    title: "Om donasjonen",
-    forwardButton: true,
-    backwardButton: true,
-    //nextPane and previousPane are overwritten in Widget.js
-    nextPane: () => {},
-    previousPane: () => {},
-    content: (
+export default function DonationPane(props: PaneProps) {
+    
+    return (
         <div>
+            <h1>Om donasjonen</h1>
             <form>
                 <label>
                     <input type="radio" value="recommended"/>
@@ -21,6 +17,7 @@ export const donationPane: PaneProps  = {
                     Jeg vil velge fordeling selv
                 </label>
             </form>
+            <div>Buttons</div>
         </div>
-    )
+    );
 }
