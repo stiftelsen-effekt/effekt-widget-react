@@ -14,7 +14,10 @@ export default function MethodPane(props: PaneProps) {
                 <div><input type="checkbox" id="check-privacy-policy"></input>Jeg godtar <a href="https://gieffektivt.no/samarbeid-drift#personvern">personvernerklæringen *</a></div>
                 <div><input type="checkbox" id="check-newsletter"></input>Jeg ønsker å melde meg på nyhetsbrevet</div>
             </div>
-            <div>Buttons</div>
+            <div>
+                <button onClick={() => { props.widget.prevPane() }}>Tilbake</button>
+                <button onClick={() => { props.widget.nextPane() }}>Fram</button>
+            </div>
         </div>
     );
 }

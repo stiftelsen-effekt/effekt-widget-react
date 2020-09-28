@@ -17,7 +17,10 @@ export default function DonationPane(props: PaneProps) {
                     Jeg vil velge fordeling selv
                 </label>
             </form>
-            <div>Buttons</div>
+            <div>
+                <button onClick={() => { props.widget.prevPane() }}>Tilbake</button>
+                <button onClick={() => { props.widget.nextPane() }}>Fram</button>
+            </div>
         </div>
     );
 }
