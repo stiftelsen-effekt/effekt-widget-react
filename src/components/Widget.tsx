@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
 import Pane from './Pane';
 import { WidgetProps } from '../interfaces/WidgetProps'
-import { render } from '@testing-library/react';
 import { methodPane} from '../panes/methodPane';
 import { donorPane } from '../panes/donorPane';
 import { donationPane} from '../panes/donationPane';
+import { PaneProps } from '../interfaces/PaneProps';
 
 function Widget() {
   const [paneNumber, setPaneNumber] = useState(0);
+  const [donorName, setDonorName] = useState("");
+  const [email, setEmail] = useState("")
 
   function nextPane() {
     setPaneNumber(paneNumber + 1)
@@ -17,14 +19,24 @@ function Widget() {
     setPaneNumber(paneNumber - 1)
   }
 
-  const panes: JSX.Element[] = [
-    <Pane name="MethodPane" title="Betalingsmåte" content={methodPane} forwardButton={true} backwardButton={true} nextPane={nextPane} previousPane={previousPane}/>,
-    <Pane name="DonorPane" title="Om deg" content={donorPane} forwardButton={true} backwardButton={true} nextPane={nextPane} previousPane={previousPane}/>,
-    <Pane name="DonationPane" title="Om donasjonen" content={donationPane} forwardButton={true} backwardButton={true} nextPane={nextPane} previousPane={previousPane}/>
+  const panes: PaneProps[] = [
+    methodPane,
+    donorPane,
+    donationPane
   ]
 
-  function renderPane(pane: JSX.Element) {
-    return pane
+  function renderPane(pane: PaneProps) {
+    return (
+      <Pane 
+        name={pane.name} 
+        title={pane.title} 
+        content={pane.content} 
+        forwardButton={pane.forwardButton} 
+        backwardButton={pane.backwardButton} 
+        nextPane={nextPane} 
+        previousPane={previousPane}
+      />
+    )
   }
 
   return (

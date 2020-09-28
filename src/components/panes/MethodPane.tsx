@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { PaneProps } from '../interfaces/PaneProps';
 import '../Pane.css'
 
-export default function Pane(props: PaneProps) {
+export default function MethodPane(props: PaneProps) {
 
     const handleBackward = () => {
         props.previousPane()
