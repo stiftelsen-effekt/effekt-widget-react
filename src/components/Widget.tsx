@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import MethodPane from './panes/MethodPane';
 import DonorPane from './panes/DonorPane';
 import DonationPane from './panes/DonationPane';
+import SharesPane from './panes/SharesPane';
 
 function Widget() {
   const [paneNumber, setPaneNumber] = useState(0)
@@ -28,9 +29,7 @@ function Widget() {
   }
 
   function nextPane() {
-    if (paneNumber < panes.length) {
-      setPaneNumber(paneNumber + 1)
-    }
+    setPaneNumber(paneNumber + 1)
   }
 
   function prevPane() {
@@ -40,7 +39,8 @@ function Widget() {
   const panes: JSX.Element[] = [
     <MethodPane widget={widget}/>,
     <DonorPane widget={widget} />,
-    <DonationPane widget={widget} />
+    <DonationPane widget={widget} />,
+    <SharesPane widget={widget} />
   ]
 
   return (
