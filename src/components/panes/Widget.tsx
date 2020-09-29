@@ -9,7 +9,9 @@ export interface Widget {
         SSN: string,
         setSSN: Function,
         method: string,
-        setMethod: Function
+        setMethod: Function,
+        taxDeduction: boolean,
+        setTaxDeduction: Function
       },
       prevPane: Function,
       nextPane: Function,

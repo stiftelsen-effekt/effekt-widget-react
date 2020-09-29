@@ -11,6 +11,7 @@ function Widget() {
   const [method, setMethod] = useState("")
   const [email, setEmail] = useState("")
   const [SSN, setSSN] = useState("")
+  const [taxDeduction, setTaxDeduction] = useState(false)
 
   let widget = {
     state: {
@@ -19,11 +20,13 @@ function Widget() {
       method: method,
       email: email,
       SSN: SSN,
+      taxDeduction: taxDeduction,
       setPaneNumber: setPaneNumber,
       setDonorName: setDonorName,
       setMethod: setMethod,
       setEmail: setEmail,
-      setSSN: setSSN
+      setSSN: setSSN,
+      setTaxDeduction: setTaxDeduction
     },
     prevPane: prevPane,
     nextPane: nextPane,
@@ -41,7 +44,7 @@ function Widget() {
 
   function prevButton() {
     return (
-      <button onClick={() => { prevPane() }}>Fram</button>
+      <button onClick={() => { prevPane() }}>Tilbake</button>
     )
   }
 
