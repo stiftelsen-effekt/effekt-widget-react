@@ -16,18 +16,26 @@ export default function MethodPane(props: PaneProps) {
 
     function handleTax(e: React.FormEvent<HTMLInputElement>) {
         widgetState.setTaxDeduction(e.currentTarget.checked)
-        console.log(widgetState.taxDeduction)
     }
+
+    function handlePrivacyPolicy(e: React.FormEvent<HTMLInputElement>) {
+        widgetState.setPrivacyPolicy(e.currentTarget.checked)
+    }
+
+    function handleNewsletter(e: React.FormEvent<HTMLInputElement>) {
+        widgetState.setNewsletter(e.currentTarget.checked)
+    }
+
 
     return (
         <div className="pane">
             <h1>Om deg</h1>
             <div className="pane">
                 <input type="text" placeholder="Navn" maxLength={100} onChange={handleName} value={widgetState.donorName}></input>
-                <input type="text" placeholder="Email" maxLength={100} onChange={handleEmail} value={widgetState.email}></input>
+                <input type="email" placeholder="Email" maxLength={100} onChange={handleEmail} value={widgetState.email}></input>
                 <div><input type="checkbox" id="check-tax-deduction" onChange={handleTax} checked={widgetState.taxDeduction}></input>Jeg ønsker skattefradrag</div>
-                <div><input type="checkbox" id="check-privacy-policy"></input>Jeg godtar <a href="https://gieffektivt.no/samarbeid-drift#personvern">personvernerklæringen *</a></div>
-                <div><input type="checkbox" id="check-newsletter"></input>Jeg ønsker å melde meg på nyhetsbrevet</div>
+                <div><input type="checkbox" id="check-privacy-policy" onChange={handlePrivacyPolicy} checked={widgetState.privacyPolicy}></input>Jeg godtar <a href="https://gieffektivt.no/samarbeid-drift#personvern">personvernerklæringen *</a></div>
+                <div><input type="checkbox" id="check-newsletter" onChange={handleNewsletter} checked={widgetState.newsletter}></input>Jeg ønsker å melde meg på nyhetsbrevet</div>
             </div>
             <div>
                 {props.widget.prevButton()}

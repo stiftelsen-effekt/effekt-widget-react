@@ -12,21 +12,30 @@ function Widget() {
   const [email, setEmail] = useState("")
   const [SSN, setSSN] = useState("")
   const [taxDeduction, setTaxDeduction] = useState(false)
+  const [privacyPolicy, setPrivacyPolicy] = useState(false)
+  const [newsletter, setNewsletter] = useState(false)
+  const [recommendedShare, setRecommendedShare] = useState(true)
 
   let widget = {
     state: {
       paneNumber: paneNumber,
-      donorName: donorName,
       method: method,
+      donorName: donorName,
       email: email,
       SSN: SSN,
       taxDeduction: taxDeduction,
+      privacyPolicy: privacyPolicy,
+      newsletter: newsletter,
+      recommendedShare: recommendedShare,
       setPaneNumber: setPaneNumber,
-      setDonorName: setDonorName,
       setMethod: setMethod,
+      setDonorName: setDonorName,
       setEmail: setEmail,
       setSSN: setSSN,
-      setTaxDeduction: setTaxDeduction
+      setTaxDeduction: setTaxDeduction,
+      setPrivacyPolicy: setPrivacyPolicy,
+      setNewsletter: setNewsletter,
+      setRecommendedShare: setRecommendedShare
     },
     prevPane: prevPane,
     nextPane: nextPane,
@@ -55,10 +64,10 @@ function Widget() {
   }
 
   const panes: JSX.Element[] = [
-    <MethodPane   widget={widget} />,
-    <DonorPane    widget={widget} />,
+    <MethodPane widget={widget} />,
+    <DonorPane widget={widget} />,
     <DonationPane widget={widget} />,
-    <SharesPane   widget={widget} />,
+    <SharesPane widget={widget} />,
     <ReferralPane widget={widget} />
   ]
 

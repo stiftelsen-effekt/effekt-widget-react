@@ -4,10 +4,10 @@ import './Pane.css'
 
 export default function DonationPane(props: PaneProps) {
 
-    const method = props.widget.state.method
+    const widgetState = props.widget.state
 
     function showSumField() {
-        if (method === "PayPal" || "Vipps") {
+        if (widgetState.method === "PayPal" || widgetState.method === "Vipps") {
             return (
                 <div>
                     <input type="tel" placeholder="sum"></input>kr
@@ -17,7 +17,7 @@ export default function DonationPane(props: PaneProps) {
     }
 
     function showRecurringField() {
-        if (method === "PayPal") {
+        if (widgetState.method === "PayPal") {
             return (
                 <form>
                     <label>
@@ -33,6 +33,21 @@ export default function DonationPane(props: PaneProps) {
             )
         }
     }
+
+    function handleNext() {
+        //Pane 4 is ReferralPane
+        if (widgetState.recommendedShare) {
+            widgetState.setPaneNumber(4)
+        }
+        //Pane 3 is SharesPane
+        else {
+            widgetState.setPaneNumber(3)
+        }
+    }
+
+    function handleRecommended() {
+        widgetState.setRecommendedShare(!widgetState.recommendedShare)
+    }
     
     return (
         <div>
@@ -41,18 +56,18 @@ export default function DonationPane(props: PaneProps) {
             {showRecurringField()}
             <form>
                 <label>
-                    <input type="radio" name="selectShare" value="recommended"/>
+                    <input type="radio" name="selectShare" value="recommended" onChange={handleRecommended} checked={widgetState.recommendedShare}/>
                     Bruk vår anbefalte fordeling
                 </label>
                 <br></br>
                 <label>
-                    <input type="radio" name="selectShare" value="custom"/>
+                    <input type="radio" name="selectShare" value="custom" onChange={handleRecommended} checked={!widgetState.recommendedShare}/>
                     Jeg vil velge fordeling selv
                 </label>
             </form>
             <div>
                 {props.widget.prevButton()}
-                {props.widget.nextButton()}
+                <button onClick={handleNext}>Fram</button>
             </div>
         </div>
     );

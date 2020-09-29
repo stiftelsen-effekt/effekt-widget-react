@@ -11,7 +11,13 @@ export interface Widget {
         method: string,
         setMethod: Function,
         taxDeduction: boolean,
-        setTaxDeduction: Function
+        setTaxDeduction: Function,
+        privacyPolicy: boolean,
+        setPrivacyPolicy: Function,
+        newsletter: boolean,
+        setNewsletter: Function,
+        recommendedShare: boolean,
+        setRecommendedShare: Function
       },
       prevPane: Function,
       nextPane: Function,
