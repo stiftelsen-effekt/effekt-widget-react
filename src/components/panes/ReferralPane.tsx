@@ -2,19 +2,20 @@ import React from 'react';
 import { PaneProps } from './PaneProps';
 import './Pane.css'
 
-export default function MethodPane(props: PaneProps) {
+export default function ReferralPane(props: PaneProps) {
 
     const pretendDatabase = [
-        "Against malaria foundation",
-        "GiveWell",
-        "Malaria Consortium"
+        "Anbefaling av en bekjent",
+        "Twitter",
+        "Facebook"
     ]
 
     return (
         <div className="pane">
-            <h1>Velg fordeling</h1>
+            <h1>Hvor hørte du om oss?</h1>
+            <p>Valgfritt</p>
             <div className="pane">
-                {pretendDatabase.map(org => { return (<div><p>{org}</p><input type="tel"></input></div>)})}
+                {pretendDatabase.map(ref => { return (<button onClick={() => {props.widget.nextPane()} }>{ref}</button>)})}
             </div>
             <div>
                 {props.widget.prevButton()}

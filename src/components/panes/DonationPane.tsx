@@ -51,8 +51,8 @@ export default function DonationPane(props: PaneProps) {
                 </label>
             </form>
             <div>
-                <button onClick={() => { props.widget.prevPane() }}>Tilbake</button>
-                <button onClick={() => { props.widget.nextPane() }}>Fram</button>
+                {props.widget.prevButton()}
+                {props.widget.nextButton()}
             </div>
         </div>
     );

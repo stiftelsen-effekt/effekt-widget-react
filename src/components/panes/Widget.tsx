@@ -11,6 +11,8 @@ export interface Widget {
         method: string,
         setMethod: Function
       },
+      prevPane: Function,
       nextPane: Function,
-      prevPane: Function
+      prevButton: Function,
+      nextButton: Function
 }

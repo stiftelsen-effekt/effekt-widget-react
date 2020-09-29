@@ -15,8 +15,8 @@ export default function MethodPane(props: PaneProps) {
                 <div><input type="checkbox" id="check-newsletter"></input>Jeg ønsker å melde meg på nyhetsbrevet</div>
             </div>
             <div>
-                <button onClick={() => { props.widget.prevPane() }}>Tilbake</button>
-                <button onClick={() => { props.widget.nextPane() }}>Fram</button>
+                {props.widget.prevButton()}
+                {props.widget.nextButton()}
             </div>
         </div>
     );
