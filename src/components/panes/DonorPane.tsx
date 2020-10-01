@@ -8,7 +8,7 @@ export default function MethodPane(props: PaneProps) {
 
     function handleName(e: React.FormEvent<HTMLInputElement>) {
         widgetState.setDonorName(e.currentTarget.value)
-      }
+    }
 
     function handleEmail(e: React.FormEvent<HTMLInputElement>) {
         widgetState.setEmail(e.currentTarget.value)
@@ -25,7 +25,6 @@ export default function MethodPane(props: PaneProps) {
     function handleNewsletter(e: React.FormEvent<HTMLInputElement>) {
         widgetState.setNewsletter(e.currentTarget.checked)
     }
-
 
     return (
         <div className="pane">

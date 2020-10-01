@@ -15,6 +15,7 @@ function Widget() {
   const [privacyPolicy, setPrivacyPolicy] = useState(false)
   const [newsletter, setNewsletter] = useState(false)
   const [recommendedShare, setRecommendedShare] = useState(true)
+  const [recurring, setRecurring] = useState(true)
 
   let widget = {
     state: {
@@ -27,6 +28,7 @@ function Widget() {
       privacyPolicy: privacyPolicy,
       newsletter: newsletter,
       recommendedShare: recommendedShare,
+      recurring: recurring,
       setPaneNumber: setPaneNumber,
       setMethod: setMethod,
       setDonorName: setDonorName,
@@ -35,7 +37,8 @@ function Widget() {
       setTaxDeduction: setTaxDeduction,
       setPrivacyPolicy: setPrivacyPolicy,
       setNewsletter: setNewsletter,
-      setRecommendedShare: setRecommendedShare
+      setRecommendedShare: setRecommendedShare,
+      setRecurring: setRecurring
     },
     prevPane: prevPane,
     nextPane: nextPane,
@@ -44,11 +47,21 @@ function Widget() {
   }
 
   function nextPane() {
-    setPaneNumber(paneNumber + 1)
+    if (paneNumber === 2 && recommendedShare === true) {
+      setPaneNumber(paneNumber + 2)
+    }
+    else {
+      setPaneNumber(paneNumber + 1)
+    }
   }
 
   function prevPane() {
-    setPaneNumber(paneNumber - 1)
+    if (paneNumber === 4 && recommendedShare === true) {
+      setPaneNumber(paneNumber - 2)
+    }
+    else {
+      setPaneNumber(paneNumber - 1)
+    }
   }
 
   function prevButton() {

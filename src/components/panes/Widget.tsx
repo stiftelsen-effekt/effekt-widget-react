@@ -17,7 +17,9 @@ export interface Widget {
         newsletter: boolean,
         setNewsletter: Function,
         recommendedShare: boolean,
-        setRecommendedShare: Function
+        setRecommendedShare: Function,
+        recurring: boolean,
+        setRecurring: Function
       },
       prevPane: Function,
       nextPane: Function,

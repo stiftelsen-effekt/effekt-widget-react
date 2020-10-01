@@ -6,11 +6,31 @@ export default function DonationPane(props: PaneProps) {
 
     const widgetState = props.widget.state
 
+    function handleChange() {
+        
+    }
+
+    // Allows only numbers and backspace
+    function handleKeyDown(e: React.KeyboardEvent<HTMLDivElement>) {
+        const numberRegex = new RegExp("[0-9]")
+        if (!numberRegex.test(e.key) && e.keyCode !== 8) {
+            e.preventDefault()
+        }
+    }
+
+    function handleRecommended() {
+        widgetState.setRecommendedShare(!widgetState.recommendedShare)
+    }
+
+    function handleRecurring() {
+        widgetState.setRecurring(!widgetState.recurring)
+    }
+
     function showSumField() {
         if (widgetState.method === "PayPal" || widgetState.method === "Vipps") {
             return (
                 <div>
-                    <input type="tel" placeholder="sum"></input>kr
+                    <input type="tel" placeholder="sum" onChange={handleChange} onKeyDown={handleKeyDown}></input>kr
                 </div>
             )
         }
@@ -21,32 +41,17 @@ export default function DonationPane(props: PaneProps) {
             return (
                 <form>
                     <label>
-                        <input type="radio" name="selectRecurring" value="recommended"/>
+                        <input type="radio" name="selectRecurring" onChange={handleRecurring} checked={widgetState.recurring}/>
                         Jeg vil gi en månedlig donasjon
                     </label>
                     <br></br>
                     <label>
-                        <input type="radio" name="selectRecurring" value="custom"/>
+                        <input type="radio" name="selectRecurring" onChange={handleRecurring} checked={!widgetState.recurring}/>
                         Jeg vil velge fordeling selv
                     </label>
                 </form>
             )
         }
-    }
-
-    function handleNext() {
-        //Pane 4 is ReferralPane
-        if (widgetState.recommendedShare) {
-            widgetState.setPaneNumber(4)
-        }
-        //Pane 3 is SharesPane
-        else {
-            widgetState.setPaneNumber(3)
-        }
-    }
-
-    function handleRecommended() {
-        widgetState.setRecommendedShare(!widgetState.recommendedShare)
     }
     
     return (
@@ -56,18 +61,18 @@ export default function DonationPane(props: PaneProps) {
             {showRecurringField()}
             <form>
                 <label>
-                    <input type="radio" name="selectShare" value="recommended" onChange={handleRecommended} checked={widgetState.recommendedShare}/>
+                    <input type="radio" name="selectShare" onChange={handleRecommended} checked={widgetState.recommendedShare}/>
                     Bruk vår anbefalte fordeling
                 </label>
                 <br></br>
                 <label>
-                    <input type="radio" name="selectShare" value="custom" onChange={handleRecommended} checked={!widgetState.recommendedShare}/>
+                    <input type="radio" name="selectShare" onChange={handleRecommended} checked={!widgetState.recommendedShare}/>
                     Jeg vil velge fordeling selv
                 </label>
             </form>
             <div>
                 {props.widget.prevButton()}
-                <button onClick={handleNext}>Fram</button>
+                {props.widget.nextButton()}
             </div>
         </div>
     );
