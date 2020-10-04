@@ -1,22 +1,13 @@
 import React from 'react';
-import { PaneProps } from './PaneProps';
+import { PaneProps } from '../interfaces/PaneProps';
 import '../style/Pane.css'
 
 export default function DonationPane(props: PaneProps) {
 
     const widgetState = props.widget.state
 
-    function handleChange() {
-        
-    }
-
-    // Allows only numbers and backspace
-    // TODO: Fix bug: doesnt work with some special characters (*^`) and possibly more
-    function handleKeyDown(e: React.KeyboardEvent<HTMLDivElement>) {
-        const numberRegex = new RegExp("[0-9]")
-        if (!numberRegex.test(e.key) && e.keyCode !== 8) {
-            e.preventDefault()
-        }
+    function handleSum(e: React.FormEvent<HTMLInputElement>) {
+        widgetState.setSum(e.currentTarget.value)
     }
 
     function handleRecommended() {
@@ -31,7 +22,7 @@ export default function DonationPane(props: PaneProps) {
         if (widgetState.method === "PayPal" || widgetState.method === "Vipps") {
             return (
                 <div>
-                    <input type="number" inputMode="numeric" placeholder="sum" onChange={handleChange} onKeyDown={handleKeyDown}></input>kr
+                    <input type="number" inputMode="numeric" placeholder="sum" onChange={handleSum}></input>kr
                 </div>
             )
         }

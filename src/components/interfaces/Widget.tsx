@@ -8,6 +8,8 @@ export interface Widget {
         setEmail: Function,
         SSN: string,
         setSSN: Function,
+        sum: number,
+        setSum: Function,
         method: string,
         setMethod: Function,
         taxDeduction: boolean,

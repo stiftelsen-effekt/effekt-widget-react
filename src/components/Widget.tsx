@@ -14,6 +14,7 @@ function Widget() {
   const [method, setMethod] = useState("")
   const [email, setEmail] = useState("")
   const [SSN, setSSN] = useState("")
+  const [sum, setSum] = useState(0)
   const [taxDeduction, setTaxDeduction] = useState(false)
   const [privacyPolicy, setPrivacyPolicy] = useState(false)
   const [newsletter, setNewsletter] = useState(false)
@@ -28,6 +29,7 @@ function Widget() {
       donorName: donorName,
       email: email,
       SSN: SSN,
+      sum: sum,
       taxDeduction: taxDeduction,
       privacyPolicy: privacyPolicy,
       newsletter: newsletter,
@@ -39,6 +41,7 @@ function Widget() {
       setDonorName: setDonorName,
       setEmail: setEmail,
       setSSN: setSSN,
+      setSum: setSum,
       setTaxDeduction: setTaxDeduction,
       setPrivacyPolicy: setPrivacyPolicy,
       setNewsletter: setNewsletter,

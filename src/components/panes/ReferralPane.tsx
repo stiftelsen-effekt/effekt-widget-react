@@ -1,5 +1,5 @@
 import React from 'react';
-import { PaneProps } from './PaneProps';
+import { PaneProps } from '../interfaces/PaneProps';
 import '../style/Pane.css'
 
 export default function ReferralPane(props: PaneProps) {
