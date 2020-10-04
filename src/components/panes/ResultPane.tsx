@@ -21,7 +21,7 @@ export default function ReferralPane(props: PaneProps) {
                     <div>
                         <h1>Takk!</h1>
                         <img src="https://storage.googleapis.com/effekt-widget/assets/heart.svg" alt="Thank you heart <3"></img>
-                        <p>Vi har nå mottatt din donasjon! Vi har også sendt en kvittering til philip@testeffekt.no med mer informasjon. Sjekk søppelpost-mappen om du ikke har mottatt eposten i løpet av noen timer.</p>
+                        <p>Vi har nå mottatt din donasjon! Vi har også sendt en kvittering til {widgetState.email} med mer informasjon. Sjekk søppelpost-mappen om du ikke har mottatt eposten i løpet av noen timer.</p>
                     </div>
                 )
 

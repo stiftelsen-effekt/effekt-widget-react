@@ -11,6 +11,7 @@ export default function DonationPane(props: PaneProps) {
     }
 
     // Allows only numbers and backspace
+    // TODO: Fix bug: doesnt work with some special characters (*^`) and possibly more
     function handleKeyDown(e: React.KeyboardEvent<HTMLDivElement>) {
         const numberRegex = new RegExp("[0-9]")
         if (!numberRegex.test(e.key) && e.keyCode !== 8) {
