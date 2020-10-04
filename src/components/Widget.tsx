@@ -6,7 +6,7 @@ import SharesPane from './panes/SharesPane'
 import ReferralPane from './panes/ReferralPane'
 import ResultPane from './panes/ResultPane'
 import PanesType from './interfaces/Panes'
-import EmailValidator from 'email-validator'
+import validateInputs from './helpers/inputValidation'
 
 function Widget() {
   const [currentPane, setCurrentPane] = useState("MethodPane")
@@ -53,40 +53,14 @@ function Widget() {
     errorField: errorField
   }
 
-  const letters = /^[A-Za-z]+$/;
-  const numbers = /^[0-9]+$/;
-
   function nextPane() { 
-    if (currentPane === "DonorPane") {
-      if (!donorName.match(letters)) { 
-        setError("Ikke et gyldig navn")
-        return 
-      }
-      else if (donorName.length < 3 || donorName.length > 32) { 
-        setError("Ikke et gyldig navn")
-        return 
-      }
-      else if (!EmailValidator.validate(email)) { 
-        setError("Ikke en gyldig email")
-        return 
-      }
-      else if (taxDeduction) {
-        if (!SSN.match(numbers) || SSN.length !== 11) {
-          setError("Ikke et gyldig fødselsnummer")
-          return
-        }
-      }
-      else if (!privacyPolicy) { 
-        setError("Du må godkjenne personvernerklæringen")
-        return
-      }
-    }
-    else if (currentPane === "DonationPane" && recommendedShare) {
+    if (currentPane === "DonationPane" && recommendedShare) {
       setCurrentPane("ReferralPane")
       return
     }
-    setError("")
-    setCurrentPane(Panes[currentPane].props.nextPane) 
+
+    const errorMessage = validateInputs(currentPane, donorName, email, SSN, taxDeduction, privacyPolicy)
+    errorMessage !== "" ? setError(errorMessage) : setCurrentPane(Panes[currentPane].props.nextPane) 
   }
 
   function prevPane() { 

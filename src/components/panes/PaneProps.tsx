@@ -1,4 +1,4 @@
-import { Widget } from './Widget'
+import { Widget } from '../interfaces/Widget'
 
 export interface PaneProps {
     widget: Widget,
