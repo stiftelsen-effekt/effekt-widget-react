@@ -19,10 +19,13 @@ export interface Widget {
         recommendedShare: boolean,
         setRecommendedShare: Function,
         recurring: boolean,
-        setRecurring: Function
+        setRecurring: Function,
+        error: string,
+        setError: Function
       },
       prevPane: Function,
       nextPane: Function,
       prevButton: Function,
-      nextButton: Function
+      nextButton: Function,
+      errorField: Function
 }

@@ -1,6 +1,5 @@
 import React from 'react';
 import { PaneProps } from './PaneProps';
-import * as EmailValidator from 'email-validator';
 import './Pane.css'
 
 export default function MethodPane(props: PaneProps) {
@@ -19,6 +18,10 @@ export default function MethodPane(props: PaneProps) {
         widgetState.setTaxDeduction(e.currentTarget.checked)
     }
 
+    function handleSSN(e: React.FormEvent<HTMLInputElement>) {
+        widgetState.setSSN(e.currentTarget.value)
+    }
+
     function handlePrivacyPolicy(e: React.FormEvent<HTMLInputElement>) {
         widgetState.setPrivacyPolicy(e.currentTarget.checked)
     }
@@ -27,11 +30,9 @@ export default function MethodPane(props: PaneProps) {
         widgetState.setNewsletter(e.currentTarget.checked)
     }
 
-    function invalidEmailWarning() {
-        if (!EmailValidator.validate(widgetState.email)) {
-            return (
-                <div>Ugyldig email inntastet</div>
-            )
+    function showSSNField() {
+        if (widgetState.taxDeduction) {
+            return <input type="text" placeholder="Fødselsnummer" inputMode="decimal" maxLength={11} onChange={handleSSN} value={widgetState.SSN}></input>
         }
     }
 
@@ -41,8 +42,8 @@ export default function MethodPane(props: PaneProps) {
             <div className="pane">
                 <input type="text" inputMode="text" placeholder="Navn" maxLength={100} onChange={handleName} value={widgetState.donorName}></input>
                 <input type="email" inputMode="email" placeholder="Email" maxLength={100} onChange={handleEmail} value={widgetState.email}></input>
-                {invalidEmailWarning()}
                 <div><input type="checkbox" id="check-tax-deduction" onChange={handleTax} checked={widgetState.taxDeduction}></input>Jeg ønsker skattefradrag</div>
+                {showSSNField()}
                 <div><input type="checkbox" id="check-privacy-policy" onChange={handlePrivacyPolicy} checked={widgetState.privacyPolicy}></input>Jeg godtar <a href="https://gieffektivt.no/samarbeid-drift#personvern">personvernerklæringen *</a></div>
                 <div><input type="checkbox" id="check-newsletter" onChange={handleNewsletter} checked={widgetState.newsletter}></input>Jeg ønsker å melde meg på nyhetsbrevet</div>
             </div>
@@ -50,6 +51,7 @@ export default function MethodPane(props: PaneProps) {
                 {props.widget.prevButton()}
                 {props.widget.nextButton()}
             </div>
+            {props.widget.errorField()}
         </div>
     );
 }
