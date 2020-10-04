@@ -1,12 +1,13 @@
-import React, { useState } from 'react';
-import MethodPane from './panes/MethodPane';
-import DonorPane from './panes/DonorPane';
-import DonationPane from './panes/DonationPane';
-import SharesPane from './panes/SharesPane';
-import ReferralPane from './panes/ReferralPane';
+import React, { useState } from 'react'
+import MethodPane from './panes/MethodPane'
+import DonorPane from './panes/DonorPane'
+import DonationPane from './panes/DonationPane'
+import SharesPane from './panes/SharesPane'
+import ReferralPane from './panes/ReferralPane'
+import ResultPane from './panes/ResultPane'
 
 function Widget() {
-  const [paneNumber, setPaneNumber] = useState(0)
+  const [currentPane, setCurrentPane] = useState("MethodPane")
   const [donorName, setDonorName] = useState("")
   const [method, setMethod] = useState("")
   const [email, setEmail] = useState("")
@@ -19,7 +20,7 @@ function Widget() {
 
   let widget = {
     state: {
-      paneNumber: paneNumber,
+      currentPane: currentPane,
       method: method,
       donorName: donorName,
       email: email,
@@ -29,7 +30,7 @@ function Widget() {
       newsletter: newsletter,
       recommendedShare: recommendedShare,
       recurring: recurring,
-      setPaneNumber: setPaneNumber,
+      setCurrentPane: setCurrentPane,
       setMethod: setMethod,
       setDonorName: setDonorName,
       setEmail: setEmail,
@@ -46,47 +47,30 @@ function Widget() {
     nextButton: nextButton
   }
 
-  function nextPane() {
-    if (paneNumber === 2 && recommendedShare === true) {
-      setPaneNumber(paneNumber + 2)
-    }
-    else {
-      setPaneNumber(paneNumber + 1)
-    }
+  function prevPane() { setCurrentPane(paneObjects[currentPane].props.prevPane) }
+
+  function nextPane() { setCurrentPane(paneObjects[currentPane].props.nextPane) }
+
+  function prevButton() { return (<button onClick={() => { prevPane() }}>Tilbake</button>) }
+
+  function nextButton() { return (<button onClick={() => { nextPane() }}>Fram</button>) }
+
+  interface Panes {
+    [paneName: string]: JSX.Element
   }
 
-  function prevPane() {
-    if (paneNumber === 4 && recommendedShare === true) {
-      setPaneNumber(paneNumber - 2)
-    }
-    else {
-      setPaneNumber(paneNumber - 1)
-    }
+  const paneObjects: Panes = {
+    MethodPane:   <MethodPane widget={widget} nextPane="DonorPane" prevPane="MethodPane" />,
+    DonorPane:    <DonorPane widget={widget} nextPane="DonationPane" prevPane="MethodPane" />,
+    DonationPane: <DonationPane widget={widget} nextPane={"SharesPane"} prevPane="DonorPane" />,
+    SharesPane:   <SharesPane widget={widget} nextPane="ReferralPane" prevPane="DonationPane" />,
+    ReferralPane: <ReferralPane widget={widget} nextPane="ResultPane" prevPane={"SharesPane"} />,
+    ResultPane:   <ResultPane widget={widget} nextPane="ResultPane" prevPane="ReferralPane" />,
   }
-
-  function prevButton() {
-    return (
-      <button onClick={() => { prevPane() }}>Tilbake</button>
-    )
-  }
-
-  function nextButton() {
-    return (
-      <button onClick={() => { nextPane() }}>Fram</button>
-    )
-  }
-
-  const panes: JSX.Element[] = [
-    <MethodPane widget={widget} />,
-    <DonorPane widget={widget} />,
-    <DonationPane widget={widget} />,
-    <SharesPane widget={widget} />,
-    <ReferralPane widget={widget} />
-  ]
 
   return (
     <div className="Widget">
-      {panes[paneNumber]}
+      {paneObjects[currentPane]}
     </div>
   );
 }

@@ -31,7 +31,7 @@ export default function DonationPane(props: PaneProps) {
         if (widgetState.method === "PayPal" || widgetState.method === "Vipps") {
             return (
                 <div>
-                    <input type="tel" placeholder="sum" onChange={handleChange} onKeyDown={handleKeyDown}></input>kr
+                    <input type="number" inputMode="numeric" placeholder="sum" onChange={handleChange} onKeyDown={handleKeyDown}></input>kr
                 </div>
             )
         }

@@ -1,5 +1,7 @@
 import { Widget } from './Widget'
 
 export interface PaneProps {
-    widget: Widget
+    widget: Widget,
+    prevPane: string
+    nextPane: string
 }

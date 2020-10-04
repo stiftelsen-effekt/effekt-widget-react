@@ -1,7 +1,7 @@
 export interface Widget {
     state: {
-        paneNumber: number,
-        setPaneNumber: Function,
+        currentPane: string,
+        setCurrentPane: Function,
         donorName: string,
         setDonorName: Function,
         email: string,

@@ -14,7 +14,7 @@ export default function MethodPane(props: PaneProps) {
         <div className="pane">
             <h1>Velg fordeling</h1>
             <div className="pane">
-                {pretendDatabase.map(org => { return (<div key={org.ID}>{org.full_name}<input type="tel"></input></div>)})}
+                {pretendDatabase.map(org => { return (<div key={org.ID}>{org.full_name}<input type="text" maxLength={3} inputMode="numeric"></input></div>)})}
             </div>
             <div>
                 {props.widget.prevButton()}
