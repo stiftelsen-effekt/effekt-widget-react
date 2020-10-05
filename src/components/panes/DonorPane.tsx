@@ -6,29 +6,17 @@ export default function MethodPane(props: PaneProps) {
 
     const widgetState = props.widget.state
 
-    function handleName(e: React.FormEvent<HTMLInputElement>) {
-        widgetState.setDonorName(e.currentTarget.value)
-    }
+    function handleName(e: React.FormEvent<HTMLInputElement>) { widgetState.setDonorName(e.currentTarget.value) }
 
-    function handleEmail(e: React.FormEvent<HTMLInputElement>) {
-        widgetState.setEmail(e.currentTarget.value)
-    }
+    function handleEmail(e: React.FormEvent<HTMLInputElement>) { widgetState.setEmail(e.currentTarget.value) }
 
-    function handleTax(e: React.FormEvent<HTMLInputElement>) {
-        widgetState.setTaxDeduction(e.currentTarget.checked)
-    }
+    function handleTax(e: React.FormEvent<HTMLInputElement>) { widgetState.setTaxDeduction(e.currentTarget.checked) }
 
-    function handleSSN(e: React.FormEvent<HTMLInputElement>) {
-        widgetState.setSSN(e.currentTarget.value)
-    }
+    function handleSSN(e: React.FormEvent<HTMLInputElement>) { widgetState.setSSN(e.currentTarget.value) }
 
-    function handlePrivacyPolicy(e: React.FormEvent<HTMLInputElement>) {
-        widgetState.setPrivacyPolicy(e.currentTarget.checked)
-    }
+    function handlePrivacyPolicy(e: React.FormEvent<HTMLInputElement>) { widgetState.setPrivacyPolicy(e.currentTarget.checked) }
 
-    function handleNewsletter(e: React.FormEvent<HTMLInputElement>) {
-        widgetState.setNewsletter(e.currentTarget.checked)
-    }
+    function handleNewsletter(e: React.FormEvent<HTMLInputElement>) { widgetState.setNewsletter(e.currentTarget.checked) }
 
     function showSSNField() {
         if (widgetState.taxDeduction) {

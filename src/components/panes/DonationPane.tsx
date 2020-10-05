@@ -6,23 +6,17 @@ export default function DonationPane(props: PaneProps) {
 
     const widgetState = props.widget.state
 
-    function handleSum(e: React.FormEvent<HTMLInputElement>) {
-        widgetState.setSum(e.currentTarget.value)
-    }
+    function handleSum(e: React.FormEvent<HTMLInputElement>) { widgetState.setSum(e.currentTarget.value) }
 
-    function handleRecommended() {
-        widgetState.setRecommendedShare(!widgetState.recommendedShare)
-    }
+    function handleRecommended() { widgetState.setRecommendedShare(!widgetState.recommendedShare) }
 
-    function handleRecurring() {
-        widgetState.setRecurring(!widgetState.recurring)
-    }
+    function handleRecurring() { widgetState.setRecurring(!widgetState.recurring) }
 
     function showSumField() {
         if (widgetState.method === "PayPal" || widgetState.method === "Vipps") {
             return (
                 <div>
-                    <input type="number" inputMode="numeric" placeholder="sum" onChange={handleSum}></input>kr
+                    <input type="number" inputMode="numeric" placeholder="sum" onChange={handleSum} value={widgetState.sum}></input>kr
                 </div>
             )
         }
@@ -39,7 +33,7 @@ export default function DonationPane(props: PaneProps) {
                     <br></br>
                     <label>
                         <input type="radio" name="selectRecurring" onChange={handleRecurring} checked={!widgetState.recurring}/>
-                        Jeg vil velge fordeling selv
+                        Jeg vil gi en engangsdonasjon
                     </label>
                 </form>
             )
@@ -66,6 +60,7 @@ export default function DonationPane(props: PaneProps) {
                 {props.widget.prevButton()}
                 {props.widget.nextButton()}
             </div>
+            {props.widget.errorField()}
         </div>
     );
 }

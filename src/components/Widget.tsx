@@ -7,19 +7,21 @@ import ReferralPane from './panes/ReferralPane'
 import ResultPane from './panes/ResultPane'
 import PanesType from './interfaces/Panes'
 import validateInputs from './helpers/inputValidation'
+import { getOrganizations } from './helpers/network'
 
 function Widget() {
   const [currentPane, setCurrentPane] = useState("MethodPane")
-  const [donorName, setDonorName] = useState("")
+  const [donorName, setDonorName] = useState("navn") // For dev
   const [method, setMethod] = useState("")
-  const [email, setEmail] = useState("")
+  const [email, setEmail] = useState("navn@testeffekt.no") // For dev
   const [SSN, setSSN] = useState("")
-  const [sum, setSum] = useState(0)
+  const [sum, setSum] = useState("")
   const [taxDeduction, setTaxDeduction] = useState(false)
-  const [privacyPolicy, setPrivacyPolicy] = useState(false)
+  const [privacyPolicy, setPrivacyPolicy] = useState(true) // For dev
   const [newsletter, setNewsletter] = useState(false)
   const [recommendedShare, setRecommendedShare] = useState(true)
   const [recurring, setRecurring] = useState(true)
+  const [shares, setShares] = useState()
   const [error, setError] = useState("")
 
   let widget = {
@@ -56,30 +58,38 @@ function Widget() {
     errorField: errorField
   }
 
-  function nextPane() { 
-    if (currentPane === "DonationPane" && recommendedShare) {
-      setCurrentPane("ReferralPane")
-      return
-    }
+  getOrganizations().forEach(element => {
+    
+  })
 
-    const errorMessage = validateInputs(currentPane, donorName, email, SSN, taxDeduction, privacyPolicy)
-    errorMessage !== "" ? setError(errorMessage) : setCurrentPane(Panes[currentPane].props.nextPane) 
+  function nextPane() { 
+    const errorMessage = validateInputs(currentPane, method, donorName, email, SSN, taxDeduction, privacyPolicy, sum)
+    if (errorMessage === "") {
+      if (currentPane === "DonationPane" && recommendedShare) {
+        setCurrentPane("ReferralPane")
+      }
+      else {
+        setCurrentPane(Panes[currentPane].props.nextPane)
+      }
+    }
+    setError(errorMessage)
   }
 
-  function prevPane() { 
+  function prevPane() {
     if (currentPane === "ReferralPane" && recommendedShare) {
       setCurrentPane("DonationPane")
     }
     else {
       setCurrentPane(Panes[currentPane].props.prevPane) 
     }
+    setError("")
   }
 
   function nextButton() { return (<button onClick={() => { nextPane() }}>Fram</button>) }
 
   function prevButton() { return (<button onClick={() => { prevPane() }}>Tilbake</button>) }
 
-  function errorField() { return (<p>{error}</p>) }
+  function errorField() { return (<p> {error} </p>) }
 
   const Panes: PanesType = {
     MethodPane:   <MethodPane   widget={widget} nextPane="DonorPane"    prevPane="MethodPane" />,

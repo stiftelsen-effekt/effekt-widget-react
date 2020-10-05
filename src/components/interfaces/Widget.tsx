@@ -8,7 +8,7 @@ export interface Widget {
         setEmail: Function,
         SSN: string,
         setSSN: Function,
-        sum: number,
+        sum: string,
         setSum: Function,
         method: string,
         setMethod: Function,
