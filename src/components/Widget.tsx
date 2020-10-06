@@ -7,7 +7,15 @@ import ReferralPane from './panes/ReferralPane'
 import ResultPane from './panes/ResultPane'
 import PanesType from './interfaces/Panes'
 import validateInputs from './helpers/inputValidation'
+import { Share } from './interfaces/Share'
 import { getOrganizations } from './helpers/network'
+
+let defaultShares: Share[] = []
+
+getOrganizations().forEach(org => {
+  let orgShare: Share = {ID: org.ID, full_name: org.full_name, share: 0}
+  defaultShares.push(orgShare)
+})
 
 function Widget() {
   const [currentPane, setCurrentPane] = useState("MethodPane")
@@ -21,7 +29,7 @@ function Widget() {
   const [newsletter, setNewsletter] = useState(false)
   const [recommendedShare, setRecommendedShare] = useState(true)
   const [recurring, setRecurring] = useState(true)
-  const [shares, setShares] = useState()
+  const [shares, setShares] = useState(defaultShares)
   const [error, setError] = useState("")
 
   let widget = {
@@ -37,6 +45,7 @@ function Widget() {
       newsletter: newsletter,
       recommendedShare: recommendedShare,
       recurring: recurring,
+      shares: shares,
       error: error,
       setCurrentPane: setCurrentPane,
       setMethod: setMethod,
@@ -49,6 +58,7 @@ function Widget() {
       setNewsletter: setNewsletter,
       setRecommendedShare: setRecommendedShare,
       setRecurring: setRecurring,
+      setShares: setShares,
       setError: setError
     },
     prevPane: prevPane,

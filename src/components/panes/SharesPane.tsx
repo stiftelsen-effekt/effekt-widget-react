@@ -1,15 +1,26 @@
 import React from 'react';
 import { PaneProps } from '../interfaces/PaneProps';
-import { getOrganizations } from '../helpers/network'
+import { Share } from '../interfaces/Share'
 import '../style/Pane.css'
  
 export default function MethodPane(props: PaneProps) {
     //const [totalPercentage, setTotalPercentage] = useState(0)
     
-    //const widgetState = props.widget.state
+    const widgetState = props.widget.state
 
-    function handleShare() {
+    function handleShare(e: React.FormEvent<HTMLInputElement>, orgName: string) {
+        let newShares: Share[] = widgetState.shares
 
+        const orgShare: Share | undefined = newShares.find(share => share.full_name === orgName)
+        
+        if (orgShare !== undefined) {
+            const isChangedOrg = (org: Share) => org === orgShare;
+            newShares[newShares.findIndex(isChangedOrg)].share = parseInt(e.currentTarget.value)
+
+            //TODO: Organisasjonslisten oppdateres ikke ved endringer
+            //Hvorfor oppdateres ikke organisajonslisten når state oppdateres?
+            widgetState.setShares(newShares)
+        }
     }
 
     function showPercentage() {
@@ -22,14 +33,15 @@ export default function MethodPane(props: PaneProps) {
         <div className="pane">
             <h1>Velg fordeling</h1>
             <div className="pane">
-                {getOrganizations().map(org => { return (
+                {widgetState.shares.map(org => { return (
                     <div key={org.ID}> {org.full_name} 
                         <input 
                             type="number" 
                             inputMode="decimal"                              
                             placeholder="0" 
                             name={org.full_name} 
-                            onChange={handleShare}>
+                            value={org.share}
+                            onChange={e => handleShare(e, org.full_name)}>
                         </input>
                     </div>
                 )})}

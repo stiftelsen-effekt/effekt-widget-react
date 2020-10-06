@@ -1,3 +1,5 @@
+import { Share } from './Share'
+
 export interface Widget {
     state: {
         currentPane: string,
@@ -22,6 +24,8 @@ export interface Widget {
         setRecommendedShare: Function,
         recurring: boolean,
         setRecurring: Function,
+        shares: Share[],
+        setShares: Function,
         error: string,
         setError: Function
       },
