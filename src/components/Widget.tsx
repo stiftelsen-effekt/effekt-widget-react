@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import MethodPane from './panes/MethodPane'
 import DonorPane from './panes/DonorPane'
 import DonationPane from './panes/DonationPane'
@@ -7,17 +7,14 @@ import ReferralPane from './panes/ReferralPane'
 import ResultPane from './panes/ResultPane'
 import PanesType from './interfaces/Panes'
 import validateInputs from './helpers/inputValidation'
-import { Share } from './interfaces/Share'
-import { getOrganizations } from './helpers/network'
+import Share from './interfaces/Share'
+import Organization from './interfaces/Organization'
+import { getOrganizations} from './helpers/network'
 
-let defaultShares: Share[] = []
-
-getOrganizations().forEach(org => {
-  let orgShare: Share = {ID: org.ID, full_name: org.full_name, share: 0}
-  defaultShares.push(orgShare)
-})
+const placeholderShare: Share = {ID: 0, full_name: "", share: 0}
 
 function Widget() {
+  
   const [currentPane, setCurrentPane] = useState("MethodPane")
   const [donorName, setDonorName] = useState("navn") // For dev
   const [method, setMethod] = useState("")
@@ -29,7 +26,7 @@ function Widget() {
   const [newsletter, setNewsletter] = useState(false)
   const [recommendedShare, setRecommendedShare] = useState(true)
   const [recurring, setRecurring] = useState(true)
-  const [shares, setShares] = useState(defaultShares)
+  const [shares, setShares] = useState([placeholderShare])
   const [error, setError] = useState("")
 
   let widget = {
@@ -68,9 +65,16 @@ function Widget() {
     errorField: errorField
   }
 
-  getOrganizations().forEach(element => {
-    
-  })
+  useEffect(() => {
+    let defaultShares: Share[] = []
+    getOrganizations().then( (result) => {
+      result.forEach((org: Organization) => {
+         let orgShare: Share = {ID: org.id, full_name: org.name, share: 0}
+         defaultShares.push(orgShare)
+      })
+    })
+    setShares(defaultShares);
+  }, []);
 
   function nextPane() { 
     const errorMessage = validateInputs(currentPane, method, donorName, email, SSN, taxDeduction, privacyPolicy, sum)

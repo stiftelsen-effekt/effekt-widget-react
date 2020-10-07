@@ -1,6 +1,6 @@
 import EmailValidator from 'email-validator'
 
-const letters = /^[A-Za-z]+$/;
+const letters = /^[a-zA-Z\s]*$/; // Also includes whitespace
 const numbers = /^[0-9]+$/;
 
 export default function validateInputs(currentPane: string, method: string, donorName: string, email: string, SSN: string, taxDeduction: boolean, privacyPolicy: boolean, sum: string) {
