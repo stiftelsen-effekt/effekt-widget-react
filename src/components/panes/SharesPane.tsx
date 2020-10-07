@@ -10,20 +10,20 @@ export default function MethodPane(props: PaneProps) {
     const [totalPercentage, setTotalPercentage] = useState(0)
 
     function handleShare(e: React.FormEvent<HTMLInputElement>, orgName: string) {
-        let newShares: Share[] = widgetState.shares
+        console.log("onchange")
+        let newShares: Share[] = [...widgetState.shares]
 
         const orgShare: Share | undefined = newShares.find(share => share.full_name === orgName)
         
         if (orgShare !== undefined) {
             const isChangedOrg = (org: Share) => org === orgShare;
-            newShares[newShares.findIndex(isChangedOrg)].share = parseInt(e.currentTarget.value)
-
-            //TODO: Organisasjonslisten oppdateres ikke ved endringer
-            //Hvorfor oppdateres ikke organisajonslisten når state oppdateres?
+            const value = e.currentTarget.value 
+            newShares[newShares.findIndex(isChangedOrg)].share = parseInt(value)
+ 
             widgetState.setShares(newShares)
         }
     }
-
+    
     function setupSharesList() {
         let sharesList: JSX.Element[] = []
         widgetState.shares.forEach(org => { 
@@ -33,7 +33,7 @@ export default function MethodPane(props: PaneProps) {
                     inputMode="decimal"                              
                     placeholder="0" 
                     name={org.full_name} 
-                    value={org.share}
+                    value={isNaN(org.share) ? "" : org.share}
                     onChange={e => handleShare(e, org.full_name)}>
                 </input>
             </div>)
