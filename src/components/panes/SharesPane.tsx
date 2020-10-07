@@ -10,7 +10,6 @@ export default function MethodPane(props: PaneProps) {
     const [totalPercentage, setTotalPercentage] = useState(0)
 
     function handleShare(e: React.FormEvent<HTMLInputElement>, orgName: string) {
-        console.log("onchange")
         let newShares: Share[] = [...widgetState.shares]
 
         const orgShare: Share | undefined = newShares.find(share => share.full_name === orgName)
@@ -22,6 +21,12 @@ export default function MethodPane(props: PaneProps) {
  
             widgetState.setShares(newShares)
         }
+
+        let newPercentage: number = 0
+        widgetState.shares.forEach(org => {
+            newPercentage += (isNaN(org.share) ? 0 : org.share)
+        })
+        setTotalPercentage(newPercentage)
     }
     
     function setupSharesList() {
@@ -30,8 +35,8 @@ export default function MethodPane(props: PaneProps) {
             sharesList.push(<div key={org.ID}> {org.full_name} 
                 <input 
                     type="number" 
-                    inputMode="decimal"                              
-                    placeholder="0" 
+                    inputMode="decimal" 
+                    placeholder=""                         
                     name={org.full_name} 
                     value={isNaN(org.share) ? "" : org.share}
                     onChange={e => handleShare(e, org.full_name)}>
