@@ -1,23 +1,33 @@
 import React from 'react';
 import { PaneProps } from './PaneProps';
+import { useDispatch, useSelector } from 'react-redux'
+import { selectPaymentMethod } from '../../store/donation/actions'
+import { WidgetState, PaymentMethod } from '../../store/state'
 import './Pane.css'
 
 export default function MethodPane(props: PaneProps) {
 
+    const dispatch = useDispatch()
+    const currentPaymentMethod = useSelector((state: WidgetState) => state.donation.method)
+
+    //dispatch(selectPaymentMethod(PaymentMethod.BANK))
+
+    const widgetState = props.widget.state
+
     const widget = props.widget
 
     function selectBank() {
-        widget.state.setMethod("Bank")
+        dispatch(selectPaymentMethod(PaymentMethod.BANK))
         widget.nextPane()
     }
 
     function selectPayPal() {
-        widget.state.setMethod("PayPal")
+        dispatch(selectPaymentMethod(PaymentMethod.PAYPAL))
         widget.nextPane()
     }
 
     function selectVipps() {
-        widget.state.setMethod("Vipps")
+        dispatch(selectPaymentMethod(PaymentMethod.VIPPS))
         widget.nextPane()
     }
 
