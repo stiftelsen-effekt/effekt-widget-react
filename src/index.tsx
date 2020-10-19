@@ -5,10 +5,11 @@ import Widget from './components/Widget';
 import * as serviceWorker from './serviceWorker';
 import { combineReducers, createStore } from 'redux';
 import { WidgetState } from './store/state';
-import { donationReducer } from './store/donation/reducer';
 import { Provider } from 'react-redux';
+import { donationReducer } from './store/donation/reducer';
 import { layoutReducer } from './store/layout/reducer';
-
+import { errorReducer } from './store/error/reducer';
+import { payPalReducer } from './store/paypal/reducer';
 
 /**
  * Here we create our top level redux store
@@ -17,6 +18,8 @@ import { layoutReducer } from './store/layout/reducer';
 const rootReducer = combineReducers<WidgetState>({
   donation: donationReducer,
   layout: layoutReducer,
+  paypal: payPalReducer,
+  error: errorReducer,
 });
 
 /**

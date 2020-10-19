@@ -1,8 +1,8 @@
 export interface WidgetState {
     donation: Donation,
     layout: Layout,
-    //paypal: PayPalState,
-    //errorState: ErrorState,
+    paypal: PayPalState,
+    error: Error,
 }
 
 export interface Layout {
@@ -43,7 +43,7 @@ export interface Share {
 }
 
 export interface Error {
-    visible: boolean,
+    isVisible: boolean,
     message: string,
 }
 
