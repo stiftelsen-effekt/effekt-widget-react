@@ -1,8 +1,11 @@
+import { FormStateMap } from 'redux-form'
+
 export interface WidgetState {
     donation: Donation,
     layout: Layout,
     paypal: PayPalState,
     error: Error,
+    form: FormStateMap,
 }
 
 export interface Layout {

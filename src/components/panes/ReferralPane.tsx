@@ -1,8 +1,6 @@
 import React from 'react';
-import { PaneProps } from './PaneProps';
-import './Pane.css'
 
-export default function ReferralPane(props: PaneProps) {
+export default function ReferralPane() {
 
     const pretendDatabase = [
         {ID: 1, name: "Anbefaling av en bekjent"},
@@ -15,11 +13,9 @@ export default function ReferralPane(props: PaneProps) {
             <h1>Hvor hørte du om oss?</h1>
             <p>Valgfritt</p>
             <div className="pane">
-                {pretendDatabase.map(ref => { return (<button key={ref.ID} onClick={() => {props.widget.nextPane()} }>{ref.name}</button>)})}
+                {pretendDatabase.map(ref => { return (<button key={ref.ID} onClick={() => {} }>{ref.name}</button>)})}
             </div>
             <div>
-                {props.widget.prevButton()}
-                {props.widget.nextButton()}
             </div>
         </div>
     );

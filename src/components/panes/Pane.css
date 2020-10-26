@@ -1,9 +1,0 @@
-.pane {
-    display: flex;
-    flex-direction: column;
-    width: 40vw;
-}
-
-button {
-    width: 50%;
-}

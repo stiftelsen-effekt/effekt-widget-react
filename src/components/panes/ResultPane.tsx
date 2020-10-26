@@ -1,13 +1,10 @@
 import React from 'react';
-import { PaneProps } from './PaneProps';
-import './Pane.css'
 
-export default function ReferralPane(props: PaneProps) {
+export default function ReferralPane() {
 
-    const widgetState = props.widget.state
 
-    function showResult() {
-        switch (widgetState.method) {
+    function showResult(method: string) {
+        switch (method) {
             case "Bank":
                 return (
                     <div>
@@ -21,7 +18,7 @@ export default function ReferralPane(props: PaneProps) {
                     <div>
                         <h1>Takk!</h1>
                         <img src="https://storage.googleapis.com/effekt-widget/assets/heart.svg" alt="Thank you heart <3"></img>
-                        <p>Vi har nå mottatt din donasjon! Vi har også sendt en kvittering til {widgetState.email} med mer informasjon. Sjekk søppelpost-mappen om du ikke har mottatt eposten i løpet av noen timer.</p>
+                        <p>Vi har nå mottatt din donasjon! Vi har også sendt en kvittering til {"Emailen din"} med mer informasjon. Sjekk søppelpost-mappen om du ikke har mottatt eposten i løpet av noen timer.</p>
                     </div>
                 )
 
@@ -34,7 +31,6 @@ export default function ReferralPane(props: PaneProps) {
 
     return (
         <div className="pane">
-            {showResult()}
         </div>
     );
 }

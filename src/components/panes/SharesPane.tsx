@@ -1,8 +1,6 @@
 import React from 'react';
-import { PaneProps } from './PaneProps';
-import './Pane.css'
 
-export default function MethodPane(props: PaneProps) {
+export default function MethodPane() {
 
     const pretendDatabase = [
         {ID: 1, full_name: "Against malaria foundation", short_desc: "Against Malaria Foundation driver preventivt arbeid gjennom distribusjon av impregnerte malarianett. Studier viser at for 8kr beskyttes én person i minst ett år."},
@@ -17,8 +15,6 @@ export default function MethodPane(props: PaneProps) {
                 {pretendDatabase.map(org => { return (<div key={org.ID}>{org.full_name}<input type="tel"></input></div>)})}
             </div>
             <div>
-                {props.widget.prevButton()}
-                {props.widget.nextButton()}
             </div>
         </div>
     );

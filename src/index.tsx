@@ -10,6 +10,7 @@ import { donationReducer } from './store/donation/reducer';
 import { layoutReducer } from './store/layout/reducer';
 import { errorReducer } from './store/error/reducer';
 import { payPalReducer } from './store/paypal/reducer';
+import { reducer as reduxFormReducer} from 'redux-form'
 
 /**
  * Here we create our top level redux store
@@ -20,6 +21,7 @@ const rootReducer = combineReducers<WidgetState>({
   layout: layoutReducer,
   paypal: payPalReducer,
   error: errorReducer,
+  form: reduxFormReducer,
 });
 
 /**
