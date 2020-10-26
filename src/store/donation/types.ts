@@ -3,7 +3,9 @@ import { PaymentMethod } from '../state'
 export const SELECT_PAYMENT_METHOD = 'SELECT_PAYMENT_METHOD'
 export const SELECT_TAX_DEDUCTION = 'SELECT_TAX_DEDUCTION'
 export const SUBMIT_DONOR_INFO = 'SUBMIT_DONOR_INFO'
-export const EDIT_CUSTOM_SHARE = 'EDIT_CUSTOM_SHARE'
+export const SET_CUSTOM_SHARE = 'EDIT_CUSTOM_SHARE'
+export const SET_SUM = 'SET_SUM'
+export const SET_RECURRING = 'SET_RECURRING'
 
 interface SelectPaymentMethod {
   type: typeof SELECT_PAYMENT_METHOD
@@ -30,12 +32,26 @@ interface SubmitDonorInfo {
     }
 }
 
-interface EditCustomShare {
-    type: typeof EDIT_CUSTOM_SHARE
+interface SetCustomShare {
+    type: typeof SET_CUSTOM_SHARE
     payload: {
         orgID: number,
         share: number,
     }
 }
 
-export type DonationActionTypes = SelectPaymentMethod | SelectTaxDeduction | SubmitDonorInfo | EditCustomShare
+interface SetSum {
+  type: typeof SET_SUM
+  payload: {
+    sum: number,
+  }
+}
+
+interface SetRecurring {
+  type: typeof SET_RECURRING
+  payload: {
+    recurring: boolean,
+  }
+}
+
+export type DonationActionTypes = SelectPaymentMethod | SelectTaxDeduction | SubmitDonorInfo | SetCustomShare | SetSum | SetRecurring

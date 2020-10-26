@@ -1,6 +1,6 @@
 import { Reducer } from 'redux';
 import { Donation } from '../state';
-import { DonationActionTypes, SELECT_PAYMENT_METHOD, SELECT_TAX_DEDUCTION } from './types';
+import { DonationActionTypes, SELECT_PAYMENT_METHOD, SELECT_TAX_DEDUCTION, SUBMIT_DONOR_INFO, SET_CUSTOM_SHARE, SET_SUM, SET_RECURRING } from './types';
 
 const initialState: Donation = {
   recurring: true,
@@ -26,7 +26,15 @@ export const donationReducer: Reducer<Donation, DonationActionTypes> = (
     case SELECT_PAYMENT_METHOD:
       return { ...state, method: action.payload.method }
     case SELECT_TAX_DEDUCTION:
-      return { ...state, taxDeduction: action.payload.taxDeduction};
+      return { ...state, taxDeduction: action.payload.taxDeduction}
+    case SUBMIT_DONOR_INFO:
+      return { ...state, ...action.payload } // Unsure if this will work
+    case SET_CUSTOM_SHARE:
+      return { ...state } // Not yet implemented
+    case SET_SUM:
+      return { ...state, sum: action.payload.sum}
+    case SET_RECURRING:
+      return { ...state, recurring: action.payload.recurring}
     default:
       return state;
   }

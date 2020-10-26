@@ -1,16 +1,9 @@
 import React from 'react'
 import { Field, reduxForm, InjectedFormProps } from 'redux-form'
+import { DonorInput } from '../../../store/state'
 import { Form } from '../panes.style'
-
-export interface IDonor {
-    name: string;
-    email: string;
-    taxDeduction: boolean;
-    privacyPolicy: boolean;
-    newsletter: boolean;
-}
   
-  class DonorFormComponent extends React.Component<InjectedFormProps<IDonor>> {
+class DonorFormComponent extends React.Component<InjectedFormProps<DonorInput>> {
     render() {
         const { pristine, submitting, handleSubmit } = this.props;
         return (
@@ -32,6 +25,6 @@ export interface IDonor {
     }
 }
 
-export const DonorForm = reduxForm<IDonor>({
+export const DonorForm = reduxForm<DonorInput>({
     form: 'donorForm',
   })(DonorFormComponent);

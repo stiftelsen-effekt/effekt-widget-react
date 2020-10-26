@@ -4,7 +4,7 @@ import './index.css';
 import Widget from './components/Widget';
 import * as serviceWorker from './serviceWorker';
 import { combineReducers, createStore } from 'redux';
-import { WidgetState } from './store/state';
+import { State } from './store/state';
 import { Provider } from 'react-redux';
 import { donationReducer } from './store/donation/reducer';
 import { layoutReducer } from './store/layout/reducer';
@@ -16,7 +16,7 @@ import { reducer as reduxFormReducer} from 'redux-form'
  * Here we create our top level redux store
  * This store is responsible for all of the shared UI state
  */
-const rootReducer = combineReducers<WidgetState>({
+const rootReducer = combineReducers<State>({
   donation: donationReducer,
   layout: layoutReducer,
   paypal: payPalReducer,

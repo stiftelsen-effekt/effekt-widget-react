@@ -1,6 +1,6 @@
 import { FormStateMap } from 'redux-form'
 
-export interface WidgetState {
+export interface State {
     donation: Donation,
     layout: Layout,
     paypal: PayPalState,
@@ -31,13 +31,16 @@ export interface Donation extends DonationInput {
     kid?: number
 }
 
-export interface Donor {
+export interface DonorInput {
     name?: string,
     email?: string,
     taxDeduction?: boolean,
     ssn?: number,
     newsletter: boolean,
-    donorID?: number,
+}
+
+export interface Donor extends DonorInput {
+    donorID?: number
 }
 
 export interface Share {

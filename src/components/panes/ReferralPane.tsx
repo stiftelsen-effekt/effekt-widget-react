@@ -2,13 +2,13 @@ import React from 'react';
 
 export default function ReferralPane() {
 
-    
+    const referrals: string[] = []
 
     function setupReferrals() {
         let referralsList: JSX.Element[] = []
         referrals.forEach(ref => {
             referralsList.push(
-                <button key={ref.ID} onClick={() => {}>{ref.name}</button>
+                <button key={ref} onClick={() => {}}>{ref}</button>
             )
         })
         return referralsList

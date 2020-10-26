@@ -1,5 +1,3 @@
-import EmailValidator from 'email-validator'
-
 const letters = /^[a-zA-Z\s]*$/; // Also includes whitespace
 const numbers = /^[0-9]+$/;
 
@@ -10,9 +8,6 @@ export default function validateInputs(currentPane: string, method: string, dono
         }
         else if (donorName.length < 3 || donorName.length > 32) { 
             return "Ikke et gyldig navn"
-        }
-        else if (!EmailValidator.validate(email)) { 
-            return "Ikke en gyldig email"
         }
         else if (taxDeduction && (!SSN.match(numbers) || SSN.length !== 11)) {
             return "Ikke et gyldig fødselsnummer"

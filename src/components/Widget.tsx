@@ -1,8 +1,8 @@
 import React from 'react'
-import MethodPane from './panes/MethodPane';
+import MethodPane from './panes/MethodPane/MethodPane';
 import DonorPane from './panes/DonorPane/DonorPane';
-import DonationPane from './panes/DonationPane';
-import SharesPane from './panes/SharesPane';
+import DonationPane from './panes/DonationPane/DonationPane';
+import SharesPane from './panes/SharesPane/SharesPane';
 import ReferralPane from './panes/ReferralPane';
 
 function Widget() {
