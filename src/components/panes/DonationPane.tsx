@@ -42,6 +42,7 @@ export default function DonationPane() {
             </form>
             <div>
             </div>
+            {props.widget.errorField()}
         </div>
     );
 }

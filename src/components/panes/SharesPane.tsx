@@ -1,19 +1,44 @@
 import React from 'react';
 
-export default function MethodPane() {
+export default function SharesPane() {
 
-    const pretendDatabase = [
-        {ID: 1, full_name: "Against malaria foundation", short_desc: "Against Malaria Foundation driver preventivt arbeid gjennom distribusjon av impregnerte malarianett. Studier viser at for 8kr beskyttes én person i minst ett år."},
-        {ID: 2, full_name: "GiveWell", short_desc: "GiveWell gjør en kontinuerlig vurdering av saksområder for å finne de mest trengende sakene, pengene utdeles så kvartalsvis til de mest effektive organisasjonene."},
-        {ID: 3, full_name: "Malaria Consortium", short_desc: "Malaria Consortium utfører seasonal malaria chemoprevention (SMC) som forhindrer smitte  i Afrika, studier viser at denne metoden er svært kostnadseffektiv.",}
-    ]
+    interface Organization {
+        ID: string;
+        full_name: string;
+        share: number;
+    }
 
+    const shares: Organization[] = []
+    
+    function setupSharesList() {
+        let sharesList: JSX.Element[] = []
+        shares.forEach(org => { 
+            sharesList.push(<div key={org.ID}> {org.full_name} 
+                <input 
+                    type="number" 
+                    inputMode="decimal" 
+                    placeholder=""                         
+                    name={org.full_name} 
+                    value={isNaN(org.share) ? "" : org.share}>
+                </input>
+            </div>)
+        })
+        return sharesList
+    }
+
+    function showPercentage() {
+        return (
+        <div>Du har fordelt {} av 100%</div>
+        )
+    }
+    
     return (
         <div className="pane">
             <h1>Velg fordeling</h1>
             <div className="pane">
-                {pretendDatabase.map(org => { return (<div key={org.ID}>{org.full_name}<input type="tel"></input></div>)})}
+                {setupSharesList()}
             </div>
+            {showPercentage()}
             <div>
             </div>
         </div>
