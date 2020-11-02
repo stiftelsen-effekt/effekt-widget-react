@@ -1,16 +1,33 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react'
+import { getReferrals } from '../helpers/network'
+
+interface Referral {
+    ID: number;
+    name: string;
+    ordering: number;
+}
 
 export default function ReferralPane() {
+    const [referrals, setReferrals] = useState<Referral[]>()
 
-    const referrals: string[] = []
+    useEffect(() => {
+        getReferrals()
+          .then(response => setReferrals(response))
+          .catch((error) => console.log(error.message))
+      }, [])
 
     function setupReferrals() {
         let referralsList: JSX.Element[] = []
-        referrals.forEach(ref => {
+
+        if (referrals) {
+            referrals.forEach(ref => {
             referralsList.push(
-                <button key={ref} onClick={() => {}}>{ref}</button>
-            )
-        })
+                //TODO: Post referrals on onClick
+                <button key={ref.ID} onClick={() => {}}>{ref.name}</button>
+                )
+            })
+        }
+        
         return referralsList
     }
 
@@ -19,10 +36,9 @@ export default function ReferralPane() {
             <h1>Hvor hørte du om oss?</h1>
             <p>Valgfritt</p>
             <div className="pane">
-                {/* {pretendDatabase.map(ref => { return (<button key={ref.ID} onClick={() => {} }>{ref.name}</button>)})} */}
+                {setupReferrals()}
             </div>
-            <div>
-            </div>
+            <button>Hopp over</button>
         </div>
     );
 }

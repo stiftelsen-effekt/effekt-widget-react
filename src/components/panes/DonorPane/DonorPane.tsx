@@ -7,10 +7,16 @@ import { submitDonorInfo } from '../../../store/donation/actions'
 
 export default function DonorPane() {
     const dispatch = useDispatch()
-
-    //Todo: store form data in state
     const submitDonor = (values: DonorInput) => {
-        //submitDonorInfo()
+        if (values.name && values.email && values.taxDeduction && values.ssn) {
+            dispatch(submitDonorInfo(
+                values.name, 
+                values.email, 
+                values.taxDeduction, 
+                values.ssn, 
+                values.newsletter
+            ))
+        }
     }
 
     return (
