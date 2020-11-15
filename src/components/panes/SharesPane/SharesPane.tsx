@@ -1,4 +1,5 @@
 import React from 'react';
+import { PaneContainer } from '../Panes.style';
 
 export default function SharesPane() {
 
@@ -33,7 +34,7 @@ export default function SharesPane() {
     }
     
     return (
-        <div className="pane">
+        <PaneContainer>
             <h1>Velg fordeling</h1>
             <div className="pane">
                 {setupSharesList()}
@@ -41,6 +42,6 @@ export default function SharesPane() {
             {showPercentage()}
             <div>
             </div>
-        </div>
+        </PaneContainer>
     );
 }

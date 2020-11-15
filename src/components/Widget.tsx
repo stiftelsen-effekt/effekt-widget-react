@@ -4,16 +4,14 @@ import DonorPane from './panes/DonorPane/DonorPane';
 import DonationPane from './panes/DonationPane/DonationPane';
 import SharesPane from './panes/SharesPane/SharesPane';
 import ReferralPane from './panes/ReferralPane';
+import Carousel from './Carousel';
+
 
 function Widget() {
 
   return (
     <div>
-      <MethodPane />
-      <DonorPane />
-      <DonationPane />
-      <SharesPane />
-      <ReferralPane />
+      <Carousel />
     </div>
   );
 }

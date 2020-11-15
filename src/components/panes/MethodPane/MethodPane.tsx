@@ -2,21 +2,34 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux'
 import { selectPaymentMethod } from '../../../store/donation/actions'
 import { State, PaymentMethod } from '../../../store/state'
+import { PaneTitle } from '../Panes.style'
+import { BankButton, MethodPaneWrapper, MethodWrapper, PayPalButton, VippsButton, TextWrapper, InfoText } from './MethodPane.style';
 
 export default function MethodPane() {
-
-    const dispatch = useDispatch()
     const currentPaymentMethod = useSelector((state: State) => state.donation.method)
+    const dispatch = useDispatch()
+
+    function methodClicked(method: PaymentMethod) {
+        dispatch(selectPaymentMethod(method))
+        document.getElementById("buttonNext")?.click()
+    }
 
     return (
-        <div className="pane">
-            <h1>Betalingsmåte</h1>
-            <div>
-                <button onClick={() => dispatch(selectPaymentMethod(PaymentMethod.BANK))}>Bank</button>
-                <button onClick={() => dispatch(selectPaymentMethod(PaymentMethod.PAYPAL))}>PayPal</button>
-                <button onClick={() => dispatch(selectPaymentMethod(PaymentMethod.VIPPS))}>Vipps</button>
-                <p>Current method: {currentPaymentMethod}</p>
-            </div>
-        </div>
+        <MethodPaneWrapper>
+            <TextWrapper>
+                <PaneTitle>Betalingsmåte</PaneTitle>
+            </TextWrapper>
+            <TextWrapper>
+                <InfoText>Kostnadene angitt dekkes av oss, slik at 100% av din donasjon kommer frem.</InfoText>
+            </TextWrapper>
+            <MethodWrapper>
+                <BankButton onClick={() => methodClicked(PaymentMethod.BANK)}>2kr</BankButton>
+                <PayPalButton onClick={() => methodClicked(PaymentMethod.PAYPAL)}>1,90% + 2,8kr</PayPalButton>
+            </MethodWrapper>
+            <MethodWrapper>
+                <VippsButton onClick={() => methodClicked(PaymentMethod.VIPPS)}>2,99%</VippsButton>
+            </MethodWrapper>
+            <p>Current method: {currentPaymentMethod}</p>
+        </MethodPaneWrapper>
     );
 }

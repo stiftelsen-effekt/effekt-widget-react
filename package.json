@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@material-ui/core": "^4.11.0",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
@@ -13,14 +14,19 @@
     "@types/react-redux": "^7.1.9",
     "@types/redux-form": "^8.3.0",
     "@types/styled-components": "^5.1.4",
+    "@types/validator": "^13.1.0",
+    "email-validator": "^2.0.4",
+    "pure-react-carousel": "^1.27.6",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-hook-form": "^6.11.2",
     "react-redux": "^7.2.1",
     "react-scripts": "3.4.3",
     "redux": "^4.0.5",
     "redux-form": "^8.3.6",
-    "styled-components": "^5.2.0",
-    "typescript": "~3.7.2"
+    "styled-components": "^5.2.1",
+    "typescript": "~3.7.2",
+    "validator": "^13.1.17"
   },
   "scripts": {
     "start": "react-scripts start",

@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import { DonationForm, FormInputs } from './DonationForm'
 import { setSum, setRecurring } from '../../../store/donation/actions'
 import { selectCustomShare } from '../../../store/layout/actions'
+import { PaneContainer } from '../Panes.style';
 
 export default function DonationPane() {
     const dispatch = useDispatch()
@@ -14,9 +15,9 @@ export default function DonationPane() {
     }
     
     return (
-        <div>
+        <PaneContainer>
             <h1>Om donasjonen</h1>
             <DonationForm onSubmit={submitDonation}/>
-        </div>
+        </PaneContainer>
     );
 }
