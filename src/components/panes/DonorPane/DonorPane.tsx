@@ -18,11 +18,6 @@ export default function DonorPane() {
     const dispatch = useDispatch()
     const { register, watch, errors, handleSubmit } = useForm<DonorFormValues>()
     const watchAllFields = watch()
-    const [checked, setChecked] = useState(false);
-
-    const handleTaxChange = () => {
-      setChecked((prev) => !prev)
-    };
 
     function updateDonorValues(values: any) {
         dispatch(submitDonorInfo(
