@@ -2,6 +2,7 @@ import styled from 'styled-components'
 
 export const MethodPaneWrapper = styled.div`
     padding: 10px;
+    padding-top: 0px;
     &:focus {
         outline: none;
     }

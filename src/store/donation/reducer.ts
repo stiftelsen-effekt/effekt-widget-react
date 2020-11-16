@@ -28,12 +28,14 @@ export const donationReducer: Reducer<Donation, DonationActionTypes> = (
     case SELECT_TAX_DEDUCTION:
       return { ...state, taxDeduction: action.payload.taxDeduction}
     case SUBMIT_DONOR_INFO:
-      return { ...state, 
-        name: action.payload.name, 
-        email: action.payload.email, 
-        taxDeduction: action.payload.taxDeduction, 
-        ssn: action.payload.ssn,
-        newsletter: action.payload.newsletter 
+      return { ...state,
+        donor: {
+          name: action.payload.name, 
+          email: action.payload.email, 
+          taxDeduction: action.payload.taxDeduction, 
+          ssn: action.payload.ssn,
+          newsletter: action.payload.newsletter 
+        }
       } // Unsure if this will work
     case SET_SHARE:
       return { ...state } // Not yet implemented

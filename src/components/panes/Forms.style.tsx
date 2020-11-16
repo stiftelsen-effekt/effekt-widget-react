@@ -8,7 +8,7 @@ export const Form = styled.form`
     width: 100%;
 `
 
-export const TextFieldWrapper = styled.div`
+export const InputFieldWrapper = styled.div`
     display: flex;
     flex-direction: column;
 `
@@ -30,7 +30,14 @@ export const CheckBox = styled.input`
     }
 `
 
-export const CheckBoxFont = styled.p`
+export const RadioButton = styled.input`
+    margin-left: 10px;
+    &:hover {
+        cursor: pointer;
+}
+`
+
+export const InputLabel = styled.p`
     align-self: start;
     font-size: 12px;
     display: inline;

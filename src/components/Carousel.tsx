@@ -19,7 +19,7 @@ export default function Carousel(){
                 dragEnabled={false}
             >
             <Slider>
-                {/* <Slide index={0}><MethodPane /></Slide> */}
+                <Slide index={0}><MethodPane /></Slide>
                 <Slide index={1}><DonorPane /></Slide>
                 <Slide index={2}><DonationPane /></Slide>
                 <Slide index={3}><SharesPane /></Slide>
