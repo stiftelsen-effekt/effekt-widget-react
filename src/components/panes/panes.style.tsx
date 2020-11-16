@@ -17,10 +17,18 @@ export const OrangeLink = styled.a`
     color: #FFAA2B;
     display: inline;
     text-decoration-color: #FFAA2B;
-    font-size: 13px;
+    font-size: 12px;
+    position: relative;
+    bottom: 2px;
 `
 
 export const ErrorMessage = styled.div`
     font-size: 12px;
     color: red;
+`
+
+export const NavigationWrapper = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
 `

@@ -14,7 +14,7 @@ export default function Carousel(){
         <CarouselWrapper>
             <CarouselProvider
                 naturalSlideWidth={100}
-                naturalSlideHeight={100}
+                naturalSlideHeight={200}
                 totalSlides={5}
                 dragEnabled={false}
             >

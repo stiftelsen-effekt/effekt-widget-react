@@ -11,7 +11,6 @@ export const Form = styled.form`
 export const TextFieldWrapper = styled.div`
     display: flex;
     flex-direction: column;
-    align-items: center;
 `
 
 export const TextField = styled.input`
@@ -25,13 +24,17 @@ export const TextField = styled.input`
 `
 
 export const CheckBox = styled.input`
+    margin-left: 10px;
     &:hover {
         cursor: pointer;
     }
 `
 
 export const CheckBoxFont = styled.p`
-    font-size: 13px;
+    align-self: start;
+    font-size: 12px;
     display: inline;
-
+    position: relative;
+    bottom: 2px;
+    margin-left: 5px;
 `

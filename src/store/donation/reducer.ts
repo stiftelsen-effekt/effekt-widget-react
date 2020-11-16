@@ -28,7 +28,6 @@ export const donationReducer: Reducer<Donation, DonationActionTypes> = (
     case SELECT_TAX_DEDUCTION:
       return { ...state, taxDeduction: action.payload.taxDeduction}
     case SUBMIT_DONOR_INFO:
-      console.log("this submitted")
       return { ...state, 
         name: action.payload.name, 
         email: action.payload.email, 

@@ -23,6 +23,10 @@ const StyledSVG = styled.svg`
         opacity: 0.5;
     }
 `
+// Removes purple color from link
+const Link = styled.a`
+    color: inherit;
+`
 
 function TooltipIcon(props: any) {
   return (
@@ -38,9 +42,9 @@ export function TaxTooltip() {
 
     return (
         <Tooltip classes={{ tooltip: classes.tooltip, tooltipArrow: classes.positionArrow }} title={tooltipText} placement="top" TransitionComponent={Zoom} arrow>
-            <a target="_blank" rel="noopener noreferrer" href="https://gieffektivt.no/skattefradrag">
+            <Link target="_blank" rel="noopener noreferrer" href="https://gieffektivt.no/skattefradrag">
                 <TooltipIcon />
-            </a>
+            </Link>
         </Tooltip>
     )
 }
