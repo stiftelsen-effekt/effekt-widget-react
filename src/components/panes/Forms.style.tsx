@@ -30,11 +30,15 @@ export const CheckBox = styled.input`
     }
 `
 
+export const RadioWrapper = styled.div`
+    
+`
+
 export const RadioButton = styled.input`
     margin-left: 10px;
     &:hover {
         cursor: pointer;
-}
+    }
 `
 
 export const InputLabel = styled.p`

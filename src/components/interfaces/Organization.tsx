@@ -1,4 +1,4 @@
-export default interface Organization {
+export interface Organization {
     abbriv: string,
     name: string,
     id: number,

@@ -22,6 +22,20 @@ export const OrangeLink = styled.a`
     bottom: 2px;
 `
 
+export const HorizontalLine = styled.div`
+    height: 1px;
+    background-color: #FFAA2B;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 100%;
+`
+
+export const VerticalLine = styled.div`
+    width: 4px;
+    height: 30px;
+    background-color: #FFAA2B;
+`
+
 export const ErrorMessage = styled.div`
     font-size: 12px;
     color: red;

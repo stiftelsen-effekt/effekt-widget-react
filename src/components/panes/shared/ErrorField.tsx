@@ -7,6 +7,7 @@ export const ErrorWrapper = styled.div`
 `
 
 export const ErrorMessage = styled.div`
+    margin-left: 3px;
     font-size: 12px;
     color: red;
     display: inline;

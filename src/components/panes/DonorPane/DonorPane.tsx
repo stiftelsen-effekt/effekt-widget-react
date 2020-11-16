@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { PaneContainer, PaneTitle, OrangeLink, NavigationWrapper } from '../Panes.style'
+import { PaneContainer, PaneTitle, OrangeLink, NavigationWrapper, HorizontalLine } from '../Panes.style'
 import { DonorInput } from '../../../store/state'
 import { submitDonorInfo } from '../../../store/donation/actions'
 import { InputFieldWrapper, TextField, InputLabel, CheckBox } from '../Forms.style'
@@ -22,8 +22,7 @@ export default function DonorPane() {
     const [ emailErrorAnimation, setEmailErrorAnimation ] = useState(false)
     const [ ssnErrorAnimation, setSsnErrorAnimation ] = useState(false)
     const [ privacyPolicyErrorAnimation, setPrivacyPolicyErrorAnimation ] = useState(false)
-    
-    const { register, watch, errors, handleSubmit } = useForm<DonorFormValues>({mode: 'all'})
+    const { register, watch, errors, handleSubmit } = useForm<DonorFormValues>({mode: 'all', reValidateMode: 'onBlur'})
     const watchAllFields = watch()
 
     function updateDonorState(values: any) {
@@ -98,7 +97,9 @@ export default function DonorPane() {
                                 <Collapse in={ssnErrorAnimation}>
                                     <ErrorField text="Ugyldig personnummer"/>
                                 </Collapse>
-                                <TextField name="ssn" type="tel" placeholder="Personnummer" ref={register({maxLength: 11, minLength: 11, pattern: /[0-9]/})} />
+                                <TextField name="ssn" type="tel" placeholder="Personnummer" 
+                                    ref={register({ validate: val => !watchAllFields.taxDeduction || (Validate.isInt(val) && Validate.isLength(val, {min:11, max: 11}))})} 
+                                />
                             </InputFieldWrapper>
                         </Collapse>
                     </div>
@@ -107,7 +108,7 @@ export default function DonorPane() {
                         <Collapse in={privacyPolicyErrorAnimation}>
                             <ErrorField text="Du må godta personvernerklæringen"/>
                         </Collapse>
-                        <CheckBox name="privacyPolicy" type="checkbox" ref={register({ required: true, validate: val => val})} />
+                        <CheckBox name="privacyPolicy" type="checkbox" ref={register({ required: true })} />
                         <InputLabel>Jeg godtar </InputLabel>
                         <OrangeLink target="_blank" rel="noopener noreferrer" href="https://gieffektivt.no/samarbeid-drift#personvern">personvernerklæringen</OrangeLink>
                     </div>
@@ -115,6 +116,7 @@ export default function DonorPane() {
                         <CheckBox name="newsletter" type="checkbox" ref={register} /><InputLabel>Jeg ønsker å melde meg på nyhetsbrevet</InputLabel>
                     </div>
                 </div>
+            <HorizontalLine />
             <NavigationWrapper>
                 <PrevButton />
                 <SkipButton onClick={setAnonymousDonor} />

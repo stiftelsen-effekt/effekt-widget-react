@@ -1,29 +1,33 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { PaneContainer } from '../Panes.style';
+import { getOrganizations } from '../../helpers/network'
+import { Organization } from './../../interfaces/Organization'
+import { Share } from './../../interfaces/Share'
 
 export default function SharesPane() {
+    let organizations: Organization[];
 
-    interface Organization {
-        ID: string;
-        full_name: string;
-        share: number;
-    }
-
-    const shares: Organization[] = []
+    useEffect(() => {
+        getOrganizations().then(result => {
+            organizations = result
+        })
+    }, [])
     
     function setupSharesList() {
         let sharesList: JSX.Element[] = []
-        shares.forEach(org => { 
-            sharesList.push(<div key={org.ID}> {org.full_name} 
-                <input 
-                    type="number" 
-                    inputMode="decimal" 
-                    placeholder=""                         
-                    name={org.full_name} 
-                    value={isNaN(org.share) ? "" : org.share}>
-                </input>
-            </div>)
-        })
+        if (organizations) {
+            organizations.forEach(org => { 
+                sharesList.push(<div key={org.id}> {org.name} 
+                    <input 
+                        type="number" 
+                        inputMode="decimal" 
+                        placeholder=""                         
+                        name={org.name} 
+                        value={isNaN(org.standardShare) ? "" : org.standardShare}>
+                    </input>
+                </div>)
+            })
+        }
         return sharesList
     }
 
