@@ -24,7 +24,7 @@ export interface DonationInput {
     sum?: number,
     recurring: boolean,
     donor?: Donor,
-    shares?: Array<Share>,
+    shares?: Shares,
 }
 
 export interface Donation extends DonationInput {
@@ -46,6 +46,10 @@ export interface Donor extends DonorInput {
 export interface Share {
     organizationID: number,
     share: number,
+}
+
+export interface Shares {
+    [key: string]: number
 }
 
 export interface Error {

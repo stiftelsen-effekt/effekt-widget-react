@@ -11,14 +11,18 @@ export const ShareWrapper = styled.div`
     justify-content: center;
     align-items: center;
     margin: 0;
-    height: 45px;
+    padding: 0;
+    height: 40px;
+    position: relative;
+
 `
 
 export const SmallTextField = styled.input`
-    width: 35px;
-    padding: 10px;
+    width: 30px;
+    padding: 8px;
     display: inline-block;
-    margin: 5px;
+    margin-left: 5px;
+    margin-right: 5px;
     font-size: 14px;
     background: #eee;
     border: none;
@@ -33,9 +37,10 @@ export const OrganizationName = styled.p`
     width: 120px;
     font-size: 12px;
     display: inline-block;
-    margin-left: 5px;
+    margin-right: 5px;
 `
 
 export const PercentageText = styled.p`
+    padding: 5px;
     display: inline-block;
 `

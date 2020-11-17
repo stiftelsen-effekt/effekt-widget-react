@@ -6,7 +6,7 @@ import { CarouselWrapper } from './Carousel.style'
 import DonationPane from './panes/DonationPane/DonationPane';
 import DonorPane from './panes/DonorPane/DonorPane';
 import MethodPane from './panes/MethodPane/MethodPane';
-import ReferralPane from './panes/ReferralPane';
+import ReferralPane from './panes/ReferralPane/ReferralPane';
 import SharesPane from './panes/SharesPane/SharesPane';
   
 export default function Carousel(){
@@ -19,10 +19,10 @@ export default function Carousel(){
                 dragEnabled={false}
             >
             <Slider>
-                <Slide index={3}><SharesPane /></Slide>
                 <Slide index={0}><MethodPane /></Slide>
                 <Slide index={1}><DonorPane /></Slide>
                 <Slide index={2}><DonationPane /></Slide>
+                <Slide index={3}><SharesPane /></Slide>
                 <Slide index={4}><ReferralPane /></Slide>
             </Slider>
             <ButtonBack>Back</ButtonBack>

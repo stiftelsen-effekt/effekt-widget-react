@@ -13,6 +13,12 @@ export const PaneTitle = styled.p`
     align-self: center;
 `
 
+export const UnderTitle = styled.p`
+    font-size: 15px
+    align-self: center;
+    margin: 5px;
+`
+
 export const OrangeLink = styled.a`
     color: #FFAA2B;
     display: inline;

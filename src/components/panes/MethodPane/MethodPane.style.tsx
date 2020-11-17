@@ -3,9 +3,6 @@ import styled from 'styled-components'
 export const MethodPaneWrapper = styled.div`
     padding: 10px;
     padding-top: 0px;
-    &:focus {
-        outline: none;
-    }
 `
 
 export const MethodWrapper = styled.div`
@@ -34,13 +31,13 @@ export const InfoText = styled.p`
     margin: 0;
 `
 
-export const BankButton = styled.div`
+export const BankButton = styled.button`
     background-image: url(https://storage.googleapis.com/effekt-widget/assets/logos/bank.png);
     background-size: 70px auto;
     background-repeat: no-repeat;
     background-position: center -3px;
     width: 100px;
-    height: 40px;
+    height: 42px;
     cursor: pointer;
     border: 1px solid gray;
     display: flex;
@@ -55,13 +52,13 @@ export const BankButton = styled.div`
     }
 `
 
-export const PayPalButton = styled.div`
+export const PayPalButton = styled.button`
     background-image: url(https://storage.googleapis.com/effekt-widget/assets/logos/PayPal.png);
     background-size: 80px auto;
     background-repeat: no-repeat;
     background-position: center 5px;
     width: 100px;
-    height: 40px;
+    height: 42px;
     cursor: pointer;
     border: 1px solid gray;
     display: flex;
@@ -75,13 +72,13 @@ export const PayPalButton = styled.div`
         opacity: 0.5;
     }
 `
-export const VippsButton = styled.div`
+export const VippsButton = styled.button`
     background-image: url(https://storage.googleapis.com/effekt-widget/assets/logos/vipps.png);
     background-size: 80px auto;
     background-repeat: no-repeat;
     background-position: center 5px;
     width: 100px;
-    height: 40px;
+    height: 42px;
     cursor: pointer;
     border: 1px solid gray;
     display: flex;

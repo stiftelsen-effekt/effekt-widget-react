@@ -1,4 +1,4 @@
-import { PaymentMethod, Share } from '../state'
+import { PaymentMethod, Shares } from '../state'
 
 export const SELECT_PAYMENT_METHOD = 'SELECT_PAYMENT_METHOD'
 export const SELECT_TAX_DEDUCTION = 'SELECT_TAX_DEDUCTION'
@@ -35,7 +35,7 @@ interface SubmitDonorInfo {
 interface SetShares {
   type: typeof SET_SHARES
   payload: {
-    shares: Array<Share>
+    shares: Shares
   }
 }
 

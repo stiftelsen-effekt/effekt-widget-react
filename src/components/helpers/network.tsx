@@ -2,6 +2,8 @@ import { Share } from "../../store/state"
 
 const api_url = "https://dev.data.gieffektivt.no/"
 
+export const getOrganizationsURL = api_url + 'organizations/active'
+
 export async function getOrganizations() {
     const response = await fetch(api_url + 'organizations/active')
     const orgs = await response.json()

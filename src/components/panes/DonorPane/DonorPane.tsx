@@ -47,6 +47,7 @@ export default function DonorPane() {
     }
 
     function onSubmit() {
+        //TODO: Replace when new carousel
         if (Object.keys(errors).length === 0) {
             document.getElementById("buttonNext")?.click()
         }

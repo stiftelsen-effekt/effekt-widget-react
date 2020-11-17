@@ -35,18 +35,20 @@ export default function DonationPane() {
         if (values.customShare) dispatch(selectCustomShare(values.customShare == "true"))
     }
 
+    // TODO: Replace when new carousel
     function onSubmit() {
         if (Object.keys(errors).length === 0) {
             document.getElementById("buttonNext")?.click()
         }
     }
 
-    // Disables nextbutton if there are any input validation errors
     useEffect(() => {
+        // Plays animation if an error changes
         errors.sum ? setSumErrorAnimation(true) : setSumErrorAnimation(false)
         errors.recurring ? setRecurringErrorAnimation(true) : setRecurringErrorAnimation(false)
         errors.customShare ? setCustomShareErrorAnimation(true) : setCustomShareErrorAnimation(false)
 
+        // Disables nextbutton if there are any input validation errors
         if (Object.keys(errors).length === 0) {
             setNextDisabled(false)
         }
@@ -66,7 +68,7 @@ export default function DonationPane() {
                     <ErrorField text="Ugyldig sum"/>
                 </Collapse>
                 {(currentPaymentMethod === PaymentMethod.PAYPAL || currentPaymentMethod === PaymentMethod.VIPPS) && 
-                    <TextField name="sum" type="tel" placeholder="0" ref={register({required: true, validate: val => Validator.isInt(val) })} />
+                    <TextField name="sum" type="tel" placeholder="0" ref={register({required: true, validate: val => Validator.isInt(val) && val > 0 })} />
                 }
                 {currentPaymentMethod === PaymentMethod.PAYPAL &&
                     <div>

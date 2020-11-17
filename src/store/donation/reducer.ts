@@ -26,7 +26,7 @@ export const donationReducer: Reducer<Donation, DonationActionTypes> = (
     case SELECT_PAYMENT_METHOD:
       return { ...state, method: action.payload.method }
     case SELECT_TAX_DEDUCTION:
-      return { ...state, taxDeduction: action.payload.taxDeduction}
+      return { ...state, taxDeduction: action.payload.taxDeduction }
     case SUBMIT_DONOR_INFO:
       return { ...state,
         donor: {
@@ -38,11 +38,11 @@ export const donationReducer: Reducer<Donation, DonationActionTypes> = (
         }
       }
     case SET_SHARES:
-      return { ...state, shares: action.payload.shares }
+      return { ...state, shares: { ...action.payload.shares }}
     case SET_SUM:
       return { ...state, sum: action.payload.sum}
     case SET_RECURRING:
-      return { ...state, recurring: action.payload.recurring}
+      return { ...state, recurring: action.payload.recurring }
     default:
       return state;
   }
