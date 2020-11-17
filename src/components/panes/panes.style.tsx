@@ -31,7 +31,7 @@ export const HorizontalLine = styled.div`
 `
 
 export const VerticalLine = styled.div`
-    width: 4px;
+    width: 3px;
     height: 30px;
     background-color: #FFAA2B;
 `

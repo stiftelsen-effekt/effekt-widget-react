@@ -1,3 +1,5 @@
+import { Share } from "../../store/state"
+
 const api_url = "https://dev.data.gieffektivt.no/"
 
 export async function getOrganizations() {

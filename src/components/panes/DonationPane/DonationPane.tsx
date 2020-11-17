@@ -26,11 +26,10 @@ export default function DonationPane() {
     const isCustomShare = useSelector((state: State) => state.layout.customShare)
     const isRecurring = useSelector((state: State) => state.donation.recurring)
     const currentPaymentMethod = useSelector((state: State) => state.donation.method)
-    const { register, watch, errors, handleSubmit, setValue } = useForm<DonationFormValues>({mode: 'all'})
+    const { register, watch, errors, handleSubmit } = useForm<DonationFormValues>({mode: 'all'})
     const watchAllFields = watch()
 
     function updateDonationState(values: DonationFormValues) {
-        console.log(values)
         if (values.sum) dispatch(setSum(values.sum))
         if (values.recurring) dispatch(setRecurring(values.recurring == "true"))
         if (values.customShare) dispatch(selectCustomShare(values.customShare == "true"))
@@ -70,15 +69,17 @@ export default function DonationPane() {
                     <TextField name="sum" type="tel" placeholder="0" ref={register({required: true, validate: val => Validator.isInt(val) })} />
                 }
                 {currentPaymentMethod === PaymentMethod.PAYPAL &&
-                    <RadioWrapper>
-                        <Collapse in={recurringErrorAnimation}>
-                            <ErrorField text="Du må velge et alternativ"/>
-                        </Collapse>
-                        <div><RadioButton name="recurring" type="radio" value="true" ref={register} defaultChecked={isRecurring} /><InputLabel>Jeg vil gi en månedlig donasjon</InputLabel></div>
-                        <div><RadioButton name="recurring" type="radio" value="false" ref={register} defaultChecked={!isRecurring} /><InputLabel>Jeg vil gi en engangsdonasjon</InputLabel></div>
-                    </RadioWrapper>
+                    <div>
+                        <RadioWrapper>
+                            <Collapse in={recurringErrorAnimation}>
+                                <ErrorField text="Du må velge et alternativ"/>
+                            </Collapse>
+                            <div><RadioButton name="recurring" type="radio" value="true" ref={register} defaultChecked={isRecurring} /><InputLabel>Jeg vil gi en månedlig donasjon</InputLabel></div>
+                            <div><RadioButton name="recurring" type="radio" value="false" ref={register} defaultChecked={!isRecurring} /><InputLabel>Jeg vil gi en engangsdonasjon</InputLabel></div>
+                        </RadioWrapper>
+                        <HorizontalLine />
+                    </div>
                 }
-                <HorizontalLine />
                 <RadioWrapper>
                     <Collapse in={customShareErrorAnimation}>
                         <ErrorField text="Du må velge et alternativ"/>

@@ -1,9 +1,9 @@
-import { PaymentMethod } from '../state'
+import { PaymentMethod, Share } from '../state'
 
 export const SELECT_PAYMENT_METHOD = 'SELECT_PAYMENT_METHOD'
 export const SELECT_TAX_DEDUCTION = 'SELECT_TAX_DEDUCTION'
 export const SUBMIT_DONOR_INFO = 'SUBMIT_DONOR_INFO'
-export const SET_SHARE = 'SET_SHARE'
+export const SET_SHARES = 'SET_SHARES'
 export const SET_SUM = 'SET_SUM'
 export const SET_RECURRING = 'SET_RECURRING'
 
@@ -32,12 +32,11 @@ interface SubmitDonorInfo {
     }
 }
 
-interface SetShare {
-    type: typeof SET_SHARE
-    payload: {
-        orgID: number,
-        share: number,
-    }
+interface SetShares {
+  type: typeof SET_SHARES
+  payload: {
+    shares: Array<Share>
+  }
 }
 
 interface SetSum {
@@ -54,4 +53,4 @@ interface SetRecurring {
   }
 }
 
-export type DonationActionTypes = SelectPaymentMethod | SelectTaxDeduction | SubmitDonorInfo | SetShare | SetSum | SetRecurring
+export type DonationActionTypes = SelectPaymentMethod | SelectTaxDeduction | SubmitDonorInfo | SetShares | SetSum | SetRecurring

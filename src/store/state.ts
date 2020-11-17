@@ -44,7 +44,7 @@ export interface Donor extends DonorInput {
 }
 
 export interface Share {
-    orgID: string,
+    organizationID: number,
     share: number,
 }
 
