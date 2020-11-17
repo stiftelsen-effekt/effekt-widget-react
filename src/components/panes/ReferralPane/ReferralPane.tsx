@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { getReferrals } from '../../helpers/network'
-import { HorizontalLine, NavigationWrapper, PaneContainer, PaneTitle, UnderTitle } from '../Panes.style'
-import DonorNameBar from '../shared/DonorNameBar'
+import { HorizontalLine, NavigationWrapper, PaneContainer, PaneTitle, UnderTitle, VerticalLine } from '../Panes.style'
+import DonationInfoBar from '../shared/DonationInfoBar'
 import { NextButton, PrevButton } from '../shared/NavigationButtons'
 import { ReferralButton, ReferralsWrapper } from './ReferralPane.style'
 
@@ -43,7 +43,7 @@ export default function ReferralPane() {
 
     return (
         <PaneContainer>
-            <DonorNameBar />
+            <DonationInfoBar />
             <PaneTitle>Hvor hørte du om oss?</PaneTitle>
             <UnderTitle>Valgfritt</UnderTitle>
             <form onSubmit={handleSubmit(onSubmit)}>
@@ -53,6 +53,7 @@ export default function ReferralPane() {
                 <HorizontalLine />
                 <NavigationWrapper>
                     <PrevButton />
+                    <VerticalLine />
                     <NextButton isDisabled={false} />
                 </NavigationWrapper>
             </form>

@@ -9,7 +9,8 @@ export const PaneContainer = styled.div`
 
 export const PaneTitle = styled.p`
     font-size: 25px;
-    margin: 10px;
+    margin-top: 5px;
+    margin-bottom: 10px;
     align-self: center;
 `
 

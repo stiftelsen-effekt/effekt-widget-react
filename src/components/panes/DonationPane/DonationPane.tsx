@@ -6,7 +6,7 @@ import { HorizontalLine, NavigationWrapper, PaneContainer, PaneTitle, VerticalLi
 import { PaymentMethod, State } from '../../../store/state';
 import { NextButton, PrevButton } from '../shared/NavigationButtons';
 import { useForm } from 'react-hook-form';
-import DonorNameBar from '../shared/DonorNameBar';
+import DonorNameBar from '../shared/DonationInfoBar';
 import { InputLabel, RadioButton, RadioWrapper, TextField } from '../Forms.style';
 import { Collapse } from '@material-ui/core';
 import ErrorField from '../shared/ErrorField';

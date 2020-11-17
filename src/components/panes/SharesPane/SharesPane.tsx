@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { State } from '../../../store/state'
 import { HorizontalLine, NavigationWrapper, PaneContainer, PaneTitle, VerticalLine } from '../Panes.style'
 import { OrganizationName, PercentageText, SharesWrapper, ShareWrapper, SmallTextField } from './SharesPane.style'
-import DonorNameBar from '../shared/DonorNameBar'
+import DonationInfoBar from '../shared/DonationInfoBar'
 import { NextButton, PrevButton } from '../shared/NavigationButtons'
 import { useQuery } from 'react-query'
 import axios from 'axios'
@@ -89,7 +89,7 @@ export default function SharesPane() {
     
     return (
         <PaneContainer>
-            <DonorNameBar />
+            <DonationInfoBar />
             <PaneTitle>Velg fordeling</PaneTitle>
             <form onSubmit={handleSubmit(onSubmit)}>
                 <SharesWrapper>
