@@ -6,7 +6,7 @@ import { HorizontalLine, NavigationWrapper, PaneContainer, PaneTitle, VerticalLi
 import { PaymentMethod, State } from '../../../store/state';
 import { NextButton, PrevButton } from '../shared/NavigationButtons';
 import { useForm } from 'react-hook-form';
-import DonorNameBar from '../shared/DonationInfoBar';
+import DonationInfoBar from '../shared/DonationInfoBar';
 import { InputLabel, RadioButton, RadioWrapper, TextField } from '../Forms.style';
 import { Collapse } from '@material-ui/core';
 import ErrorField from '../shared/ErrorField';
@@ -14,7 +14,7 @@ import Validator from 'validator'
 export interface DonationFormValues {
     recurring: string;
     customShare: string;
-    sum: number;
+    sum: string;
 }
 
 export default function DonationPane() {
@@ -30,7 +30,7 @@ export default function DonationPane() {
     const watchAllFields = watch()
 
     function updateDonationState(values: DonationFormValues) {
-        if (values.sum) dispatch(setSum(values.sum))
+        if (values.sum) dispatch(setSum(values.sum == "" ? 0 : parseInt(values.sum)))
         if (values.recurring) dispatch(setRecurring(values.recurring == "true"))
         if (values.customShare) dispatch(selectCustomShare(values.customShare == "true"))
     }
@@ -48,6 +48,7 @@ export default function DonationPane() {
         errors.recurring ? setRecurringErrorAnimation(true) : setRecurringErrorAnimation(false)
         errors.customShare ? setCustomShareErrorAnimation(true) : setCustomShareErrorAnimation(false)
 
+        console.log(errors)
         // Disables nextbutton if there are any input validation errors
         if (Object.keys(errors).length === 0) {
             setNextDisabled(false)
@@ -61,7 +62,7 @@ export default function DonationPane() {
     
     return (
         <PaneContainer>
-            <DonorNameBar />
+            <DonationInfoBar sum={watchAllFields.sum === ""  ? 0 : parseInt(watchAllFields.sum)} />
             <PaneTitle>Om donasjonen</PaneTitle>
             <form onSubmit={handleSubmit(onSubmit)}>
                 <Collapse in={sumErrorAnimation}>

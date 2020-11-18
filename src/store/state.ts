@@ -21,7 +21,7 @@ export interface PayPalState {
 
 export interface DonationInput {
     method?: PaymentMethod,
-    sum?: number,
+    sum: number,
     recurring: boolean,
     donor?: Donor,
     shares?: Shares,

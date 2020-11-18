@@ -46,6 +46,7 @@ export const VerticalLine = styled.div`
 export const ErrorMessage = styled.div`
     font-size: 12px;
     color: red;
+    padding-left: 2px;
 `
 
 export const NavigationWrapper = styled.div`

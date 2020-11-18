@@ -4,6 +4,7 @@ import { DonationActionTypes, SELECT_PAYMENT_METHOD, SELECT_TAX_DEDUCTION, SUBMI
 
 const initialState: Donation = {
   recurring: true,
+  sum: 0,
   donor: {
     taxDeduction: false,
     newsletter: false,
