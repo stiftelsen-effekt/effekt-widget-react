@@ -35,7 +35,7 @@ export default function ReferralPane() {
             if (ref.name !== "BYNN podcast")     
             referralsList.push(
                 //TODO: Post referrals on click
-                <ReferralButton key={ref.ID} onClick={() => onSubmit(ref.ID)}>{ref.name}</ReferralButton>
+                <ReferralButton type="button" key={ref.ID} onClick={() => onSubmit(ref.ID)}>{ref.name}</ReferralButton>
                 )
             })
         }

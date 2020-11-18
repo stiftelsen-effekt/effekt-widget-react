@@ -19,13 +19,12 @@ interface DonorFormValues extends DonorInput {
 export default function DonorPane() {
     const dispatch = useDispatch()
     const [ nextDisabled, setNextDisabled ] = useState(true)
-    // TODO: Make a single hook for all four animations
     const [ nameErrorAnimation, setNameErrorAnimation ] = useState(false)
     const [ emailErrorAnimation, setEmailErrorAnimation ] = useState(false)
     const [ ssnErrorAnimation, setSsnErrorAnimation ] = useState(false)
     const [ privacyPolicyErrorAnimation, setPrivacyPolicyErrorAnimation ] = useState(false)
     const currentPaneNumber = useSelector((state: State) => state.layout.paneNumber)
-    const { register, watch, errors, handleSubmit } = useForm<DonorFormValues>({mode: 'all', reValidateMode: 'onBlur'})
+    const { register, watch, errors, handleSubmit } = useForm<DonorFormValues>({mode: 'onBlur'})
     const watchAllFields = watch()
 
     function updateDonorState(values: any) {
@@ -33,7 +32,7 @@ export default function DonorPane() {
             values.name ? values.name : "", 
             values.email ? values.email : "", 
             values.taxDeduction ? values.taxDeduction : false,
-            values.ssn ? values.snn : "", 
+            values.ssn ? values.ssn : "", 
             values.newsletter ? values.newsletter : false
         ))
     }

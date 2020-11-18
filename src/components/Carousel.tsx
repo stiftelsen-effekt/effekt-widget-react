@@ -21,7 +21,7 @@ export default function Carousel(){
                 <MethodPane />
             </Collapse>
             <Collapse in={currentPane === 1}>
-                <ResultPane />
+                <DonorPane />
             </Collapse>
             <Collapse in={currentPane === 2}>
                 <DonationPane />

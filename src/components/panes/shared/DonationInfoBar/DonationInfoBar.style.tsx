@@ -22,9 +22,9 @@ export const InfoBarText = styled.p`
     font-size: 14px;
     color: #FFAA2B;
     display: inline;
-    margin-left: 5px;
-    margin-right: 5px;
+    margin: 0;
     font-weight: bold;
+    white-space: nowrap;
 `
 
 export const MethodLogo = styled.div`

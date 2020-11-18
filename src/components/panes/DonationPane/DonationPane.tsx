@@ -31,7 +31,9 @@ export default function DonationPane() {
     const watchAllFields = watch()
 
     function updateDonationState(values: DonationFormValues) {
-        if (values.sum) dispatch(setSum(values.sum == "" ? 0 : parseInt(values.sum)))
+        console.log(values.sum)
+        if (values.sum) console.log(Validator.isInt(values.sum))
+        if (values.sum) dispatch(setSum(Validator.isInt(values.sum) ? parseInt(values.sum) : 0))
         if (values.recurring) dispatch(setRecurring(values.recurring == "true"))
         if (values.customShare) dispatch(selectCustomShare(values.customShare == "true"))
     }
@@ -47,7 +49,6 @@ export default function DonationPane() {
         errors.recurring ? setRecurringErrorAnimation(true) : setRecurringErrorAnimation(false)
         errors.customShare ? setCustomShareErrorAnimation(true) : setCustomShareErrorAnimation(false)
 
-        console.log(errors)
         if (Object.keys(errors).length === 0) {
             setNextDisabled(false)
         }
@@ -61,7 +62,7 @@ export default function DonationPane() {
     return (
         <Pane>
             <PaneContainer>
-                <DonationInfoBar sum={watchAllFields.sum === ""  ? 0 : parseInt(watchAllFields.sum)} />
+                <DonationInfoBar sum={watchAllFields.sum === "" || !Validator.isInt(watchAllFields.sum ? watchAllFields.sum : "")  ? 0 : parseInt(watchAllFields.sum)} />
                 <PaneTitle>Om donasjonen</PaneTitle>
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <Collapse in={sumErrorAnimation}>
