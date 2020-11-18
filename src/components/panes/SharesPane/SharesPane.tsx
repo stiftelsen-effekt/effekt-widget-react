@@ -12,8 +12,10 @@ import { NextButton, PrevButton } from '../shared/NavigationButtons'
 import { useQuery } from 'react-query'
 import axios from 'axios'
 import { Collapse } from '@material-ui/core'
-import ErrorField from '../shared/ErrorField'
 import { setPaneNumber } from '../../../store/layout/actions'
+import { ToolTip } from '../shared/ToolTip'
+
+const tooltipLink = "https://gieffektivt.no/skattefradrag"
 
 export default function SharesPane() {
     const dispatch = useDispatch()
@@ -43,6 +45,7 @@ export default function SharesPane() {
         return (
             <ShareWrapper key={org.id}> 
                 <OrganizationName>{org.name}</OrganizationName>
+                <ToolTip text={org.shortDesc} link={tooltipLink} />
                 <SmallTextField 
                     type="number" 
                     inputMode="decimal" 

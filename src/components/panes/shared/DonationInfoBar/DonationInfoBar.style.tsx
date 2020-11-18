@@ -28,29 +28,30 @@ export const InfoBarText = styled.p`
 `
 
 export const MethodLogo = styled.div`
-    background-size: 40px auto;
+    background-size: 60px auto;
     background-repeat: no-repeat;
     background-position: center 5px;
     margin-left: 5px;
-    width: 60px;
+    width: 80px;
     height: 30px;
 `
 
 export const BankLogo = styled(MethodLogo)`
     background-image: url(https://storage.googleapis.com/effekt-widget/assets/logos/bank.png);
     position: relative;
-    bottom: -2px;
+    bottom: 4px;
 `
 
 export const PayPalLogo = styled(MethodLogo)`
     background-image: url(https://storage.googleapis.com/effekt-widget/assets/logos/PayPal.png);
-    background-size: 60px auto;
+    background-size: 80px auto;
     position: relative;
-    bottom: -4px;
+    top: 4px;
+    overflow: visible;
 `
 export const VippsLogo = styled(MethodLogo)`
     background-image: url(https://storage.googleapis.com/effekt-widget/assets/logos/vipps.png);
-    background-size: 55px auto;
+    background-size: 80px auto;
     position: relative;
-    bottom: -5px;
+    top: 5px;
 `

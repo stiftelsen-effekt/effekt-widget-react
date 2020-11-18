@@ -6,12 +6,16 @@ import { submitDonorInfo } from '../../../store/donation/actions'
 import { InputFieldWrapper, TextField, InputLabel, CheckBox } from '../Forms.style'
 import { useForm } from "react-hook-form"
 import Validate from 'validator'
-import { TaxTooltip } from './TaxTooltip'
 import { Collapse } from '@material-ui/core'
 import ErrorField from '../shared/ErrorField'
 import { NextButton, PrevButton, SkipButton } from '../shared/NavigationButtons'
 import { setPaneNumber } from '../../../store/layout/actions'
 import DonationInfoBar from '../shared/DonationInfoBar/DonationInfoBar'
+import { ToolTip } from '../shared/ToolTip'
+
+const tooltipText = "Vi trenger ditt fødselsnummer for å rapportere skattefradrag til Skatteetaten for at du skal få skattefradrag for donasjonen din."
+const tooltipLink = "https://gieffektivt.no/skattefradrag"
+
 interface DonorFormValues extends DonorInput {
     privacyPolicy: boolean;
 }
@@ -19,6 +23,7 @@ interface DonorFormValues extends DonorInput {
 export default function DonorPane() {
     const dispatch = useDispatch()
     const [ nextDisabled, setNextDisabled ] = useState(true)
+    const [ successfulSubmit, setSuccessfulSubmit ] = useState(false)
     const [ nameErrorAnimation, setNameErrorAnimation ] = useState(false)
     const [ emailErrorAnimation, setEmailErrorAnimation ] = useState(false)
     const [ ssnErrorAnimation, setSsnErrorAnimation ] = useState(false)
@@ -39,6 +44,7 @@ export default function DonorPane() {
 
     function setAnonymousDonor() {
         dispatch(setPaneNumber(currentPaneNumber + 1))
+        setSuccessfulSubmit(true)
         updateDonorState({
             name: 'Anonym Giver',
             email: 'anon@gieffektivt.no',
@@ -69,6 +75,7 @@ export default function DonorPane() {
 
     function onSubmit() {
         if (Object.keys(errors).length === 0) {
+            setSuccessfulSubmit(true)
             dispatch(setPaneNumber(currentPaneNumber + 1))
         }
         if (watchAllFields.name  && watchAllFields.email && watchAllFields.ssn) {
@@ -82,7 +89,7 @@ export default function DonorPane() {
     return (
         <Pane>
             <PaneContainer>
-                <DonationInfoBar />
+                <DonationInfoBar disableName={successfulSubmit} disableSum={successfulSubmit} />
                 <PaneTitle>Om deg</PaneTitle>
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <InputFieldWrapper>
@@ -99,7 +106,7 @@ export default function DonorPane() {
                         <div>
                             <CheckBox name="taxDeduction" type="checkbox" ref={register} />
                             <InputLabel>Jeg ønsker skattefradrag</InputLabel>
-                            <TaxTooltip />
+                            <ToolTip text={tooltipText} link={tooltipLink} />
                             <Collapse in={watchAllFields.taxDeduction}>
                                 <InputFieldWrapper>
                                     <Collapse in={ssnErrorAnimation}>
