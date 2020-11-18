@@ -1,6 +1,6 @@
 import { Reducer } from 'redux';
 import { Layout } from '../state';
-import { EDIT_PANE_NUMBER, LayoutActionTypes, SELECT_CUSTOM_SHARE, SELECT_PRIVACY_POLICY } from './types';
+import { SET_PANE_NUMBER, LayoutActionTypes, SELECT_CUSTOM_SHARE, SELECT_PRIVACY_POLICY } from './types';
 
 const initialState: Layout = {
     privacyPolicy: false,
@@ -25,7 +25,7 @@ export const layoutReducer: Reducer<Layout, LayoutActionTypes> = (
       return { ...state, customShare: action.payload.customShare }
     case SELECT_PRIVACY_POLICY:
       return { ...state, privacyPolicy: action.payload.privacyPolicy }
-    case EDIT_PANE_NUMBER:
+    case SET_PANE_NUMBER:
       return { ...state, paneNumber: action.payload.paneNumber}
     default:
       return state;

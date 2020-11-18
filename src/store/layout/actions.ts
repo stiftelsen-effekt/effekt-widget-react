@@ -1,4 +1,4 @@
-import { LayoutActionTypes, SELECT_CUSTOM_SHARE, SELECT_PRIVACY_POLICY, EDIT_PANE_NUMBER } from './types';
+import { LayoutActionTypes, SELECT_CUSTOM_SHARE, SELECT_PRIVACY_POLICY, SET_PANE_NUMBER } from './types';
 
 export function selectCustomShare(customShare: boolean): LayoutActionTypes {
   return {
@@ -18,9 +18,9 @@ export function selectPrivacyPolicy(privacyPolicy: boolean): LayoutActionTypes {
   };
 }
 
-export function editPaneNumber(paneNumber: number): LayoutActionTypes {
+export function setPaneNumber(paneNumber: number): LayoutActionTypes {
   return {
-    type: EDIT_PANE_NUMBER,
+    type: SET_PANE_NUMBER,
     payload: {
         paneNumber
     },

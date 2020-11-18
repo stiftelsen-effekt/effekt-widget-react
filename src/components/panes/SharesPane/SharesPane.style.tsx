@@ -41,6 +41,9 @@ export const OrganizationName = styled.p`
 `
 
 export const PercentageText = styled.p`
-    padding: 5px;
-    display: inline-block;
+    margin: 0;
+    margin-top: 3px;
+    color: gray;
+    font-size: 12px;
+    text-align: center;
 `

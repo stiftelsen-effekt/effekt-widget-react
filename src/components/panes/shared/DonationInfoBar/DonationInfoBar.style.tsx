@@ -8,7 +8,6 @@ export const InfoBarWrapper = styled.div`
     justify-content: center;
     align-items: center;
     display: flex;
-    justify-content: space-between;
 `
 
 export const InfoItemWrapper = styled.div`
@@ -39,6 +38,8 @@ export const MethodLogo = styled.div`
 
 export const BankLogo = styled(MethodLogo)`
     background-image: url(https://storage.googleapis.com/effekt-widget/assets/logos/bank.png);
+    position: relative;
+    bottom: -2px;
 `
 
 export const PayPalLogo = styled(MethodLogo)`

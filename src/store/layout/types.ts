@@ -1,6 +1,6 @@
 export const SELECT_CUSTOM_SHARE = 'SELECT_CUSTOM_SHARE'
 export const SELECT_PRIVACY_POLICY = 'SELECT_PRIVACY_POLICY'
-export const EDIT_PANE_NUMBER = 'EDIT_PANE_NUMBER'
+export const SET_PANE_NUMBER = 'SET_PANE_NUMBER'
 
 interface SelectCustomShare {
     type: typeof SELECT_CUSTOM_SHARE
@@ -16,11 +16,11 @@ interface SelectPrivacyPolicy {
     }
 }
 
-interface EditPaneNumber {
-    type: typeof EDIT_PANE_NUMBER
+interface setPaneNumber {
+    type: typeof SET_PANE_NUMBER
     payload: {
         paneNumber: number
     }
 }
 
-export type LayoutActionTypes = SelectCustomShare | SelectPrivacyPolicy | EditPaneNumber
+export type LayoutActionTypes = SelectCustomShare | SelectPrivacyPolicy | setPaneNumber

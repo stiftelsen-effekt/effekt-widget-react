@@ -1,6 +1,11 @@
 import styled from 'styled-components'
 
+export const Pane = styled.div`
+    width: 300px;  
+`
+
 export const PaneContainer = styled.div`
+    width: 300px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -38,9 +43,10 @@ export const HorizontalLine = styled.div`
 `
 
 export const VerticalLine = styled.div`
-    width: 3px;
+    width: 1px;
     height: 30px;
     background-color: #FFAA2B;
+    margin-bottom: 5px;
 `
 
 export const ErrorMessage = styled.div`
@@ -53,4 +59,5 @@ export const NavigationWrapper = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
+    margin-top: 5px;
 `
