@@ -36,7 +36,7 @@ export interface DonorInput {
     email?: string,
     taxDeduction?: boolean,
     ssn?: number,
-    newsletter: boolean,
+    newsletter?: boolean,
 }
 
 export interface Donor extends DonorInput {

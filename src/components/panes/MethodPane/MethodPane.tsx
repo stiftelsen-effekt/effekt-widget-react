@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
 import { selectPaymentMethod } from '../../../store/donation/actions'
 import { State, PaymentMethod } from '../../../store/state'
@@ -7,7 +7,6 @@ import { Pane, PaneContainer, PaneTitle } from '../Panes.style'
 import { BankButton, MethodPaneWrapper, MethodWrapper, PayPalButton, VippsButton, TextWrapper, InfoText } from './MethodPane.style';
 
 export default function MethodPane() {
-    const currentPaymentMethod = useSelector((state: State) => state.donation.method)
     const currentPaneNumber = useSelector((state: State) => state.layout.paneNumber)
     const dispatch = useDispatch()
 

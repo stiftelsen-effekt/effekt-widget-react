@@ -1,4 +1,4 @@
-import { DonationActionTypes, SELECT_PAYMENT_METHOD, SELECT_TAX_DEDUCTION, SUBMIT_DONOR_INFO, SET_SUM, SET_RECURRING, SET_SHARES } from './types';
+import { DonationActionTypes, SELECT_PAYMENT_METHOD, SELECT_TAX_DEDUCTION, SUBMIT_DONOR_INFO, SET_SUM, SET_RECURRING, SET_SHARES, SET_DONOR_ID, SET_KID } from './types';
 import { PaymentMethod, Shares } from '../state'
 
 export function selectPaymentMethod(method: PaymentMethod): DonationActionTypes {
@@ -55,6 +55,24 @@ export function setRecurring(recurring: boolean): DonationActionTypes {
     type: SET_RECURRING,
     payload: {
       recurring
+    }
+  }
+}
+
+export function setDonorID(donorID: number): DonationActionTypes {
+  return {
+    type: SET_DONOR_ID,
+    payload: {
+      donorID
+    }
+  }
+}
+
+export function setKID(kid: number): DonationActionTypes {
+  return {
+    type: SET_KID,
+    payload: {
+      kid
     }
   }
 }

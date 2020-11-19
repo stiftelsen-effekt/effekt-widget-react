@@ -6,6 +6,8 @@ export const SUBMIT_DONOR_INFO = 'SUBMIT_DONOR_INFO'
 export const SET_SHARES = 'SET_SHARES'
 export const SET_SUM = 'SET_SUM'
 export const SET_RECURRING = 'SET_RECURRING'
+export const SET_KID = 'SET_KID'
+export const SET_DONOR_ID = 'SET_DONOR_ID'
 
 interface SelectPaymentMethod {
   type: typeof SELECT_PAYMENT_METHOD
@@ -53,4 +55,18 @@ interface SetRecurring {
   }
 }
 
-export type DonationActionTypes = SelectPaymentMethod | SelectTaxDeduction | SubmitDonorInfo | SetShares | SetSum | SetRecurring
+interface SetKID {
+  type: typeof SET_KID
+  payload: {
+    kid: number
+  }
+}
+
+interface SetDonorID {
+  type: typeof SET_DONOR_ID
+  payload: {
+    donorID: number
+  }
+}
+
+export type DonationActionTypes = SelectPaymentMethod | SelectTaxDeduction | SubmitDonorInfo | SetShares | SetSum | SetRecurring | SetKID | SetDonorID

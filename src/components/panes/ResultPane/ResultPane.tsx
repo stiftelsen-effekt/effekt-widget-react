@@ -8,6 +8,7 @@ import { BlackContainer, BoldWhiteText, Heart, ResultWrapper, VippsLogo, WhiteTe
 export default function ReferralPane() {
     const currentMethod = useSelector((state: State) => state.donation.method)
     const donorEmail = useSelector((state: State) => state.donation.donor?.email)
+    const kid = useSelector((state: State) => state.donation.kid)
 
     return (
         <Pane>
@@ -19,10 +20,10 @@ export default function ReferralPane() {
                         <p>Du kan nå overføre til oss</p>
                         <BlackContainer>
                             <TextWrapper>
-                                <BoldWhiteText>Kontonr</BoldWhiteText><WhiteText>{"konto"}</WhiteText>
+                                <BoldWhiteText>Kontonr</BoldWhiteText><WhiteText>1506 29 95960</WhiteText>
                             </TextWrapper>
                             <TextWrapper>
-                                <BoldWhiteText>KID</BoldWhiteText><WhiteText>{"KID"}</WhiteText>
+                            <BoldWhiteText>KID</BoldWhiteText><WhiteText>{kid}</WhiteText>
                             </TextWrapper>
                         </BlackContainer>
                         {donorEmail !== "anon@gieffektivt.no" && 

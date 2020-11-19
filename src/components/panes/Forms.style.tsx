@@ -27,6 +27,7 @@ export const CheckBox = styled.input`
     margin-left: 10px;
     &:hover {
         cursor: pointer;
+        opacity: 0.5;
     }
 `
 

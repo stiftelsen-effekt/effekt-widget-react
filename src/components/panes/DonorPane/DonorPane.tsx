@@ -13,11 +13,19 @@ import { setPaneNumber } from '../../../store/layout/actions'
 import DonationInfoBar from '../shared/DonationInfoBar/DonationInfoBar'
 import { ToolTip } from '../shared/ToolTip'
 
-const tooltipText = "Vi trenger ditt fødselsnummer for å rapportere skattefradrag til Skatteetaten for at du skal få skattefradrag for donasjonen din."
-const tooltipLink = "https://gieffektivt.no/skattefradrag"
-
 interface DonorFormValues extends DonorInput {
     privacyPolicy: boolean;
+}
+
+const tooltipText = "Vi trenger ditt fødselsnummer for å rapportere skattefradrag til Skatteetaten for at du skal få skattefradrag for donasjonen din."
+const tooltipLink = "https://gieffektivt.no/skattefradrag"
+const anonymousDonorObject: DonorFormValues = {
+    name: 'Anonym Giver',
+    email: 'anon@gieffektivt.no',
+    taxDeduction: false,
+    ssn: 12345678910,
+    newsletter: false,
+    privacyPolicy: true
 }
 
 export default function DonorPane() {
@@ -27,32 +35,26 @@ export default function DonorPane() {
     const [ nameErrorAnimation, setNameErrorAnimation ] = useState(false)
     const [ emailErrorAnimation, setEmailErrorAnimation ] = useState(false)
     const [ ssnErrorAnimation, setSsnErrorAnimation ] = useState(false)
+    const [ anonymousDonor, setAnonymousDonor ] = useState(false)
     const [ privacyPolicyErrorAnimation, setPrivacyPolicyErrorAnimation ] = useState(false)
     const currentPaneNumber = useSelector((state: State) => state.layout.paneNumber)
-    const { register, watch, errors, handleSubmit } = useForm<DonorFormValues>({mode: 'onBlur'})
+    const { register, watch, errors, handleSubmit } = useForm<DonorFormValues>()
     const watchAllFields = watch()
 
-    function updateDonorState(values: any) {
+    function updateDonorState(values: DonorFormValues) {
         dispatch(submitDonorInfo(
             values.name ? values.name : "", 
             values.email ? values.email : "", 
             values.taxDeduction ? values.taxDeduction : false,
-            values.ssn ? values.ssn : "", 
+            values.ssn ? values.ssn : 1, 
             values.newsletter ? values.newsletter : false
         ))
     }
 
-    function setAnonymousDonor() {
+    function submitAnonymous() {
+        setAnonymousDonor(true)
         dispatch(setPaneNumber(currentPaneNumber + 1))
         setSuccessfulSubmit(true)
-        updateDonorState({
-            name: 'Anonym Giver',
-            email: 'anon@gieffektivt.no',
-            taxDeduction: false,
-            ssn: "",
-            newsletter: false
-            }
-        )
     }
 
     useEffect(() => {
@@ -61,7 +63,7 @@ export default function DonorPane() {
         errors.ssn ? setSsnErrorAnimation(true) : setSsnErrorAnimation(false)
         errors.privacyPolicy ? setPrivacyPolicyErrorAnimation(true) : setPrivacyPolicyErrorAnimation(false)
 
-        if (Object.keys(errors).length <= 1) {
+        if (Object.keys(errors).length <= 0) {
             if(watchAllFields.taxDeduction && errors.taxDeduction) {
                 setNextDisabled(true)
             }
@@ -70,19 +72,17 @@ export default function DonorPane() {
         else {
             setNextDisabled(true)
         }
-        updateDonorState(watchAllFields)
+        updateDonorState(anonymousDonor ? anonymousDonorObject : watchAllFields)
     }, [watchAllFields])
 
     function onSubmit() {
         if (Object.keys(errors).length === 0) {
+            setAnonymousDonor(false)
             setSuccessfulSubmit(true)
             dispatch(setPaneNumber(currentPaneNumber + 1))
         }
-        if (watchAllFields.name  && watchAllFields.email && watchAllFields.ssn) {
-            updateDonorState(watchAllFields)
-        }
         else {
-            setAnonymousDonor()
+            setAnonymousDonor(true)
         }
     }
 
@@ -133,7 +133,7 @@ export default function DonorPane() {
                     </div>
                     <NavigationWrapper>
                         <PrevButton />
-                        <SkipButton onClick={setAnonymousDonor} />
+                        <SkipButton onClick={submitAnonymous} />
                         <NextButton isDisabled={nextDisabled} />
                     </NavigationWrapper>
                 </form>

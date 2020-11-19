@@ -36,6 +36,8 @@ export const MethodLogo = styled.div`
     height: 30px;
 `
 
+//TODO: Add alt tags to all three logos
+
 export const BankLogo = styled(MethodLogo)`
     background-image: url(https://storage.googleapis.com/effekt-widget/assets/logos/bank.png);
     position: relative;

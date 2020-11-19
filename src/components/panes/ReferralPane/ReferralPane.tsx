@@ -32,6 +32,7 @@ export default function ReferralPane() {
         if (referrals) {
             referrals.forEach(ref => {
             //TODO: Remove BYNN podcast from database?
+            //TODO: Add input field for "annet" referral
             if (ref.name !== "BYNN podcast")     
             referralsList.push(
                 //TODO: Post referrals on click

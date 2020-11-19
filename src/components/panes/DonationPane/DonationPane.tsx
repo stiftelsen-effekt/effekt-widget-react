@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setSum, setRecurring } from '../../../store/donation/actions'
+import { setSum, setRecurring, setDonorID, setKID } from '../../../store/donation/actions'
 import { selectCustomShare, setPaneNumber } from '../../../store/layout/actions'
 import { HorizontalLine, NavigationWrapper, Pane, PaneContainer, PaneTitle, VerticalLine } from '../Panes.style';
 import { PaymentMethod, State } from '../../../store/state';
@@ -11,6 +11,13 @@ import { InputLabel, RadioButton, RadioWrapper, TextField } from '../Forms.style
 import { Collapse } from '@material-ui/core';
 import ErrorField from '../shared/ErrorField';
 import Validator from 'validator'
+import { postDonation } from './../../helpers/network'
+
+/**
+ * This component renders inputs for donations
+ * If the donor chooses recommended share, a post request is sent to register the donation when clicking next
+ * If the donor chooses custom share, the request is sent from SharesPane instead
+ */
 interface DonationFormValues {
     recurring: string;
     customShare: string;
@@ -25,23 +32,20 @@ export default function DonationPane() {
     const [ customShareErrorAnimation, setCustomShareErrorAnimation ] = useState(false)
     const isCustomShare = useSelector((state: State) => state.layout.customShare)
     const isRecurring = useSelector((state: State) => state.donation.recurring)
+    const donorName = useSelector((state: State) => state.donation.donor?.name)
+    const donorEmail = useSelector((state: State) => state.donation.donor?.email)
+    const donorSSN = useSelector((state: State) => state.donation.donor?.ssn)
+    const donorNewsletter = useSelector((state: State) => state.donation.donor?.newsletter)
+    const donationSum = useSelector((state: State) => state.donation.sum)
     const currentPaymentMethod = useSelector((state: State) => state.donation.method)
     const currentPaneNumber = useSelector((state: State) => state.layout.paneNumber)
     const { register, watch, errors, handleSubmit } = useForm<DonationFormValues>({mode: 'all'})
     const watchAllFields = watch()
 
     function updateDonationState(values: DonationFormValues) {
-        console.log(values.sum)
-        if (values.sum) console.log(Validator.isInt(values.sum))
         if (values.sum) dispatch(setSum(Validator.isInt(values.sum) ? parseInt(values.sum) : 0))
         if (values.recurring) dispatch(setRecurring(values.recurring == "true"))
         if (values.customShare) dispatch(selectCustomShare(values.customShare == "true"))
-    }
-
-    function onSubmit() {
-        if (Object.keys(errors).length === 0) {
-            dispatch(setPaneNumber(currentPaneNumber + (isCustomShare ? 1 : 2)))
-        }
     }
 
     useEffect(() => {
@@ -58,6 +62,26 @@ export default function DonationPane() {
 
         updateDonationState(watchAllFields)
     }, [watchAllFields])
+
+    function onSubmit() {
+        if (Object.keys(errors).length === 0) {
+            if (!isCustomShare) {
+                if (donorName && donorEmail && donorNewsletter !== undefined && donationSum ) {
+                    const postData = {
+                            donor: {
+                                name: donorName,
+                                email: donorEmail,
+                                ssn: donorSSN ? donorSSN.toString() : "",
+                                newsletter: donorNewsletter
+                            },
+                        amount: donationSum
+                    }
+                postDonation(postData, dispatch)
+                }
+            }
+            dispatch(setPaneNumber(currentPaneNumber + (isCustomShare ? 1 : 2)))
+        }
+    }
     
     return (
         <Pane>
@@ -93,7 +117,7 @@ export default function DonationPane() {
                     <NavigationWrapper>
                         <PrevButton />
                         <VerticalLine />
-                        <NextButton isDisabled={nextDisabled} />
+                        <NextButton isDisabled={nextDisabled} text={isCustomShare ? "Neste" : "Fullfør"} />
                     </NavigationWrapper>
                 </form>
             </PaneContainer>

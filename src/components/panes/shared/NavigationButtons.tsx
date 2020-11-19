@@ -79,10 +79,15 @@ const SmallButtonText = styled.p`
     font-size: 13px;
 `
 
-export function NextButton(props: any) {
+interface NextButtonProps {
+    isDisabled: boolean;
+    text?: string;
+}
+
+export function NextButton(props: NextButtonProps) {
     return (
         <NavigationButton type="submit" disabled={props.isDisabled}>
-            <SmallButtonText>Neste</SmallButtonText>
+            <SmallButtonText>{props.text ? props.text : "Neste"}</SmallButtonText>
         </NavigationButton>
     )
 }
