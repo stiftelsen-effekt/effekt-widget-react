@@ -1,11 +1,11 @@
 import styled from 'styled-components'
 
 export const Pane = styled.div`
-    width: 300px;  
+    width: 500px;  
 `
 
 export const PaneContainer = styled.div`
-    width: 300px;
+    width: 500px;
     display: flex;
     flex-direction: column;
     align-items: center;

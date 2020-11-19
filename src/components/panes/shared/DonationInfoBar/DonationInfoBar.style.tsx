@@ -8,10 +8,11 @@ export const InfoBarWrapper = styled.div`
     justify-content: center;
     align-items: center;
     display: flex;
+    margin-top: 5px;
 `
 
 export const InfoItemWrapper = styled.div`
-    width: 110px;
+    width: 150px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -25,6 +26,7 @@ export const InfoBarText = styled.p`
     margin: 0;
     font-weight: bold;
     white-space: nowrap;
+    overflow: visible;
 `
 
 export const MethodLogo = styled.div`

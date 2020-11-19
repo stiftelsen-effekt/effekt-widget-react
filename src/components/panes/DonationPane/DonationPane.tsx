@@ -93,7 +93,7 @@ export default function DonationPane() {
                         <ErrorField text="Ugyldig sum"/>
                     </Collapse>
                     {(currentPaymentMethod === PaymentMethod.PAYPAL || currentPaymentMethod === PaymentMethod.VIPPS) && 
-                        <TextField name="sum" type="tel" placeholder="0" ref={register({required: true, validate: val => Validator.isInt(val) && val > 0 })} />
+                        <TextField name="sum" maxLength={10} type="tel" placeholder="0" ref={register({required: true, validate: val => Validator.isInt(val) && val > 0 })} />
                     }
                     {currentPaymentMethod === PaymentMethod.PAYPAL &&
                         <div>

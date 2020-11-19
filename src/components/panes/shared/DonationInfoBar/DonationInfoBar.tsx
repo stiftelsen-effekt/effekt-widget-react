@@ -22,29 +22,10 @@ export default function DonationInfoBar(props: InfoBarProps) {
     const currentPaneNumber = useSelector((state: State) => state.layout.paneNumber)
     const donorFirstName = donationState.donor?.name ? donationState.donor?.name.split(' ')[0] : "Anonym"
 
+    // Places a period between every third digit
     function formatCurrency(value: number) { 
         let formattedCurrency = value.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
-
-        if (formattedCurrency.length > 23) {
-            return ">999tril. "
-        }
-        else if (formattedCurrency.length > 19){
-            formattedCurrency = ">" +  formattedCurrency.split(".")[0] + "tril. "
-            return formattedCurrency
-        }
-        else if (formattedCurrency.length > 15){
-            formattedCurrency = ">" +  formattedCurrency.split(".")[0] + "bill. "
-            return formattedCurrency
-        }
-        else if (formattedCurrency.length > 11) {
-            formattedCurrency = ">" +  formattedCurrency.split(".")[0] + "mrd. "
-            return formattedCurrency
-        }
-        else if (formattedCurrency.length > 8){
-            formattedCurrency = ">" + formattedCurrency.split(".")[0] + "mill. "
-            return formattedCurrency
-        }
-        else return formattedCurrency
+        return formattedCurrency
     }
     
     return (

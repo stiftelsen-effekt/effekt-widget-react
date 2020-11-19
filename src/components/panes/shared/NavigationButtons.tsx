@@ -26,28 +26,6 @@ const NavigationButton = styled.button`
     }
 `
 
-const StyledPrevButton = styled.div`
-    background-color: white;
-    border: none;
-    height: 30px;
-    width: 60px;
-    font-weight: bold;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 5px;
-    margin-bottom: 15px;
-
-    &:hover {
-        opacity: 0.5;
-        cursor: pointer;
-    }
-
-    &:disabled {
-        opacity: 0.5
-    }
-`
-
 const StyledSkipButton = styled.button`
     background-color: #FFAA2B;
     border: none;

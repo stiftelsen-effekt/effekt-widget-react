@@ -5,7 +5,7 @@ interface Donor {
     newsletter: boolean;
 }
 
-interface Organization {
+export interface OrganizationSplit {
     id: number;
     split: number;
     name: string;
@@ -14,7 +14,7 @@ interface Organization {
 export interface DonationData {
     donor: Donor;
     amount: number;
-    organizations?: Array<Organization>
+    organizations?: Array<OrganizationSplit>
 }
 
 export interface ReferralData {

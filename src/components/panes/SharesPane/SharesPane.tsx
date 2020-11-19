@@ -14,13 +14,20 @@ import axios from 'axios'
 import { Collapse } from '@material-ui/core'
 import { setPaneNumber } from '../../../store/layout/actions'
 import { ToolTip } from '../shared/ToolTip'
+import { postDonation } from './../../helpers/network'
+import { DonationData, OrganizationSplit } from './../../helpers/network.types'
 
-const tooltipLink = "https://gieffektivt.no/skattefradrag"
+const tooltipLink = "https://gieffektivt.no/organisasjoner"
 
 export default function SharesPane() {
     const dispatch = useDispatch()
     const [ nextDisabled, setNextDisabled ] = useState(false)
     const currentPaneNumber = useSelector((state: State) => state.layout.paneNumber)
+    const donorName = useSelector((state: State) => state.donation.donor?.name)
+    const donorEmail = useSelector((state: State) => state.donation.donor?.email)
+    const donorSSN = useSelector((state: State) => state.donation.donor?.ssn)
+    const donorNewsletter = useSelector((state: State) => state.donation.donor?.newsletter)
+    const donationSum = useSelector((state: State) => state.donation.sum)
     const [ percentageErrorAnimation, setPercentageErrorAnimation ] = useState(false)
     const { register, watch, handleSubmit, setValue } = useForm({mode: 'all'})
     const watchAllFields = watch()
@@ -79,6 +86,27 @@ export default function SharesPane() {
     function onSubmit() {
         if (getTotalPercentage().totalPercentage === 100) {
             dispatch(setPaneNumber(currentPaneNumber + 1))
+            if (donorName && donorEmail && donorNewsletter !== undefined && donationSum ) {
+                
+                let organizations: Array<OrganizationSplit> = []
+
+                const postData: DonationData  = {
+                        donor: {
+                            name: donorName,
+                            email: donorEmail,
+                            ssn: donorSSN ? donorSSN.toString() : "",
+                            newsletter: donorNewsletter
+                        },
+                    amount: donationSum,
+                    // TODO: Make organizations dynamic
+                    organizations: [{
+                        id: 1,
+                        split: 100,
+                        name: "Against Malaria Foundation"
+                    }]
+                }
+            postDonation(postData, dispatch)
+            }
         }
         dispatch(setShares(watchAllFields))
     }
