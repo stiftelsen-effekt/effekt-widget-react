@@ -3,11 +3,12 @@ import { useForm } from 'react-hook-form'
 import { useDispatch, useSelector } from 'react-redux'
 import { setPaneNumber } from '../../../store/layout/actions'
 import { State } from '../../../store/state'
-import { getReferrals } from '../../helpers/network'
+import { getReferrals, postReferral } from '../../helpers/network'
 import { HorizontalLine, NavigationWrapper, Pane, PaneContainer, PaneTitle, UnderTitle, VerticalLine } from '../Panes.style'
 import DonationInfoBar from '../shared/DonationInfoBar/DonationInfoBar'
 import { NextButton, PrevButton } from '../shared/NavigationButtons'
 import { ReferralButton, ReferralsWrapper } from './ReferralPane.style'
+
 interface Referral {
     ID: number;
     name: string;
@@ -17,6 +18,7 @@ interface Referral {
 export default function ReferralPane() {
     const [referrals, setReferrals] = useState<Referral[]>()
     const currentPaneNumber = useSelector((state: State) => state.layout.paneNumber)
+    const donorID = useSelector((state: State) => state.donation.donor?.donorID)
     const { handleSubmit } = useForm()
     const dispatch = useDispatch()
 
@@ -43,8 +45,16 @@ export default function ReferralPane() {
         return referralsList
     }
 
-    function onSubmit(referral: number) {
+    function onSubmit(referralID: number) {
         dispatch(setPaneNumber(currentPaneNumber + 1))
+        if (donorID) {
+            const referralData = {
+                referralTypeID: referralID,
+                donorID: donorID,
+                otherComment: ""
+            }
+            postReferral(referralData)
+        }
     }
 
     return (

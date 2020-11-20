@@ -1,4 +1,5 @@
 import { setDonorID, setKID } from "../../store/donation/actions"
+import { setAnsweredReferral } from "../../store/layout/actions"
 import { PaymentMethod } from "../../store/state"
 import { DonationData, ReferralData } from "./network.types"
 
@@ -20,14 +21,6 @@ export async function getReferrals() {
     return orgs.content
 }
 
-//TODO: Check if postReferrals actually works
-export async function postReferrals(data: string) {
-    const xhttp = new XMLHttpRequest()
-    xhttp.open("POST", api_url + 'referrals/', true)
-    xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded")
-    xhttp.send(`data=${encodeURIComponent('test?')}`)
-}
-
 // Original code below
 
 export function request(endpoint: string, type: string, data: any, cb: any) {
@@ -41,13 +34,13 @@ export function request(endpoint: string, type: string, data: any, cb: any) {
                 var response = JSON.parse(this.responseText);
 
                 if (response.status == 200) {
-                    cb(null, response);
+                    return cb(null, response);
                 }
                 else if (response.status == 400) {
-                    cb(response.content, null);
+                    return cb(response.content, null);
                 }
             } else {
-                cb(this.status, null);
+                return cb(this.status, null);
             }
         }
     };
@@ -77,6 +70,8 @@ export async function postDonation(postData: DonationData, dispatch: Function) {
         }
 
         // TODO: Move dispatches to SharesPane instead?
+        console.log(data.content.hasAnsweredReferral)
+        dispatch(setAnsweredReferral(data.content.hasAnsweredReferral))
         dispatch(setKID(data.content.KID))
         dispatch(setDonorID(data.content.donorID))
 
@@ -94,7 +89,6 @@ export async function postDonation(postData: DonationData, dispatch: Function) {
         //     _self.getPane(VippsPane).setUrl(data.content.paymentProviderUrl)
         // }
         console.log(data)
-        return data
     })
 }
 

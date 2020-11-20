@@ -1,30 +1,32 @@
-import { FormStateMap } from 'redux-form'
+import { FormStateMap } from 'redux-form' //TODO: Remove redux form stuff
 
 export interface State {
-    donation: Donation,
-    layout: Layout,
-    paypal: PayPalState,
-    error: Error,
-    form: FormStateMap,
+    donation: Donation
+    layout: Layout
+    paypal: PayPalState
+    error: Error
+    form: FormStateMap
 }
 
+//TODO: Remove privacyPolicy, it is only needed locally in DonationPane
 export interface Layout {
-    privacyPolicy: boolean,
-    customShare: boolean,
-    paneNumber: number,
+    privacyPolicy: boolean
+    customShare: boolean
+    paneNumber: number
+    answeredReferral?: boolean
 }
 
 export interface PayPalState {
-    loading: boolean,
-    success: boolean,
+    loading: boolean
+    success: boolean
 }
 
 export interface DonationInput {
-    method?: PaymentMethod,
-    sum: number,
-    recurring: boolean,
-    donor?: Donor,
-    shares?: Splits,
+    method?: PaymentMethod
+    sum: number
+    recurring: boolean
+    donor?: Donor
+    shares?: Splits
 }
 
 export interface Donation extends DonationInput {
@@ -32,11 +34,11 @@ export interface Donation extends DonationInput {
 }
 
 export interface DonorInput {
-    name?: string,
-    email?: string,
-    taxDeduction?: boolean,
-    ssn?: number,
-    newsletter?: boolean,
+    name?: string
+    email?: string
+    taxDeduction?: boolean
+    ssn?: number
+    newsletter?: boolean
 }
 
 export interface Donor extends DonorInput {
@@ -44,8 +46,8 @@ export interface Donor extends DonorInput {
 }
 
 export interface Share {
-    organizationID: number,
-    share: number,
+    organizationID: number
+    share: number
 }
 
 export interface Splits {
@@ -53,8 +55,8 @@ export interface Splits {
 }
 
 export interface Error {
-    isVisible: boolean,
-    message: string,
+    isVisible: boolean
+    message: string
 }
 
 export enum PaymentMethod {

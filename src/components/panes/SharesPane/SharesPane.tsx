@@ -152,7 +152,7 @@ export default function SharesPane() {
                     <NavigationWrapper>
                         <PrevButton />
                         <VerticalLine />
-                        <NextButton isDisabled={nextDisabled} />
+                        <NextButton isDisabled={nextDisabled} text="Fullfør"/>
                     </NavigationWrapper>
                 </form>
                 :  

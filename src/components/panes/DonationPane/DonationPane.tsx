@@ -75,9 +75,12 @@ export default function DonationPane() {
                     if (donationSum && (currentPaymentMethod !== PaymentMethod.BANK && currentPaymentMethod !== PaymentMethod.BANK_UKID )) { 
                         postData.amount = donationSum
                     }
-                postDonation(postData, dispatch)
+                postDonation(postData, dispatch).then(result => {
+                    console.log(result)
+                })
                 }
             }
+
             dispatch(setPaneNumber(currentPaneNumber + (isCustomShare ? 1 : 2)))
         }
     }
