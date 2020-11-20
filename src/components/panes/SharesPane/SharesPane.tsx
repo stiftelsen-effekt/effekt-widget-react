@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { getOrganizationsURL } from '../../helpers/network'
 import { Organization } from './../../interfaces/Organization'
 import { useForm } from 'react-hook-form'
-import { setShares } from './../../../store/donation/actions'
+import { setDonorID, setKID, setShares } from './../../../store/donation/actions'
 import { useDispatch, useSelector } from 'react-redux'
 import { State } from '../../../store/state'
 import { HorizontalLine, NavigationWrapper, PaneContainer, PaneTitle, VerticalLine } from '../Panes.style'
@@ -19,15 +19,19 @@ import { DonationData, OrganizationSplit } from './../../helpers/network.types'
 
 const tooltipLink = "https://gieffektivt.no/organisasjoner"
 
+// TODO: Loading animation after submitting
+
 export default function SharesPane() {
     const dispatch = useDispatch()
     const [ nextDisabled, setNextDisabled ] = useState(false)
+    const [ submitLoading, setSubmitLoading ] = useState(false)
     const currentPaneNumber = useSelector((state: State) => state.layout.paneNumber)
     const donorName = useSelector((state: State) => state.donation.donor?.name)
     const donorEmail = useSelector((state: State) => state.donation.donor?.email)
     const donorSSN = useSelector((state: State) => state.donation.donor?.ssn)
     const donorNewsletter = useSelector((state: State) => state.donation.donor?.newsletter)
     const donationSum = useSelector((state: State) => state.donation.sum)
+    const donationMethod = useSelector((state: State) => state.donation.method)
     const [ percentageErrorAnimation, setPercentageErrorAnimation ] = useState(false)
     const { register, watch, handleSubmit, setValue } = useForm({mode: 'all'})
     const watchAllFields = watch()
@@ -84,53 +88,76 @@ export default function SharesPane() {
     }, [watchAllFields])
 
     function onSubmit() {
+
+        dispatch(setShares(watchAllFields)) // This line might be redundant?
+
         if (getTotalPercentage().totalPercentage === 100) {
-            dispatch(setPaneNumber(currentPaneNumber + 1))
-            if (donorName && donorEmail && donorNewsletter !== undefined && donationSum ) {
+            setSubmitLoading(true)
+            if (donorName && donorEmail && donationMethod && donorNewsletter !== undefined) {
                 
-                let organizations: Array<OrganizationSplit> = []
+                let orgSplits: Array<OrganizationSplit> = []
+                
+                for (const property in watchAllFields) {
+                    const split = watchAllFields[property]
+                    if (split > 0) {
+                        let orgSplit: OrganizationSplit = {id: 0, split: 0, name: ""}
+                        orgSplit.id = parseInt(property)
+                        orgSplit.split = parseInt(watchAllFields[property])
+                        data?.data.content.forEach((org: Organization) => {
+                            if (orgSplit.id === org.id) {
+                                orgSplit.name = org.name
+                            }
+                        })
+                        orgSplits.push(orgSplit)
+                    }
+                }
 
                 const postData: DonationData  = {
-                        donor: {
-                            name: donorName,
-                            email: donorEmail,
-                            ssn: donorSSN ? donorSSN.toString() : "",
-                            newsletter: donorNewsletter
-                        },
-                    amount: donationSum,
-                    // TODO: Make organizations dynamic
-                    organizations: [{
-                        id: 1,
-                        split: 100,
-                        name: "Against Malaria Foundation"
-                    }]
+                    donor: {
+                        name: donorName,
+                        email: donorEmail,
+                        newsletter: donorNewsletter
+                    },
+                    method: donationMethod,
+                    organizations: orgSplits
                 }
-            postDonation(postData, dispatch)
+                if (donationSum) postData.amount = donationSum
+                if (donorSSN) postData.donor.ssn = donorSSN.toString()
+
+                // TODO: Move dispatches setKID and setDonorID from network.ts to here
+                postDonation(postData, dispatch).then((result) => {
+                    console.log(result) // undefined, how to fix?
+                    setSubmitLoading(false)
+                    dispatch(setPaneNumber(currentPaneNumber + 1))
+                })
             }
         }
-        dispatch(setShares(watchAllFields))
     }
     
     return (
         <PaneContainer>
             <DonationInfoBar />
             <PaneTitle>Velg fordeling</PaneTitle>
-            <form onSubmit={handleSubmit(onSubmit)}>
-                <SharesWrapper>
-                    {isLoading && <p>Laster inn...</p>}
-                    {error && <p>Noe gikk galt</p>}
-                    {data?.data.content.map((org: any) => setupOrganizationInput(org))}
-                </SharesWrapper>
-                <Collapse in={percentageErrorAnimation}>
-                    <PercentageText>Du har fordelt {getTotalPercentage().totalPercentage} / 100%</PercentageText>
-                </Collapse>
-                <HorizontalLine />
-                <NavigationWrapper>
-                    <PrevButton />
-                    <VerticalLine />
-                    <NextButton isDisabled={nextDisabled} />
-                </NavigationWrapper>
-            </form>
+            {!submitLoading ? 
+                <form onSubmit={handleSubmit(onSubmit)}>
+                    <SharesWrapper>
+                        {isLoading && <p>Laster inn...</p>}
+                        {error && <p>Noe gikk galt</p>}
+                        {data?.data.content.map((org: any) => setupOrganizationInput(org))}
+                    </SharesWrapper>
+                    <Collapse in={percentageErrorAnimation}>
+                        <PercentageText>Du har fordelt {getTotalPercentage().totalPercentage} / 100%</PercentageText>
+                    </Collapse>
+                    <HorizontalLine />
+                    <NavigationWrapper>
+                        <PrevButton />
+                        <VerticalLine />
+                        <NextButton isDisabled={nextDisabled} />
+                    </NavigationWrapper>
+                </form>
+                :  
+                <p>Laster...</p> // TODO: Add animation here
+            }
         </PaneContainer>
     );
 }

@@ -1,7 +1,9 @@
+import { PaymentMethod } from "../../store/state";
+
 interface Donor {
     name: string;
     email: string;
-    ssn: string;
+    ssn?: string;
     newsletter: boolean;
 }
 
@@ -13,7 +15,8 @@ export interface OrganizationSplit {
 
 export interface DonationData {
     donor: Donor;
-    amount: number;
+    amount?: number;
+    method: PaymentMethod;
     organizations?: Array<OrganizationSplit>
 }
 

@@ -1,5 +1,5 @@
 import { DonationActionTypes, SELECT_PAYMENT_METHOD, SELECT_TAX_DEDUCTION, SUBMIT_DONOR_INFO, SET_SUM, SET_RECURRING, SET_SHARES, SET_DONOR_ID, SET_KID } from './types';
-import { PaymentMethod, Shares } from '../state'
+import { PaymentMethod, Splits } from '../state'
 
 export function selectPaymentMethod(method: PaymentMethod): DonationActionTypes {
   return {
@@ -32,7 +32,7 @@ export function submitDonorInfo(name: string, email: string, taxDeduction: boole
   }
 }
 
-export function setShares(shares: Shares) {
+export function setShares(shares: Splits) {
   return {
     type: SET_SHARES,
     payload: {

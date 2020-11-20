@@ -1,4 +1,5 @@
 import { setDonorID, setKID } from "../../store/donation/actions"
+import { PaymentMethod } from "../../store/state"
 import { DonationData, ReferralData } from "./network.types"
 
 const api_url = "https://dev.data.gieffektivt.no/"
@@ -61,17 +62,30 @@ export function request(endpoint: string, type: string, data: any, cb: any) {
     }
 }
 
-export function postDonation(postData: DonationData, dispatch: Function) {
+export async function registerBankPending(postData: {KID: number}) {
+    request("donations/bank/pending", "POST", postData, function(err: any, data: any) {
+        if (err) console.error("Sending av epost feilet");
+        console.log(data)
+    });
+}
+
+export async function postDonation(postData: DonationData, dispatch: Function) {
     request("donations/register", "POST", postData, function(err: any, data: any) {
         if (err == 0 || err) {
             if (err == 0) console.error("Når ikke server. Forsøk igjen senere.");
             else if (err == 500) console.error("Det er noe feil med donasjonen");
         }
-        console.log(data)
+
+        // TODO: Move dispatches to SharesPane instead?
         dispatch(setKID(data.content.KID))
         dispatch(setDonorID(data.content.donorID))
 
+        if (postData.method === PaymentMethod.BANK) {
+            registerBankPending({KID: data.content.KID})
+        }
+
         // sendAnalytics("register_donation", _self.KID);
+
         // if (_self.method === "BANK") {
         //     _self.registerBankPending();
         // }
@@ -79,7 +93,8 @@ export function postDonation(postData: DonationData, dispatch: Function) {
         // if (_self.method === "VIPPS") {
         //     _self.getPane(VippsPane).setUrl(data.content.paymentProviderUrl)
         // }
-
+        console.log(data)
+        return data
     })
 }
 

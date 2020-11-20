@@ -12,12 +12,8 @@ import { Collapse } from '@material-ui/core';
 import ErrorField from '../shared/ErrorField';
 import Validator from 'validator'
 import { postDonation } from './../../helpers/network'
+import { DonationData } from '../../helpers/network.types';
 
-/**
- * This component renders inputs for donations
- * If the donor chooses recommended share, a post request is sent to register the donation when clicking next
- * If the donor chooses custom share, the request is sent from SharesPane instead
- */
 interface DonationFormValues {
     recurring: string;
     customShare: string;
@@ -66,15 +62,18 @@ export default function DonationPane() {
     function onSubmit() {
         if (Object.keys(errors).length === 0) {
             if (!isCustomShare) {
-                if (donorName && donorEmail && donorNewsletter !== undefined && donationSum ) {
-                    const postData = {
-                            donor: {
-                                name: donorName,
-                                email: donorEmail,
-                                ssn: donorSSN ? donorSSN.toString() : "",
-                                newsletter: donorNewsletter
-                            },
-                        amount: donationSum
+                if (donorName && donorEmail && donorNewsletter !== undefined && currentPaymentMethod) {
+                    const postData: DonationData = {
+                        donor: {
+                            name: donorName,
+                            email: donorEmail,
+                            ssn: donorSSN ? donorSSN.toString() : "",
+                            newsletter: donorNewsletter
+                        },
+                        method: currentPaymentMethod
+                    }
+                    if (donationSum && (currentPaymentMethod !== PaymentMethod.BANK && currentPaymentMethod !== PaymentMethod.BANK_UKID )) { 
+                        postData.amount = donationSum
                     }
                 postDonation(postData, dispatch)
                 }
@@ -86,7 +85,7 @@ export default function DonationPane() {
     return (
         <Pane>
             <PaneContainer>
-                <DonationInfoBar sum={watchAllFields.sum === "" || !Validator.isInt(watchAllFields.sum ? watchAllFields.sum : "")  ? 0 : parseInt(watchAllFields.sum)} />
+                <DonationInfoBar sum={watchAllFields.sum === "" || !Validator.isInt(watchAllFields.sum ? watchAllFields.sum : "") || parseInt(watchAllFields.sum) < 0  ? 0 : parseInt(watchAllFields.sum)} />
                 <PaneTitle>Om donasjonen</PaneTitle>
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <Collapse in={sumErrorAnimation}>
