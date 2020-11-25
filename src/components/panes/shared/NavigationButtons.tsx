@@ -76,6 +76,7 @@ export function PrevButton() {
     const dispatch = useDispatch()
 
     function goBack() {
+        //TODO: This is probably redundant
         if (!isCustomShare && currentPaneNumber === 4) {
             dispatch(setPaneNumber(currentPaneNumber - 2))
         } 
@@ -96,5 +97,13 @@ export function SkipButton(props: any) {
         <StyledSkipButton type="button" onClick={props.onClick}>
             <ButtonText>Gi anonymt</ButtonText>
         </StyledSkipButton>
+    )
+}
+
+export function NavButton(props: any) {
+    return (    
+        <NavigationButton type="button" onClick={props.onClick}>
+            <SmallButtonText>{props.text}</SmallButtonText>
+        </NavigationButton>
     )
 }

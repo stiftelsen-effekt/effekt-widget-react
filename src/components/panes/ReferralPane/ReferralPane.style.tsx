@@ -4,10 +4,23 @@ export const ReferralsWrapper = styled.div`
     width: 240px;
     white-space: normal;
     display: flex;
-    align-content: space-between;
-    justify-content: space-between;
+    align-items: space-between;
     width: 240px;
     flex-wrap: wrap;
+`
+
+export const OtherInputWrapper = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+`
+
+export const OtherInput = styled.textarea`
+    margin-top: 10px;
+    width: 200px;
+    height: 100px;
+    padding: 5px;
 `
 
 export const ReferralButton = styled.button`

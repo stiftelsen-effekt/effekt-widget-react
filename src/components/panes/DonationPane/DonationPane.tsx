@@ -35,6 +35,7 @@ export default function DonationPane() {
     const donationSum = useSelector((state: State) => state.donation.sum)
     const currentPaymentMethod = useSelector((state: State) => state.donation.method)
     const currentPaneNumber = useSelector((state: State) => state.layout.paneNumber)
+    const answeredReferral = useSelector((state: State) => state.layout.answeredReferral)
     const { register, watch, errors, handleSubmit } = useForm<DonationFormValues>({mode: 'all'})
     const watchAllFields = watch()
 
@@ -59,10 +60,24 @@ export default function DonationPane() {
         updateDonationState(watchAllFields)
     }, [watchAllFields])
 
+    // This hook waits for the response from the POST donation request sent when submittig
+    // It then uses the response data to determine how many panes to skip
+    useEffect(() => {
+        if (answeredReferral !== undefined) {
+            if (!isCustomShare && answeredReferral) {
+                dispatch(setPaneNumber(currentPaneNumber + 3))
+            }
+            else if (!isCustomShare) {
+                dispatch(setPaneNumber(currentPaneNumber + 2))
+            }
+        }
+    }, [answeredReferral])
+
     function onSubmit() {
         if (Object.keys(errors).length === 0) {
             if (!isCustomShare) {
                 if (donorName && donorEmail && donorNewsletter !== undefined && currentPaymentMethod) {
+                    //TODO: Move this to network.ts
                     const postData: DonationData = {
                         donor: {
                             name: donorName,
@@ -75,13 +90,12 @@ export default function DonationPane() {
                     if (donationSum && (currentPaymentMethod !== PaymentMethod.BANK && currentPaymentMethod !== PaymentMethod.BANK_UKID )) { 
                         postData.amount = donationSum
                     }
-                postDonation(postData, dispatch).then(result => {
-                    console.log(result)
-                })
+                    postDonation(postData, dispatch)
                 }
             }
-
-            dispatch(setPaneNumber(currentPaneNumber + (isCustomShare ? 1 : 2)))
+            else if (isCustomShare === true) {
+                dispatch(setPaneNumber(currentPaneNumber + 1))
+            }
         }
     }
     

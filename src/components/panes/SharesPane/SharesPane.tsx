@@ -26,12 +26,14 @@ export default function SharesPane() {
     const [ nextDisabled, setNextDisabled ] = useState(false)
     const [ submitLoading, setSubmitLoading ] = useState(false)
     const currentPaneNumber = useSelector((state: State) => state.layout.paneNumber)
+    const isCustomShare = useSelector((state: State) => state.layout.customShare)
     const donorName = useSelector((state: State) => state.donation.donor?.name)
     const donorEmail = useSelector((state: State) => state.donation.donor?.email)
     const donorSSN = useSelector((state: State) => state.donation.donor?.ssn)
     const donorNewsletter = useSelector((state: State) => state.donation.donor?.newsletter)
     const donationSum = useSelector((state: State) => state.donation.sum)
     const donationMethod = useSelector((state: State) => state.donation.method)
+    const answeredReferral = useSelector((state: State) => state.layout.answeredReferral)
     const [ percentageErrorAnimation, setPercentageErrorAnimation ] = useState(false)
     const { register, watch, handleSubmit, setValue } = useForm({mode: 'all'})
     const watchAllFields = watch()
@@ -87,10 +89,21 @@ export default function SharesPane() {
         }
     }, [watchAllFields])
 
+    // This hook waits for the response (answeredReferral) from the POST donation request sent when submittig
+    // It then uses the response data to determine how many panes to skip
+    useEffect(() => {
+        if (answeredReferral !== undefined) {
+            if (answeredReferral && isCustomShare) {
+                dispatch(setPaneNumber(currentPaneNumber + 2))
+            }
+            else if (isCustomShare) {
+                dispatch(setPaneNumber(currentPaneNumber + 1))
+            }
+        }
+    }, [answeredReferral])
+
     function onSubmit() {
-
         dispatch(setShares(watchAllFields)) // This line might be redundant?
-
         if (getTotalPercentage().totalPercentage === 100) {
             setSubmitLoading(true)
             if (donorName && donorEmail && donationMethod && donorNewsletter !== undefined) {
@@ -124,11 +137,10 @@ export default function SharesPane() {
                 if (donationSum) postData.amount = donationSum
                 if (donorSSN) postData.donor.ssn = donorSSN.toString()
 
-                // TODO: Move dispatches setKID and setDonorID from network.ts to here
+                // TODO: Move dispatches from network.ts to here
                 postDonation(postData, dispatch).then((result) => {
-                    console.log(result) // undefined, how to fix?
+                    console.log(result) // undefined, figure out how to use result data and move dispatches from network.ts
                     setSubmitLoading(false)
-                    dispatch(setPaneNumber(currentPaneNumber + 1))
                 })
             }
         }

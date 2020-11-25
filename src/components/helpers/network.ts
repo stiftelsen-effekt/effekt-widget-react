@@ -1,3 +1,4 @@
+import { resolve } from "dns"
 import { setDonorID, setKID } from "../../store/donation/actions"
 import { setAnsweredReferral } from "../../store/layout/actions"
 import { PaymentMethod } from "../../store/state"
@@ -53,9 +54,10 @@ export function request(endpoint: string, type: string, data: any, cb: any) {
         http.open("GET", url, true);
         http.send(data);
     }
+    return http
 }
 
-export async function registerBankPending(postData: {KID: number}) {
+export function registerBankPending(postData: {KID: number}) {
     request("donations/bank/pending", "POST", postData, function(err: any, data: any) {
         if (err) console.error("Sending av epost feilet");
         console.log(data)
@@ -63,14 +65,13 @@ export async function registerBankPending(postData: {KID: number}) {
 }
 
 export async function postDonation(postData: DonationData, dispatch: Function) {
-    request("donations/register", "POST", postData, function(err: any, data: any) {
+    return request("donations/register", "POST", postData, function(err: any, data: any) {
         if (err == 0 || err) {
             if (err == 0) console.error("Når ikke server. Forsøk igjen senere.");
             else if (err == 500) console.error("Det er noe feil med donasjonen");
         }
 
         // TODO: Move dispatches to SharesPane instead?
-        console.log(data.content.hasAnsweredReferral)
         dispatch(setAnsweredReferral(data.content.hasAnsweredReferral))
         dispatch(setKID(data.content.KID))
         dispatch(setDonorID(data.content.donorID))
@@ -89,6 +90,7 @@ export async function postDonation(postData: DonationData, dispatch: Function) {
         //     _self.getPane(VippsPane).setUrl(data.content.paymentProviderUrl)
         // }
         console.log(data)
+        return data
     })
 }
 

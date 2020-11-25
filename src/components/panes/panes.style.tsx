@@ -23,6 +23,8 @@ export const UnderTitle = styled.p`
     font-size: 15px
     align-self: center;
     margin: 5px;
+    text-align: center;
+    color: gray;
 `
 
 export const OrangeLink = styled.a`

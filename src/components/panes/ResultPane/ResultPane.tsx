@@ -2,6 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { PaymentMethod, State } from '../../../store/state';
 import { Pane, PaneContainer, PaneTitle } from '../Panes.style';
+import DonationInfoBar from '../shared/DonationInfoBar/DonationInfoBar';
 import { PrevButton } from '../shared/NavigationButtons';
 import { BlackContainer, BoldWhiteText, Heart, ResultWrapper, VippsLogo, WhiteText, TextWrapper, InfoText } from './ResultPane.style';
 
@@ -13,6 +14,7 @@ export default function ReferralPane() {
     return (
         <Pane>
             <PaneContainer>
+                <DonationInfoBar />
                 {(currentMethod === PaymentMethod.BANK) && 
                     <ResultWrapper>
                         <PaneTitle>Takk!</PaneTitle>
@@ -40,12 +42,10 @@ export default function ReferralPane() {
                 }
                 {(currentMethod === PaymentMethod.VIPPS) &&
                      <ResultWrapper>
-                        <VippsLogo src="https://storage.googleapis.com/effekt-widget/assets/logos/vipps.png" alt="Vipps logo" />
                         <button>Betal med Vipps</button>
                     </ResultWrapper>
                 }
             </PaneContainer>
-            <PrevButton />
         </Pane>
     );
 }
