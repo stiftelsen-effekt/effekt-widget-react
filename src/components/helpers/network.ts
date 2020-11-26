@@ -4,7 +4,7 @@ import { setAnsweredReferral } from "../../store/layout/actions"
 import { PaymentMethod } from "../../store/state"
 import { DonationData, ReferralData } from "./network.types"
 
-const api_url = "https://dev.data.gieffektivt.no/"
+const api_url = "https://data.gieffektivt.no/"
 
 export const getOrganizationsURL = api_url + 'organizations/active'
 
@@ -98,4 +98,48 @@ export function postReferral(referralData: ReferralData) {
     request("referrals/", "POST", referralData, function (err: any, data: any) {
         console.log(data)
     })
+}
+
+export function setupWebSocket() {
+    let socket = new WebSocket("wss://api.gieffektivt.no");
+    
+    socket.addEventListener("message", (msg) => { onSocketMessage(msg) } )
+    socket.addEventListener("close", () => { console.log("Socket closed") } )
+    socket.addEventListener("open", () => keepWebsocketAlive(socket))
+
+    keepWebsocketAlive(socket);
+}
+
+export function keepWebsocketAlive(socket: WebSocket) { 
+    var timeout = 20000;
+    if (socket.readyState == socket.OPEN) {  
+        socket.send('');  
+    }  
+    let websocketTimerId = setTimeout(keepWebsocketAlive(socket), timeout);  
+}  
+
+// export function cancelWebsocketKeepAlive() {  
+//     if (this.websocketTimerId) {  
+//         clearTimeout(this.websocketTimerId);  
+//     }  
+// }
+
+export function onSocketMessage(msg: any) {
+    console.log("Socket message: ", msg);
+
+    const clientWsID = msg.data;
+    //updatePayPalForms();
+    
+    if (msg.data == "PAYPAL_VERIFIED") {
+        console.log("PAYPAL VERIFIED")
+        // this.submit("DONATION_RECIEVED");
+        // this.cancelWebsocketKeepAlive();
+        // this.socket.close();
+    }
+    else if (msg.data == "PAYPAL_ERROR") {
+         console.log("PAYPAL ERROR")
+        // this.widget.error("Feil i PayPal");
+        // this.hideWaitingScreen();
+    }
+    
 }

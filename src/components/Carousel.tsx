@@ -6,33 +6,40 @@ import MethodPane from './panes/MethodPane/MethodPane';
 import DonorPane from './panes/DonorPane/DonorPane';
 import DonationPane from './panes/DonationPane/DonationPane';
 import SharesPane from './panes/SharesPane/SharesPane';
+import PayPalPane from './panes/PayPalPane/PayPalPane'
 import ReferralPane from './panes/ReferralPane/ReferralPane';
 import ResultPane from './panes/ResultPane/ResultPane';
 import { Collapse } from '@material-ui/core';
 import { useSelector } from 'react-redux';
-import { State } from '../store/state';
+import { State, PaneNumber } from '../store/state';
   
 export default function Carousel(){
     const currentPane = useSelector((state: State) => state.layout.paneNumber)
 
     return (
         <CarouselWrapper>
-            <Collapse in={currentPane === 0}>
+            <Collapse in={currentPane === PaneNumber.MethodPane}>
                 <MethodPane />
             </Collapse>
-            <Collapse in={currentPane === 1}>
+            <Collapse in={currentPane === PaneNumber.DonorPane}>
                 <DonorPane />
             </Collapse>
-            <Collapse in={currentPane === 2}>
+            <Collapse in={currentPane === PaneNumber.DonationPane}>
                 <DonationPane />
             </Collapse>
-            <Collapse in={currentPane === 3}>
+            <Collapse in={currentPane === PaneNumber.SharesPane}>
                 <SharesPane />
             </Collapse>
-            <Collapse in={currentPane === 4}>
+            <Collapse in={currentPane === PaneNumber.ReferralPane}>
                 <ReferralPane />
             </Collapse>
-            <Collapse in={currentPane === 5}>
+            <Collapse in={currentPane === PaneNumber.PayPalPane}>
+                <PayPalPane />
+            </Collapse>
+            <Collapse in={currentPane === PaneNumber.VippsPane}>
+                <h1>Vipps her</h1>
+            </Collapse>
+            <Collapse in={currentPane === PaneNumber.ResultPane}>
                 <ResultPane />
             </Collapse>
         </CarouselWrapper>

@@ -20,8 +20,7 @@ const rootReducer = combineReducers<State>({
   donation: donationReducer,
   layout: layoutReducer,
   paypal: payPalReducer,
-  error: errorReducer,
-  form: reduxFormReducer,
+  error: errorReducer
 });
 
 /**

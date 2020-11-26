@@ -8,7 +8,7 @@ import { useForm } from "react-hook-form"
 import Validate from 'validator'
 import { Collapse } from '@material-ui/core'
 import ErrorField from '../shared/ErrorField'
-import { NextButton, PrevButton, SkipButton } from '../shared/NavigationButtons'
+import { NextButton, OrangeButton, PrevButton } from '../shared/NavigationButtons'
 import { setPaneNumber } from '../../../store/layout/actions'
 import DonationInfoBar from '../shared/DonationInfoBar/DonationInfoBar'
 import { ToolTip } from '../shared/ToolTip'
@@ -133,7 +133,7 @@ export default function DonorPane() {
                     </div>
                     <NavigationWrapper>
                         <PrevButton />
-                        <SkipButton onClick={submitAnonymous} />
+                        <OrangeButton onClick={submitAnonymous} text="Gi anonymt" />
                         <NextButton isDisabled={nextDisabled} />
                     </NavigationWrapper>
                 </form>

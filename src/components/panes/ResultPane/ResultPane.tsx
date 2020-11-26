@@ -37,7 +37,10 @@ export default function ReferralPane() {
                     <ResultWrapper>
                         <PaneTitle>Takk!</PaneTitle>
                         <Heart src="https://storage.googleapis.com/effekt-widget/assets/heart.svg" alt="Takk for din donasjon" />
-                        <InfoText>Vi har nå mottatt din donasjon! Vi har også sendt en kvittering til {donorEmail} med mer informasjon. Sjekk søppelpost-mappen om du ikke har mottatt eposten i løpet av noen timer.</InfoText>
+                        <InfoText>Vi har nå mottatt din donasjon!</InfoText>
+                        {(donorEmail !== "anon@gieffektivt.no") &&
+                            <InfoText>Vi har også sendt en kvittering til {donorEmail} med mer informasjon. Sjekk søppelpost-mappen om du ikke har mottatt eposten i løpet av noen timer.</InfoText>
+                        }
                     </ResultWrapper>
                 }
                 {(currentMethod === PaymentMethod.VIPPS) &&

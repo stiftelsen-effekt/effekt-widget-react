@@ -1,11 +1,8 @@
-import { FormStateMap } from 'redux-form' //TODO: Remove redux form stuff
-
 export interface State {
     donation: Donation
     layout: Layout
     paypal: PayPalState
     error: Error
-    form: FormStateMap
 }
 
 //TODO: Remove privacyPolicy, it is only needed locally in DonationPane
@@ -65,4 +62,15 @@ export enum PaymentMethod {
     VIPPS_KID = 4,
     BANK_UKID = 5,
     VIPPS = 6,
+}
+
+export enum PaneNumber {
+    MethodPane =  0,
+    DonorPane = 1,
+    DonationPane = 2,
+    SharesPane = 3,
+    ReferralPane = 4,
+    PayPalPane = 5,
+    VippsPane = 6,
+    ResultPane = 7
 }

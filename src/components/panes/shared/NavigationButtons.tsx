@@ -73,13 +73,13 @@ export function NextButton(props: NextButtonProps) {
 export function PrevButton() {
     const currentPaneNumber = useSelector((state: State) => state.layout.paneNumber)
     const isCustomShare = useSelector((state: State) => state.layout.customShare)
+    const hasAnsweredReferral = useSelector((state: State) => state.layout.answeredReferral)
     const dispatch = useDispatch()
 
     function goBack() {
-        //TODO: This is probably redundant
         if (!isCustomShare && currentPaneNumber === 4) {
             dispatch(setPaneNumber(currentPaneNumber - 2))
-        } 
+        }
         else {
             dispatch(setPaneNumber(currentPaneNumber - 1))
         }
@@ -92,10 +92,10 @@ export function PrevButton() {
     )
 }
 
-export function SkipButton(props: any) {
+export function OrangeButton(props: any) {
     return (    
         <StyledSkipButton type="button" onClick={props.onClick}>
-            <ButtonText>Gi anonymt</ButtonText>
+            <ButtonText>{props.text}</ButtonText>
         </StyledSkipButton>
     )
 }
