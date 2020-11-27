@@ -4,7 +4,7 @@ import { Organization } from './../../interfaces/Organization'
 import { useForm } from 'react-hook-form'
 import { setDonorID, setKID, setShares } from './../../../store/donation/actions'
 import { useDispatch, useSelector } from 'react-redux'
-import { State } from '../../../store/state'
+import { PaymentMethod, paymentMethodStrings, State } from '../../../store/state'
 import { HorizontalLine, NavigationWrapper, PaneContainer, PaneTitle, VerticalLine } from '../Panes.style'
 import { OrganizationName, PercentageText, SharesWrapper, ShareWrapper, SmallTextField } from './SharesPane.style'
 import DonationInfoBar from '../shared/DonationInfoBar/DonationInfoBar'
@@ -131,7 +131,7 @@ export default function SharesPane() {
                         email: donorEmail,
                         newsletter: donorNewsletter
                     },
-                    method: donationMethod,
+                    method: paymentMethodStrings[donationMethod],
                     organizations: orgSplits
                 }
                 if (donationSum) postData.amount = donationSum

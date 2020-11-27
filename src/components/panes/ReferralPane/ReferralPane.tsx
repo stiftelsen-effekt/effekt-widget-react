@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form'
 import { Collapse } from '@material-ui/core'
 import { useDispatch, useSelector } from 'react-redux'
 import { setPaneNumber } from '../../../store/layout/actions'
-import { State } from '../../../store/state'
+import { PaneNumber, PaymentMethod, State } from '../../../store/state'
 import { getReferrals, postReferral } from '../../helpers/network'
 import { TextField } from '../Forms.style'
 import { HorizontalLine, NavigationWrapper, Pane, PaneContainer, PaneTitle, UnderTitle, VerticalLine } from '../Panes.style'
@@ -21,6 +21,7 @@ export default function ReferralPane() {
     const [referrals, setReferrals] = useState<Referral[]>()
     const [openOtherInput, setOpenOtherInput ] = useState(false)
     const currentPaneNumber = useSelector((state: State) => state.layout.paneNumber)
+    const paymentMethod = useSelector((state: State) => state.donation.method)
     const donorID = useSelector((state: State) => state.donation.donor?.donorID)
     const { handleSubmit, register, watch, errors } = useForm()
     const watchOtherInput = watch("other", false)
@@ -49,6 +50,18 @@ export default function ReferralPane() {
         return referralsList
     }
 
+    function goToNextPane() {
+        if (paymentMethod == PaymentMethod.BANK) {
+            dispatch(setPaneNumber(PaneNumber.ResultPane))
+        }
+        else if (paymentMethod == PaymentMethod.VIPPS) {
+            dispatch(setPaneNumber(PaneNumber.VippsPane))
+        }
+        else if (paymentMethod == PaymentMethod.PAYPAL) {
+            dispatch(setPaneNumber(PaneNumber.PayPalPane))
+        }
+    }
+
     function postExistingReferral(referralID: number) {
         if (donorID) {
             const referralData = {
@@ -57,7 +70,7 @@ export default function ReferralPane() {
                 otherComment: ""
             }
             postReferral(referralData)
-            dispatch(setPaneNumber(currentPaneNumber + 1))
+            goToNextPane()
         }
     }
 
@@ -69,7 +82,7 @@ export default function ReferralPane() {
                 otherComment: watchOtherInput
             }
             postReferral(referralData)
-            dispatch(setPaneNumber(currentPaneNumber + 1))
+            goToNextPane()
         }
     }
 

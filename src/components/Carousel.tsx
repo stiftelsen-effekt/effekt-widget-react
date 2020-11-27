@@ -7,11 +7,13 @@ import DonorPane from './panes/DonorPane/DonorPane';
 import DonationPane from './panes/DonationPane/DonationPane';
 import SharesPane from './panes/SharesPane/SharesPane';
 import PayPalPane from './panes/PayPalPane/PayPalPane'
+import VippsPane from './panes/VippsPane/VippsPane';
 import ReferralPane from './panes/ReferralPane/ReferralPane';
 import ResultPane from './panes/ResultPane/ResultPane';
 import { Collapse } from '@material-ui/core';
 import { useSelector } from 'react-redux';
 import { State, PaneNumber } from '../store/state';
+
   
 export default function Carousel(){
     const currentPane = useSelector((state: State) => state.layout.paneNumber)
@@ -37,7 +39,7 @@ export default function Carousel(){
                 <PayPalPane />
             </Collapse>
             <Collapse in={currentPane === PaneNumber.VippsPane}>
-                <h1>Vipps her</h1>
+                <VippsPane />
             </Collapse>
             <Collapse in={currentPane === PaneNumber.ResultPane}>
                 <ResultPane />

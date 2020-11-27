@@ -16,7 +16,7 @@ export interface OrganizationSplit {
 export interface DonationData {
     donor: Donor;
     amount?: number;
-    method: PaymentMethod;
+    method: string;
     organizations?: Array<OrganizationSplit>
 }
 

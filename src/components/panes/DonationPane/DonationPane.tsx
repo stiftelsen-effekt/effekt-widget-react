@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setSum, setRecurring, setDonorID, setKID } from '../../../store/donation/actions'
 import { selectCustomShare, setPaneNumber } from '../../../store/layout/actions'
 import { HorizontalLine, NavigationWrapper, Pane, PaneContainer, PaneTitle, VerticalLine } from '../Panes.style';
-import { PaymentMethod, State } from '../../../store/state';
+import { PaneNumber, PaymentMethod, paymentMethodStrings, State } from '../../../store/state';
 import { NextButton, PrevButton } from '../shared/NavigationButtons';
 import { useForm } from 'react-hook-form';
 import DonationInfoBar from '../shared/DonationInfoBar/DonationInfoBar';
@@ -27,6 +27,7 @@ export default function DonationPane() {
     const [ recurringErrorAnimation, setRecurringErrorAnimation ] = useState(false)
     const [ customShareErrorAnimation, setCustomShareErrorAnimation ] = useState(false)
     const isCustomShare = useSelector((state: State) => state.layout.customShare)
+    const DonationMethod = useSelector((state: State) => state.donation.method)
     const isRecurring = useSelector((state: State) => state.donation.recurring)
     const donorName = useSelector((state: State) => state.donation.donor?.name)
     const donorEmail = useSelector((state: State) => state.donation.donor?.email)
@@ -65,10 +66,19 @@ export default function DonationPane() {
     useEffect(() => {
         if (answeredReferral !== undefined) {
             if (!isCustomShare && answeredReferral) {
-                dispatch(setPaneNumber(currentPaneNumber + 3))
+                if (DonationMethod === PaymentMethod.BANK) {
+                    dispatch(setPaneNumber(PaneNumber.ResultPane))
+                }
+                else if (DonationMethod === PaymentMethod.VIPPS) {
+                    dispatch(setPaneNumber(PaneNumber.VippsPane))
+                }
+                else if (DonationMethod === PaymentMethod.PAYPAL) {
+                    dispatch(setPaneNumber(PaneNumber.PayPalPane))
+
+                }
             }
             else if (!isCustomShare) {
-                dispatch(setPaneNumber(currentPaneNumber + 2))
+                dispatch(setPaneNumber(PaneNumber.ReferralPane))
             }
         }
     }, [answeredReferral])
@@ -85,7 +95,7 @@ export default function DonationPane() {
                             ssn: donorSSN ? donorSSN.toString() : "",
                             newsletter: donorNewsletter
                         },
-                        method: currentPaymentMethod
+                        method: paymentMethodStrings[currentPaymentMethod]
                     }
                     if (donationSum && (currentPaymentMethod !== PaymentMethod.BANK && currentPaymentMethod !== PaymentMethod.BANK_UKID )) { 
                         postData.amount = donationSum
@@ -94,7 +104,7 @@ export default function DonationPane() {
                 }
             }
             else if (isCustomShare === true) {
-                dispatch(setPaneNumber(currentPaneNumber + 1))
+                dispatch(setPaneNumber(PaneNumber.SharesPane))
             }
         }
     }

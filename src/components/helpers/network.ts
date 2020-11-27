@@ -1,10 +1,10 @@
 import { resolve } from "dns"
 import { setDonorID, setKID } from "../../store/donation/actions"
 import { setAnsweredReferral } from "../../store/layout/actions"
-import { PaymentMethod } from "../../store/state"
+import { PaymentMethod, paymentMethodStrings } from "../../store/state"
 import { DonationData, ReferralData } from "./network.types"
 
-const api_url = "https://data.gieffektivt.no/"
+const api_url = "https://dev.data.gieffektivt.no/"
 
 export const getOrganizationsURL = api_url + 'organizations/active'
 
@@ -76,7 +76,7 @@ export async function postDonation(postData: DonationData, dispatch: Function) {
         dispatch(setKID(data.content.KID))
         dispatch(setDonorID(data.content.donorID))
 
-        if (postData.method === PaymentMethod.BANK) {
+        if (postData.method === paymentMethodStrings[PaymentMethod.BANK]) {
             registerBankPending({KID: data.content.KID})
         }
 
@@ -99,6 +99,10 @@ export function postReferral(referralData: ReferralData) {
         console.log(data)
     })
 }
+
+
+
+//TODO: Remove unused code
 
 export function setupWebSocket() {
     let socket = new WebSocket("wss://api.gieffektivt.no");

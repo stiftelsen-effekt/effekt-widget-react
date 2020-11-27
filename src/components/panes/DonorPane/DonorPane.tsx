@@ -58,16 +58,25 @@ export default function DonorPane() {
     }
 
     useEffect(() => {
+        console.log(watchAllFields.taxDeduction)
+        console.log(errors)
         errors.name ? setNameErrorAnimation(true) : setNameErrorAnimation(false)
         errors.email ? setEmailErrorAnimation(true) : setEmailErrorAnimation(false)
         errors.ssn ? setSsnErrorAnimation(true) : setSsnErrorAnimation(false)
         errors.privacyPolicy ? setPrivacyPolicyErrorAnimation(true) : setPrivacyPolicyErrorAnimation(false)
 
-        if (Object.keys(errors).length <= 0) {
-            if(watchAllFields.taxDeduction && errors.taxDeduction) {
+        if (Object.keys(errors).length == 0) {
+            setNextDisabled(false)
+        }
+        else if (Object.keys(errors).length === 1) {
+            if (errors.ssn && watchAllFields.taxDeduction === true) {
+                console.log("her")
                 setNextDisabled(true)
             }
-            setNextDisabled(false)
+            else if (errors.ssn && watchAllFields.taxDeduction === false) {
+                console.log("her2")
+                setNextDisabled(false)
+            }
         }
         else {
             setNextDisabled(true)
@@ -76,13 +85,11 @@ export default function DonorPane() {
     }, [watchAllFields])
 
     function onSubmit() {
-        if (Object.keys(errors).length === 0) {
+        console.log("submitted")
+        if (!nextDisabled) {
             setAnonymousDonor(false)
             setSuccessfulSubmit(true)
             dispatch(setPaneNumber(currentPaneNumber + 1))
-        }
-        else {
-            setAnonymousDonor(true)
         }
     }
 
@@ -113,7 +120,7 @@ export default function DonorPane() {
                                         <ErrorField text="Ugyldig personnummer"/>
                                     </Collapse>
                                     <TextField name="ssn" type="tel" placeholder="Personnummer" 
-                                        ref={register({ validate: val => !watchAllFields.taxDeduction || (Validate.isInt(val) && Validate.isLength(val, {min:9, max: 11}))})} 
+                                        ref={register({ required: false, validate: val => watchAllFields.taxDeduction == false || (Validate.isInt(val) && Validate.isLength(val, {min:9, max: 11}))})} 
                                     />
                                 </InputFieldWrapper>
                             </Collapse>

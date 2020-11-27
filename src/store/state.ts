@@ -64,6 +64,11 @@ export enum PaymentMethod {
     VIPPS = 6,
 }
 
+export let paymentMethodStrings: any = {}
+paymentMethodStrings[PaymentMethod.BANK] = "BANK"
+paymentMethodStrings[PaymentMethod.PAYPAL] = "PAYPAL"
+paymentMethodStrings[PaymentMethod.VIPPS] = "VIPPS"
+
 export enum PaneNumber {
     MethodPane =  0,
     DonorPane = 1,
