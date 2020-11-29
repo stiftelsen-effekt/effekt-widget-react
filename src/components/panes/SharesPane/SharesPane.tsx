@@ -103,7 +103,7 @@ export default function SharesPane() {
     }, [answeredReferral])
 
     function onSubmit() {
-        dispatch(setShares(watchAllFields)) // This line might be redundant?
+        dispatch(setShares(watchAllFields))
         if (getTotalPercentage().totalPercentage === 100) {
             setSubmitLoading(true)
             if (donorName && donorEmail && donationMethod && donorNewsletter !== undefined) {

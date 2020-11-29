@@ -25,3 +25,13 @@ export interface ReferralData {
     donorID: number;
     otherComment: string;
 }
+
+export interface PostDonationResponse {
+    content: {
+        KID: number,
+        donorID: number,
+        hasAnsweredReferral: boolean,
+        paymentProviderUrl: string
+    }
+    status: number
+}

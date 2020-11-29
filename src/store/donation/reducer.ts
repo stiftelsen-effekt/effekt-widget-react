@@ -1,7 +1,6 @@
-import { act } from 'react-dom/test-utils';
 import { Reducer } from 'redux';
 import { Donation } from '../state';
-import { DonationActionTypes, SELECT_PAYMENT_METHOD, SELECT_TAX_DEDUCTION, SUBMIT_DONOR_INFO, SET_SHARES, SET_SUM, SET_RECURRING, SET_KID, SET_DONOR_ID} from './types';
+import { DonationActionTypes, SELECT_PAYMENT_METHOD, SELECT_TAX_DEDUCTION, SUBMIT_DONOR_INFO, SET_SHARES, SET_SUM, SET_RECURRING, SET_KID, SET_DONOR_ID, SET_PAYMENT_PROVIDER_URL} from './types';
 
 const initialState: Donation = {
   recurring: true,
@@ -49,6 +48,8 @@ export const donationReducer: Reducer<Donation, DonationActionTypes> = (
       return { ...state, kid: action.payload.kid }
     case SET_DONOR_ID:
       return { ...state, donor: { ...state.donor, donorID: action.payload.donorID }}
+    case SET_PAYMENT_PROVIDER_URL: 
+      return { ...state, paymentProviderURL: action.payload.url }
     default:
       return state;
   }

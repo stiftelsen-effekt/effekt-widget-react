@@ -58,8 +58,6 @@ export default function DonorPane() {
     }
 
     useEffect(() => {
-        console.log(watchAllFields.taxDeduction)
-        console.log(errors)
         errors.name ? setNameErrorAnimation(true) : setNameErrorAnimation(false)
         errors.email ? setEmailErrorAnimation(true) : setEmailErrorAnimation(false)
         errors.ssn ? setSsnErrorAnimation(true) : setSsnErrorAnimation(false)
@@ -70,11 +68,9 @@ export default function DonorPane() {
         }
         else if (Object.keys(errors).length === 1) {
             if (errors.ssn && watchAllFields.taxDeduction === true) {
-                console.log("her")
                 setNextDisabled(true)
             }
             else if (errors.ssn && watchAllFields.taxDeduction === false) {
-                console.log("her2")
                 setNextDisabled(false)
             }
         }
@@ -85,7 +81,6 @@ export default function DonorPane() {
     }, [watchAllFields])
 
     function onSubmit() {
-        console.log("submitted")
         if (!nextDisabled) {
             setAnonymousDonor(false)
             setSuccessfulSubmit(true)

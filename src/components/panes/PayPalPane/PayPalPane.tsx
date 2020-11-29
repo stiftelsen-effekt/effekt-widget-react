@@ -8,7 +8,7 @@ import { LoadingIcon, NavigationWrapper, Pane, PaneContainer, PaneTitle, UnderTi
 import DonationInfoBar from '../shared/DonationInfoBar/DonationInfoBar';
 import { PayPalFormWrapper, OrangeSubmit } from './PayPalPane.style';
 
-//TODO: Recurring donation does not return message after paying and subscribing in PayPal
+//TODO: Recurring donation does not return message after paying and subscribing in PayPal (does not work in production with the old widget either)
 
 export default function ReferralPane() {
     const isRecurring = useSelector((state: State) => state.donation.recurring)
@@ -19,6 +19,7 @@ export default function ReferralPane() {
     const [webSocketID, setWebSocketID ] = useState()
     const dispatch = useDispatch()
 
+    // Opens up a WebSocket that listens for a response from PayPal with status of payment
     useEffect(() => {
         const socket = new WebSocket("wss://api.gieffektivt.no")
         socket.onmessage = function (event) {

@@ -45,7 +45,9 @@ export default function ReferralPane() {
                 }
                 {(currentMethod === PaymentMethod.VIPPS) &&
                      <ResultWrapper>
-                        <button>Betal med Vipps</button>
+                        <PaneTitle>Takk!</PaneTitle>
+                        <Heart src="https://storage.googleapis.com/effekt-widget/assets/heart.svg" alt="Takk for din donasjon" />
+                        <InfoText>Vi håper å straks motta din donasjon via Vipps!</InfoText>
                     </ResultWrapper>
                 }
             </PaneContainer>

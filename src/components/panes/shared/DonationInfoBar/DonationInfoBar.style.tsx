@@ -57,5 +57,5 @@ export const VippsLogo = styled(MethodLogo)`
     background-image: url(https://storage.googleapis.com/effekt-widget/assets/logos/vipps.png);
     background-size: 80px auto;
     position: relative;
-    top: 5px;
+    top: 3px;
 `

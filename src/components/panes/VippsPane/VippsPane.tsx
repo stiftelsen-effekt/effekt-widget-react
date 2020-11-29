@@ -1,22 +1,26 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
-import { PaymentMethod, State } from '../../../store/state';
-import { Pane, PaneContainer, PaneTitle } from '../Panes.style';
+import { useDispatch, useSelector } from 'react-redux';
+import { setPaymentProviderURL } from '../../../store/donation/actions';
+import { setPaneNumber } from '../../../store/layout/actions';
+import { PaneNumber, PaymentMethod, State } from '../../../store/state';
+import { Pane, PaneContainer } from '../Panes.style';
 import DonationInfoBar from '../shared/DonationInfoBar/DonationInfoBar';
-import { PrevButton } from '../shared/NavigationButtons';
+import { VippsButton } from './VippsPane.style';
 
 export default function VippsPane() {
+    const vippsPaymentURL = useSelector((state: State) => state.donation.paymentProviderURL)
+    const dispatch = useDispatch()
 
     function openVipps() {
-
+        window.open(vippsPaymentURL)
+        dispatch(setPaneNumber(PaneNumber.ResultPane))
     }
 
     return (
         <Pane>
             <PaneContainer>
                 <DonationInfoBar />
-                <PaneTitle>Vipps</PaneTitle>
-                <button onClick={openVipps}></button>
+                <VippsButton onClick={openVipps}></VippsButton>
             </PaneContainer>
         </Pane>
     )

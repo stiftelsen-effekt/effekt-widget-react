@@ -20,6 +20,8 @@ interface DonationFormValues {
     sum: string;
 }
 
+//TODO: Add loading animation after submitting
+
 export default function DonationPane() {
     const dispatch = useDispatch()
     const [ nextDisabled, setNextDisabled ] = useState(false)

@@ -1,4 +1,4 @@
-import { DonationActionTypes, SELECT_PAYMENT_METHOD, SELECT_TAX_DEDUCTION, SUBMIT_DONOR_INFO, SET_SUM, SET_RECURRING, SET_SHARES, SET_DONOR_ID, SET_KID } from './types';
+import { DonationActionTypes, SELECT_PAYMENT_METHOD, SELECT_TAX_DEDUCTION, SUBMIT_DONOR_INFO, SET_SUM, SET_RECURRING, SET_SHARES, SET_DONOR_ID, SET_KID, SET_PAYMENT_PROVIDER_URL } from './types';
 import { PaymentMethod, Splits } from '../state'
 
 export function selectPaymentMethod(method: PaymentMethod): DonationActionTypes {
@@ -73,6 +73,15 @@ export function setKID(kid: number): DonationActionTypes {
     type: SET_KID,
     payload: {
       kid
+    }
+  }
+}
+
+export function setPaymentProviderURL(url: string): DonationActionTypes {
+  return {
+    type: SET_PAYMENT_PROVIDER_URL,
+    payload: {
+      url
     }
   }
 }

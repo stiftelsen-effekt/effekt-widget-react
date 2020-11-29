@@ -1,8 +1,8 @@
 import { resolve } from "dns"
-import { setDonorID, setKID } from "../../store/donation/actions"
+import { setDonorID, setKID, setPaymentProviderURL } from "../../store/donation/actions"
 import { setAnsweredReferral } from "../../store/layout/actions"
 import { PaymentMethod, paymentMethodStrings } from "../../store/state"
-import { DonationData, ReferralData } from "./network.types"
+import { DonationData, PostDonationResponse, ReferralData } from "./network.types"
 
 const api_url = "https://dev.data.gieffektivt.no/"
 
@@ -65,7 +65,7 @@ export function registerBankPending(postData: {KID: number}) {
 }
 
 export async function postDonation(postData: DonationData, dispatch: Function) {
-    return request("donations/register", "POST", postData, function(err: any, data: any) {
+    return request("donations/register", "POST", postData, function(err: any, data: PostDonationResponse) {
         if (err == 0 || err) {
             if (err == 0) console.error("Når ikke server. Forsøk igjen senere.");
             else if (err == 500) console.error("Det er noe feil med donasjonen");
@@ -75,6 +75,7 @@ export async function postDonation(postData: DonationData, dispatch: Function) {
         dispatch(setAnsweredReferral(data.content.hasAnsweredReferral))
         dispatch(setKID(data.content.KID))
         dispatch(setDonorID(data.content.donorID))
+        dispatch(setPaymentProviderURL(data.content.paymentProviderUrl))
 
         if (postData.method === paymentMethodStrings[PaymentMethod.BANK]) {
             registerBankPending({KID: data.content.KID})

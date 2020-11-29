@@ -28,6 +28,7 @@ export interface DonationInput {
 
 export interface Donation extends DonationInput {
     kid?: number
+    paymentProviderURL?: string
 }
 
 export interface DonorInput {
