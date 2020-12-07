@@ -1,3 +1,5 @@
+import { RECURRING_DONATION } from "./donation/types"
+
 export interface State {
     donation: Donation
     layout: Layout
@@ -21,7 +23,7 @@ export interface PayPalState {
 export interface DonationInput {
     method?: PaymentMethod
     sum: number
-    recurring: boolean
+    recurring: RECURRING_DONATION,
     donor?: Donor
     shares?: Splits
 }

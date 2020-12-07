@@ -4,12 +4,11 @@ import { setSum, setRecurring, setDonorID, setKID } from '../../../store/donatio
 import { selectCustomShare, setPaneNumber } from '../../../store/layout/actions'
 import { HorizontalLine, NavigationWrapper, Pane, PaneContainer, PaneTitle, VerticalLine } from '../Panes.style';
 import { PaneNumber, PaymentMethod, paymentMethodStrings, State } from '../../../store/state';
-import { NextButton, PrevButton } from '../shared/NavigationButtons';
+import { NextButton, PrevButton } from '../../shared/Buttons/NavigationButtons';
 import { useForm } from 'react-hook-form';
-import DonationInfoBar from '../shared/DonationInfoBar/DonationInfoBar';
 import { InputLabel, RadioButton, RadioWrapper, TextField } from '../Forms.style';
 import { Collapse } from '@material-ui/core';
-import ErrorField from '../shared/ErrorField';
+import ErrorField from '../../shared/Error/ErrorField';
 import Validator from 'validator'
 import { postDonation } from './../../helpers/network'
 import { DonationData } from '../../helpers/network.types';
@@ -44,8 +43,6 @@ export default function DonationPane() {
 
     function updateDonationState(values: DonationFormValues) {
         if (values.sum) dispatch(setSum(Validator.isInt(values.sum) ? parseInt(values.sum) : 0))
-        if (values.recurring) dispatch(setRecurring(values.recurring == "true"))
-        if (values.customShare) dispatch(selectCustomShare(values.customShare == "true"))
     }
 
     useEffect(() => {
@@ -114,7 +111,6 @@ export default function DonationPane() {
     return (
         <Pane>
             <PaneContainer>
-                <DonationInfoBar sum={watchAllFields.sum === "" || !Validator.isInt(watchAllFields.sum ? watchAllFields.sum : "") || parseInt(watchAllFields.sum) < 0  ? 0 : parseInt(watchAllFields.sum)} />
                 <PaneTitle>Om donasjonen</PaneTitle>
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <Collapse in={sumErrorAnimation}>
@@ -125,13 +121,6 @@ export default function DonationPane() {
                     }
                     {currentPaymentMethod === PaymentMethod.PAYPAL &&
                         <div>
-                            <RadioWrapper>
-                                <Collapse in={recurringErrorAnimation}>
-                                    <ErrorField text="Du må velge et alternativ"/>
-                                </Collapse>
-                                <div><RadioButton name="recurring" type="radio" value="true" ref={register} defaultChecked={isRecurring} /><InputLabel>Jeg vil gi en månedlig donasjon</InputLabel></div>
-                                <div><RadioButton name="recurring" type="radio" value="false" ref={register} defaultChecked={!isRecurring} /><InputLabel>Jeg vil gi en engangsdonasjon</InputLabel></div>
-                            </RadioWrapper>
                             <HorizontalLine />
                         </div>
                     }

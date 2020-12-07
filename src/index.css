@@ -6,9 +6,8 @@ body {
   font-weight: 300;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  position: absolute;
+  overflow-x: hidden;
 }
 
 code {

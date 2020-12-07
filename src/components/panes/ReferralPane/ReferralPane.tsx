@@ -7,8 +7,8 @@ import { PaneNumber, PaymentMethod, State } from '../../../store/state'
 import { getReferrals, postReferral } from '../../helpers/network'
 import { TextField } from '../Forms.style'
 import { HorizontalLine, NavigationWrapper, Pane, PaneContainer, PaneTitle, UnderTitle, VerticalLine } from '../Panes.style'
-import DonationInfoBar from '../shared/DonationInfoBar/DonationInfoBar'
-import { NavButton, NextButton, PrevButton } from '../shared/NavigationButtons'
+
+import { NavButton, NextButton, PrevButton } from '../../shared/Buttons/NavigationButtons'
 import { OtherInput, OtherInputWrapper, ReferralButton, ReferralsWrapper } from './ReferralPane.style'
 
 interface Referral {
@@ -99,7 +99,6 @@ export default function ReferralPane() {
     return (
         <Pane>
             <PaneContainer>
-                <DonationInfoBar />
                 <PaneTitle>Hvor hørte du om oss?</PaneTitle>
                 <form onSubmit={handleSubmit(() => onSubmit(-1))}>
                     <Collapse in={!openOtherInput}>

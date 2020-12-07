@@ -7,11 +7,11 @@ import { InputFieldWrapper, TextField, InputLabel, CheckBox } from '../Forms.sty
 import { useForm } from "react-hook-form"
 import Validate from 'validator'
 import { Collapse } from '@material-ui/core'
-import ErrorField from '../shared/ErrorField'
-import { NextButton, OrangeButton, PrevButton } from '../shared/NavigationButtons'
+import ErrorField from '../../shared/Error/ErrorField'
+import { NextButton, OrangeButton, PrevButton } from '../../shared/Buttons/NavigationButtons'
 import { setPaneNumber } from '../../../store/layout/actions'
-import DonationInfoBar from '../shared/DonationInfoBar/DonationInfoBar'
-import { ToolTip } from '../shared/ToolTip'
+
+import { ToolTip } from '../../shared/ToolTip/ToolTip'
 
 interface DonorFormValues extends DonorInput {
     privacyPolicy: boolean;
@@ -91,7 +91,6 @@ export default function DonorPane() {
     return (
         <Pane>
             <PaneContainer>
-                <DonationInfoBar disableName={successfulSubmit} disableSum={successfulSubmit} />
                 <PaneTitle>Om deg</PaneTitle>
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <InputFieldWrapper>
@@ -115,7 +114,7 @@ export default function DonorPane() {
                                         <ErrorField text="Ugyldig personnummer"/>
                                     </Collapse>
                                     <TextField name="ssn" type="tel" placeholder="Personnummer" 
-                                        ref={register({ required: false, validate: val => watchAllFields.taxDeduction == false || (Validate.isInt(val) && Validate.isLength(val, {min:9, max: 11}))})} 
+                                        ref={register({ required: false, validate: val => watchAllFields.taxDeduction === false || (Validate.isInt(val) && Validate.isLength(val, {min:9, max: 11}))})} 
                                     />
                                 </InputFieldWrapper>
                             </Collapse>

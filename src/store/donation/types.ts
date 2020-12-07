@@ -52,7 +52,7 @@ interface SetSum {
 interface SetRecurring {
   type: typeof SET_RECURRING
   payload: {
-    recurring: boolean,
+    recurring: RECURRING_DONATION,
   }
 }
 
@@ -75,6 +75,16 @@ interface SetPaymentProviderURL {
   payload: {
     url: string
   }
+}
+
+export enum RECURRING_DONATION {
+  RECURRING,
+  NON_RECURRING
+}
+
+export enum SHARE_TYPE {
+  STANDARD,
+  CUSTOM
 }
 
 export type DonationActionTypes = SelectPaymentMethod | SelectTaxDeduction | SubmitDonorInfo | SetShares | SetSum | SetRecurring | SetKID | SetDonorID | SetPaymentProviderURL

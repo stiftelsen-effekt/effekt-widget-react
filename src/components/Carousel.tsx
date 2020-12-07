@@ -10,9 +10,8 @@ import PayPalPane from './panes/PayPalPane/PayPalPane'
 import VippsPane from './panes/VippsPane/VippsPane';
 import ReferralPane from './panes/ReferralPane/ReferralPane';
 import ResultPane from './panes/ResultPane/ResultPane';
-import { Collapse } from '@material-ui/core';
 import { useSelector } from 'react-redux';
-import { State, PaneNumber } from '../store/state';
+import { State } from '../store/state';
 
   
 export default function Carousel(){
@@ -20,30 +19,14 @@ export default function Carousel(){
 
     return (
         <CarouselWrapper>
-            <Collapse in={currentPane === PaneNumber.MethodPane}>
-                <MethodPane />
-            </Collapse>
-            <Collapse in={currentPane === PaneNumber.DonorPane}>
-                <DonorPane />
-            </Collapse>
-            <Collapse in={currentPane === PaneNumber.DonationPane}>
-                <DonationPane />
-            </Collapse>
-            <Collapse in={currentPane === PaneNumber.SharesPane}>
-                <SharesPane />
-            </Collapse>
-            <Collapse in={currentPane === PaneNumber.ReferralPane}>
-                <ReferralPane />
-            </Collapse>
-            <Collapse in={currentPane === PaneNumber.PayPalPane}>
-                <PayPalPane />
-            </Collapse>
-            <Collapse in={currentPane === PaneNumber.VippsPane}>
-                <VippsPane />
-            </Collapse>
-            <Collapse in={currentPane === PaneNumber.ResultPane}>
-                <ResultPane />
-            </Collapse>
+            <MethodPane />
+            <DonorPane />
+            <DonationPane />
+            <SharesPane />
+            <ReferralPane />
+            <PayPalPane />
+            <VippsPane />
+            <ResultPane />
         </CarouselWrapper>
     );
 }

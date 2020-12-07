@@ -7,13 +7,13 @@ import { useDispatch, useSelector } from 'react-redux'
 import { PaymentMethod, paymentMethodStrings, State } from '../../../store/state'
 import { HorizontalLine, NavigationWrapper, PaneContainer, PaneTitle, VerticalLine } from '../Panes.style'
 import { OrganizationName, PercentageText, SharesWrapper, ShareWrapper, SmallTextField } from './SharesPane.style'
-import DonationInfoBar from '../shared/DonationInfoBar/DonationInfoBar'
-import { NextButton, PrevButton } from '../shared/NavigationButtons'
+
+import { NextButton, PrevButton } from '../../shared/Buttons/NavigationButtons'
 import { useQuery } from 'react-query'
 import axios from 'axios'
 import { Collapse } from '@material-ui/core'
 import { setPaneNumber } from '../../../store/layout/actions'
-import { ToolTip } from '../shared/ToolTip'
+import { ToolTip } from '../../shared/ToolTip/ToolTip'
 import { postDonation } from './../../helpers/network'
 import { DonationData, OrganizationSplit } from './../../helpers/network.types'
 
@@ -148,7 +148,6 @@ export default function SharesPane() {
     
     return (
         <PaneContainer>
-            <DonationInfoBar />
             <PaneTitle>Velg fordeling</PaneTitle>
             {!submitLoading ? 
                 <form onSubmit={handleSubmit(onSubmit)}>

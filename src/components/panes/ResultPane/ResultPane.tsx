@@ -2,8 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { PaymentMethod, State } from '../../../store/state';
 import { Pane, PaneContainer, PaneTitle } from '../Panes.style';
-import DonationInfoBar from '../shared/DonationInfoBar/DonationInfoBar';
-import { PrevButton } from '../shared/NavigationButtons';
+import { PrevButton } from '../../shared/Buttons/NavigationButtons';
 import { BlackContainer, BoldWhiteText, Heart, ResultWrapper, VippsLogo, WhiteText, TextWrapper, InfoText } from './ResultPane.style';
 
 export default function ReferralPane() {
@@ -14,7 +13,6 @@ export default function ReferralPane() {
     return (
         <Pane>
             <PaneContainer>
-                <DonationInfoBar />
                 {(currentMethod === PaymentMethod.BANK) && 
                     <ResultWrapper>
                         <PaneTitle>Takk!</PaneTitle>

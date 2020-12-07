@@ -1,9 +1,9 @@
 import { Reducer } from 'redux';
 import { Donation } from '../state';
-import { DonationActionTypes, SELECT_PAYMENT_METHOD, SELECT_TAX_DEDUCTION, SUBMIT_DONOR_INFO, SET_SHARES, SET_SUM, SET_RECURRING, SET_KID, SET_DONOR_ID, SET_PAYMENT_PROVIDER_URL} from './types';
+import { DonationActionTypes, SELECT_PAYMENT_METHOD, SELECT_TAX_DEDUCTION, SUBMIT_DONOR_INFO, SET_SHARES, SET_SUM, SET_RECURRING, SET_KID, SET_DONOR_ID, SET_PAYMENT_PROVIDER_URL, RECURRING_DONATION} from './types';
 
 const initialState: Donation = {
-  recurring: true,
+  recurring: RECURRING_DONATION.RECURRING,
   sum: 0,
   donor: {
     taxDeduction: false,

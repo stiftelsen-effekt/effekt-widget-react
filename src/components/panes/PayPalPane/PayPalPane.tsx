@@ -5,7 +5,6 @@ import { setPaneNumber } from '../../../store/layout/actions';
 import { PaneNumber, PaymentMethod, State } from '../../../store/state';
 import { InputFieldWrapper } from '../Forms.style';
 import { LoadingIcon, NavigationWrapper, Pane, PaneContainer, PaneTitle, UnderTitle } from '../Panes.style';
-import DonationInfoBar from '../shared/DonationInfoBar/DonationInfoBar';
 import { PayPalFormWrapper, OrangeSubmit } from './PayPalPane.style';
 
 //TODO: Recurring donation does not return message after paying and subscribing in PayPal (does not work in production with the old widget either)
@@ -37,7 +36,6 @@ export default function ReferralPane() {
     return (
         <Pane>
             <PaneContainer>
-                <DonationInfoBar />
                 <PaneTitle>Gå til PayPal</PaneTitle>
                 {(!isRecurring && !payPalLoading) &&
                     <PayPalFormWrapper>
