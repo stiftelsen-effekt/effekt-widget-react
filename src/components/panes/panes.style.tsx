@@ -20,7 +20,7 @@ export const PaneTitle = styled.p`
 `
 
 export const UnderTitle = styled.p`
-    font-size: 15px
+    font-size: 15px;
     align-self: center;
     margin: 5px;
     text-align: center;
