@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { PaneContainer, PaneTitle, OrangeLink, NavigationWrapper, HorizontalLine, Pane } from '../Panes.style'
+import { PaneContainer, OrangeLink, Pane } from '../Panes.style'
 import { DonorInput, State } from '../../../store/state'
 import { submitDonorInfo } from '../../../store/donation/actions'
 import { InputFieldWrapper, TextField, InputLabel, CheckBox } from '../Forms.style'
@@ -8,10 +8,15 @@ import { useForm } from "react-hook-form"
 import Validate from 'validator'
 import { Collapse } from '@material-ui/core'
 import ErrorField from '../../shared/Error/ErrorField'
-import { NextButton, OrangeButton, PrevButton } from '../../shared/Buttons/NavigationButtons'
-import { setPaneNumber } from '../../../store/layout/actions'
+import { nextPane, setPaneNumber } from '../../../store/layout/actions'
 
 import { ToolTip } from '../../shared/ToolTip/ToolTip'
+import { DonorForm } from './DonorPane.style'
+import { RichSelect } from '../../shared/RichSelect/RichSelect'
+import { DonorType } from '../../../types/Temp'
+import { RichSelectOption } from '../../shared/RichSelect/RichSelectOption'
+import { NavButton } from '../../shared/Buttons/NavigationButtons'
+import { NextButton } from '../../shared/Buttons/NavigationButtons.style'
 
 interface DonorFormValues extends DonorInput {
     privacyPolicy: boolean;
@@ -31,11 +36,10 @@ const anonymousDonorObject: DonorFormValues = {
 export const DonorPane: React.FC = () => {
     const dispatch = useDispatch()
     const [ nextDisabled, setNextDisabled ] = useState(true)
-    const [ successfulSubmit, setSuccessfulSubmit ] = useState(false)
     const [ nameErrorAnimation, setNameErrorAnimation ] = useState(false)
     const [ emailErrorAnimation, setEmailErrorAnimation ] = useState(false)
     const [ ssnErrorAnimation, setSsnErrorAnimation ] = useState(false)
-    const [ anonymousDonor, setAnonymousDonor ] = useState(false)
+    const [ anonymousDonor, setAnonymousDonor ] = useState(DonorType.DONOR)
     const [ privacyPolicyErrorAnimation, setPrivacyPolicyErrorAnimation ] = useState(false)
     const currentPaneNumber = useSelector((state: State) => state.layout.paneNumber)
     const { register, watch, errors, handleSubmit } = useForm<DonorFormValues>()
@@ -52,9 +56,8 @@ export const DonorPane: React.FC = () => {
     }
 
     function submitAnonymous() {
-        setAnonymousDonor(true)
+        setAnonymousDonor(DonorType.ANONYMOUS)
         dispatch(setPaneNumber(currentPaneNumber + 1))
-        setSuccessfulSubmit(true)
     }
 
     useEffect(() => {
@@ -82,63 +85,73 @@ export const DonorPane: React.FC = () => {
 
     function onSubmit() {
         if (!nextDisabled) {
-            setAnonymousDonor(false)
-            setSuccessfulSubmit(true)
-            dispatch(setPaneNumber(currentPaneNumber + 1))
+            setAnonymousDonor(DonorType.DONOR)
+            dispatch(nextPane())
         }
     }
 
     return (
         <Pane>
-            <PaneContainer>
-                <PaneTitle>Om deg</PaneTitle>
-                <form onSubmit={handleSubmit(onSubmit)}>
-                    <InputFieldWrapper>
-                        <Collapse in={nameErrorAnimation}>
-                            <ErrorField text="Ugyldig navn"/>
-                        </Collapse>
-                        <TextField name="name" type="text" placeholder="Navn" ref={register({ required: true, minLength: 3})} />
-                        <Collapse in={emailErrorAnimation}>
-                            <ErrorField text="Ugyldig epost"/>
-                        </Collapse>
-                        <TextField name="email" type="text" placeholder="Epost" ref={register({ required: true, validate: val => Validate.isEmail(val)})} />
-                    </InputFieldWrapper>
-                    <div>
-                        <div>
-                            <CheckBox name="taxDeduction" type="checkbox" ref={register} />
-                            <InputLabel>Jeg ønsker skattefradrag</InputLabel>
-                            <ToolTip text={tooltipText} link={tooltipLink} />
-                            <Collapse in={watchAllFields.taxDeduction}>
-                                <InputFieldWrapper>
-                                    <Collapse in={ssnErrorAnimation}>
-                                        <ErrorField text="Ugyldig personnummer"/>
-                                    </Collapse>
-                                    <TextField name="ssn" type="tel" placeholder="Personnummer" 
-                                        ref={register({ required: false, validate: val => watchAllFields.taxDeduction === false || (Validate.isInt(val) && Validate.isLength(val, {min:9, max: 11}))})} 
-                                    />
-                                </InputFieldWrapper>
+            <RichSelect selected={anonymousDonor} onChange={(type: DonorType) => setAnonymousDonor(type)}>
+                <RichSelectOption
+                    label={"Info om deg"}
+                    value={DonorType.DONOR}>
+                    <DonorForm onSubmit={handleSubmit(onSubmit)}>
+                        <InputFieldWrapper>
+                            <Collapse in={nameErrorAnimation}>
+                                <ErrorField text="Ugyldig navn"/>
                             </Collapse>
-                        </div>
-                        <div>
-                            {privacyPolicyErrorAnimation}
-                            <Collapse in={privacyPolicyErrorAnimation}>
-                                <ErrorField text="Du må godta personvernerklæringen"/>
+                            <TextField name="name" type="text" placeholder="Navn" ref={register({ required: true, minLength: 3})} />
+                            <Collapse in={emailErrorAnimation}>
+                                <ErrorField text="Ugyldig epost"/>
                             </Collapse>
-                            <CheckBox name="privacyPolicy" type="checkbox" ref={register({ required: true })} />
-                            <InputLabel>Jeg godtar </InputLabel>
-                            <OrangeLink target="_blank" rel="noopener noreferrer" href="https://gieffektivt.no/samarbeid-drift#personvern">personvernerklæringen</OrangeLink>
-                        </div>
+                            <TextField name="email" type="text" placeholder="Epost" ref={register({ required: true, validate: val => Validate.isEmail(val)})} />
+                        </InputFieldWrapper>
                         <div>
-                            <CheckBox name="newsletter" type="checkbox" ref={register} /><InputLabel>Jeg ønsker å melde meg på nyhetsbrevet</InputLabel>
+                            <div>
+                                <CheckBox name="taxDeduction" type="checkbox" ref={register} />
+                                <InputLabel>Jeg ønsker skattefradrag</InputLabel>
+                                <ToolTip text={tooltipText} link={tooltipLink} />
+                                <Collapse in={watchAllFields.taxDeduction}>
+                                    <InputFieldWrapper>
+                                        <Collapse in={ssnErrorAnimation}>
+                                            <ErrorField text="Ugyldig personnummer"/>
+                                        </Collapse>
+                                        <TextField name="ssn" type="tel" placeholder="Personnummer" 
+                                            ref={register({ required: false, validate: val => watchAllFields.taxDeduction === false || (Validate.isInt(val) && Validate.isLength(val, {min:9, max: 11}))})} 
+                                        />
+                                    </InputFieldWrapper>
+                                </Collapse>
+                            </div>
+                            <div>
+                                {privacyPolicyErrorAnimation}
+                                <Collapse in={privacyPolicyErrorAnimation}>
+                                    <ErrorField text="Du må godta personvernerklæringen"/>
+                                </Collapse>
+                                <CheckBox name="privacyPolicy" type="checkbox" ref={register({ required: true })} />
+                                <InputLabel>Jeg godtar </InputLabel>
+                                <OrangeLink target="_blank" rel="noopener noreferrer" href="https://gieffektivt.no/samarbeid-drift#personvern">personvernerklæringen</OrangeLink>
+                            </div>
+                            <div>
+                                <CheckBox name="newsletter" type="checkbox" ref={register} /><InputLabel>Jeg ønsker å melde meg på nyhetsbrevet</InputLabel>
+                            </div>
                         </div>
-                    </div>
-                    <NavigationWrapper>
+                    </DonorForm>
+                </RichSelectOption>
+                
+                <RichSelectOption
+                    label={"Doner anonymt"}
+                    value={DonorType.ANONYMOUS}></RichSelectOption>
+            </RichSelect>
+            <NextButton>Neste</NextButton>
+        </Pane>
+    );
+}
+
+/**
+ * <NavigationWrapper>
                         <PrevButton />
                         <OrangeButton onClick={submitAnonymous} text="Gi anonymt" />
                         <NextButton isDisabled={nextDisabled} />
                     </NavigationWrapper>
-                </form>
-            </PaneContainer>
-        </Pane>
-    );
-}
+ */

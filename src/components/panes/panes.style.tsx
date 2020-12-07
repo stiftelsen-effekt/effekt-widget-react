@@ -1,15 +1,17 @@
 import styled from 'styled-components'
 
 export const Pane = styled.div`
-    padding: 0px 20px;
+    padding: 20px;
     box-sizing: border-box; 
-`
-
-export const PaneContainer = styled.div`
     display: flex;
     flex-direction: column;
+`
+
+//TODO: REMOVE
+export const PaneContainer = styled.div`
     align-items: center;
     justify-content: center;
+    padding: 10px 0;
 `
 
 export const PaneTitle = styled.p`

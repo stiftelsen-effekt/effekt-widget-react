@@ -69,6 +69,8 @@ interface RadioBallProps {
 
 export const Content = styled.div`
   height: ${(props: ContentProps) => (props.selected ? 'auto' : '0px')};
+  overflow: hidden;
+  box-sizing: border-box;
 `;
 
 interface ContentProps {

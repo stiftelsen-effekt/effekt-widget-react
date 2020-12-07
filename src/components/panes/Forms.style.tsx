@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { gray18 } from '../../config/colors'
 
 export const Form = styled.form`
     display: flex;
@@ -14,13 +15,13 @@ export const InputFieldWrapper = styled.div`
 `
 
 export const TextField = styled.input`
-   width: 200px;
    padding: 20px;
    display: block;
    margin: 5px;
    font-size: 15px;
-   background: #eee;
-   border: none;
+   border: 1px solid ${gray18};
+   border-radius: 5px;
+   box-sizing: border-box;
 `
 
 export const CheckBox = styled.input`

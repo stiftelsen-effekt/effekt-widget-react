@@ -12,8 +12,11 @@ import { State } from '../store/state';
 
 function Widget() {
   const currentPane = useSelector((state: State) => state.layout.paneNumber)
+
+  console.log("Rerender widget")
+
   return (
-    <div style={{ display: 'block', maxWidth: '460px', margin: '0 auto' }}>
+    <div style={{ display: 'block', maxWidth: '100vw', margin: '0 auto' }}>
         <Carousel 
           dynamicHeight={true} 
           selectedItem={currentPane} 

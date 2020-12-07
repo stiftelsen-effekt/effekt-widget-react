@@ -4,6 +4,8 @@ import styled from 'styled-components'
 import { setPaneNumber } from '../../../store/layout/actions'
 import { State } from '../../../store/state'
 
+//TODO: Remove all this
+
 const NavigationButton = styled.button`
     background-color: white;
     border: none;
@@ -107,3 +109,5 @@ export function NavButton(props: any) {
         </NavigationButton>
     )
 }
+
+//END REMOVE
