@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { getOrganizationsURL } from '../../helpers/network'
-import { Organization } from './../../interfaces/Organization'
+import { Organization } from '../../../types/Organization'
 import { useForm } from 'react-hook-form'
 import { setDonorID, setKID, setShares } from './../../../store/donation/actions'
 import { useDispatch, useSelector } from 'react-redux'
@@ -21,7 +21,7 @@ const tooltipLink = "https://gieffektivt.no/organisasjoner"
 
 // TODO: Loading animation after submitting
 
-export default function SharesPane() {
+export const SharesPane: React.FC = () => {
     const dispatch = useDispatch()
     const [ nextDisabled, setNextDisabled ] = useState(false)
     const [ submitLoading, setSubmitLoading ] = useState(false)

@@ -17,7 +17,7 @@ interface Referral {
     ordering: number;
 }
 
-export default function ReferralPane() {
+export const ReferralPane: React.FC = () => {
     const [referrals, setReferrals] = useState<Referral[]>()
     const [openOtherInput, setOpenOtherInput ] = useState(false)
     const currentPaneNumber = useSelector((state: State) => state.layout.paneNumber)

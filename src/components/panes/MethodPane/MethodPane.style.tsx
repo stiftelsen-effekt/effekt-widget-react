@@ -34,4 +34,11 @@ export const MethodButton = styled.div`
     box-shadow: 0px 3px 6px 0 rgba(0,0,0,.15);
     margin-bottom: 15px;
     width: 100%;
+    transition: all 90ms;
+    user-select: none;
+    cursor: pointer;
+
+    &:active {
+        box-shadow: 0px 1px 2px 0 rgba(0,0,0,.30);
+    }
 `;

@@ -1,18 +1,18 @@
 import styled from "styled-components";
-import { gray14, gray18, gray20, orange05, orange20 } from "../../../config/colors";
+import { gray14, gray18, gray20, orange15, orange20 } from "../../../config/colors";
 
 export const Wrapper = styled.div`
   border-bottom: 1px solid ${gray14};
 
   h2 {
     font-weight: 600;
-    font-size: 12px;
+    font-size: 14px;
     margin: 0;
     margin-bottom: 4px;
   }
 
   h3 {
-    font-size: 9px;
+    font-size: 11px;
     color: ${gray20};
     font-weight: 300;
     margin: 0;
@@ -24,6 +24,15 @@ export const LabelWrapper = styled.div`
   flex-direction: row;
   cursor: pointer;
   padding: 16px 0;
+  user-select: none;
+
+  &:active {
+    & > div:first-child {
+      &::after {
+        border: 3px solid ${orange15};
+      }
+    }
+  }
 `;
 
 export const HeaderWrapper = styled.div`

@@ -1,4 +1,3 @@
-import { resolve } from "dns"
 import { setDonorID, setKID, setPaymentProviderURL } from "../../store/donation/actions"
 import { setAnsweredReferral } from "../../store/layout/actions"
 import { PaymentMethod, paymentMethodStrings } from "../../store/state"

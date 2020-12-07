@@ -6,8 +6,15 @@ body {
   font-weight: 300;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  position: absolute;
-  overflow-x: hidden;
+}
+
+.carousel .slide {
+  background: none !important;
+  text-align: inherit !important;
+}
+
+.carousel {
+  border-bottom: 1px solid #ddd;
 }
 
 code {

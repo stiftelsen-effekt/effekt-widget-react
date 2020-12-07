@@ -1,4 +1,4 @@
-import { LayoutActionTypes, SELECT_CUSTOM_SHARE, SELECT_PRIVACY_POLICY, SET_ANSWERED_REFERRAL, SET_PANE_NUMBER } from './types';
+import { DECREMENT_CURRENT_PANE, INCREMENT_CURRENT_PANE, LayoutActionTypes, SELECT_CUSTOM_SHARE, SELECT_PRIVACY_POLICY, SET_ANSWERED_REFERRAL, SET_PANE_NUMBER } from './types';
 
 export function selectCustomShare(customShare: boolean): LayoutActionTypes {
   return {
@@ -24,6 +24,18 @@ export function setPaneNumber(paneNumber: number): LayoutActionTypes {
     payload: {
         paneNumber
     },
+  };
+}
+
+export function nextPane(): LayoutActionTypes {
+  return {
+    type: INCREMENT_CURRENT_PANE,
+  };
+}
+
+export function prevPane(): LayoutActionTypes {
+  return {
+    type: DECREMENT_CURRENT_PANE,
   };
 }
 

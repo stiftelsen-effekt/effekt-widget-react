@@ -1,12 +1,11 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setPaymentProviderURL } from '../../../store/donation/actions';
-import { setPaneNumber } from '../../../store/layout/actions';
-import { PaneNumber, PaymentMethod, State } from '../../../store/state';
-import { Pane, PaneContainer } from '../Panes.style';
+import { setPaneNumber } from '../../../../store/layout/actions';
+import { PaneNumber, State } from '../../../../store/state';
+import { Pane, PaneContainer } from '../../Panes.style';
 import { VippsButton } from './VippsPane.style';
 
-export default function VippsPane() {
+export const VippsPane = () => {
     const vippsPaymentURL = useSelector((state: State) => state.donation.paymentProviderURL)
     const dispatch = useDispatch()
 

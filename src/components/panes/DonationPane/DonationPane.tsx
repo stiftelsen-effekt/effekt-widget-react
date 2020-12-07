@@ -21,7 +21,7 @@ interface DonationFormValues {
 
 //TODO: Add loading animation after submitting
 
-export default function DonationPane() {
+export const DonationPane: React.FC = () => {
     const dispatch = useDispatch()
     const [ nextDisabled, setNextDisabled ] = useState(false)
     const [ sumErrorAnimation, setSumErrorAnimation ] = useState(false)

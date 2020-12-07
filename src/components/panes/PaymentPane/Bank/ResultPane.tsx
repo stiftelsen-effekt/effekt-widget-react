@@ -1,11 +1,10 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { PaymentMethod, State } from '../../../store/state';
-import { Pane, PaneContainer, PaneTitle } from '../Panes.style';
-import { PrevButton } from '../../shared/Buttons/NavigationButtons';
-import { BlackContainer, BoldWhiteText, Heart, ResultWrapper, VippsLogo, WhiteText, TextWrapper, InfoText } from './ResultPane.style';
+import { PaymentMethod, State } from '../../../../store/state';
+import { Pane, PaneContainer, PaneTitle } from '../../Panes.style';
+import { BlackContainer, BoldWhiteText, Heart, ResultWrapper, WhiteText, TextWrapper, InfoText } from './ResultPane.style';
 
-export default function ReferralPane() {
+export const ResultPane = () => {
     const currentMethod = useSelector((state: State) => state.donation.method)
     const donorEmail = useSelector((state: State) => state.donation.donor?.email)
     const kid = useSelector((state: State) => state.donation.kid)

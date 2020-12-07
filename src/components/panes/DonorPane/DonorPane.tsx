@@ -28,7 +28,7 @@ const anonymousDonorObject: DonorFormValues = {
     privacyPolicy: true
 }
 
-export default function DonorPane() {
+export const DonorPane: React.FC = () => {
     const dispatch = useDispatch()
     const [ nextDisabled, setNextDisabled ] = useState(true)
     const [ successfulSubmit, setSuccessfulSubmit ] = useState(false)

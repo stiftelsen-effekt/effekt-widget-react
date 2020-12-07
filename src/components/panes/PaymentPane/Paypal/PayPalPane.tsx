@@ -1,15 +1,14 @@
 import { Collapse } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setPaneNumber } from '../../../store/layout/actions';
-import { PaneNumber, PaymentMethod, State } from '../../../store/state';
-import { InputFieldWrapper } from '../Forms.style';
-import { LoadingIcon, NavigationWrapper, Pane, PaneContainer, PaneTitle, UnderTitle } from '../Panes.style';
+import { setPaneNumber } from '../../../../store/layout/actions';
+import { PaneNumber, State } from '../../../../store/state';
+import { LoadingIcon, Pane, PaneContainer, PaneTitle, UnderTitle } from '../../Panes.style';
 import { PayPalFormWrapper, OrangeSubmit } from './PayPalPane.style';
 
 //TODO: Recurring donation does not return message after paying and subscribing in PayPal (does not work in production with the old widget either)
 
-export default function ReferralPane() {
+export const PaypalPane = () => {
     const isRecurring = useSelector((state: State) => state.donation.recurring)
     const donationAmount = useSelector((state: State) => state.donation.sum)
     const donationKID = useSelector((state: State) => state.donation.kid)

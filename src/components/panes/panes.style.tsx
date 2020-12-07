@@ -3,7 +3,6 @@ import styled from 'styled-components'
 export const Pane = styled.div`
     padding: 0px 20px;
     box-sizing: border-box; 
-    max-width: 100vw;
 `
 
 export const PaneContainer = styled.div`

@@ -13,6 +13,7 @@ export interface Layout {
     customShare: boolean
     paneNumber: number
     answeredReferral?: boolean
+    height: number
 }
 
 export interface PayPalState {
