@@ -75,7 +75,6 @@ export function NextButton(props: NextButtonProps) {
 export function PrevButton() {
     const currentPaneNumber = useSelector((state: State) => state.layout.paneNumber)
     const isCustomShare = useSelector((state: State) => state.layout.customShare)
-    const hasAnsweredReferral = useSelector((state: State) => state.layout.answeredReferral)
     const dispatch = useDispatch()
 
     function goBack() {

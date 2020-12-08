@@ -30,7 +30,7 @@ export const PaypalPane = () => {
                 setPayPalError(true)
             }
         }
-    }, [])
+    }, [dispatch])
     
     return (
         <Pane>

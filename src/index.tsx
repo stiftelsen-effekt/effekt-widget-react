@@ -10,7 +10,6 @@ import { donationReducer } from './store/donation/reducer';
 import { layoutReducer } from './store/layout/reducer';
 import { errorReducer } from './store/error/reducer';
 import { payPalReducer } from './store/paypal/reducer';
-import { reducer as reduxFormReducer} from 'redux-form'
 import { Host } from './components/Host';
 
 /**

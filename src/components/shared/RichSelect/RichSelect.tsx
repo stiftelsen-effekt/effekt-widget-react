@@ -13,8 +13,9 @@ export const RichSelect: React.FC<RichSelectProps> = ({ children, selected, onCh
   return (
     <RichSelectWrapper>
       {
-        children.map((child: React.ReactElement<OptionProps>) => (
-          <RichSelectOption 
+        children.map((child: React.ReactElement<OptionProps>, i) => (
+          <RichSelectOption
+            key={i} 
             {...child.props} 
             selected={child.props.value === selected} 
             select={(value: number) => onChange(value)}/>

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setSum, setRecurring, setDonorID, setKID } from '../../../store/donation/actions'
-import { selectCustomShare, setPaneNumber } from '../../../store/layout/actions'
+import { setSum } from '../../../store/donation/actions'
+import { setPaneNumber } from '../../../store/layout/actions'
 import { HorizontalLine, NavigationWrapper, Pane, PaneContainer, PaneTitle, VerticalLine } from '../Panes.style';
 import { PaneNumber, PaymentMethod, paymentMethodStrings, State } from '../../../store/state';
 import { NextButton, PrevButton } from '../../shared/Buttons/NavigationButtons';
@@ -25,29 +25,22 @@ export const DonationPane: React.FC = () => {
     const dispatch = useDispatch()
     const [ nextDisabled, setNextDisabled ] = useState(false)
     const [ sumErrorAnimation, setSumErrorAnimation ] = useState(false)
-    const [ recurringErrorAnimation, setRecurringErrorAnimation ] = useState(false)
     const [ customShareErrorAnimation, setCustomShareErrorAnimation ] = useState(false)
     const isCustomShare = useSelector((state: State) => state.layout.customShare)
     const DonationMethod = useSelector((state: State) => state.donation.method)
-    const isRecurring = useSelector((state: State) => state.donation.recurring)
     const donorName = useSelector((state: State) => state.donation.donor?.name)
     const donorEmail = useSelector((state: State) => state.donation.donor?.email)
     const donorSSN = useSelector((state: State) => state.donation.donor?.ssn)
     const donorNewsletter = useSelector((state: State) => state.donation.donor?.newsletter)
     const donationSum = useSelector((state: State) => state.donation.sum)
     const currentPaymentMethod = useSelector((state: State) => state.donation.method)
-    const currentPaneNumber = useSelector((state: State) => state.layout.paneNumber)
     const answeredReferral = useSelector((state: State) => state.layout.answeredReferral)
     const { register, watch, errors, handleSubmit } = useForm<DonationFormValues>({mode: 'all'})
     const watchAllFields = watch()
 
-    function updateDonationState(values: DonationFormValues) {
-        if (values.sum) dispatch(setSum(Validator.isInt(values.sum) ? parseInt(values.sum) : 0))
-    }
 
     useEffect(() => {
         errors.sum ? setSumErrorAnimation(true) : setSumErrorAnimation(false)
-        errors.recurring ? setRecurringErrorAnimation(true) : setRecurringErrorAnimation(false)
         errors.customShare ? setCustomShareErrorAnimation(true) : setCustomShareErrorAnimation(false)
 
         if (Object.keys(errors).length === 0) {
@@ -57,8 +50,9 @@ export const DonationPane: React.FC = () => {
             setNextDisabled(true)
         }
 
-        updateDonationState(watchAllFields)
-    }, [watchAllFields])
+        let values = watchAllFields
+        if (values.sum) dispatch(setSum(Validator.isInt(values.sum) ? parseInt(values.sum) : 0))
+    }, [dispatch, errors, watchAllFields])
 
     // This hook waits for the response from the POST donation request sent when submittig
     // It then uses the response data to determine how many panes to skip
@@ -80,7 +74,7 @@ export const DonationPane: React.FC = () => {
                 dispatch(setPaneNumber(PaneNumber.ReferralPane))
             }
         }
-    }, [answeredReferral])
+    }, [DonationMethod, answeredReferral, dispatch, isCustomShare])
 
     function onSubmit() {
         if (Object.keys(errors).length === 0) {

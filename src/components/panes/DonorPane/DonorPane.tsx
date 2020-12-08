@@ -1,21 +1,20 @@
-import React, { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { PaneContainer, OrangeLink, Pane } from '../Panes.style'
-import { DonorInput, State } from '../../../store/state'
+import React, { FormEvent, useEffect, useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { OrangeLink, Pane } from '../Panes.style'
+import { DonorInput } from '../../../store/state'
 import { submitDonorInfo } from '../../../store/donation/actions'
 import { InputFieldWrapper, TextField, InputLabel, CheckBox } from '../Forms.style'
 import { useForm } from "react-hook-form"
 import Validate from 'validator'
 import { Collapse } from '@material-ui/core'
 import ErrorField from '../../shared/Error/ErrorField'
-import { nextPane, setPaneNumber } from '../../../store/layout/actions'
+import { nextPane } from '../../../store/layout/actions'
 
 import { ToolTip } from '../../shared/ToolTip/ToolTip'
 import { DonorForm } from './DonorPane.style'
 import { RichSelect } from '../../shared/RichSelect/RichSelect'
 import { DonorType } from '../../../types/Temp'
 import { RichSelectOption } from '../../shared/RichSelect/RichSelectOption'
-import { NavButton } from '../../shared/Buttons/NavigationButtons'
 import { NextButton } from '../../shared/Buttons/NavigationButtons.style'
 
 interface DonorFormValues extends DonorInput {
@@ -39,26 +38,10 @@ export const DonorPane: React.FC = () => {
     const [ nameErrorAnimation, setNameErrorAnimation ] = useState(false)
     const [ emailErrorAnimation, setEmailErrorAnimation ] = useState(false)
     const [ ssnErrorAnimation, setSsnErrorAnimation ] = useState(false)
-    const [ anonymousDonor, setAnonymousDonor ] = useState(DonorType.DONOR)
+    const [ donorType, setDonorType ] = useState(DonorType.DONOR)
     const [ privacyPolicyErrorAnimation, setPrivacyPolicyErrorAnimation ] = useState(false)
-    const currentPaneNumber = useSelector((state: State) => state.layout.paneNumber)
     const { register, watch, errors, handleSubmit } = useForm<DonorFormValues>()
     const watchAllFields = watch()
-
-    function updateDonorState(values: DonorFormValues) {
-        dispatch(submitDonorInfo(
-            values.name ? values.name : "", 
-            values.email ? values.email : "", 
-            values.taxDeduction ? values.taxDeduction : false,
-            values.ssn ? values.ssn : 1, 
-            values.newsletter ? values.newsletter : false
-        ))
-    }
-
-    function submitAnonymous() {
-        setAnonymousDonor(DonorType.ANONYMOUS)
-        dispatch(setPaneNumber(currentPaneNumber + 1))
-    }
 
     useEffect(() => {
         errors.name ? setNameErrorAnimation(true) : setNameErrorAnimation(false)
@@ -66,7 +49,7 @@ export const DonorPane: React.FC = () => {
         errors.ssn ? setSsnErrorAnimation(true) : setSsnErrorAnimation(false)
         errors.privacyPolicy ? setPrivacyPolicyErrorAnimation(true) : setPrivacyPolicyErrorAnimation(false)
 
-        if (Object.keys(errors).length == 0) {
+        if (Object.keys(errors).length === 0) {
             setNextDisabled(false)
         }
         else if (Object.keys(errors).length === 1) {
@@ -80,23 +63,39 @@ export const DonorPane: React.FC = () => {
         else {
             setNextDisabled(true)
         }
-        updateDonorState(anonymousDonor ? anonymousDonorObject : watchAllFields)
-    }, [watchAllFields])
 
-    function onSubmit() {
-        if (!nextDisabled) {
-            setAnonymousDonor(DonorType.DONOR)
+        let values = donorType ? anonymousDonorObject : watchAllFields;
+        dispatch(submitDonorInfo(
+            values.name ? values.name : "", 
+            values.email ? values.email : "", 
+            values.taxDeduction ? values.taxDeduction : false,
+            values.ssn ? values.ssn : 1, 
+            values.newsletter ? values.newsletter : false
+        ))
+    }, [donorType, dispatch, errors, watchAllFields])
+
+    function paneSubmitted(e: FormEvent) {
+        e.preventDefault();
+
+        if (donorType === DonorType.ANONYMOUS) {
             dispatch(nextPane())
+        } else {
+            handleSubmit(() => {
+                if (!nextDisabled) {
+                    dispatch(nextPane())
+                }
+            })
         }
     }
 
     return (
         <Pane>
-            <RichSelect selected={anonymousDonor} onChange={(type: DonorType) => setAnonymousDonor(type)}>
-                <RichSelectOption
-                    label={"Info om deg"}
-                    value={DonorType.DONOR}>
-                    <DonorForm onSubmit={handleSubmit(onSubmit)}>
+            <DonorForm onSubmit={paneSubmitted}>
+                <RichSelect selected={donorType} onChange={(type: DonorType) => setDonorType(type)}>
+                    <RichSelectOption
+                        label={"Info om deg"}
+                        value={DonorType.DONOR}>
+                        
                         <InputFieldWrapper>
                             <Collapse in={nameErrorAnimation}>
                                 <ErrorField text="Ugyldig navn"/>
@@ -136,22 +135,14 @@ export const DonorPane: React.FC = () => {
                                 <CheckBox name="newsletter" type="checkbox" ref={register} /><InputLabel>Jeg ønsker å melde meg på nyhetsbrevet</InputLabel>
                             </div>
                         </div>
-                    </DonorForm>
-                </RichSelectOption>
-                
-                <RichSelectOption
-                    label={"Doner anonymt"}
-                    value={DonorType.ANONYMOUS}></RichSelectOption>
-            </RichSelect>
-            <NextButton>Neste</NextButton>
+                    </RichSelectOption>
+                    
+                    <RichSelectOption
+                        label={"Doner anonymt"}
+                        value={DonorType.ANONYMOUS}></RichSelectOption>
+                </RichSelect>
+                <NextButton type={"submit"}>Neste</NextButton>
+            </DonorForm>
         </Pane>
     );
 }
-
-/**
- * <NavigationWrapper>
-                        <PrevButton />
-                        <OrangeButton onClick={submitAnonymous} text="Gi anonymt" />
-                        <NextButton isDisabled={nextDisabled} />
-                    </NavigationWrapper>
- */

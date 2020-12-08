@@ -5,10 +5,9 @@ import { useDispatch, useSelector } from 'react-redux'
 import { setPaneNumber } from '../../../store/layout/actions'
 import { PaneNumber, PaymentMethod, State } from '../../../store/state'
 import { getReferrals, postReferral } from '../../helpers/network'
-import { TextField } from '../Forms.style'
-import { HorizontalLine, NavigationWrapper, Pane, PaneContainer, PaneTitle, UnderTitle, VerticalLine } from '../Panes.style'
+import { NavigationWrapper, Pane, PaneContainer, PaneTitle, UnderTitle, VerticalLine } from '../Panes.style'
 
-import { NavButton, NextButton, PrevButton } from '../../shared/Buttons/NavigationButtons'
+import { NavButton, NextButton } from '../../shared/Buttons/NavigationButtons'
 import { OtherInput, OtherInputWrapper, ReferralButton, ReferralsWrapper } from './ReferralPane.style'
 
 interface Referral {
@@ -20,10 +19,9 @@ interface Referral {
 export const ReferralPane: React.FC = () => {
     const [referrals, setReferrals] = useState<Referral[]>()
     const [openOtherInput, setOpenOtherInput ] = useState(false)
-    const currentPaneNumber = useSelector((state: State) => state.layout.paneNumber)
     const paymentMethod = useSelector((state: State) => state.donation.method)
     const donorID = useSelector((state: State) => state.donation.donor?.donorID)
-    const { handleSubmit, register, watch, errors } = useForm()
+    const { handleSubmit, register, watch } = useForm()
     const watchOtherInput = watch("other", false)
     const dispatch = useDispatch()
 
@@ -51,13 +49,13 @@ export const ReferralPane: React.FC = () => {
     }
 
     function goToNextPane() {
-        if (paymentMethod == PaymentMethod.BANK) {
+        if (paymentMethod === PaymentMethod.BANK) {
             dispatch(setPaneNumber(PaneNumber.ResultPane))
         }
-        else if (paymentMethod == PaymentMethod.VIPPS) {
+        else if (paymentMethod === PaymentMethod.VIPPS) {
             dispatch(setPaneNumber(PaneNumber.VippsPane))
         }
-        else if (paymentMethod == PaymentMethod.PAYPAL) {
+        else if (paymentMethod === PaymentMethod.PAYPAL) {
             dispatch(setPaneNumber(PaneNumber.PayPalPane))
         }
     }

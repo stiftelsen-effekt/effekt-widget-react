@@ -1,5 +1,3 @@
-import { Error } from '../state'
-
 export const SET_ERROR = 'SET_ERROR'
 
 interface SetError {
