@@ -1,50 +1,64 @@
-import React from 'react';
-import { useDispatch, useSelector } from 'react-redux'
-import { selectPaymentMethod, setRecurring } from '../../../store/donation/actions'
-import { State, PaymentMethod } from '../../../store/state'
-import { nextPane } from '../../../store/layout/actions'
-import { Pane } from '../Panes.style'
-import { MethodWrapper, MethodButton, InfoText } from './MethodPane.style';
-import { RichSelect } from '../../shared/RichSelect/RichSelect';
-import { RichSelectOption } from '../../shared/RichSelect/RichSelectOption';
-import { RECURRING_DONATION } from '../../../store/donation/types';
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  selectPaymentMethod,
+  setRecurring,
+} from "../../../store/donation/actions";
+import { State, PaymentMethod } from "../../../store/state";
+import { nextPane } from "../../../store/layout/actions";
+import { Pane } from "../Panes.style";
+import { MethodWrapper, MethodButton, InfoText } from "./MethodPane.style";
+import { RichSelect } from "../../shared/RichSelect/RichSelect";
+import { RichSelectOption } from "../../shared/RichSelect/RichSelectOption";
+import { RECURRING_DONATION } from "../../../store/donation/types";
 
 export const MethodPane: React.FC = () => {
-    const dispatch = useDispatch()
-    const recurring = useSelector((state: State) => state.donation.recurring)
+  const dispatch = useDispatch();
+  const recurring = useSelector((state: State) => state.donation.recurring);
 
-    const selectMethod = (method: PaymentMethod) => {
-        dispatch(selectPaymentMethod(method))
-        dispatch(nextPane())
-    }
+  const selectMethod = (method: PaymentMethod) => {
+    dispatch(selectPaymentMethod(method));
+    dispatch(nextPane());
+  };
 
-    return (
-        <Pane>
-            <InfoText>Kostnadene angitt dekkes av oss, slik at 100% av din donasjon kommer frem.</InfoText>
-            <RichSelect 
-                selected={recurring}
-                onChange={(value: RECURRING_DONATION) => dispatch(setRecurring(value))}
-                >
-                <RichSelectOption 
-                    label="Gi en fast månedlig sum" 
-                    sublabel="Du vil bli varslet ved trekk og kan avslutte når som helst" 
-                    value={RECURRING_DONATION.RECURRING} />
-                <RichSelectOption 
-                    label="Gi et engangsbeløp" 
-                    value={RECURRING_DONATION.NON_RECURRING} />
-            </RichSelect>
-            <MethodWrapper>
-                <MethodButton 
-                    className={"bank"}
-                    onClick={() => selectMethod(PaymentMethod.BANK)}></MethodButton>
-                <MethodButton
-                    className={"vipps"}
-                    onClick={() => selectMethod(PaymentMethod.VIPPS)}>2,99%</MethodButton>
-                <MethodButton 
-                    className={"paypal"}
-                    onClick={() => selectMethod(PaymentMethod.PAYPAL)}>1,90%</MethodButton>
-            </MethodWrapper>
-        </Pane>
-    );
-
-}
+  return (
+    <Pane>
+      <InfoText>
+        Kostnadene angitt dekkes av oss, slik at 100% av din donasjon kommer
+        frem.
+      </InfoText>
+      <RichSelect
+        selected={recurring}
+        onChange={(value: RECURRING_DONATION) => dispatch(setRecurring(value))}
+      >
+        <RichSelectOption
+          label="Gi en fast månedlig sum"
+          sublabel="Du vil bli varslet ved trekk og kan avslutte når som helst"
+          value={RECURRING_DONATION.RECURRING}
+        />
+        <RichSelectOption
+          label="Gi et engangsbeløp"
+          value={RECURRING_DONATION.NON_RECURRING}
+        />
+      </RichSelect>
+      <MethodWrapper>
+        <MethodButton
+          className="bank"
+          onClick={() => selectMethod(PaymentMethod.BANK)}
+        />
+        <MethodButton
+          className="vipps"
+          onClick={() => selectMethod(PaymentMethod.VIPPS)}
+        >
+          2,99%
+        </MethodButton>
+        <MethodButton
+          className="paypal"
+          onClick={() => selectMethod(PaymentMethod.PAYPAL)}
+        >
+          1,90%
+        </MethodButton>
+      </MethodWrapper>
+    </Pane>
+  );
+};
