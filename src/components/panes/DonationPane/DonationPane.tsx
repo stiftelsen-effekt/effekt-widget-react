@@ -12,6 +12,7 @@ import ErrorField from '../../shared/Error/ErrorField';
 import Validator from 'validator'
 import { postDonation } from './../../helpers/network'
 import { DonationData } from '../../helpers/network.types';
+import { notDeepEqual } from 'assert';
 
 interface DonationFormValues {
     recurring: string;
@@ -37,6 +38,8 @@ export const DonationPane: React.FC = () => {
     const answeredReferral = useSelector((state: State) => state.layout.answeredReferral)
     const { register, watch, errors, handleSubmit } = useForm<DonationFormValues>({mode: 'all'})
     const watchAllFields = watch()
+
+    const noTab = useSelector((state: State) => state.layout.paneNumber !== PaneNumber.DonationPane)
 
 
     useEffect(() => {

@@ -1,8 +1,9 @@
 import styled from "styled-components";
+import { gray20 } from "../../../config/colors";
 
 export const NextButton = styled.button`
   height: 45px;
-  background: black;
+  background: ${(props: NextButtonProps) => props.disabled ? gray20 : '#000'};
   color: white;
   font-weight: 600;
   font-size: 14px;
@@ -14,3 +15,7 @@ export const NextButton = styled.button`
   border: none;
   cursor: pointer;
 `
+
+interface NextButtonProps {
+  disabled: boolean
+}

@@ -3,7 +3,6 @@ import { RECURRING_DONATION } from "./donation/types"
 export interface State {
     donation: Donation
     layout: Layout
-    paypal: PayPalState
     error: Error
 }
 
@@ -14,11 +13,6 @@ export interface Layout {
     paneNumber: number
     answeredReferral?: boolean
     height: number
-}
-
-export interface PayPalState {
-    loading: boolean
-    success: boolean
 }
 
 export interface DonationInput {
@@ -44,6 +38,10 @@ export interface DonorInput {
 
 export interface Donor extends DonorInput {
     donorID?: number
+}
+
+export interface DonorFormValues extends DonorInput {
+    privacyPolicy: boolean;
 }
 
 export interface Share {

@@ -9,7 +9,6 @@ import { Provider } from 'react-redux';
 import { donationReducer } from './store/donation/reducer';
 import { layoutReducer } from './store/layout/reducer';
 import { errorReducer } from './store/error/reducer';
-import { payPalReducer } from './store/paypal/reducer';
 import { Host } from './components/Host';
 
 /**
@@ -19,7 +18,6 @@ import { Host } from './components/Host';
 const rootReducer = combineReducers<State>({
   donation: donationReducer,
   layout: layoutReducer,
-  paypal: payPalReducer,
   error: errorReducer
 });
 
