@@ -1,8 +1,7 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setPaymentProviderURL } from '../../../store/donation/actions';
 import { setPaneNumber } from '../../../store/layout/actions';
-import { PaneNumber, PaymentMethod, State } from '../../../store/state';
+import { PaneNumber, State } from '../../../store/state';
 import { Pane, PaneContainer } from '../Panes.style';
 import DonationInfoBar from '../shared/DonationInfoBar/DonationInfoBar';
 import { VippsButton } from './VippsPane.style';

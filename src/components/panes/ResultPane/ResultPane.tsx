@@ -3,8 +3,7 @@ import { useSelector } from 'react-redux';
 import { PaymentMethod, State } from '../../../store/state';
 import { Pane, PaneContainer, PaneTitle } from '../Panes.style';
 import DonationInfoBar from '../shared/DonationInfoBar/DonationInfoBar';
-import { PrevButton } from '../shared/NavigationButtons';
-import { BlackContainer, BoldWhiteText, Heart, ResultWrapper, VippsLogo, WhiteText, TextWrapper, InfoText } from './ResultPane.style';
+import { BlackContainer, BoldWhiteText, Heart, ResultWrapper, WhiteText, TextWrapper, InfoText } from './ResultPane.style';
 
 export default function ReferralPane() {
     const currentMethod = useSelector((state: State) => state.donation.method)

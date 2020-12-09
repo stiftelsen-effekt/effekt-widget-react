@@ -37,7 +37,6 @@ export default function DonationPane() {
     const donorNewsletter = useSelector((state: State) => state.donation.donor?.newsletter)
     const donationSum = useSelector((state: State) => state.donation.sum)
     const currentPaymentMethod = useSelector((state: State) => state.donation.method)
-    const currentPaneNumber = useSelector((state: State) => state.layout.paneNumber)
     const answeredReferral = useSelector((state: State) => state.layout.answeredReferral)
     const { register, watch, errors, handleSubmit } = useForm<DonationFormValues>({mode: 'all'})
     const watchAllFields = watch()
@@ -63,7 +62,8 @@ export default function DonationPane() {
         updateDonationState(watchAllFields)
     }, [watchAllFields])
 
-    // This hook waits for the response from the POST donation request sent when submittig
+    // This hook waits for the response from the POST donation request sent when submitting
+    // answeredReferral is undefined before the response
     // It then uses the response data to determine how many panes to skip
     useEffect(() => {
         if (answeredReferral !== undefined) {
@@ -76,7 +76,6 @@ export default function DonationPane() {
                 }
                 else if (DonationMethod === PaymentMethod.PAYPAL) {
                     dispatch(setPaneNumber(PaneNumber.PayPalPane))
-
                 }
             }
             else if (!isCustomShare) {
@@ -114,6 +113,7 @@ export default function DonationPane() {
     return (
         <Pane>
             <PaneContainer>
+                {/** The following line prevents negative or invalid sums from being shown in the DonationInfoBar */}
                 <DonationInfoBar sum={watchAllFields.sum === "" || !Validator.isInt(watchAllFields.sum ? watchAllFields.sum : "") || parseInt(watchAllFields.sum) < 0  ? 0 : parseInt(watchAllFields.sum)} />
                 <PaneTitle>Om donasjonen</PaneTitle>
                 <form onSubmit={handleSubmit(onSubmit)}>

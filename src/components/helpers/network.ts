@@ -1,4 +1,3 @@
-import { resolve } from "dns"
 import { setDonorID, setKID, setPaymentProviderURL } from "../../store/donation/actions"
 import { setAnsweredReferral } from "../../store/layout/actions"
 import { PaymentMethod, paymentMethodStrings } from "../../store/state"
@@ -81,15 +80,9 @@ export async function postDonation(postData: DonationData, dispatch: Function) {
             registerBankPending({KID: data.content.KID})
         }
 
+        // TODO: Send Google analytics
         // sendAnalytics("register_donation", _self.KID);
 
-        // if (_self.method === "BANK") {
-        //     _self.registerBankPending();
-        // }
-
-        // if (_self.method === "VIPPS") {
-        //     _self.getPane(VippsPane).setUrl(data.content.paymentProviderUrl)
-        // }
         console.log(data)
         return data
     })
@@ -99,52 +92,4 @@ export function postReferral(referralData: ReferralData) {
     request("referrals/", "POST", referralData, function (err: any, data: any) {
         console.log(data)
     })
-}
-
-
-
-//TODO: Remove unused code
-
-export function setupWebSocket() {
-    let socket = new WebSocket("wss://api.gieffektivt.no");
-    
-    socket.addEventListener("message", (msg) => { onSocketMessage(msg) } )
-    socket.addEventListener("close", () => { console.log("Socket closed") } )
-    socket.addEventListener("open", () => keepWebsocketAlive(socket))
-
-    keepWebsocketAlive(socket);
-}
-
-export function keepWebsocketAlive(socket: WebSocket) { 
-    var timeout = 20000;
-    if (socket.readyState == socket.OPEN) {  
-        socket.send('');  
-    }  
-    let websocketTimerId = setTimeout(keepWebsocketAlive(socket), timeout);  
-}  
-
-// export function cancelWebsocketKeepAlive() {  
-//     if (this.websocketTimerId) {  
-//         clearTimeout(this.websocketTimerId);  
-//     }  
-// }
-
-export function onSocketMessage(msg: any) {
-    console.log("Socket message: ", msg);
-
-    const clientWsID = msg.data;
-    //updatePayPalForms();
-    
-    if (msg.data == "PAYPAL_VERIFIED") {
-        console.log("PAYPAL VERIFIED")
-        // this.submit("DONATION_RECIEVED");
-        // this.cancelWebsocketKeepAlive();
-        // this.socket.close();
-    }
-    else if (msg.data == "PAYPAL_ERROR") {
-         console.log("PAYPAL ERROR")
-        // this.widget.error("Feil i PayPal");
-        // this.hideWaitingScreen();
-    }
-    
 }

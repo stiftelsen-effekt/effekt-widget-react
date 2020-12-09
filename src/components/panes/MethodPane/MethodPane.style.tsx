@@ -7,6 +7,7 @@ export const MethodPaneWrapper = styled.div`
 
 export const MethodWrapper = styled.div`
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
 `
@@ -35,7 +36,7 @@ export const BankButton = styled.button`
     background-image: url(https://storage.googleapis.com/effekt-widget/assets/logos/bank.png);
     background-size: 70px auto;
     background-repeat: no-repeat;
-    background-position: center -3px;
+    background-position: center;
     width: 100px;
     height: 45px;
     cursor: pointer;

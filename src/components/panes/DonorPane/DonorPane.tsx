@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { PaneContainer, PaneTitle, OrangeLink, NavigationWrapper, HorizontalLine, Pane } from '../Panes.style'
+import { PaneContainer, PaneTitle, OrangeLink, NavigationWrapper, Pane } from '../Panes.style'
 import { DonorInput, State } from '../../../store/state'
 import { submitDonorInfo } from '../../../store/donation/actions'
 import { InputFieldWrapper, TextField, InputLabel, CheckBox } from '../Forms.style'
@@ -19,6 +19,7 @@ interface DonorFormValues extends DonorInput {
 
 const tooltipText = "Vi trenger ditt fødselsnummer for å rapportere skattefradrag til Skatteetaten for at du skal få skattefradrag for donasjonen din."
 const tooltipLink = "https://gieffektivt.no/skattefradrag"
+
 const anonymousDonorObject: DonorFormValues = {
     name: 'Anonym Giver',
     email: 'anon@gieffektivt.no',

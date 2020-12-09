@@ -23,7 +23,6 @@ export default function ReferralPane() {
     useEffect(() => {
         const socket = new WebSocket("wss://api.gieffektivt.no")
         socket.onmessage = function (event) {
-            console.log(event.data)
             setWebSocketID(event.data)
             if (event.data === "PAYPAL_VERIFIED") {
                 dispatch(setPaneNumber(PaneNumber.ResultPane))

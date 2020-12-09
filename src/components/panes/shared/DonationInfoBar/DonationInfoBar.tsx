@@ -1,7 +1,5 @@
-import { format } from 'path'
-import React, { useEffect } from 'react'
+import React from 'react'
 import { useSelector } from 'react-redux'
-import styled from 'styled-components'
 import { State, PaymentMethod } from '../../../../store/state'
 import { BankLogo, PayPalLogo, VippsLogo, InfoBarWrapper, InfoBarText, InfoItemWrapper } from './DonationInfoBar.style'
 
