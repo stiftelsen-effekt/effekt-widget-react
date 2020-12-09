@@ -1,4 +1,4 @@
-import React, { FormEvent, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { OrangeLink, Pane } from '../Panes.style'
 import { DonorInput } from '../../../store/state'
@@ -47,8 +47,6 @@ export const DonorPane: React.FC = () => {
         errors.email ? setEmailErrorAnimation(true) : setEmailErrorAnimation(false)
         errors.ssn ? setSsnErrorAnimation(true) : setSsnErrorAnimation(false)
         errors.privacyPolicy ? setPrivacyPolicyErrorAnimation(true) : setPrivacyPolicyErrorAnimation(false)
-
-        console.log(errors)
 
         if (Object.keys(errors).length === 0) {
             setNextDisabled(false)
@@ -100,10 +98,7 @@ export const DonorPane: React.FC = () => {
                         </InputFieldWrapper>
                         <div>
                             <div>
-                                <CheckBox name="taxDeduction" type="checkbox" ref={register} onChange={(e) => {
-                                    console.log(e.target.checked)
-                                    let test = (!e.target.checked && clearErrors(["ssn"]))
-                                }} />
+                                <CheckBox name="taxDeduction" type="checkbox" ref={register} onChange={(e) => !e.target.checked && clearErrors(["ssn"])} />
                                 <InputLabel>Jeg ønsker skattefradrag</InputLabel>
                                 <ToolTip text={tooltipText} link={tooltipLink} />
                                 <Collapse in={watchAllFields.taxDeduction}>
