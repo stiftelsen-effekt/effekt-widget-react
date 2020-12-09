@@ -5,6 +5,7 @@ export const MethodWrapper = styled.div`
     display: flex;
     flex-direction: column;
 `
+
 export const TextWrapper = styled.div`
     display: flex;
     margin-top: 20px;
