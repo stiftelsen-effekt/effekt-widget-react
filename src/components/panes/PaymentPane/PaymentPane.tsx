@@ -1,21 +1,21 @@
-import React from 'react'
-import { useSelector } from 'react-redux'
-import { PaymentMethod, State } from '../../../store/state'
-import { ResultPane } from './Bank/ResultPane'
-import { PaypalPane } from './Paypal/PayPalPane'
-import { VippsPane } from './Vipps/VippsPane'
+import React from "react";
+import { useSelector } from "react-redux";
+import { PaymentMethod, State } from "../../../store/state";
+import { ResultPane } from "./Bank/ResultPane";
+import { PaypalPane } from "./Paypal/PayPalPane";
+import { VippsPane } from "./Vipps/VippsPane";
 
 export const PaymentPane: React.FC = () => {
-  const method = useSelector((state: State) => state.donation.method)
+  const method = useSelector((state: State) => state.donation.method);
 
   switch (method) {
     case PaymentMethod.BANK:
-      return <ResultPane />
+      return <ResultPane />;
     case PaymentMethod.PAYPAL:
-      return <PaypalPane />
+      return <PaypalPane />;
     case PaymentMethod.VIPPS:
-      return <VippsPane />
+      return <VippsPane />;
     default:
-      return <div>Invalid payment method</div>
+      return <div>Invalid payment method</div>;
   }
-}
+};
