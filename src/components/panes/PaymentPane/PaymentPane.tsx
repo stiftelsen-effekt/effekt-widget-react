@@ -1,6 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { PaymentMethod, State } from "../../../store/state";
+import { State } from "../../../store/state";
+import { PaymentMethod } from "../../../types/Enums";
 import { ResultPane } from "./Bank/ResultPane";
 import { PaypalPane } from "./Paypal/PayPalPane";
 import { VippsPane } from "./Vipps/VippsPane";

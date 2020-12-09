@@ -1,5 +1,11 @@
 import styled from "styled-components";
-import { gray14, gray18, gray20, orange15, orange20 } from "../../../config/colors";
+import {
+  gray14,
+  gray18,
+  gray20,
+  orange15,
+  orange20,
+} from "../../../config/colors";
 
 export const Wrapper = styled.div`
   border-bottom: 1px solid ${gray14};
@@ -40,7 +46,7 @@ export const HeaderWrapper = styled.div`
   margin-left: 10px;
 `;
 
-//${(props: RadioBallProps) => props.selected ? '10px' : '22px'};
+// ${(props: RadioBallProps) => props.selected ? '10px' : '22px'};
 
 export const RadioBall = styled.div`
   width: 24px;
@@ -50,29 +56,30 @@ export const RadioBall = styled.div`
   position: relative;
 
   &::after {
-    content: '';
+    content: "";
     position: absolute;
-    top: 0; 
+    top: 0;
     left: 0;
     width: 100%;
     height: 100%;
     box-sizing: border-box;
     border-radius: 50%;
     transition: all 100ms;
-    border: ${(props: RadioBallProps) => props.selected ? `7px solid ${orange20}` : `1px solid ${gray18}`};
+    border: ${(props: RadioBallProps) =>
+      props.selected ? `7px solid ${orange20}` : `1px solid ${gray18}`};
   }
 `;
 
 interface RadioBallProps {
-  selected: boolean | undefined
+  selected: boolean | undefined;
 }
 
 export const Content = styled.div`
-  height: ${(props: ContentProps) => (props.selected ? 'auto' : '0px')};
+  height: ${(props: ContentProps) => (props.selected ? "auto" : "0px")};
   overflow: hidden;
   box-sizing: border-box;
 `;
 
 interface ContentProps {
-  selected: boolean
+  selected: boolean;
 }

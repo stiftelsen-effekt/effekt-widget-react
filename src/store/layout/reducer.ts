@@ -1,13 +1,24 @@
-import { Reducer } from 'redux';
-import { Layout } from '../state';
-import { SET_PANE_NUMBER, LayoutActionTypes, SELECT_CUSTOM_SHARE, SELECT_PRIVACY_POLICY, SET_ANSWERED_REFERRAL, SET_HEIGHT, INCREMENT_CURRENT_PANE, DECREMENT_CURRENT_PANE } from './types';
+import { Reducer } from "redux";
+import { ShareType } from "../../types/Enums";
+import { Layout } from "../state";
+import {
+  SET_PANE_NUMBER,
+  LayoutActionTypes,
+  SELECT_CUSTOM_SHARE,
+  SELECT_PRIVACY_POLICY,
+  SET_ANSWERED_REFERRAL,
+  SET_HEIGHT,
+  INCREMENT_CURRENT_PANE,
+  DECREMENT_CURRENT_PANE,
+  SET_SHARE_TYPE,
+} from "./types";
 
 const initialState: Layout = {
-    privacyPolicy: false,
-    customShare: false,
-    paneNumber: 0,
-    height: 512
-}
+  privacyPolicy: false,
+  shareType: ShareType.STANDARD,
+  paneNumber: 0,
+  height: 512,
+};
 
 /**
  * The reducer is a pure function that takes in the previous state,
@@ -19,24 +30,26 @@ const initialState: Layout = {
 
 export const layoutReducer: Reducer<Layout, LayoutActionTypes> = (
   state: Layout = initialState,
-  action: LayoutActionTypes,
+  action: LayoutActionTypes
 ) => {
   switch (action.type) {
     case SELECT_CUSTOM_SHARE:
-      return { ...state, customShare: action.payload.customShare }
+      return { ...state, shareType: ShareType.CUSTOM };
+    case SET_SHARE_TYPE:
+      return { ...state, shareType: action.payload.shareType };
     case SELECT_PRIVACY_POLICY:
-      return { ...state, privacyPolicy: action.payload.privacyPolicy }
+      return { ...state, privacyPolicy: action.payload.privacyPolicy };
     case SET_PANE_NUMBER:
-      return { ...state, paneNumber: action.payload.paneNumber }
+      return { ...state, paneNumber: action.payload.paneNumber };
     case INCREMENT_CURRENT_PANE:
-      return { ...state, paneNumber: state.paneNumber+1 }
+      return { ...state, paneNumber: state.paneNumber + 1 };
     case DECREMENT_CURRENT_PANE:
-      return { ...state, paneNumber: state.paneNumber-1 }
+      return { ...state, paneNumber: state.paneNumber - 1 };
     case SET_ANSWERED_REFERRAL:
-      return { ...state, answeredReferral: action.payload.answeredReferral }
+      return { ...state, answeredReferral: action.payload.answeredReferral };
     case SET_HEIGHT:
-      return { ...state, height: action.payload.height}
+      return { ...state, height: action.payload.height };
     default:
       return state;
   }
-}
+};

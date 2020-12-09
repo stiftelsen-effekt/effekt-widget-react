@@ -1,16 +1,29 @@
-import React from 'react';
-import { Content, HeaderWrapper, LabelWrapper, RadioBall, Wrapper } from './RichSelectOption.style';
+import React from "react";
+import {
+  Content,
+  HeaderWrapper,
+  LabelWrapper,
+  RadioBall,
+  Wrapper,
+} from "./RichSelectOption.style";
 
 export interface OptionProps {
-  label: string,
-  sublabel?: string,
-  //An enum
-  value: number,
-  selected?: boolean,
-  select?: (value: number) => void
+  label: string;
+  sublabel?: string;
+  // An enum
+  value: number;
+  selected?: boolean;
+  select?: (value: number) => void;
 }
 
-export const RichSelectOption: React.FC<OptionProps> = ({ label, sublabel, value, selected, children, select }) => {
+export const RichSelectOption: React.FC<OptionProps> = ({
+  label,
+  sublabel,
+  value,
+  selected,
+  children,
+  select,
+}) => {
   return (
     <Wrapper>
       <LabelWrapper onClick={() => select && select(value)}>
@@ -20,9 +33,7 @@ export const RichSelectOption: React.FC<OptionProps> = ({ label, sublabel, value
           <h3>{sublabel}</h3>
         </HeaderWrapper>
       </LabelWrapper>
-      <Content selected={selected || false}>
-        {children}
-      </Content>
+      <Content selected={selected || false}>{children}</Content>
     </Wrapper>
-  )
-}
+  );
+};

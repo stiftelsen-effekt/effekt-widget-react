@@ -7,7 +7,7 @@ export const WidgetWrapper = styled.div`
 `;
 
 export const Splash = styled.div`
-  background-image: url('https://thumb.tildacdn.com/tild3231-3764-4630-b635-313165393338/-/format/webp/SCI2.png');
+  background-image: url("https://thumb.tildacdn.com/tild3231-3764-4630-b635-313165393338/-/format/webp/SCI2.png");
   background-size: cover;
   background-position: center top;
   height: 235px;
@@ -19,7 +19,7 @@ export const Splash = styled.div`
 `;
 
 export const SplashTitle = styled.h1`
-  font-family: 'Georgia';
+  font-family: "Georgia";
   font-weight: 400;
   margin-bottom: 16px;
   font-size: 42px;
