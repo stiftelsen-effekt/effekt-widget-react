@@ -9,7 +9,6 @@ import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a lo
 import { useSelector } from 'react-redux';
 import { State } from '../store/state';
 
-
 function Widget() {
   const currentPane = useSelector((state: State) => state.layout.paneNumber)
 
