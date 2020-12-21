@@ -1,3 +1,22 @@
-.carousel__slide-focus-ring {
-    outline: none;
+#app {
+  display: flex;
+  justify-content: center;
+}
+
+#carousel-wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  overflow-x: hidden;
+}
+
+#carousel {
+  white-space: nowrap;
+  transition: all 200ms;
+}
+
+.pane {
+  width: 100%;
+  display: inline-block;
+  vertical-align: top;
 }

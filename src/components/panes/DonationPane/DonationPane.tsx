@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import { Collapse } from "@material-ui/core";
 import Validator from "validator";
 import { setSum } from "../../../store/donation/actions";
-import { setShareType } from "../../../store/layout/actions";
+import { nextPane, setShareType } from "../../../store/layout/actions";
 import { Pane, PaneContainer } from "../Panes.style";
 import { State } from "../../../store/state";
 import { TextField } from "../Forms.style";
@@ -101,6 +101,7 @@ export const DonationPane: React.FC = () => {
               postData.amount = donationSum;
             }
             postDonation(postData, dispatch);
+            dispatch(nextPane())
           }
         }
       }
