@@ -16,6 +16,7 @@ import { PaymentMethod, ShareType } from "../../../types/Enums";
 import { RichSelectOption } from "../../shared/RichSelect/RichSelectOption";
 import { RichSelect } from "../../shared/RichSelect/RichSelect";
 import { NextButton } from "../../shared/Buttons/NavigationButtons.style";
+import ShareSelection from "./ShareSelection";
 
 interface DonationFormValues {
   recurring: string;
@@ -73,6 +74,7 @@ export const DonationPane: React.FC = () => {
   */
 
   function onSubmit() {
+    console.log("submit")
     if (Object.keys(errors).length === 0) {
       if (donor) {
         if (shareType === ShareType.STANDARD) {
@@ -101,10 +103,10 @@ export const DonationPane: React.FC = () => {
               postData.amount = donationSum;
             }
             postDonation(postData, dispatch);
-            dispatch(nextPane())
           }
         }
       }
+      dispatch(nextPane())
     }
   }
 
@@ -151,10 +153,14 @@ export const DonationPane: React.FC = () => {
               value={ShareType.CUSTOM}
             />
           </RichSelect>
-
-          <NextButton type="submit" disabled={nextDisabled}>
-            Neste
-          </NextButton>
+          {shareType === ShareType.CUSTOM &&
+            <ShareSelection />
+          }
+          {shareType === ShareType.STANDARD &&
+            <NextButton type="submit" disabled={nextDisabled}>
+              Neste
+            </NextButton>
+          }
         </form>
       </PaneContainer>
     </Pane>
