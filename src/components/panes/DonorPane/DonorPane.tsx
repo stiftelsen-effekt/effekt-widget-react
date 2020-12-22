@@ -5,7 +5,7 @@ import { Collapse } from "@material-ui/core";
 import Validate from "validator";
 import { useForm } from "react-hook-form";
 import { OrangeLink, Pane } from "../Panes.style";
-import { DonorInput } from "../../../store/state";
+import { Donor, DonorInput } from "../../../store/state";
 import { submitDonorInfo } from "../../../store/donation/actions";
 import {
   InputFieldWrapper,
@@ -44,7 +44,7 @@ export const DonorPane: React.FC = () => {
   const [nameErrorAnimation, setNameErrorAnimation] = useState(false);
   const [emailErrorAnimation, setEmailErrorAnimation] = useState(false);
   const [ssnErrorAnimation, setSsnErrorAnimation] = useState(false);
-  const [donorType, setDonorType] = useState(DonorType.DONOR);
+  const [donorType, setDonorType] = useState<DonorType>(DonorType.DONOR);
   const [
     privacyPolicyErrorAnimation,
     setPrivacyPolicyErrorAnimation,
@@ -66,7 +66,9 @@ export const DonorPane: React.FC = () => {
       ? setPrivacyPolicyErrorAnimation(true)
       : setPrivacyPolicyErrorAnimation(false);
 
-    if (Object.keys(errors).length === 0) {
+    if (donorType === DonorType.ANONYMOUS) {
+      setNextDisabled(false)
+    } else if (Object.keys(errors).length === 0) {
       setNextDisabled(false);
     } else {
       setNextDisabled(true);

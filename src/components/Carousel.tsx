@@ -4,6 +4,8 @@ import { useEffect } from 'react';
 import { State } from '../store/state';
 import "./Carousel.style.css"
 
+//
+
 function Carousel(props: any) {
   const [currentPaneNumber, setCurrentPaneNumber] = useState(0) // get from redux global state
   const reduxPaneNumber = useSelector((state: State) => state.layout.paneNumber);
@@ -19,6 +21,16 @@ function Carousel(props: any) {
     setNumberOfPanes(panes ? panes : 0)
   }, [])
 
+  // This hook detects when paneNumber changes in the Redux store
+  useEffect(() => {
+    if (reduxPaneNumber > currentPaneNumber) {
+      changePaneByOffset(1)
+    }
+    else if (reduxPaneNumber < currentPaneNumber) {
+      changePaneByOffset(-1)
+    }
+  }, [reduxPaneNumber])
+
   const changePaneByOffset = (offset: number) => {
     let newRenderedPanes = [...renderedPanes]
     newRenderedPanes[currentPaneNumber + offset] = 1
@@ -32,22 +44,15 @@ function Carousel(props: any) {
       setRenderedPanes(newRenderedPanes)
     }, 200)
   }
-  
-  useEffect(() => {
-    if (reduxPaneNumber > currentPaneNumber) {
-      changePaneByOffset(1)
-    }
-    else if (reduxPaneNumber < currentPaneNumber) {
-      changePaneByOffset(-1)
-    }
-  }, [reduxPaneNumber])
 
+  //TODO: Remove
   const prevPane = () => {
     if (currentPaneNumber > 0) {
       changePaneByOffset(-1)
     }
   }
 
+  //TODO: Remove
   const nextPane = () => {
     if (currentPaneNumber < numberOfPanes - 1) {
      changePaneByOffset(1)
@@ -60,11 +65,6 @@ function Carousel(props: any) {
         {props.children.map((child: any, i: number) => {
           return <div className="pane" key={i}>{renderedPanes[i] === 1 && child}</div>
         })}
-      </div>
-      <p>Temporary navigation buttons (Not synced with redux)</p>
-      <div>
-        <button onClick={prevPane}>Prev</button>
-        <button onClick={nextPane}>Next</button>
       </div>
     </div>
   )
