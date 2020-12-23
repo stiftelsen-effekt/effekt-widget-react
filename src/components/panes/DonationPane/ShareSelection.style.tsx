@@ -4,6 +4,9 @@ export const ShareInputContainer = styled.div`
     border: 1px solid gray;
     border-radius: 8px;
     margin: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 `
 
 export const OrganizationName = styled.p`
@@ -18,20 +21,26 @@ export const PercentageText = styled.p`
     margin-right: 5px;
     display: inline-block;
     color: gray;
-`
-
-export const FloatRightDiv = styled.div`
-    float: right;
+    font-size: 20px;
 `
 
 export const ShareInput = styled.input`
-    height: 100%;
-    width: 5vw;
+    width: 4vw;
     border: none;
     font-size: 20px;
+    text-align: right;
+    box-sizing: border-box;
 
     &&:hover {
+        box-sizing: border-box;
         border: 2px solid gray;
+        border-radius: 5px;
+    }
+
+    &&:focus {
+        outline: none;
+        box-sizing: border-box;
+        border: 2px solid black;
         border-radius: 5px;
     }
 `

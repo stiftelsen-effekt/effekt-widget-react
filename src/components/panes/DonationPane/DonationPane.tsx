@@ -10,13 +10,15 @@ import { Pane, PaneContainer } from "../Panes.style";
 import { State } from "../../../store/state";
 import { TextField } from "../Forms.style";
 import ErrorField from "../../shared/Error/ErrorField";
-import { postDonation } from "../../helpers/network";
+import { getOrganizationsURL, postDonation } from "../../helpers/network";
 import { DonationData } from "../../helpers/network.types";
 import { PaymentMethod, ShareType } from "../../../types/Enums";
 import { RichSelectOption } from "../../shared/RichSelect/RichSelectOption";
 import { RichSelect } from "../../shared/RichSelect/RichSelect";
 import { NextButton } from "../../shared/Buttons/NavigationButtons.style";
 import ShareSelection from "./ShareSelection";
+import { useQuery } from "react-query";
+import axios from "axios";
 
 interface DonationFormValues {
   recurring: string;
@@ -38,6 +40,10 @@ export const DonationPane: React.FC = () => {
   const currentPaymentMethod = useSelector(
     (state: State) => state.donation.method
   );
+  const {isLoading, error, data } = useQuery("getOrganizations", () => 
+    axios(getOrganizationsURL)
+  )
+
   /*
   const answeredReferral = useSelector(
     (state: State) => state.layout.answeredReferral
@@ -154,7 +160,7 @@ export const DonationPane: React.FC = () => {
             />
           </RichSelect>
           {shareType === ShareType.CUSTOM &&
-            <ShareSelection />
+            <ShareSelection prefetchData={{error: error, isLoading: isLoading, data: data}} />
           }
           {shareType === ShareType.STANDARD &&
             <NextButton type="submit" disabled={nextDisabled}>

@@ -12,13 +12,23 @@ import { ToolTip } from '../../shared/ToolTip/ToolTip'
 import { postDonation } from './../../helpers/network'
 import { DonationData, OrganizationSplit } from './../../helpers/network.types'
 import { NextButton } from '../../shared/Buttons/NavigationButtons.style'
-import { FloatRightDiv, OrganizationName, PercentageText, ShareInput, ShareInputContainer } from './ShareSelection.style'
+import { OrganizationName, PercentageText, ShareInput, ShareInputContainer } from './ShareSelection.style'
 
 const tooltipLink = "https://gieffektivt.no/organisasjoner"
 
 // TODO: Loading animation after submitting
 
-export default function SharesPane() {
+interface PrefetchData {
+    isLoading: any,
+    error: any,
+    data: any,
+}
+
+interface ShareSelectionProps {
+    prefetchData: PrefetchData
+}
+
+export default function SharesPane(props: ShareSelectionProps) {
     const dispatch = useDispatch()
     const [ nextDisabled, setNextDisabled ] = useState(false)
     const [ submitLoading, setSubmitLoading ] = useState(false)
@@ -32,9 +42,9 @@ export default function SharesPane() {
     const [ percentageErrorAnimation, setPercentageErrorAnimation ] = useState(false)
     const { register, watch, handleSubmit, setValue } = useForm({mode: 'all'})
     const watchAllFields = watch()
-    const {isLoading, error, data } = useQuery("getOrganizations", () => 
-        axios(getOrganizationsURL)
-    )
+    // const {isLoading, error, data } = useQuery("getOrganizations", () => 
+    //     axios(getOrganizationsURL)
+    // )
 
     function getTotalPercentage() {
         let totalPercentage: number = 0
@@ -52,9 +62,11 @@ export default function SharesPane() {
     function setupOrganizationInput(org: Organization) {
         return (
             <ShareInputContainer key={org.id}>
-                <ToolTip text={org.shortDesc} link={tooltipLink} />
-                <OrganizationName>{org.name}</OrganizationName>
-                <FloatRightDiv>
+                <div>
+                    <OrganizationName>{org.name}</OrganizationName>
+                    <ToolTip text={org.shortDesc} link={tooltipLink} />
+                </div>
+                <div>
                     <ShareInput 
                         type="number" 
                         inputMode="decimal" 
@@ -64,7 +76,7 @@ export default function SharesPane() {
                         ref={register} 
                     />
                     <PercentageText>%</PercentageText>
-                </FloatRightDiv>
+                </div>
             </ShareInputContainer>
         )
     }
@@ -76,10 +88,10 @@ export default function SharesPane() {
             setNextDisabled(false)
             setPercentageErrorAnimation(false)
         } 
-        else if (data) {
+        else if (props.prefetchData.data) {
             setNextDisabled(true)
             setPercentageErrorAnimation(true)
-         }
+        }
         if (negative) {
             setNextDisabled(true)
             setPercentageErrorAnimation(true)
@@ -100,7 +112,7 @@ export default function SharesPane() {
                         let orgSplit: OrganizationSplit = {id: 0, split: 0, name: ""}
                         orgSplit.id = parseInt(property)
                         orgSplit.split = parseInt(watchAllFields[property])
-                        data?.data.content.forEach((org: Organization) => {
+                        props.prefetchData.data?.data.content.forEach((org: Organization) => {
                             if (orgSplit.id === org.id) {
                                 orgSplit.name = org.name
                             }
@@ -137,9 +149,9 @@ export default function SharesPane() {
             {!submitLoading ? 
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <div>
-                        {isLoading && <p>Laster inn...</p>}
-                        {error && <p>Noe gikk galt</p>}
-                        {data?.data.content.map((org: any) => setupOrganizationInput(org))}
+                        {props.prefetchData.isLoading && <p>Laster inn...</p>}
+                        {props.prefetchData.error && <p>Noe gikk galt</p>}
+                        {props.prefetchData.data?.data.content.map((org: any) => setupOrganizationInput(org))}
                     </div>
                     <Collapse in={percentageErrorAnimation}>
                         <p>Du har fordelt {getTotalPercentage().totalPercentage} / 100%</p>
