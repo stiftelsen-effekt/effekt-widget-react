@@ -1,11 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { Collapse } from "@material-ui/core";
 import Validate from "validator";
 import { useForm } from "react-hook-form";
 import { OrangeLink, Pane } from "../Panes.style";
-import { Donor, DonorInput } from "../../../store/state";
+import { DonorInput } from "../../../store/state";
 import { submitDonorInfo } from "../../../store/donation/actions";
 import {
   InputFieldWrapper,
@@ -110,18 +109,18 @@ export const DonorPane: React.FC = () => {
         >
           <RichSelectOption label="Info om deg" value={DonorType.DONOR}>
             <InputFieldWrapper>
-              <Collapse in={nameErrorAnimation}>
+              {nameErrorAnimation &&
                 <ErrorField text="Ugyldig navn" />
-              </Collapse>
+              }
               <TextField
                 name="name"
                 type="text"
                 placeholder="Navn"
                 ref={register({ required: true, minLength: 3 })}
               />
-              <Collapse in={emailErrorAnimation}>
+              {emailErrorAnimation &&
                 <ErrorField text="Ugyldig epost" />
-              </Collapse>
+              }
               <TextField
                 name="email"
                 type="text"
@@ -142,11 +141,11 @@ export const DonorPane: React.FC = () => {
                 />
                 <InputLabel>Jeg ønsker skattefradrag</InputLabel>
                 <ToolTip text={tooltipText} link={tooltipLink} />
-                <Collapse in={watchAllFields.taxDeduction}>
+                {watchAllFields.taxDeduction &&
                   <InputFieldWrapper>
-                    <Collapse in={ssnErrorAnimation}>
+                    {ssnErrorAnimation && 
                       <ErrorField text="Ugyldig personnummer" />
-                    </Collapse>
+                    }                    
                     <TextField
                       name="ssn"
                       type="tel"
@@ -160,13 +159,13 @@ export const DonorPane: React.FC = () => {
                       })}
                     />
                   </InputFieldWrapper>
-                </Collapse>
+                }
               </div>
               <div>
                 {privacyPolicyErrorAnimation}
-                <Collapse in={privacyPolicyErrorAnimation}>
+                {privacyPolicyErrorAnimation &&
                   <ErrorField text="Du må godta personvernerklæringen" />
-                </Collapse>
+                }
                 <CheckBox
                   name="privacyPolicy"
                   type="checkbox"

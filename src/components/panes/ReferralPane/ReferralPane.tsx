@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { Collapse } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
 import { setPaneNumber } from "../../../store/layout/actions";
 import { PaneNumber, State } from "../../../store/state";
@@ -21,6 +20,7 @@ import {
   OtherInputWrapper,
   ReferralButton,
   ReferralsWrapper,
+  ReferralButtonsWrapper,
 } from "./ReferralPane.style";
 import { PaymentMethod } from "../../../types/Enums";
 
@@ -113,34 +113,40 @@ export const ReferralPane: React.FC = () => {
   return (
     <Pane>
       <PaneContainer>
+        <ReferralsWrapper>
           <PaneTitle>Hvor hørte du om oss?</PaneTitle>
           <form onSubmit={handleSubmit(() => onSubmit(-1))}>
-            <Collapse in={!openOtherInput}>
-              <UnderTitle>Valgfritt</UnderTitle>
-              <ReferralsWrapper>{setupReferrals()}</ReferralsWrapper>
-              <NavigationWrapper>
-                <NextButton disabled={false} >
-                  Neste
-                </NextButton>
-              </NavigationWrapper>
-            </Collapse>
-            <Collapse in={openOtherInput}>
-              <OtherInputWrapper>
-                <UnderTitle>Fortell gjerne mer</UnderTitle>
-                <OtherInput name="other" placeholder="Skriv her" ref={register} />
-              </OtherInputWrapper>
-              <NavigationWrapper>
-                {openOtherInput && (
-                  <NavButton
-                    onClick={() => setOpenOtherInput(false)}
-                    text="Tilbake"
-                  />
-                )}
-                <VerticalLine />
-                <NavButton onClick={postOtherReferral} text="Fullfør" />
-              </NavigationWrapper>
-            </Collapse>
+            {!openOtherInput &&
+              <div>
+                <p>Valgfritt</p>
+                <ReferralButtonsWrapper>{setupReferrals()}</ReferralButtonsWrapper>
+                <NavigationWrapper>
+                  <NextButton disabled={false} >
+                    Neste
+                  </NextButton>
+                </NavigationWrapper>
+              </div>
+            }
+            {openOtherInput &&
+              <div>
+                <OtherInputWrapper>
+                  <UnderTitle>Fortell gjerne mer</UnderTitle>
+                  <OtherInput name="other" placeholder="Skriv her" ref={register} />
+                </OtherInputWrapper>
+                <NavigationWrapper>
+                  {openOtherInput && (
+                    <NavButton
+                      onClick={() => setOpenOtherInput(false)}
+                      text="Tilbake"
+                    />
+                  )}
+                  <VerticalLine />
+                  <NavButton onClick={postOtherReferral} text="Fullfør" />
+                </NavigationWrapper>
+              </div>
+            }
           </form>
+          </ReferralsWrapper>
       </PaneContainer>
     </Pane>
   );

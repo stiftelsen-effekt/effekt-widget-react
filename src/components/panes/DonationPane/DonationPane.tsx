@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
-import { Collapse } from "@material-ui/core";
 import Validator from "validator";
 import { setSum } from "../../../store/donation/actions";
 import { nextPane, setShareType } from "../../../store/layout/actions";
@@ -139,9 +138,9 @@ export const DonationPane: React.FC = () => {
     <Pane>
       <PaneContainer>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <Collapse in={sumErrorAnimation}>
-            <ErrorField text="Ugyldig sum" />
-          </Collapse>
+          {sumErrorAnimation &&
+              <ErrorField text="Ugyldig sum" />
+          }
           {sumField}
 
           <RichSelect

@@ -1,12 +1,15 @@
 import styled from "styled-components";
 
 export const ReferralsWrapper = styled.div`
-  width: 240px;
+ 
+`
+
+export const ReferralButtonsWrapper = styled.div`
   white-space: normal;
   display: flex;
   align-items: space-between;
-  width: 240px;
   flex-wrap: wrap;
+  align-self: center;
 `;
 
 export const OtherInputWrapper = styled.div`
@@ -24,14 +27,19 @@ export const OtherInput = styled.textarea`
 `;
 
 export const ReferralButton = styled.button`
-  width: 110px;
-  padding: 5px;
-  margin: 5px;
-  background: #f8f1e5;
-  border: 1px solid #dfd2c5;
+  width: 48%;
+  padding: 2%;
+  margin: 1%;
+  background-color: white;
+  font-size: 15px;
+  color: #484848;
+  border: 1px solid gray;
+  border-radius: 5px;
+  box-shadow: 3px;
+  box-shadow: 0 0 5px lightgray;
 
   &:hover {
     cursor: pointer;
-    opacity: 0.5;
+    background-color: #f0f0f0;
   }
 `;

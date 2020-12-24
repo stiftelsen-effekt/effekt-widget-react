@@ -7,7 +7,6 @@ import { useDispatch, useSelector } from 'react-redux'
 import { State } from '../../../store/state'
 import { useQuery } from 'react-query'
 import axios from 'axios'
-import { Collapse } from '@material-ui/core'
 import { ToolTip } from '../../shared/ToolTip/ToolTip'
 import { postDonation } from './../../helpers/network'
 import { DonationData, OrganizationSplit } from './../../helpers/network.types'
@@ -153,9 +152,9 @@ export default function SharesPane(props: ShareSelectionProps) {
                         {props.prefetchData.error && <p>Noe gikk galt</p>}
                         {props.prefetchData.data?.data.content.map((org: any) => setupOrganizationInput(org))}
                     </div>
-                    <Collapse in={percentageErrorAnimation}>
+                    {percentageErrorAnimation &&
                         <p>Du har fordelt {getTotalPercentage().totalPercentage} / 100%</p>
-                    </Collapse>
+                    }
                     <NextButton disabled={nextDisabled}>
                         Neste
                     </NextButton>
