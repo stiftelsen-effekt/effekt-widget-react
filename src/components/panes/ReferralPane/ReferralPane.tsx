@@ -14,7 +14,7 @@ import {
 } from "../Panes.style";
 
 import { NavButton } from "../../shared/Buttons/NavigationButtons";
-import { NextButton } from "../../shared/Buttons/NavigationButtons.style"
+import { NextButton } from "../../shared/Buttons/NavigationButtons.style";
 import {
   OtherInput,
   OtherInputWrapper,
@@ -35,7 +35,6 @@ export const ReferralPane: React.FC = () => {
   const [openOtherInput, setOpenOtherInput] = useState(false);
   const paymentMethod = useSelector((state: State) => state.donation.method);
   const donorID = useSelector((state: State) => state.donation.donor?.donorID);
-  const shareType = useSelector((state: State) => state.layout.shareType);
   const { handleSubmit, register, watch } = useForm();
   const watchOtherInput = watch("other", false);
   const dispatch = useDispatch();
@@ -116,22 +115,26 @@ export const ReferralPane: React.FC = () => {
         <ReferralsWrapper>
           <PaneTitle>Hvor hørte du om oss?</PaneTitle>
           <form onSubmit={handleSubmit(() => onSubmit(-1))}>
-            {!openOtherInput &&
+            {!openOtherInput && (
               <div>
                 <p>Valgfritt</p>
-                <ReferralButtonsWrapper>{setupReferrals()}</ReferralButtonsWrapper>
+                <ReferralButtonsWrapper>
+                  {setupReferrals()}
+                </ReferralButtonsWrapper>
                 <NavigationWrapper>
-                  <NextButton disabled={false} >
-                    Neste
-                  </NextButton>
+                  <NextButton disabled={false}>Neste</NextButton>
                 </NavigationWrapper>
               </div>
-            }
-            {openOtherInput &&
+            )}
+            {openOtherInput && (
               <div>
                 <OtherInputWrapper>
                   <UnderTitle>Fortell gjerne mer</UnderTitle>
-                  <OtherInput name="other" placeholder="Skriv her" ref={register} />
+                  <OtherInput
+                    name="other"
+                    placeholder="Skriv her"
+                    ref={register}
+                  />
                 </OtherInputWrapper>
                 <NavigationWrapper>
                   {openOtherInput && (
@@ -144,9 +147,9 @@ export const ReferralPane: React.FC = () => {
                   <NavButton onClick={postOtherReferral} text="Fullfør" />
                 </NavigationWrapper>
               </div>
-            }
+            )}
           </form>
-          </ReferralsWrapper>
+        </ReferralsWrapper>
       </PaneContainer>
     </Pane>
   );

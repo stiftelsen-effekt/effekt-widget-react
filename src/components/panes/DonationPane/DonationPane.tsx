@@ -3,6 +3,8 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import Validator from "validator";
+import { useQuery } from "react-query";
+import axios, { AxiosResponse } from "axios";
 import { setSum } from "../../../store/donation/actions";
 import { nextPane, setShareType } from "../../../store/layout/actions";
 import { Pane, PaneContainer } from "../Panes.style";
@@ -15,9 +17,9 @@ import { PaymentMethod, ShareType } from "../../../types/Enums";
 import { RichSelectOption } from "../../shared/RichSelect/RichSelectOption";
 import { RichSelect } from "../../shared/RichSelect/RichSelect";
 import { NextButton } from "../../shared/Buttons/NavigationButtons.style";
-import ShareSelection from "./ShareSelection";
-import { useQuery } from "react-query";
-import axios from "axios";
+import { SharesPane } from "./ShareSelection";
+import { Organization } from "../../../types/Organization";
+import { IServerResponse } from "../../../types/Temp";
 
 interface DonationFormValues {
   recurring: string;
@@ -39,9 +41,9 @@ export const DonationPane: React.FC = () => {
   const currentPaymentMethod = useSelector(
     (state: State) => state.donation.method
   );
-  const {isLoading, error, data } = useQuery("getOrganizations", () => 
-    axios(getOrganizationsURL)
-  )
+  const { isLoading, error, data } = useQuery<
+    AxiosResponse<IServerResponse<[Organization]>>
+  >("getOrganizations", () => axios(getOrganizationsURL));
 
   /*
   const answeredReferral = useSelector(
@@ -79,7 +81,6 @@ export const DonationPane: React.FC = () => {
   */
 
   function onSubmit() {
-    console.log("submit")
     if (Object.keys(errors).length === 0) {
       if (donor) {
         if (shareType === ShareType.STANDARD) {
@@ -111,7 +112,7 @@ export const DonationPane: React.FC = () => {
           }
         }
       }
-      dispatch(nextPane())
+      dispatch(nextPane());
     }
   }
 
@@ -138,9 +139,7 @@ export const DonationPane: React.FC = () => {
     <Pane>
       <PaneContainer>
         <form onSubmit={handleSubmit(onSubmit)}>
-          {sumErrorAnimation &&
-              <ErrorField text="Ugyldig sum" />
-          }
+          {sumErrorAnimation && <ErrorField text="Ugyldig sum" />}
           {sumField}
 
           <RichSelect
@@ -158,14 +157,14 @@ export const DonationPane: React.FC = () => {
               value={ShareType.CUSTOM}
             />
           </RichSelect>
-          {shareType === ShareType.CUSTOM &&
-            <ShareSelection prefetchData={{error: error, isLoading: isLoading, data: data}} />
-          }
-          {shareType === ShareType.STANDARD &&
+          {shareType === ShareType.CUSTOM && data?.data && (
+            <SharesPane prefetchData={{ error, isLoading, data: data?.data }} />
+          )}
+          {shareType === ShareType.STANDARD && (
             <NextButton type="submit" disabled={nextDisabled}>
               Neste
             </NextButton>
-          }
+          )}
         </form>
       </PaneContainer>
     </Pane>

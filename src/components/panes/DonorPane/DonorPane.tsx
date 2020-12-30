@@ -66,7 +66,7 @@ export const DonorPane: React.FC = () => {
       : setPrivacyPolicyErrorAnimation(false);
 
     if (donorType === DonorType.ANONYMOUS) {
-      setNextDisabled(false)
+      setNextDisabled(false);
     } else if (Object.keys(errors).length === 0) {
       setNextDisabled(false);
     } else {
@@ -109,18 +109,14 @@ export const DonorPane: React.FC = () => {
         >
           <RichSelectOption label="Info om deg" value={DonorType.DONOR}>
             <InputFieldWrapper>
-              {nameErrorAnimation &&
-                <ErrorField text="Ugyldig navn" />
-              }
+              {nameErrorAnimation && <ErrorField text="Ugyldig navn" />}
               <TextField
                 name="name"
                 type="text"
                 placeholder="Navn"
                 ref={register({ required: true, minLength: 3 })}
               />
-              {emailErrorAnimation &&
-                <ErrorField text="Ugyldig epost" />
-              }
+              {emailErrorAnimation && <ErrorField text="Ugyldig epost" />}
               <TextField
                 name="email"
                 type="text"
@@ -141,11 +137,11 @@ export const DonorPane: React.FC = () => {
                 />
                 <InputLabel>Jeg ønsker skattefradrag</InputLabel>
                 <ToolTip text={tooltipText} link={tooltipLink} />
-                {watchAllFields.taxDeduction &&
+                {watchAllFields.taxDeduction && (
                   <InputFieldWrapper>
-                    {ssnErrorAnimation && 
+                    {ssnErrorAnimation && (
                       <ErrorField text="Ugyldig personnummer" />
-                    }                    
+                    )}
                     <TextField
                       name="ssn"
                       type="tel"
@@ -159,13 +155,13 @@ export const DonorPane: React.FC = () => {
                       })}
                     />
                   </InputFieldWrapper>
-                }
+                )}
               </div>
               <div>
                 {privacyPolicyErrorAnimation}
-                {privacyPolicyErrorAnimation &&
+                {privacyPolicyErrorAnimation && (
                   <ErrorField text="Du må godta personvernerklæringen" />
-                }
+                )}
                 <CheckBox
                   name="privacyPolicy"
                   type="checkbox"

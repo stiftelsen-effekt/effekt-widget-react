@@ -1,8 +1,6 @@
 import styled from "styled-components";
 
-export const ReferralsWrapper = styled.div`
- 
-`
+export const ReferralsWrapper = styled.div``;
 
 export const ReferralButtonsWrapper = styled.div`
   white-space: normal;
