@@ -8,6 +8,7 @@ export const INCREMENT_CURRENT_PANE = "INCREMENT_CURRENT_PANE";
 export const DECREMENT_CURRENT_PANE = "DECREMENT_CURRENT_PANE";
 export const SET_ANSWERED_REFERRAL = "SET_ANSWERRED_REFERRAL";
 export const SET_HEIGHT = "SET_HEIGHT";
+export const SET_LOADING = "SET_LOADING";
 
 interface SelectCustomShare {
   type: typeof SELECT_CUSTOM_SHARE;
@@ -59,6 +60,11 @@ interface SetHeight {
   };
 }
 
+interface SetLoading {
+  type: typeof SET_LOADING;
+  payload: boolean;
+}
+
 export type LayoutActionTypes =
   | SelectCustomShare
   | SelectPrivacyPolicy
@@ -67,4 +73,5 @@ export type LayoutActionTypes =
   | DecrementCurrentPane
   | SetAnsweredReferral
   | SetHeight
-  | SetShareType;
+  | SetShareType
+  | SetLoading;

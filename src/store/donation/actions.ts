@@ -1,3 +1,4 @@
+import actionCreatorFactory from "typescript-fsa";
 import {
   DonationActionTypes,
   SELECT_PAYMENT_METHOD,
@@ -12,6 +13,8 @@ import {
 } from "./types";
 import { PaymentMethod, RecurringDonation } from "../../types/Enums";
 import { Shares } from "../../types/Temp";
+
+const actionCreator = actionCreatorFactory();
 
 export function selectPaymentMethod(
   method: PaymentMethod
@@ -107,3 +110,20 @@ export function setPaymentProviderURL(url: string): DonationActionTypes {
     },
   };
 }
+
+/**
+ * TODO: Find a place this can live
+ */
+
+export type RegisterDonationResponse = {
+  KID: string;
+  donorID: number;
+  hasAnsweredReferral: boolean;
+  paymentProviderUrl: string;
+};
+
+export const registerDonationAction = actionCreator.async<
+  undefined,
+  RegisterDonationResponse,
+  Error
+>("REGISTER_DONATION");

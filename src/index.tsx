@@ -1,8 +1,10 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
-import { combineReducers, createStore } from "redux";
+import { applyMiddleware, combineReducers, createStore } from "redux";
 import { Provider } from "react-redux";
+import createSagaMiddleware from "redux-saga";
+import { composeWithDevTools } from "redux-devtools-extension";
 import { Widget } from "./components/Widget";
 import * as serviceWorker from "./serviceWorker";
 import { State } from "./store/state";
@@ -10,31 +12,20 @@ import { donationReducer } from "./store/donation/reducer";
 import { layoutReducer } from "./store/layout/reducer";
 import { errorReducer } from "./store/error/reducer";
 import { Host } from "./components/Host";
+import watchAll from "./store/root.saga";
 
-/**
- * Here we create our top level redux store
- * This store is responsible for all of the shared UI state
- */
 const rootReducer = combineReducers<State>({
   donation: donationReducer,
   layout: layoutReducer,
   error: errorReducer,
 });
 
-/**
- * We use the redux devtools extension for Chrome
- * This requires us to add some properties from the window to the store
- * We've disabled some linting because typescript doesn't know about
- * these properties
- */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-declare const window: any;
-// eslint-disable-next-line no-underscore-dangle
+const sagaMiddleware = createSagaMiddleware();
 const store = createStore(
   rootReducer,
-  // eslint-disable-next-line no-underscore-dangle
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+  composeWithDevTools(applyMiddleware(sagaMiddleware))
 );
+sagaMiddleware.run(watchAll);
 
 ReactDOM.render(
   <React.StrictMode>

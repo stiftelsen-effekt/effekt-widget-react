@@ -6,6 +6,7 @@ import {
   SELECT_CUSTOM_SHARE,
   SELECT_PRIVACY_POLICY,
   SET_ANSWERED_REFERRAL,
+  SET_LOADING,
   SET_PANE_NUMBER,
   SET_SHARE_TYPE,
 } from "./types";
@@ -38,8 +39,6 @@ export function selectPrivacyPolicy(privacyPolicy: boolean): LayoutActionTypes {
 }
 
 export function setPaneNumber(paneNumber: number): LayoutActionTypes {
-  //TODO: Send Google analytics
-  // sendAnalytics("go_to_slide", '', paneNumber);
   return {
     type: SET_PANE_NUMBER,
     payload: {
@@ -68,5 +67,12 @@ export function setAnsweredReferral(
     payload: {
       answeredReferral,
     },
+  };
+}
+
+export function setLoading(loading: boolean): LayoutActionTypes {
+  return {
+    type: SET_LOADING,
+    payload: loading,
   };
 }

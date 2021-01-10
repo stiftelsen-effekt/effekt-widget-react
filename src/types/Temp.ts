@@ -9,5 +9,5 @@ export interface Shares {
 
 export interface IServerResponse<T> {
   status: number;
-  content: T;
+  content: T | string;
 }

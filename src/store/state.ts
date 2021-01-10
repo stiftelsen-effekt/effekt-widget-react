@@ -13,6 +13,7 @@ export interface Layout {
   paneNumber: number;
   answeredReferral?: boolean;
   height: number;
+  loading: boolean;
 }
 
 export interface DonationInput {

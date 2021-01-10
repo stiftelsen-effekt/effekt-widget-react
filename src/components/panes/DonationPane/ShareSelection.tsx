@@ -122,11 +122,13 @@ export const SharesSelection: React.FC<ShareSelectionProps> = ({
             const orgShare: OrganizationShare = { id: 0, share: 0, name: "" };
             orgShare.id = parseInt(property);
             orgShare.share = parseInt(watchAllFields[property]);
-            prefetchData.data.content.forEach((org: Organization) => {
-              if (orgShare.id === org.id) {
-                orgShare.name = org.name;
+            (prefetchData.data.content as [Organization]).forEach(
+              (org: Organization) => {
+                if (orgShare.id === org.id) {
+                  orgShare.name = org.name;
+                }
               }
-            });
+            );
             orgShares.push(orgShare);
           }
         });
@@ -159,9 +161,9 @@ export const SharesSelection: React.FC<ShareSelectionProps> = ({
           <div>
             {prefetchData.isLoading && <p>Laster inn...</p>}
             {prefetchData.error && <p>Noe gikk galt</p>}
-            {prefetchData.data.content.map((org: Organization) =>
-              setupOrganizationInput(org)
-            )}
+            {(prefetchData.data.content as [
+              Organization
+            ]).map((org: Organization) => setupOrganizationInput(org))}
           </div>
           {percentageErrorAnimation && (
             <p>

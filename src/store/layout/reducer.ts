@@ -11,6 +11,7 @@ import {
   INCREMENT_CURRENT_PANE,
   DECREMENT_CURRENT_PANE,
   SET_SHARE_TYPE,
+  SET_LOADING,
 } from "./types";
 
 const initialState: Layout = {
@@ -18,6 +19,7 @@ const initialState: Layout = {
   shareType: ShareType.STANDARD,
   paneNumber: 0,
   height: 512,
+  loading: false,
 };
 
 /**
@@ -49,6 +51,8 @@ export const layoutReducer: Reducer<Layout, LayoutActionTypes> = (
       return { ...state, answeredReferral: action.payload.answeredReferral };
     case SET_HEIGHT:
       return { ...state, height: action.payload.height };
+    case SET_LOADING:
+      return { ...state, loading: action.payload };
     default:
       return state;
   }
