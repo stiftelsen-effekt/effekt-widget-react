@@ -23,6 +23,7 @@ const initialState: Donation = {
     taxDeduction: false,
     newsletter: false,
   },
+  isValid: true,
 };
 
 /**

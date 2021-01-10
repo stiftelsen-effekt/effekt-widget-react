@@ -29,6 +29,7 @@ export interface DonationInput {
 export interface Donation extends DonationInput {
   kid?: string;
   paymentProviderURL?: string;
+  isValid: boolean;
 }
 
 export interface DonorInput {
