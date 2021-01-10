@@ -22,7 +22,12 @@
     "prettier"
   ],
   "rules": {
-    "prettier/prettier": "error",
+    "prettier/prettier": [
+      "error",
+      {
+        "endOfLine": "auto"
+      }
+    ],
     "lines-between-class-members": "off",
     "@typescript-eslint/lines-between-class-members": [
       "error",
