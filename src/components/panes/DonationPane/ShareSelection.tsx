@@ -6,13 +6,13 @@ import { setShares } from "../../../store/donation/actions";
 import { State } from "../../../store/state";
 import { ToolTip } from "../../shared/ToolTip/ToolTip";
 
-import { OrganizationShare } from "../../helpers/network.types";
 import {
   OrganizationName,
   PercentageText,
   ShareInput,
   ShareInputContainer,
 } from "./ShareSelection.style";
+import { OrganizationShare } from "../../../types/Temp";
 
 const tooltipLink = "https://gieffektivt.no/organisasjoner";
 
