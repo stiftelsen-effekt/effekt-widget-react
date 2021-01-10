@@ -1,11 +1,11 @@
-import React, { useRef, useState, useEffect, ReactElement } from "react";
+import React, { useRef, useState, useEffect, ReactNode } from "react";
 import { useSelector } from "react-redux";
 
 import { State } from "../store/state";
 import "./Carousel.style.css";
 
 interface ICarouselProps {
-  children: JSX.Element[];
+  children: React.ReactNode[];
 }
 
 export const Carousel: React.FC<ICarouselProps> = ({ children }) => {
@@ -67,14 +67,16 @@ export const Carousel: React.FC<ICarouselProps> = ({ children }) => {
         }}
       >
         {children &&
-          children.map((child: ReactElement, i: number) => {
-            return (
-              // eslint-disable-next-line react/no-array-index-key
-              <div className="pane" key={i}>
-                {renderedPanes[i] === 1 && child}
-              </div>
-            );
-          })}
+          children
+            .filter((child: ReactNode) => child !== false)
+            .map((child: ReactNode, i: number) => {
+              return (
+                // eslint-disable-next-line react/no-array-index-key
+                <div className="pane" key={i}>
+                  {renderedPanes[i] === 1 && child}
+                </div>
+              );
+            })}
       </div>
     </div>
   );
