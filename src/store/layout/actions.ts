@@ -38,6 +38,8 @@ export function selectPrivacyPolicy(privacyPolicy: boolean): LayoutActionTypes {
 }
 
 export function setPaneNumber(paneNumber: number): LayoutActionTypes {
+  //TODO: Send Google analytics
+  // sendAnalytics("go_to_slide", '', paneNumber);
   return {
     type: SET_PANE_NUMBER,
     payload: {
