@@ -1,16 +1,15 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import Widget from './components/Widget';
-import * as serviceWorker from './serviceWorker';
-import { combineReducers, createStore } from 'redux';
-import { State } from './store/state';
-import { Provider } from 'react-redux';
-import { donationReducer } from './store/donation/reducer';
-import { layoutReducer } from './store/layout/reducer';
-import { errorReducer } from './store/error/reducer';
-import { payPalReducer } from './store/paypal/reducer';
-import { reducer as reduxFormReducer} from 'redux-form'
+import React from "react";
+import ReactDOM from "react-dom";
+import "./index.css";
+import { combineReducers, createStore } from "redux";
+import { Provider } from "react-redux";
+import { Widget } from "./components/Widget";
+import * as serviceWorker from "./serviceWorker";
+import { State } from "./store/state";
+import { donationReducer } from "./store/donation/reducer";
+import { layoutReducer } from "./store/layout/reducer";
+import { errorReducer } from "./store/error/reducer";
+import { Host } from "./components/Host";
 
 /**
  * Here we create our top level redux store
@@ -19,8 +18,7 @@ import { reducer as reduxFormReducer} from 'redux-form'
 const rootReducer = combineReducers<State>({
   donation: donationReducer,
   layout: layoutReducer,
-  paypal: payPalReducer,
-  error: errorReducer
+  error: errorReducer,
 });
 
 /**
@@ -32,15 +30,21 @@ const rootReducer = combineReducers<State>({
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 declare const window: any;
 // eslint-disable-next-line no-underscore-dangle
-const store = createStore(rootReducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
+const store = createStore(
+  rootReducer,
+  // eslint-disable-next-line no-underscore-dangle
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+);
 
 ReactDOM.render(
   <React.StrictMode>
-    <Provider store={store}>
-      <Widget/>
-    </Provider>
+    <Host>
+      <Provider store={store}>
+        <Widget />
+      </Provider>
+    </Host>
   </React.StrictMode>,
-  document.getElementById('root')
+  document.getElementById("root")
 );
 
 // If you want your app to work offline and load faster, you can change

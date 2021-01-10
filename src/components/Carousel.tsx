@@ -1,49 +1,83 @@
-import React from 'react';
-import 'pure-react-carousel/dist/react-carousel.es.css';
-import './Carousel.style.css'
-import { CarouselWrapper } from './Carousel.style'
-import MethodPane from './panes/MethodPane/MethodPane';
-import DonorPane from './panes/DonorPane/DonorPane';
-import DonationPane from './panes/DonationPane/DonationPane';
-import SharesPane from './panes/SharesPane/SharesPane';
-import PayPalPane from './panes/PayPalPane/PayPalPane'
-import VippsPane from './panes/VippsPane/VippsPane';
-import ReferralPane from './panes/ReferralPane/ReferralPane';
-import ResultPane from './panes/ResultPane/ResultPane';
-import { Collapse } from '@material-ui/core';
-import { useSelector } from 'react-redux';
-import { State, PaneNumber } from '../store/state';
+import React, { useRef, useState, useEffect, ReactElement } from "react";
+import { useSelector } from "react-redux";
 
-  
-export default function Carousel(){
-    const currentPane = useSelector((state: State) => state.layout.paneNumber)
+import { State } from "../store/state";
+import "./Carousel.style.css";
 
-    return (
-        <CarouselWrapper>
-            <Collapse in={currentPane === PaneNumber.MethodPane}>
-                <MethodPane />
-            </Collapse>
-            <Collapse in={currentPane === PaneNumber.DonorPane}>
-                <DonorPane />
-            </Collapse>
-            <Collapse in={currentPane === PaneNumber.DonationPane}>
-                <DonationPane />
-            </Collapse>
-            <Collapse in={currentPane === PaneNumber.SharesPane}>
-                <SharesPane />
-            </Collapse>
-            <Collapse in={currentPane === PaneNumber.ReferralPane}>
-                <ReferralPane />
-            </Collapse>
-            <Collapse in={currentPane === PaneNumber.PayPalPane}>
-                <PayPalPane />
-            </Collapse>
-            <Collapse in={currentPane === PaneNumber.VippsPane}>
-                <VippsPane />
-            </Collapse>
-            <Collapse in={currentPane === PaneNumber.ResultPane}>
-                <ResultPane />
-            </Collapse>
-        </CarouselWrapper>
-    );
+interface ICarouselProps {
+  children: JSX.Element[];
 }
+
+export const Carousel: React.FC<ICarouselProps> = ({ children }) => {
+  const [currentPaneNumber, setCurrentPaneNumber] = useState(0); // get from redux global state
+  const reduxPaneNumber = useSelector(
+    (state: State) => state.layout.paneNumber
+  );
+  const [renderedPanes, setRenderedPanes] = useState([1]);
+  const renderedPanesRef = useRef(renderedPanes);
+  renderedPanesRef.current = renderedPanes;
+  const currentPaneNumberRef = useRef(currentPaneNumber);
+  currentPaneNumberRef.current = currentPaneNumber;
+
+  const changePaneByOffset = (offset: number) => {
+    const newRenderedPanes = [...renderedPanes];
+    newRenderedPanes[currentPaneNumber + offset] = 1;
+    setRenderedPanes(newRenderedPanes);
+
+    setCurrentPaneNumber(currentPaneNumber + offset);
+
+    setTimeout(() => {
+      const newRenderedPanes2 = [...renderedPanesRef.current];
+      newRenderedPanes2[currentPaneNumberRef.current - offset] = 0;
+      setRenderedPanes(newRenderedPanes2);
+    }, 200);
+  };
+
+  // This hook detects when paneNumber changes in the Redux store
+  useEffect(() => {
+    if (reduxPaneNumber > currentPaneNumber) {
+      changePaneByOffset(1);
+    } else if (reduxPaneNumber < currentPaneNumber) {
+      changePaneByOffset(-1);
+    }
+  }, [reduxPaneNumber]);
+
+  /*
+  // TODO: Remove
+  const prevPane = () => {
+    if (currentPaneNumber > 0) {
+      changePaneByOffset(-1);
+    }
+  };
+
+  // TODO: Remove
+  const nextPane = () => {
+    if (currentPaneNumber < numberOfPanes - 1) {
+      changePaneByOffset(1);
+    }
+  };
+  */
+
+  return (
+    <div id="carousel-wrapper">
+      <div
+        id="carousel"
+        style={{
+          transform: `translate3d(${currentPaneNumber * -100}%, 0px, 0px)`,
+        }}
+      >
+        {children &&
+          children.map((child: ReactElement, i: number) => {
+            return (
+              // eslint-disable-next-line react/no-array-index-key
+              <div className="pane" key={i}>
+                {renderedPanes[i] === 1 && child}
+              </div>
+            );
+          })}
+      </div>
+    </div>
+  );
+};
+
+export default Carousel;

@@ -1,11 +1,25 @@
-import { DonationActionTypes, SELECT_PAYMENT_METHOD, SELECT_TAX_DEDUCTION, SUBMIT_DONOR_INFO, SET_SUM, SET_RECURRING, SET_SHARES, SET_DONOR_ID, SET_KID, SET_PAYMENT_PROVIDER_URL } from './types';
-import { PaymentMethod, Splits } from '../state'
+import {
+  DonationActionTypes,
+  SELECT_PAYMENT_METHOD,
+  SELECT_TAX_DEDUCTION,
+  SUBMIT_DONOR_INFO,
+  SET_SUM,
+  SET_RECURRING,
+  SET_SHARES,
+  SET_DONOR_ID,
+  SET_KID,
+  SET_PAYMENT_PROVIDER_URL,
+} from "./types";
+import { PaymentMethod, RecurringDonation } from "../../types/Enums";
+import { Splits } from "../../types/Temp";
 
-export function selectPaymentMethod(method: PaymentMethod): DonationActionTypes {
+export function selectPaymentMethod(
+  method: PaymentMethod
+): DonationActionTypes {
   return {
     type: SELECT_PAYMENT_METHOD,
     payload: {
-        method
+      method,
     },
   };
 }
@@ -14,12 +28,18 @@ export function selectTaxDeduction(taxDeduction: boolean): DonationActionTypes {
   return {
     type: SELECT_TAX_DEDUCTION,
     payload: {
-        taxDeduction
-    }
+      taxDeduction,
+    },
   };
 }
 
-export function submitDonorInfo(name: string, email: string, taxDeduction: boolean, ssn: number, newsletter: boolean): DonationActionTypes {
+export function submitDonorInfo(
+  name: string,
+  email: string,
+  taxDeduction: boolean,
+  ssn: number,
+  newsletter: boolean
+): DonationActionTypes {
   return {
     type: SUBMIT_DONOR_INFO,
     payload: {
@@ -27,61 +47,63 @@ export function submitDonorInfo(name: string, email: string, taxDeduction: boole
       email,
       taxDeduction,
       ssn,
-      newsletter
-    }
-  }
+      newsletter,
+    },
+  };
 }
 
-export function setShares(shares: Splits) {
+export function setShares(shares: Splits): DonationActionTypes {
   return {
     type: SET_SHARES,
     payload: {
-      shares
-    }
-  }
+      shares,
+    },
+  };
 }
 
 export function setSum(sum: number): DonationActionTypes {
   return {
     type: SET_SUM,
     payload: {
-      sum
-    }
-  }
+      sum,
+    },
+  };
 }
 
-export function setRecurring(recurring: boolean): DonationActionTypes {
+export function setRecurring(
+  recurring: RecurringDonation
+): DonationActionTypes {
   return {
     type: SET_RECURRING,
     payload: {
-      recurring
-    }
-  }
+      recurring,
+    },
+  };
 }
 
 export function setDonorID(donorID: number): DonationActionTypes {
   return {
     type: SET_DONOR_ID,
     payload: {
-      donorID
-    }
-  }
+      donorID,
+    },
+  };
 }
 
 export function setKID(kid: number): DonationActionTypes {
   return {
     type: SET_KID,
     payload: {
-      kid
-    }
-  }
+      kid,
+    },
+  };
 }
 
 export function setPaymentProviderURL(url: string): DonationActionTypes {
   return {
     type: SET_PAYMENT_PROVIDER_URL,
     payload: {
-      url
-    }
-  }
+      url,
+    },
+  };
 }
