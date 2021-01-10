@@ -60,7 +60,7 @@ interface SetRecurring {
 interface SetKID {
   type: typeof SET_KID;
   payload: {
-    kid: number;
+    kid: string;
   };
 }
 

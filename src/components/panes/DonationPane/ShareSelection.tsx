@@ -1,48 +1,35 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { postDonation } from "../../helpers/network";
 import { Organization } from "../../../types/Organization";
 import { setShares } from "../../../store/donation/actions";
 import { State } from "../../../store/state";
 import { ToolTip } from "../../shared/ToolTip/ToolTip";
 
-import { DonationData, OrganizationShare } from "../../helpers/network.types";
 import {
   OrganizationName,
   PercentageText,
   ShareInput,
   ShareInputContainer,
 } from "./ShareSelection.style";
-import { IServerResponse } from "../../../types/Temp";
+import { OrganizationShare } from "../../../types/Temp";
 
 const tooltipLink = "https://gieffektivt.no/organisasjoner";
 
-// TODO: Loading animation after submitting
-
-interface PrefetchData {
-  isLoading: boolean;
-  error: unknown;
-  data: IServerResponse<[Organization]>;
-}
-
-interface ShareSelectionProps {
-  prefetchData: PrefetchData;
-}
-
-export const SharesSelection: React.FC<ShareSelectionProps> = ({
-  prefetchData,
-}) => {
+export const SharesSelection: React.FC = () => {
   const dispatch = useDispatch();
   const [submitLoading, setSubmitLoading] = useState(false);
   const donorName = useSelector((state: State) => state.donation.donor?.name);
   const donorEmail = useSelector((state: State) => state.donation.donor?.email);
-  const donorSSN = useSelector((state: State) => state.donation.donor?.ssn);
+  // const donorSSN = useSelector((state: State) => state.donation.donor?.ssn);
   const donorNewsletter = useSelector(
     (state: State) => state.donation.donor?.newsletter
   );
-  const donationSum = useSelector((state: State) => state.donation.sum);
+  // const donationSum = useSelector((state: State) => state.donation.sum);
   const donationMethod = useSelector((state: State) => state.donation.method);
+  const organizations = useSelector(
+    (state: State) => state.layout.organizations
+  );
   const [percentageErrorAnimation, setPercentageErrorAnimation] = useState(
     false
   );
@@ -94,7 +81,7 @@ export const SharesSelection: React.FC<ShareSelectionProps> = ({
     if (total === 100) {
       // setNextDisabled(false);
       setPercentageErrorAnimation(false);
-    } else if (prefetchData.data) {
+    } else if (organizations) {
       // setNextDisabled(true);
       setPercentageErrorAnimation(true);
     }
@@ -104,6 +91,9 @@ export const SharesSelection: React.FC<ShareSelectionProps> = ({
     }
   }, [watchAllFields]);
 
+  /**
+   * Check if donation is valid on input and set state
+   */
   function onSubmit() {
     dispatch(setShares(watchAllFields));
     if (getTotalPercentage().totalPercentage === 100) {
@@ -118,11 +108,11 @@ export const SharesSelection: React.FC<ShareSelectionProps> = ({
 
         Object.keys(watchAllFields).forEach((property) => {
           const Share = watchAllFields[property];
-          if (Share > 0) {
+          if (Share > 0 && organizations) {
             const orgShare: OrganizationShare = { id: 0, share: 0, name: "" };
             orgShare.id = parseInt(property);
             orgShare.share = parseInt(watchAllFields[property]);
-            prefetchData.data.content.forEach((org: Organization) => {
+            organizations.forEach((org: Organization) => {
               if (orgShare.id === org.id) {
                 orgShare.name = org.name;
               }
@@ -131,6 +121,7 @@ export const SharesSelection: React.FC<ShareSelectionProps> = ({
           }
         });
 
+        /*
         const postData: DonationData = {
           donor: {
             name: donorName,
@@ -148,18 +139,19 @@ export const SharesSelection: React.FC<ShareSelectionProps> = ({
         postDonation(postData, dispatch).then(() => {
           setSubmitLoading(false);
         });
+        */
       }
     }
   }
+
+  if (!organizations) return <div>Ingen organisasjoner</div>;
 
   return (
     <div>
       {!submitLoading ? (
         <form onSubmit={handleSubmit(onSubmit)}>
           <div>
-            {prefetchData.isLoading && <p>Laster inn...</p>}
-            {prefetchData.error && <p>Noe gikk galt</p>}
-            {prefetchData.data.content.map((org: Organization) =>
+            {organizations.map((org: Organization) =>
               setupOrganizationInput(org)
             )}
           </div>

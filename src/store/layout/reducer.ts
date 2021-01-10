@@ -1,6 +1,8 @@
 import { Reducer } from "redux";
+import { isType } from "typescript-fsa";
 import { ShareType } from "../../types/Enums";
 import { Layout } from "../state";
+import { fetchOrganizationsAction } from "./actions";
 import {
   SET_PANE_NUMBER,
   LayoutActionTypes,
@@ -11,6 +13,7 @@ import {
   INCREMENT_CURRENT_PANE,
   DECREMENT_CURRENT_PANE,
   SET_SHARE_TYPE,
+  SET_LOADING,
 } from "./types";
 
 const initialState: Layout = {
@@ -18,6 +21,7 @@ const initialState: Layout = {
   shareType: ShareType.STANDARD,
   paneNumber: 0,
   height: 512,
+  loading: false,
 };
 
 /**
@@ -32,6 +36,13 @@ export const layoutReducer: Reducer<Layout, LayoutActionTypes> = (
   state: Layout = initialState,
   action: LayoutActionTypes
 ) => {
+  if (isType(action, fetchOrganizationsAction.done)) {
+    return {
+      ...state,
+      organizations: action.payload.result,
+    };
+  }
+
   switch (action.type) {
     case SELECT_CUSTOM_SHARE:
       return { ...state, shareType: ShareType.CUSTOM };
@@ -49,6 +60,8 @@ export const layoutReducer: Reducer<Layout, LayoutActionTypes> = (
       return { ...state, answeredReferral: action.payload.answeredReferral };
     case SET_HEIGHT:
       return { ...state, height: action.payload.height };
+    case SET_LOADING:
+      return { ...state, loading: action.payload };
     default:
       return state;
   }
