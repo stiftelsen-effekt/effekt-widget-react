@@ -1,4 +1,6 @@
+import actionCreatorFactory from "typescript-fsa";
 import { ShareType } from "../../types/Enums";
+import { Organization } from "../../types/Organization";
 import {
   DECREMENT_CURRENT_PANE,
   INCREMENT_CURRENT_PANE,
@@ -10,6 +12,8 @@ import {
   SET_PANE_NUMBER,
   SET_SHARE_TYPE,
 } from "./types";
+
+const actionCreator = actionCreatorFactory();
 
 export function selectCustomShare(customShare: boolean): LayoutActionTypes {
   return {
@@ -76,3 +80,9 @@ export function setLoading(loading: boolean): LayoutActionTypes {
     payload: loading,
   };
 }
+
+export const fetchOrganizationsAction = actionCreator.async<
+  undefined,
+  [Organization],
+  Error
+>("FETCH_ORGANIZATIONS");

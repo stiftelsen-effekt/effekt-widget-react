@@ -2,7 +2,7 @@ import { SagaIterator } from "redux-saga";
 import { call, put, select } from "redux-saga/effects";
 import { Action } from "typescript-fsa";
 import { IServerResponse } from "../../types/Temp";
-import { setLoading } from "../layout/actions";
+import { setAnsweredReferral, setLoading } from "../layout/actions";
 import { Donation, State } from "../state";
 import { registerDonationAction, RegisterDonationResponse } from "./actions";
 
@@ -21,6 +21,13 @@ export function* registerDonation(
       }
     );
     if (result.status !== 200) throw new Error(result.content as string);
+
+    yield put(
+      setAnsweredReferral(
+        (result.content as RegisterDonationResponse).hasAnsweredReferral
+      )
+    );
+
     yield put(
       registerDonationAction.done({
         params: action.payload,

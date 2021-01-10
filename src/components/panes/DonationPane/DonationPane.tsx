@@ -3,8 +3,6 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import Validator from "validator";
-import { useQuery } from "react-query";
-import axios, { AxiosResponse } from "axios";
 import {
   registerDonationAction,
   setSum,
@@ -14,14 +12,11 @@ import { Pane, PaneContainer } from "../Panes.style";
 import { State } from "../../../store/state";
 import { TextField } from "../Forms.style";
 import ErrorField from "../../shared/Error/ErrorField";
-import { getOrganizationsURL } from "../../helpers/network";
 import { PaymentMethod, ShareType } from "../../../types/Enums";
 import { RichSelectOption } from "../../shared/RichSelect/RichSelectOption";
 import { RichSelect } from "../../shared/RichSelect/RichSelect";
 import { NextButton } from "../../shared/Buttons/NavigationButtons.style";
 import { SharesSelection } from "./ShareSelection";
-import { Organization } from "../../../types/Organization";
-import { IServerResponse } from "../../../types/Temp";
 
 interface DonationFormValues {
   recurring: string;
@@ -41,9 +36,6 @@ export const DonationPane: React.FC = () => {
   const currentPaymentMethod = useSelector(
     (state: State) => state.donation.method
   );
-  const { isLoading, error, data } = useQuery<
-    AxiosResponse<IServerResponse<[Organization]>>
-  >("getOrganizations", () => axios(getOrganizationsURL));
 
   const {
     register,
@@ -122,11 +114,7 @@ export const DonationPane: React.FC = () => {
               sublabel="Valgt blant våre anbefalte organisasjoner"
               value={ShareType.CUSTOM}
             >
-              {shareType === ShareType.CUSTOM && data?.data && (
-                <SharesSelection
-                  prefetchData={{ error, isLoading, data: data?.data }}
-                />
-              )}
+              <SharesSelection />
             </RichSelectOption>
           </RichSelect>
           <NextButton type="submit" disabled={nextDisabled}>

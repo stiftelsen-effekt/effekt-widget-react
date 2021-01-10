@@ -1,4 +1,5 @@
 import { PaymentMethod, RecurringDonation, ShareType } from "../types/Enums";
+import { Organization } from "../types/Organization";
 import { Shares } from "../types/Temp";
 
 export interface State {
@@ -14,6 +15,7 @@ export interface Layout {
   answeredReferral?: boolean;
   height: number;
   loading: boolean;
+  organizations?: [Organization];
 }
 
 export interface DonationInput {
@@ -25,7 +27,7 @@ export interface DonationInput {
 }
 
 export interface Donation extends DonationInput {
-  kid?: number;
+  kid?: string;
   paymentProviderURL?: string;
 }
 

@@ -1,6 +1,8 @@
 import { Reducer } from "redux";
+import { isType } from "typescript-fsa";
 import { RecurringDonation } from "../../types/Enums";
 import { Donation } from "../state";
+import { registerDonationAction } from "./actions";
 import {
   DonationActionTypes,
   SELECT_PAYMENT_METHOD,
@@ -35,6 +37,18 @@ export const donationReducer: Reducer<Donation, DonationActionTypes> = (
   state: Donation = initialState,
   action: DonationActionTypes
 ) => {
+  if (isType(action, registerDonationAction.done)) {
+    return {
+      ...state,
+      kid: action.payload.result.KID,
+      paymentProviderURL: action.payload.result.paymentProviderUrl,
+      donor: {
+        ...state.donor,
+        donorID: action.payload.result.donorID,
+      },
+    };
+  }
+
   switch (action.type) {
     case SELECT_PAYMENT_METHOD:
       return { ...state, method: action.payload.method };

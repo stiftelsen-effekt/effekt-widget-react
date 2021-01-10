@@ -93,7 +93,7 @@ export function setDonorID(donorID: number): DonationActionTypes {
   };
 }
 
-export function setKID(kid: number): DonationActionTypes {
+export function setKID(kid: string): DonationActionTypes {
   return {
     type: SET_KID,
     payload: {

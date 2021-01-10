@@ -3,7 +3,6 @@ import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { setPaneNumber } from "../../../store/layout/actions";
 import { PaneNumber, State } from "../../../store/state";
-import { getReferrals, postReferral } from "../../helpers/network";
 import {
   NavigationWrapper,
   Pane,
@@ -31,16 +30,16 @@ interface Referral {
 }
 
 export const ReferralPane: React.FC = () => {
-  const [referrals, setReferrals] = useState<Referral[]>();
+  const [referrals] = useState<Referral[]>();
   const [openOtherInput, setOpenOtherInput] = useState(false);
   const paymentMethod = useSelector((state: State) => state.donation.method);
   const donorID = useSelector((state: State) => state.donation.donor?.donorID);
-  const { handleSubmit, register, watch } = useForm();
-  const watchOtherInput = watch("other", false);
+  const { handleSubmit, register } = useForm();
+  // const watchOtherInput = watch("other", false);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    getReferrals().then((response) => setReferrals(response));
+    // getReferrals().then((response) => setReferrals(response));
   }, []);
 
   function goToNextPane() {
@@ -53,14 +52,17 @@ export const ReferralPane: React.FC = () => {
     }
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   function postExistingReferral(referralID: number) {
     if (donorID) {
+      /*
       const referralData = {
         referralTypeID: referralID,
         donorID,
         otherComment: "",
       };
       postReferral(referralData);
+      */
       goToNextPane();
     }
   }
@@ -99,12 +101,14 @@ export const ReferralPane: React.FC = () => {
 
   function postOtherReferral() {
     if (donorID) {
+      /*
       const referralData = {
         referralTypeID: 10,
         donorID,
         otherComment: watchOtherInput,
       };
       postReferral(referralData);
+      */
       goToNextPane();
     }
   }

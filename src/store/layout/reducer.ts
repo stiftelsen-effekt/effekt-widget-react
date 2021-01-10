@@ -1,6 +1,8 @@
 import { Reducer } from "redux";
+import { isType } from "typescript-fsa";
 import { ShareType } from "../../types/Enums";
 import { Layout } from "../state";
+import { fetchOrganizationsAction } from "./actions";
 import {
   SET_PANE_NUMBER,
   LayoutActionTypes,
@@ -34,6 +36,13 @@ export const layoutReducer: Reducer<Layout, LayoutActionTypes> = (
   state: Layout = initialState,
   action: LayoutActionTypes
 ) => {
+  if (isType(action, fetchOrganizationsAction.done)) {
+    return {
+      ...state,
+      organizations: action.payload.result,
+    };
+  }
+
   switch (action.type) {
     case SELECT_CUSTOM_SHARE:
       return { ...state, shareType: ShareType.CUSTOM };
