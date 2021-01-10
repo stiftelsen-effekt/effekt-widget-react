@@ -11,7 +11,7 @@ import {
   SET_PAYMENT_PROVIDER_URL,
 } from "./types";
 import { PaymentMethod, RecurringDonation } from "../../types/Enums";
-import { Splits } from "../../types/Temp";
+import { Shares } from "../../types/Temp";
 
 export function selectPaymentMethod(
   method: PaymentMethod
@@ -52,7 +52,7 @@ export function submitDonorInfo(
   };
 }
 
-export function setShares(shares: Splits): DonationActionTypes {
+export function setShares(shares: Shares): DonationActionTypes {
   return {
     type: SET_SHARES,
     payload: {

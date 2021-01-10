@@ -1,5 +1,5 @@
 import { PaymentMethod, RecurringDonation, ShareType } from "../types/Enums";
-import { Splits } from "../types/Temp";
+import { Shares } from "../types/Temp";
 
 export interface State {
   donation: Donation;
@@ -20,7 +20,7 @@ export interface DonationInput {
   sum: number;
   recurring: RecurringDonation;
   donor?: Donor;
-  shares?: Splits;
+  shares?: Shares;
 }
 
 export interface Donation extends DonationInput {

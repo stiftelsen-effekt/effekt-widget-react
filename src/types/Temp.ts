@@ -3,7 +3,7 @@ export enum DonorType {
   DONOR,
 }
 
-export interface Splits {
+export interface Shares {
   [key: string]: number;
 }
 

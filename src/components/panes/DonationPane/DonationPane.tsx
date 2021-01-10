@@ -17,7 +17,7 @@ import { PaymentMethod, ShareType } from "../../../types/Enums";
 import { RichSelectOption } from "../../shared/RichSelect/RichSelectOption";
 import { RichSelect } from "../../shared/RichSelect/RichSelect";
 import { NextButton } from "../../shared/Buttons/NavigationButtons.style";
-import { SharesPane } from "./ShareSelection";
+import { SharesSelection } from "./ShareSelection";
 import { Organization } from "../../../types/Organization";
 import { IServerResponse } from "../../../types/Temp";
 
@@ -31,7 +31,6 @@ interface DonationFormValues {
 
 export const DonationPane: React.FC = () => {
   const dispatch = useDispatch();
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [nextDisabled, setNextDisabled] = useState(false);
   const [sumErrorAnimation, setSumErrorAnimation] = useState(false);
   const shareType = useSelector((state: State) => state.layout.shareType);
@@ -155,16 +154,17 @@ export const DonationPane: React.FC = () => {
               label="Jeg vil velge fordeling selv"
               sublabel="Valgt blant våre anbefalte organisasjoner"
               value={ShareType.CUSTOM}
-            />
+            >
+              {shareType === ShareType.CUSTOM && data?.data && (
+                <SharesSelection
+                  prefetchData={{ error, isLoading, data: data?.data }}
+                />
+              )}
+            </RichSelectOption>
           </RichSelect>
-          {shareType === ShareType.CUSTOM && data?.data && (
-            <SharesPane prefetchData={{ error, isLoading, data: data?.data }} />
-          )}
-          {shareType === ShareType.STANDARD && (
-            <NextButton type="submit" disabled={nextDisabled}>
-              Neste
-            </NextButton>
-          )}
+          <NextButton type="submit" disabled={nextDisabled}>
+            Neste
+          </NextButton>
         </form>
       </PaneContainer>
     </Pane>

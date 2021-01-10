@@ -7,8 +7,7 @@ import { setShares } from "../../../store/donation/actions";
 import { State } from "../../../store/state";
 import { ToolTip } from "../../shared/ToolTip/ToolTip";
 
-import { DonationData, OrganizationSplit } from "../../helpers/network.types";
-import { NextButton } from "../../shared/Buttons/NavigationButtons.style";
+import { DonationData, OrganizationShare } from "../../helpers/network.types";
 import {
   OrganizationName,
   PercentageText,
@@ -31,9 +30,10 @@ interface ShareSelectionProps {
   prefetchData: PrefetchData;
 }
 
-export const SharesPane: React.FC<ShareSelectionProps> = ({ prefetchData }) => {
+export const SharesSelection: React.FC<ShareSelectionProps> = ({
+  prefetchData,
+}) => {
   const dispatch = useDispatch();
-  const [nextDisabled, setNextDisabled] = useState(false);
   const [submitLoading, setSubmitLoading] = useState(false);
   const donorName = useSelector((state: State) => state.donation.donor?.name);
   const donorEmail = useSelector((state: State) => state.donation.donor?.email);
@@ -92,14 +92,14 @@ export const SharesPane: React.FC<ShareSelectionProps> = ({ prefetchData }) => {
     const total = getTotalPercentage().totalPercentage;
     const negative = getTotalPercentage().detectedNegativeShare;
     if (total === 100) {
-      setNextDisabled(false);
+      // setNextDisabled(false);
       setPercentageErrorAnimation(false);
     } else if (prefetchData.data) {
-      setNextDisabled(true);
+      // setNextDisabled(true);
       setPercentageErrorAnimation(true);
     }
     if (negative) {
-      setNextDisabled(true);
+      // setNextDisabled(true);
       setPercentageErrorAnimation(true);
     }
   }, [watchAllFields]);
@@ -114,20 +114,20 @@ export const SharesPane: React.FC<ShareSelectionProps> = ({ prefetchData }) => {
         donationMethod &&
         donorNewsletter !== undefined
       ) {
-        const orgSplits: Array<OrganizationSplit> = [];
+        const orgShares: Array<OrganizationShare> = [];
 
         Object.keys(watchAllFields).forEach((property) => {
-          const split = watchAllFields[property];
-          if (split > 0) {
-            const orgSplit: OrganizationSplit = { id: 0, split: 0, name: "" };
-            orgSplit.id = parseInt(property);
-            orgSplit.split = parseInt(watchAllFields[property]);
+          const Share = watchAllFields[property];
+          if (Share > 0) {
+            const orgShare: OrganizationShare = { id: 0, share: 0, name: "" };
+            orgShare.id = parseInt(property);
+            orgShare.share = parseInt(watchAllFields[property]);
             prefetchData.data.content.forEach((org: Organization) => {
-              if (orgSplit.id === org.id) {
-                orgSplit.name = org.name;
+              if (orgShare.id === org.id) {
+                orgShare.name = org.name;
               }
             });
-            orgSplits.push(orgSplit);
+            orgShares.push(orgShare);
           }
         });
 
@@ -139,7 +139,7 @@ export const SharesPane: React.FC<ShareSelectionProps> = ({ prefetchData }) => {
           },
           // TODO: Send payment method as string (not number)
           method: "",
-          organizations: orgSplits,
+          organizations: orgShares,
         };
         if (donationSum) postData.amount = donationSum;
         if (donorSSN) postData.donor.ssn = donorSSN.toString();
@@ -154,7 +154,6 @@ export const SharesPane: React.FC<ShareSelectionProps> = ({ prefetchData }) => {
 
   return (
     <div>
-      <h1>Velg fordeling</h1>
       {!submitLoading ? (
         <form onSubmit={handleSubmit(onSubmit)}>
           <div>
@@ -170,7 +169,6 @@ export const SharesPane: React.FC<ShareSelectionProps> = ({ prefetchData }) => {
               {`${getTotalPercentage().totalPercentage} / 100%`}
             </p>
           )}
-          <NextButton disabled={nextDisabled}>Neste</NextButton>
         </form>
       ) : (
         <p>Laster...</p>
