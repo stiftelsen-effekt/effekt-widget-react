@@ -11,7 +11,7 @@ export function* fetchOrganizations(
 ): SagaIterator<void> {
   try {
     const request = yield call(fetch, `${API_URL}/organizations/active/`);
-    const result: IServerResponse<[Organization]> = yield call(
+    const result: IServerResponse<Organization[]> = yield call(
       request.json.bind(request)
     );
     if (result.status !== 200) throw new Error(result.content as string);
@@ -19,7 +19,7 @@ export function* fetchOrganizations(
     yield put(
       fetchOrganizationsAction.done({
         params: action.payload,
-        result: result.content as [Organization],
+        result: result.content as Organization[],
       })
     );
   } catch (ex) {

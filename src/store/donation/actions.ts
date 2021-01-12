@@ -10,9 +10,11 @@ import {
   SET_DONOR_ID,
   SET_KID,
   SET_PAYMENT_PROVIDER_URL,
+  SELECT_CUSTOM_SHARE,
+  SET_SHARE_TYPE,
 } from "./types";
-import { PaymentMethod, RecurringDonation } from "../../types/Enums";
-import { Shares } from "../../types/Temp";
+import { PaymentMethod, RecurringDonation, ShareType } from "../../types/Enums";
+import { OrganizationShare } from "../../types/Temp";
 
 const actionCreator = actionCreatorFactory();
 
@@ -55,7 +57,7 @@ export function submitDonorInfo(
   };
 }
 
-export function setShares(shares: Shares): DonationActionTypes {
+export function setShares(shares: OrganizationShare[]): DonationActionTypes {
   return {
     type: SET_SHARES,
     payload: {
@@ -107,6 +109,24 @@ export function setPaymentProviderURL(url: string): DonationActionTypes {
     type: SET_PAYMENT_PROVIDER_URL,
     payload: {
       url,
+    },
+  };
+}
+
+export function selectCustomShare(customShare: boolean): DonationActionTypes {
+  return {
+    type: SELECT_CUSTOM_SHARE,
+    payload: {
+      customShare,
+    },
+  };
+}
+
+export function setShareType(shareType: ShareType): DonationActionTypes {
+  return {
+    type: SET_SHARE_TYPE,
+    payload: {
+      shareType,
     },
   };
 }

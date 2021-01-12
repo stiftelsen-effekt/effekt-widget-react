@@ -1,6 +1,6 @@
 import { PaymentMethod, RecurringDonation, ShareType } from "../types/Enums";
 import { Organization } from "../types/Organization";
-import { ReferralType, Shares } from "../types/Temp";
+import { OrganizationShare, ReferralType } from "../types/Temp";
 
 export interface State {
   donation: Donation;
@@ -11,20 +11,20 @@ export interface State {
 
 export interface Layout {
   privacyPolicy: boolean;
-  shareType: ShareType;
   paneNumber: number;
   answeredReferral?: boolean;
   height: number;
   loading: boolean;
-  organizations?: [Organization];
+  organizations?: Organization[];
 }
 
 export interface DonationInput {
   method?: PaymentMethod;
-  sum: number;
+  sum?: number;
+  shareType: ShareType;
   recurring: RecurringDonation;
   donor?: Donor;
-  shares?: Shares;
+  shares: OrganizationShare[];
 }
 
 export interface Donation extends DonationInput {

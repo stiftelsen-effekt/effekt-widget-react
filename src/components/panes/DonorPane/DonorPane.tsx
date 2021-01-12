@@ -20,6 +20,7 @@ import { DonorType } from "../../../types/Temp";
 import { RichSelectOption } from "../../shared/RichSelect/RichSelectOption";
 import { NextButton } from "../../shared/Buttons/NavigationButtons.style";
 import { nextPane } from "../../../store/layout/actions";
+import { TextInput } from "../../shared/Input/TextInput";
 
 interface DonorFormValues extends DonorInput {
   privacyPolicy: boolean;
@@ -110,18 +111,18 @@ export const DonorPane: React.FC = () => {
           <RichSelectOption label="Info om deg" value={DonorType.DONOR}>
             <InputFieldWrapper>
               {nameErrorAnimation && <ErrorField text="Ugyldig navn" />}
-              <TextField
+              <TextInput
                 name="name"
                 type="text"
                 placeholder="Navn"
-                ref={register({ required: true, minLength: 3 })}
+                innerRef={register({ required: true, minLength: 3 })}
               />
               {emailErrorAnimation && <ErrorField text="Ugyldig epost" />}
-              <TextField
+              <TextInput
                 name="email"
                 type="text"
                 placeholder="Epost"
-                ref={register({
+                innerRef={register({
                   required: true,
                   validate: (val) => Validate.isEmail(val),
                 })}

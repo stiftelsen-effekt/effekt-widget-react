@@ -4,7 +4,7 @@ export enum DonorType {
 }
 
 export interface Shares {
-  [key: string]: number;
+  [id: number]: number;
 }
 
 export interface IServerResponse<T> {
@@ -15,7 +15,6 @@ export interface IServerResponse<T> {
 export interface OrganizationShare {
   id: number;
   share: number;
-  name: string;
 }
 
 export interface ReferralData {

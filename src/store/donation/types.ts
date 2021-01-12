@@ -1,5 +1,5 @@
-import { PaymentMethod, RecurringDonation } from "../../types/Enums";
-import { Shares } from "../../types/Temp";
+import { PaymentMethod, RecurringDonation, ShareType } from "../../types/Enums";
+import { OrganizationShare } from "../../types/Temp";
 
 export const SELECT_PAYMENT_METHOD = "SELECT_PAYMENT_METHOD";
 export const SELECT_TAX_DEDUCTION = "SELECT_TAX_DEDUCTION";
@@ -10,6 +10,8 @@ export const SET_RECURRING = "SET_RECURRING";
 export const SET_KID = "SET_KID";
 export const SET_DONOR_ID = "SET_DONOR_ID";
 export const SET_PAYMENT_PROVIDER_URL = "SET_PAYMENT_PROVIDER_URL";
+export const SELECT_CUSTOM_SHARE = "SELECT_CUSTOM_SHARE";
+export const SET_SHARE_TYPE = "SET_SHARE_TYPE";
 
 interface SelectPaymentMethod {
   type: typeof SELECT_PAYMENT_METHOD;
@@ -39,7 +41,7 @@ interface SubmitDonorInfo {
 interface SetShares {
   type: typeof SET_SHARES;
   payload: {
-    shares: Shares;
+    shares: OrganizationShare[];
   };
 }
 
@@ -78,6 +80,20 @@ interface SetPaymentProviderURL {
   };
 }
 
+interface SelectCustomShare {
+  type: typeof SELECT_CUSTOM_SHARE;
+  payload: {
+    customShare: boolean;
+  };
+}
+
+interface SetShareType {
+  type: typeof SET_SHARE_TYPE;
+  payload: {
+    shareType: ShareType;
+  };
+}
+
 export type DonationActionTypes =
   | SelectPaymentMethod
   | SelectTaxDeduction
@@ -87,4 +103,6 @@ export type DonationActionTypes =
   | SetRecurring
   | SetKID
   | SetDonorID
-  | SetPaymentProviderURL;
+  | SetPaymentProviderURL
+  | SelectCustomShare
+  | SetShareType;
