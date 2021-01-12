@@ -64,7 +64,7 @@ const SmallButtonText = styled.p`
 `;
 
 interface NextButtonProps {
-  isDisabled: boolean;
+  isDisabled?: boolean;
   text?: string;
 }
 

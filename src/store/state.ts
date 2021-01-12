@@ -1,10 +1,11 @@
 import { PaymentMethod, RecurringDonation, ShareType } from "../types/Enums";
 import { Organization } from "../types/Organization";
-import { Shares } from "../types/Temp";
+import { ReferralType, Shares } from "../types/Temp";
 
 export interface State {
   donation: Donation;
   layout: Layout;
+  referrals: Referrals;
   error: Error;
 }
 
@@ -42,6 +43,10 @@ export interface DonorInput {
 
 export interface Donor extends DonorInput {
   donorID?: number;
+}
+
+export interface Referrals {
+  referrals?: [ReferralType];
 }
 
 export interface DonorFormValues extends DonorInput {

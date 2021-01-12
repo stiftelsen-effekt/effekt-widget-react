@@ -17,5 +17,5 @@ export const NextButton = styled.button`
 `;
 
 interface NextButtonProps {
-  disabled: boolean;
+  disabled?: boolean;
 }

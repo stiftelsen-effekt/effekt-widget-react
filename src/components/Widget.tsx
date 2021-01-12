@@ -9,6 +9,7 @@ import { Carousel } from "./Carousel";
 import "./Carousel.style.css";
 import { fetchOrganizationsAction } from "../store/layout/actions";
 import { State } from "../store/state";
+import { fetchReferralsAction } from "../store/referrals/actions";
 
 export const Widget: React.FC = () => {
   const dispatch = useDispatch();
@@ -18,6 +19,7 @@ export const Widget: React.FC = () => {
 
   useEffect(() => {
     dispatch(fetchOrganizationsAction.started(undefined));
+    dispatch(fetchReferralsAction.started(undefined));
   }, []);
 
   return (
