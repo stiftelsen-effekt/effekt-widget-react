@@ -23,3 +23,9 @@ export interface ReferralData {
   donorID: number;
   otherComment: string;
 }
+
+export type ReferralType = {
+  id: number;
+  name: string;
+  ordering: number;
+};

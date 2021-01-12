@@ -13,11 +13,13 @@ import { layoutReducer } from "./store/layout/reducer";
 import { errorReducer } from "./store/error/reducer";
 import { Host } from "./components/Host";
 import watchAll from "./store/root.saga";
+import { referralReducer } from "./store/referrals/reducer";
 
 const rootReducer = combineReducers<State>({
   donation: donationReducer,
   layout: layoutReducer,
   error: errorReducer,
+  referrals: referralReducer,
 });
 
 const sagaMiddleware = createSagaMiddleware();
