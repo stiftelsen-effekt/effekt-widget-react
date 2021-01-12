@@ -1,6 +1,8 @@
 import { Reducer } from "redux";
 import { isType } from "typescript-fsa";
-import { RecurringDonation } from "../../types/Enums";
+import { RecurringDonation, ShareType } from "../../types/Enums";
+import { OrganizationShare } from "../../types/Temp";
+import { fetchOrganizationsAction } from "../layout/actions";
 import { Donation } from "../state";
 import { registerDonationAction } from "./actions";
 import {
@@ -14,16 +16,19 @@ import {
   SET_KID,
   SET_DONOR_ID,
   SET_PAYMENT_PROVIDER_URL,
+  SET_SHARE_TYPE,
+  SELECT_CUSTOM_SHARE,
 } from "./types";
 
 const initialState: Donation = {
   recurring: RecurringDonation.RECURRING,
-  sum: 0,
+  shareType: ShareType.STANDARD,
   donor: {
     taxDeduction: false,
     newsletter: false,
   },
   isValid: true,
+  shares: [],
 };
 
 /**
@@ -38,8 +43,20 @@ export const donationReducer: Reducer<Donation, DonationActionTypes> = (
   state: Donation = initialState,
   action: DonationActionTypes
 ) => {
+  if (isType(action, fetchOrganizationsAction.done)) {
+    state = {
+      ...state,
+      shares: action.payload.result.map(
+        (org): OrganizationShare => ({
+          id: org.id,
+          share: org.standardShare,
+        })
+      ),
+    };
+  }
+
   if (isType(action, registerDonationAction.done)) {
-    return {
+    state = {
       ...state,
       kid: action.payload.result.KID,
       paymentProviderURL: action.payload.result.paymentProviderUrl,
@@ -52,11 +69,16 @@ export const donationReducer: Reducer<Donation, DonationActionTypes> = (
 
   switch (action.type) {
     case SELECT_PAYMENT_METHOD:
-      return { ...state, method: action.payload.method };
+      state = { ...state, method: action.payload.method };
+      break;
     case SELECT_TAX_DEDUCTION:
-      return { ...state, taxDeduction: action.payload.taxDeduction };
+      state = {
+        ...state,
+        donor: { ...state.donor, taxDeduction: action.payload.taxDeduction },
+      };
+      break;
     case SUBMIT_DONOR_INFO:
-      return {
+      state = {
         ...state,
         donor: {
           name: action.payload.name,
@@ -66,22 +88,45 @@ export const donationReducer: Reducer<Donation, DonationActionTypes> = (
           newsletter: action.payload.newsletter,
         },
       };
+      break;
     case SET_SHARES:
-      return { ...state, shares: { ...action.payload.shares } };
+      state = { ...state, shares: action.payload.shares };
+      break;
     case SET_SUM:
-      return { ...state, sum: action.payload.sum };
+      state = { ...state, sum: action.payload.sum };
+      break;
     case SET_RECURRING:
-      return { ...state, recurring: action.payload.recurring };
+      state = { ...state, recurring: action.payload.recurring };
+      break;
     case SET_KID:
-      return { ...state, kid: action.payload.kid };
+      state = { ...state, kid: action.payload.kid };
+      break;
     case SET_DONOR_ID:
-      return {
+      state = {
         ...state,
         donor: { ...state.donor, donorID: action.payload.donorID },
       };
+      break;
     case SET_PAYMENT_PROVIDER_URL:
-      return { ...state, paymentProviderURL: action.payload.url };
+      state = { ...state, paymentProviderURL: action.payload.url };
+      break;
+    case SET_SHARE_TYPE:
+      state = { ...state, shareType: action.payload.shareType };
+      break;
+    case SELECT_CUSTOM_SHARE:
+      state = { ...state, shareType: ShareType.CUSTOM };
+      break;
     default:
-      return state;
   }
+
+  /**
+   * Validate donation
+   */
+  if (
+    state.shareType === ShareType.CUSTOM &&
+    state.shares.reduce((acc, curr) => acc + curr.share, 0) !== 100
+  )
+    return { ...state, isValid: false };
+
+  return { ...state, isValid: true };
 };

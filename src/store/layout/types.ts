@@ -1,7 +1,3 @@
-import { ShareType } from "../../types/Enums";
-
-export const SELECT_CUSTOM_SHARE = "SELECT_CUSTOM_SHARE";
-export const SET_SHARE_TYPE = "SET_SHARE_TYPE";
 export const SELECT_PRIVACY_POLICY = "SELECT_PRIVACY_POLICY";
 export const SET_PANE_NUMBER = "SET_PANE_NUMBER";
 export const INCREMENT_CURRENT_PANE = "INCREMENT_CURRENT_PANE";
@@ -9,20 +5,6 @@ export const DECREMENT_CURRENT_PANE = "DECREMENT_CURRENT_PANE";
 export const SET_ANSWERED_REFERRAL = "SET_ANSWERRED_REFERRAL";
 export const SET_HEIGHT = "SET_HEIGHT";
 export const SET_LOADING = "SET_LOADING";
-
-interface SelectCustomShare {
-  type: typeof SELECT_CUSTOM_SHARE;
-  payload: {
-    customShare: boolean;
-  };
-}
-
-interface SetShareType {
-  type: typeof SET_SHARE_TYPE;
-  payload: {
-    shareType: ShareType;
-  };
-}
 
 interface SelectPrivacyPolicy {
   type: typeof SELECT_PRIVACY_POLICY;
@@ -66,12 +48,10 @@ interface SetLoading {
 }
 
 export type LayoutActionTypes =
-  | SelectCustomShare
   | SelectPrivacyPolicy
   | SetPaneNumber
   | IncrementCurrentPane
   | DecrementCurrentPane
   | SetAnsweredReferral
   | SetHeight
-  | SetShareType
   | SetLoading;

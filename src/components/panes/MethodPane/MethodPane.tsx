@@ -7,7 +7,12 @@ import {
 import { State } from "../../../store/state";
 import { nextPane } from "../../../store/layout/actions";
 import { Pane } from "../Panes.style";
-import { MethodWrapper, MethodButton, InfoText } from "./MethodPane.style";
+import {
+  MethodWrapper,
+  MethodButton,
+  InfoText,
+  RecurringSelectWrapper,
+} from "./MethodPane.style";
 import { RichSelect } from "../../shared/RichSelect/RichSelect";
 import { RichSelectOption } from "../../shared/RichSelect/RichSelectOption";
 import { PaymentMethod, RecurringDonation } from "../../../types/Enums";
@@ -27,20 +32,22 @@ export const MethodPane: React.FC = () => {
         Kostnadene angitt dekkes av oss, slik at 100% av din donasjon kommer
         frem.
       </InfoText>
-      <RichSelect
-        selected={recurring}
-        onChange={(value: RecurringDonation) => dispatch(setRecurring(value))}
-      >
-        <RichSelectOption
-          label="Gi en fast månedlig sum"
-          sublabel="Du vil bli varslet ved trekk og kan avslutte når som helst"
-          value={RecurringDonation.RECURRING}
-        />
-        <RichSelectOption
-          label="Gi et engangsbeløp"
-          value={RecurringDonation.NON_RECURRING}
-        />
-      </RichSelect>
+      <RecurringSelectWrapper>
+        <RichSelect
+          selected={recurring}
+          onChange={(value: RecurringDonation) => dispatch(setRecurring(value))}
+        >
+          <RichSelectOption
+            label="Gi en fast månedlig sum"
+            sublabel="Du vil bli varslet ved trekk og kan avslutte når som helst"
+            value={RecurringDonation.RECURRING}
+          />
+          <RichSelectOption
+            label="Gi et engangsbeløp"
+            value={RecurringDonation.NON_RECURRING}
+          />
+        </RichSelect>
+      </RecurringSelectWrapper>
       <MethodWrapper>
         <MethodButton
           className="bank"

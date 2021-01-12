@@ -46,8 +46,6 @@ export const HeaderWrapper = styled.div`
   margin-left: 10px;
 `;
 
-// ${(props: RadioBallProps) => props.selected ? '10px' : '22px'};
-
 export const RadioBall = styled.div`
   width: 24px;
   height: 24px;
@@ -76,7 +74,7 @@ interface RadioBallProps {
 
 export const Content = styled.div`
   height: ${(props: ContentProps) => (props.selected ? "auto" : "0px")};
-  overflow: hidden;
+  overflow: ${(props: ContentProps) => (props.selected ? "visible" : "hidden")};
   box-sizing: border-box;
 `;
 

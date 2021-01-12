@@ -74,3 +74,8 @@ export const MethodButton = styled.div`
     background-size: contain;
   }
 `;
+
+export const RecurringSelectWrapper = styled.div`
+  padding-top: 10px;
+  padding-bottom: 15px;
+`;
