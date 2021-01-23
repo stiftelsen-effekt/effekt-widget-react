@@ -10,6 +10,7 @@ import {
 import { submitReferralAction } from "../../../store/referrals/actions";
 import { NextButton } from "../../shared/Buttons/NavigationButtons.style";
 import { nextPane } from "../../../store/layout/actions";
+import { HistoryBar } from "../../shared/HistoryBar/HistoryBar";
 
 export const ReferralPane: React.FC = () => {
   const referrals = useSelector((state: State) => state.referrals.referrals);
@@ -17,6 +18,7 @@ export const ReferralPane: React.FC = () => {
 
   return (
     <Pane>
+      <HistoryBar />
       <PaneContainer>
         <ReferralsWrapper>
           <PaneTitle>Hvor hørte du om oss?</PaneTitle>

@@ -17,6 +17,7 @@ import { SharesSelection } from "./ShareSelection";
 import { TextInput } from "../../shared/Input/TextInput";
 import { SumWrapper } from "./DonationPane.style";
 import { SharesSum } from "./SharesSum";
+import { HistoryBar } from "../../shared/HistoryBar/HistoryBar";
 
 interface DonationFormValues {
   recurring: string;
@@ -55,6 +56,7 @@ export const DonationPane: React.FC = () => {
 
   return (
     <Pane>
+      <HistoryBar />
       <PaneContainer>
         <form onSubmit={handleSubmit(onSubmit)}>
           {(donationMethod === PaymentMethod.VIPPS ||
