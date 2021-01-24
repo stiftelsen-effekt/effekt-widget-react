@@ -12,6 +12,7 @@ export const SET_DONOR_ID = "SET_DONOR_ID";
 export const SET_PAYMENT_PROVIDER_URL = "SET_PAYMENT_PROVIDER_URL";
 export const SELECT_CUSTOM_SHARE = "SELECT_CUSTOM_SHARE";
 export const SET_SHARE_TYPE = "SET_SHARE_TYPE";
+export const SET_DONATION_VALID = "SET_DONATION_VALID";
 
 interface SelectPaymentMethod {
   type: typeof SELECT_PAYMENT_METHOD;
@@ -94,6 +95,13 @@ interface SetShareType {
   };
 }
 
+interface SetDonationValid {
+  type: typeof SET_DONATION_VALID;
+  payload: {
+    isValid: boolean;
+  };
+}
+
 export type DonationActionTypes =
   | SelectPaymentMethod
   | SelectTaxDeduction
@@ -105,4 +113,5 @@ export type DonationActionTypes =
   | SetDonorID
   | SetPaymentProviderURL
   | SelectCustomShare
-  | SetShareType;
+  | SetShareType
+  | SetDonationValid;

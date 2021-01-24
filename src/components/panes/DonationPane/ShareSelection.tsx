@@ -45,7 +45,8 @@ export const SharesSelection: React.FC = () => {
               label={org.name}
               name={org.id.toString()}
               key={org.id}
-              type="tel"
+              type="number"
+              inputMode="numeric"
               defaultValue={org.standardShare ? org.standardShare : 0}
               denomination="%"
               selectOnClick

@@ -10,6 +10,7 @@ export const TextInput: React.FC<TextInputProps> = ({
   denomination,
   name,
   type,
+  inputMode,
   placeholder,
   defaultValue,
   innerRef,
@@ -21,6 +22,7 @@ export const TextInput: React.FC<TextInputProps> = ({
         label={label}
         name={name}
         type={type}
+        inputMode={inputMode}
         placeholder={placeholder}
         defaultValue={defaultValue}
         denomination={denomination}

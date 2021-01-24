@@ -4,6 +4,7 @@ import { gray18, orange15 } from "../../../config/colors";
 export interface TextInputProps extends TextInputWrapperProps {
   type: string;
   name?: string;
+  inputMode?: "text" | "numeric";
   placeholder?: string;
   defaultValue?: string | number;
   selectOnClick?: boolean;

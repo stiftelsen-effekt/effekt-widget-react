@@ -117,6 +117,7 @@ export const donationReducer: Reducer<Donation, DonationActionTypes> = (
       state = { ...state, shareType: ShareType.CUSTOM };
       break;
     default:
+      return state;
   }
 
   /**
@@ -127,6 +128,16 @@ export const donationReducer: Reducer<Donation, DonationActionTypes> = (
     state.shares.reduce((acc, curr) => acc + curr.share, 0) !== 100
   )
     return { ...state, isValid: false };
+
+  let negativeShare = false;
+  state.shares.forEach((share) => {
+    if (share.share < 0) {
+      negativeShare = true;
+    }
+  });
+  if (negativeShare) {
+    return { ...state, isValid: false };
+  }
 
   return { ...state, isValid: true };
 };
