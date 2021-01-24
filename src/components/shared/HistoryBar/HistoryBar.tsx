@@ -59,7 +59,7 @@ export const HistoryBar: React.FC<HistoryBarProps> = () => {
         <HistoryText>
           {paneNumber > 0 && `${recurringText} / ${methodName}`}
           {paneNumber > 1 && ` / ${donorName}`}
-          {paneNumber > 2 && ` / ${donationSum}`}
+          {paneNumber > 2 && donationSum ? ` / ${donationSum}kr` : ""}
         </HistoryText>
       </TextWrapper>
     </HistoryBarWrapper>
