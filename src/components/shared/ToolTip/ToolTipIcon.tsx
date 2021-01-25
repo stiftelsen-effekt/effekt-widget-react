@@ -3,22 +3,24 @@ import React from "react";
 import styled from "styled-components";
 
 const StyledSVG = styled.svg`
-  margin-left: 5px;
   &:hover {
     cursor: pointer;
     opacity: 0.5;
   }
+  &:hover ~ span {
+    display: block;
+  }
 `;
 
-export function TooltipIcon() {
+export function ToolTipIcon() {
   return (
     <StyledSVG
       stroke="currentColor"
       fill="currentColor"
       strokeWidth={0}
       viewBox="0 0 16 16"
-      height="12px"
-      width="12px"
+      height="13px"
+      width="13px"
     >
       <path
         fillRule="evenodd"

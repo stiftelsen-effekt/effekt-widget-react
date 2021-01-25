@@ -8,7 +8,6 @@ import { DonorInput } from "../../../store/state";
 import { submitDonorInfo } from "../../../store/donation/actions";
 import { InputFieldWrapper, InputLabel, CheckBox } from "../Forms.style";
 import ErrorField from "../../shared/Error/ErrorField";
-import { ToolTip } from "../../shared/ToolTip/ToolTip";
 import { DonorForm } from "./DonorPane.style";
 import { RichSelect } from "../../shared/RichSelect/RichSelect";
 import { DonorType } from "../../../types/Temp";
@@ -18,6 +17,7 @@ import { nextPane } from "../../../store/layout/actions";
 import { TextInput } from "../../shared/Input/TextInput";
 import { HistoryBar } from "../../shared/HistoryBar/HistoryBar";
 import { CustomCheckBox } from "./CustomCheckBox";
+import { ToolTip } from "../../shared/ToolTip/ToolTip";
 
 interface DonorFormValues extends DonorInput {
   privacyPolicy: boolean;
@@ -25,7 +25,7 @@ interface DonorFormValues extends DonorInput {
 
 const tooltipText =
   "Vi trenger ditt fødselsnummer for å rapportere skattefradrag til Skatteetaten for at du skal få skattefradrag for donasjonen din.";
-const tooltipLink = "https://gieffektivt.no/skattefradrag";
+// const tooltipLink = "https://gieffektivt.no/skattefradrag";
 const anonDonor: DonorFormValues = {
   name: "Anonym Giver",
   email: "anon@gieffektivt.no",
@@ -142,7 +142,7 @@ export const DonorPane: React.FC = () => {
                 />
                 <CustomCheckBox checked={taxDeductionChecked} />
                 <InputLabel>Jeg ønsker skattefradrag</InputLabel>
-                <ToolTip text={tooltipText} link={tooltipLink} />
+                <ToolTip text={tooltipText} />
                 {watchAllFields.taxDeduction && (
                   <InputFieldWrapper>
                     {ssnErrorAnimation && (
