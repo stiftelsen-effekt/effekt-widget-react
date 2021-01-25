@@ -1,40 +1,51 @@
 /* eslint-disable react/destructuring-assignment */
 import React from "react";
 import styled from "styled-components";
-import { gray18 } from "../../../config/colors";
 import { ToolTipIcon } from "./ToolTipIcon";
 
 const ToolTipWrapper = styled.div`
-  position: relative;
+  position: absolute;
   display: inline;
-  margin-left: -365px;
-  top: -9px;
+  z-index: 2;
 `;
 
 const ToolTipText = styled.span`
   font-size: 14px;
-  border: 1px solid ${gray18};
-  border-radius: 5px;
   background-color: white;
-  height: 70px;
-  width: 210px;
-  top: -100px;
+  margin-top: 80%;
+  margin-left: -100px;
+  height: auto;
+  width: 230px;
   padding: 10px;
-  margin-left: 100px;
   position: absolute;
   display: none;
   white-space: pre-wrap;
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.2);
+  z-index: 3;
 `;
 
 interface ToolTipProps {
   text: string;
+  textMarginLeft?: string;
+  textMarginTop?: string;
+  marginLeft?: string;
+  marginTop?: string;
 }
 
 export const ToolTip: React.FC<ToolTipProps> = (props) => {
   return (
-    <ToolTipWrapper>
+    <ToolTipWrapper
+      style={{ marginLeft: props.marginLeft, marginTop: props.marginTop }}
+    >
       <ToolTipIcon />
-      <ToolTipText>{props.text}</ToolTipText>
+      <ToolTipText
+        style={{
+          marginLeft: props.textMarginLeft,
+          marginTop: props.textMarginTop,
+        }}
+      >
+        {props.text}
+      </ToolTipText>
     </ToolTipWrapper>
   );
 };

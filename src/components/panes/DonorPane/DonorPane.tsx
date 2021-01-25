@@ -141,8 +141,14 @@ export const DonorPane: React.FC = () => {
                   }}
                 />
                 <CustomCheckBox checked={taxDeductionChecked} />
+                <ToolTip
+                  text={tooltipText}
+                  marginTop="10px"
+                  marginLeft="-195px"
+                  textMarginTop="-115px"
+                  textMarginLeft="-105px"
+                />
                 <InputLabel>Jeg ønsker skattefradrag</InputLabel>
-                <ToolTip text={tooltipText} />
                 {watchAllFields.taxDeduction && (
                   <InputFieldWrapper>
                     {ssnErrorAnimation && (

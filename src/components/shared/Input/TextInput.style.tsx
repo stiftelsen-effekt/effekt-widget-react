@@ -29,7 +29,7 @@ export const TextInputWrapper = styled.div`
     content: "${(props: TextInputWrapperProps) => props.label}";
     height: 100%;
     position: absolute;
-    left: 12px;
+    left: 30px;
     top: 0;
     color: black;
     display: flex;

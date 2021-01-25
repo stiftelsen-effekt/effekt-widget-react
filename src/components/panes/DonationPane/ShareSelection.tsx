@@ -7,6 +7,7 @@ import { setShares } from "../../../store/donation/actions";
 import { State } from "../../../store/state";
 import { TextInput } from "../../shared/Input/TextInput";
 import { OrganizationShare } from "../../../types/Temp";
+import { ToolTip } from "../../shared/ToolTip/ToolTip";
 
 export const SharesSelection: React.FC = () => {
   const dispatch = useDispatch();
@@ -41,17 +42,26 @@ export const SharesSelection: React.FC = () => {
       <form>
         <div>
           {organizations.map((org: Organization) => (
-            <TextInput
-              label={org.name}
-              name={org.id.toString()}
-              key={org.id}
-              type="number"
-              inputMode="numeric"
-              defaultValue={org.standardShare ? org.standardShare : 0}
-              denomination="%"
-              selectOnClick
-              innerRef={register}
-            />
+            <div>
+              <TextInput
+                label={org.name}
+                name={org.id.toString()}
+                key={org.id}
+                type="number"
+                inputMode="numeric"
+                defaultValue={org.standardShare ? org.standardShare : 0}
+                denomination="%"
+                selectOnClick
+                innerRef={register}
+              />
+              <ToolTip
+                text={org.shortDesc}
+                marginLeft="10px"
+                marginTop="-44px"
+                textMarginLeft="15px"
+                textMarginTop="0px"
+              />
+            </div>
           ))}
         </div>
       </form>
