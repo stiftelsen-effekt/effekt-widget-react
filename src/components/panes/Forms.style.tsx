@@ -46,9 +46,9 @@ export const RadioButton = styled.input`
 
 export const InputLabel = styled.p`
   left: -370px;
-  top: -10px;
+  top: -12px;
   align-self: start;
-  font-size: 14px;
+  font-size: 15px;
   display: inline;
   position: relative;
   bottom: 2px;

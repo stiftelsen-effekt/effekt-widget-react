@@ -184,16 +184,14 @@ export const DonorPane: React.FC = () => {
                   onClick={() => setPrivacyPolicyChecked(!privacyPolicyChecked)}
                 />
                 <CustomCheckBox checked={privacyPolicyChecked} />
-                <InputLabel>
-                  {"Jeg godtar "}
-                  <OrangeLink
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    href="https://gieffektivt.no/samarbeid-drift#personvern"
-                  >
-                    personvernerklæringen
-                  </OrangeLink>
-                </InputLabel>
+                <InputLabel>Jeg godtar</InputLabel>
+                <OrangeLink
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  href="https://gieffektivt.no/samarbeid-drift#personvern"
+                >
+                  personvernerklæringen
+                </OrangeLink>
               </div>
             </div>
           </RichSelectOption>
