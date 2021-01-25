@@ -6,12 +6,7 @@ import { useForm } from "react-hook-form";
 import { OrangeLink, Pane } from "../Panes.style";
 import { DonorInput } from "../../../store/state";
 import { submitDonorInfo } from "../../../store/donation/actions";
-import {
-  InputFieldWrapper,
-  TextField,
-  InputLabel,
-  CheckBox,
-} from "../Forms.style";
+import { InputFieldWrapper, InputLabel, CheckBox } from "../Forms.style";
 import ErrorField from "../../shared/Error/ErrorField";
 import { ToolTip } from "../../shared/ToolTip/ToolTip";
 import { DonorForm } from "./DonorPane.style";
@@ -22,6 +17,7 @@ import { NextButton } from "../../shared/Buttons/NavigationButtons.style";
 import { nextPane } from "../../../store/layout/actions";
 import { TextInput } from "../../shared/Input/TextInput";
 import { HistoryBar } from "../../shared/HistoryBar/HistoryBar";
+import { CustomCheckBox } from "./CustomCheckBox";
 
 interface DonorFormValues extends DonorInput {
   privacyPolicy: boolean;
@@ -45,6 +41,9 @@ export const DonorPane: React.FC = () => {
   const [nameErrorAnimation, setNameErrorAnimation] = useState(false);
   const [emailErrorAnimation, setEmailErrorAnimation] = useState(false);
   const [ssnErrorAnimation, setSsnErrorAnimation] = useState(false);
+  const [privacyPolicyChecked, setPrivacyPolicyChecked] = useState(false);
+  const [newsletterChecked, setNewsletterChecked] = useState(false);
+  const [taxDeductionChecked, setTaxDeductionChecked] = useState(false);
   const [donorType, setDonorType] = useState<DonorType>(DonorType.DONOR);
   const [
     privacyPolicyErrorAnimation,
@@ -136,8 +135,12 @@ export const DonorPane: React.FC = () => {
                   name="taxDeduction"
                   type="checkbox"
                   ref={register}
-                  onChange={(e) => !e.target.checked && clearErrors(["ssn"])}
+                  onChange={(e) => {
+                    !e.target.checked && clearErrors(["ssn"]);
+                    setTaxDeductionChecked(!taxDeductionChecked);
+                  }}
                 />
+                <CustomCheckBox checked={taxDeductionChecked} />
                 <InputLabel>Jeg ønsker skattefradrag</InputLabel>
                 <ToolTip text={tooltipText} link={tooltipLink} />
                 {watchAllFields.taxDeduction && (
@@ -145,11 +148,11 @@ export const DonorPane: React.FC = () => {
                     {ssnErrorAnimation && (
                       <ErrorField text="Ugyldig personnummer" />
                     )}
-                    <TextField
+                    <TextInput
                       name="ssn"
                       type="tel"
                       placeholder="Personnummer"
-                      ref={register({
+                      innerRef={register({
                         required: false,
                         validate: (val) =>
                           !watchAllFields.taxDeduction ||
@@ -161,7 +164,16 @@ export const DonorPane: React.FC = () => {
                 )}
               </div>
               <div>
-                {privacyPolicyErrorAnimation}
+                <CheckBox
+                  name="newsletter"
+                  type="checkbox"
+                  ref={register}
+                  onClick={() => setNewsletterChecked(!newsletterChecked)}
+                />
+                <CustomCheckBox checked={newsletterChecked} />
+                <InputLabel>Jeg ønsker å melde meg på nyhetsbrevet</InputLabel>
+              </div>
+              <div>
                 {privacyPolicyErrorAnimation && (
                   <ErrorField text="Du må godta personvernerklæringen" />
                 )}
@@ -169,19 +181,19 @@ export const DonorPane: React.FC = () => {
                   name="privacyPolicy"
                   type="checkbox"
                   ref={register({ required: true })}
+                  onClick={() => setPrivacyPolicyChecked(!privacyPolicyChecked)}
                 />
-                <InputLabel>Jeg godtar </InputLabel>
-                <OrangeLink
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  href="https://gieffektivt.no/samarbeid-drift#personvern"
-                >
-                  personvernerklæringen
-                </OrangeLink>
-              </div>
-              <div>
-                <CheckBox name="newsletter" type="checkbox" ref={register} />
-                <InputLabel>Jeg ønsker å melde meg på nyhetsbrevet</InputLabel>
+                <CustomCheckBox checked={privacyPolicyChecked} />
+                <InputLabel>
+                  {"Jeg godtar "}
+                  <OrangeLink
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    href="https://gieffektivt.no/samarbeid-drift#personvern"
+                  >
+                    personvernerklæringen
+                  </OrangeLink>
+                </InputLabel>
               </div>
             </div>
           </RichSelectOption>

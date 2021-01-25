@@ -33,7 +33,7 @@ export const OrangeLink = styled.a`
   color: #ffaa2b;
   display: inline;
   text-decoration-color: #ffaa2b;
-  font-size: 12px;
+  font-size: 14px;
   position: relative;
   bottom: 2px;
 `;

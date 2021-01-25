@@ -25,10 +25,13 @@ export const TextField = styled.input`
 `;
 
 export const CheckBox = styled.input`
-  margin-left: 10px;
+  margin: 5px;
+  margin-left: 0;
+  width: 100%;
+  height: 30px;
+  opacity: 0;
   &:hover {
     cursor: pointer;
-    opacity: 0.5;
   }
 `;
 
@@ -42,10 +45,13 @@ export const RadioButton = styled.input`
 `;
 
 export const InputLabel = styled.p`
+  left: -370px;
+  top: -10px;
   align-self: start;
-  font-size: 12px;
+  font-size: 14px;
   display: inline;
   position: relative;
   bottom: 2px;
   margin-left: 5px;
+  pointer-events: none;
 `;
