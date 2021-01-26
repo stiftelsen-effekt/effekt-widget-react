@@ -18,6 +18,7 @@ export const PaneTitle = styled.p`
   font-size: 25px;
   margin-top: 5px;
   margin-bottom: 10px;
+  margin-left: 5px;
   align-self: center;
 `;
 

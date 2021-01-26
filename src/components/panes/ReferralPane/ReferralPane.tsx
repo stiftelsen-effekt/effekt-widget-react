@@ -52,19 +52,28 @@ export const ReferralPane: React.FC = () => {
             </OtherInputWrapper>
           </ReferralButtonsWrapper>
         </ReferralsWrapper>
-        <NextButton
-          onClick={() => {
-            dispatch(nextPane());
-            dispatch(
-              submitReferralAction.started({
-                referralID: 10,
-                comment: otherInputValue,
-              })
-            );
-          }}
-        >
-          {otherInputValue === "" ? "Hopp over" : "Send inn"}
-        </NextButton>
+        {otherInputValue === "" ? (
+          <NextButton
+            onClick={() => {
+              dispatch(nextPane());
+            }}
+          >
+            Hopp over
+          </NextButton>
+        ) : (
+          <NextButton
+            onClick={() => {
+              dispatch(
+                submitReferralAction.started({
+                  referralID: 10,
+                  comment: otherInputValue,
+                })
+              );
+            }}
+          >
+            Send inn
+          </NextButton>
+        )}
       </PaneContainer>
     </Pane>
   );

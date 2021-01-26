@@ -14,7 +14,7 @@ import { ProgressBar } from "./shared/ProgressBar/ProgressBar";
 
 export const Widget: React.FC = () => {
   const dispatch = useDispatch();
-  const answeredReferal = useSelector(
+  const answeredReferral = useSelector(
     (state: State) => state.layout.answeredReferral
   );
 
@@ -30,7 +30,7 @@ export const Widget: React.FC = () => {
           <MethodPane />
           <DonorPane />
           <DonationPane />
-          {answeredReferal !== true && <ReferralPane />}
+          {answeredReferral !== true && <ReferralPane />}
           <PaymentPane />
         </Carousel>
         <ProgressBar />
