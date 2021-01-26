@@ -1,15 +1,14 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { State } from "../../../../store/state";
-import { Pane, PaneContainer, PaneTitle } from "../../Panes.style";
+import { Pane, PaneContainer } from "../../Panes.style";
 import {
-  BlackContainer,
-  BoldWhiteText,
-  Heart,
-  ResultWrapper,
-  WhiteText,
-  TextWrapper,
   InfoText,
+  RoundedBorder,
+  TextWrapper,
+  HorizontalLine,
+  PaymentTitle,
+  UnderTitle,
 } from "./ResultPane.style";
 
 export const ResultPane: React.FC = () => {
@@ -19,25 +18,20 @@ export const ResultPane: React.FC = () => {
   return (
     <Pane>
       <PaneContainer>
-        <ResultWrapper>
-          <PaneTitle>Takk!</PaneTitle>
-          <Heart
-            src="https://storage.googleapis.com/effekt-widget/assets/heart.svg"
-            alt="Takk for din donasjon"
-          />
-          <p>Du kan nå overføre til oss</p>
-          <BlackContainer>
-            <TextWrapper>
-              <BoldWhiteText>Kontonr</BoldWhiteText>
-              <WhiteText>1506 29 95960</WhiteText>
-            </TextWrapper>
-            <TextWrapper>
-              <BoldWhiteText>KID</BoldWhiteText>
-              <WhiteText>{kid}</WhiteText>
-            </TextWrapper>
-          </BlackContainer>
-          <InfoText>{`Vi har også sendt en mail til ${donorEmail} med informasjon om din donasjon. Sjekk søppelpost-mappen om du ikke har motatt eposten i løpet av noen timer.`}</InfoText>
-        </ResultWrapper>
+        <PaymentTitle>Tusen takk!</PaymentTitle>
+        <UnderTitle>Du kan nå overføre til oss</UnderTitle>
+        <RoundedBorder>
+          <TextWrapper>
+            <b>Kontonr</b>
+            <span>1506 29 95960</span>
+          </TextWrapper>
+          <HorizontalLine />
+          <TextWrapper>
+            <b>KID</b>
+            <span>{kid}</span>
+          </TextWrapper>
+        </RoundedBorder>
+        <InfoText>{`Vi har også sendt en mail til ${donorEmail} med informasjon om din donasjon. Sjekk søppelpost-mappen om du ikke har motatt eposten i løpet av noen timer.`}</InfoText>
       </PaneContainer>
     </Pane>
   );
