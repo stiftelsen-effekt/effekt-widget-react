@@ -12,8 +12,8 @@ const ToolTipWrapper = styled.div`
 const ToolTipText = styled.span`
   font-size: 14px;
   background-color: white;
-  margin-top: 80%;
   margin-left: -100px;
+  bottom: 25px;
   height: auto;
   width: 230px;
   padding: 10px;

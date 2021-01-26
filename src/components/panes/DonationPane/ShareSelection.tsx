@@ -58,8 +58,8 @@ export const SharesSelection: React.FC = () => {
                 text={org.shortDesc}
                 marginLeft="10px"
                 marginTop="-44px"
-                textMarginLeft="15px"
-                textMarginTop="0px"
+                textMarginLeft="17px"
+                textMarginTop="2px"
               />
             </div>
           ))}
