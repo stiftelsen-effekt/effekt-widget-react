@@ -31,7 +31,13 @@ export const ReferralPane: React.FC = () => {
             {referrals?.map((ref) => (
               <ReferralButton
                 key={ref.id}
-                onClick={() => dispatch(submitReferralAction.started(ref.id))}
+                onClick={() => {
+                  dispatch(
+                    submitReferralAction.started({
+                      referralID: ref.id,
+                    })
+                  );
+                }}
               >
                 {ref.name}
               </ReferralButton>
@@ -49,8 +55,12 @@ export const ReferralPane: React.FC = () => {
         <NextButton
           onClick={() => {
             dispatch(nextPane());
-            // TODO: Add comment to submitReferralAction
-            dispatch(submitReferralAction.started(10));
+            dispatch(
+              submitReferralAction.started({
+                referralID: 10,
+                comment: otherInputValue,
+              })
+            );
           }}
         >
           {otherInputValue === "" ? "Hopp over" : "Send inn"}

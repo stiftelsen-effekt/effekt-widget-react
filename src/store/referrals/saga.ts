@@ -2,7 +2,7 @@ import { SagaIterator } from "redux-saga";
 import { call, put, select } from "redux-saga/effects";
 import { Action } from "typescript-fsa";
 import { API_URL } from "../../config/api";
-import { IServerResponse, ReferralType } from "../../types/Temp";
+import { IServerResponse, ReferralData, ReferralType } from "../../types/Temp";
 import { nextPane } from "../layout/actions";
 import { State } from "../state";
 import { fetchReferralsAction, submitReferralAction } from "./actions";
@@ -28,15 +28,16 @@ export function* fetchReferrals(action: Action<undefined>): SagaIterator<void> {
   }
 }
 
-export function* submitReferral(action: Action<number>): SagaIterator<void> {
-  const donorId = yield select((state: State) => state.donation.donor?.donorID);
+export function* submitReferral(
+  action: Action<ReferralData>
+): SagaIterator<void> {
+  const donorID = yield select((state: State) => state.donation.donor?.donorID);
 
   try {
     const data = {
-      referralId: action.payload,
-      donorId,
-      // TODO: Fix other comment
-      comment: null,
+      referralID: action.payload.referralID,
+      donorID,
+      comment: action.payload.comment,
     };
 
     const request = yield call(fetch, `${API_URL}/referrals/`, {
@@ -54,7 +55,7 @@ export function* submitReferral(action: Action<number>): SagaIterator<void> {
 
     yield put(
       submitReferralAction.done({
-        params: action.payload,
+        params: data,
         result: result.content as boolean,
       })
     );

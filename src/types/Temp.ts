@@ -18,9 +18,9 @@ export interface OrganizationShare {
 }
 
 export interface ReferralData {
-  referralTypeID: number;
-  donorID: number;
-  otherComment: string;
+  referralID: number;
+  donorID?: number;
+  comment?: string;
 }
 
 export type ReferralType = {

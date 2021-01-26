@@ -1,5 +1,5 @@
 import actionCreatorFactory from "typescript-fsa";
-import { ReferralType } from "../../types/Temp";
+import { ReferralData, ReferralType } from "../../types/Temp";
 
 const actionCreator = actionCreatorFactory();
 
@@ -9,6 +9,8 @@ export const fetchReferralsAction = actionCreator.async<
   Error
 >("FETCH_REFERRALS");
 
-export const submitReferralAction = actionCreator.async<number, boolean, Error>(
-  "SUBMIT_REFERRAL"
-);
+export const submitReferralAction = actionCreator.async<
+  ReferralData,
+  boolean,
+  Error
+>("SUBMIT_REFERRAL");
