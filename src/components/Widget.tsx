@@ -17,6 +17,7 @@ export const Widget: React.FC = () => {
   const answeredReferral = useSelector(
     (state: State) => state.layout.answeredReferral
   );
+  const donorEmail = useSelector((state: State) => state.donation.donor?.email);
 
   useEffect(() => {
     dispatch(fetchOrganizationsAction.started(undefined));
@@ -30,7 +31,8 @@ export const Widget: React.FC = () => {
           <MethodPane />
           <DonorPane />
           <DonationPane />
-          {answeredReferral !== true && <ReferralPane />}
+          {(answeredReferral !== true ||
+            donorEmail === "anon@gieffektivt.no") && <ReferralPane />}
           <PaymentPane />
         </Carousel>
         <ProgressBar />
