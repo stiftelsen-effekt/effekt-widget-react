@@ -33,6 +33,11 @@ export const CheckBox = styled.input`
   &:hover {
     cursor: pointer;
   }
+  &:focus ~ label > span {
+    border: 2px solid black;
+    border-radius: 5px;
+    z-index: 2;
+  }
 `;
 
 export const RadioWrapper = styled.div``;

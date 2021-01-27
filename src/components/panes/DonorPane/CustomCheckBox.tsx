@@ -10,9 +10,9 @@ interface CheckBoxProps {
 export const CustomCheckBox: React.FC<CheckBoxProps> = (props) => (
   <label className="container">
     {props.checked ? (
-      <input type="checkbox" checked />
+      <input type="checkbox" tabIndex={-1} checked />
     ) : (
-      <input type="checkbox" />
+      <input type="checkbox" tabIndex={-1} />
     )}
     <span className="checkmark" />
   </label>
