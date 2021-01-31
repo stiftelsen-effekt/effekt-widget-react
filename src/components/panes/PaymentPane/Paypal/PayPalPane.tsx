@@ -1,7 +1,8 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { State } from "../../../../store/state";
-import { Pane, PaneContainer, PaneTitle, UnderTitle } from "../../Panes.style";
+import { HistoryBar } from "../../../shared/HistoryBar/HistoryBar";
+import { Pane, PaneContainer } from "../../Panes.style";
 import { PayPalFormWrapper, OrangeSubmit } from "./PayPalPane.style";
 
 export const PaypalPane: React.FC = () => {
@@ -11,7 +12,6 @@ export const PaypalPane: React.FC = () => {
 
   const singleForm = (
     <PayPalFormWrapper>
-      <UnderTitle>Engangsdonasjon</UnderTitle>
       <form
         action="https://www.paypal.com/cgi-bin/webscr"
         method="post"
@@ -37,7 +37,7 @@ export const PaypalPane: React.FC = () => {
 
         <OrangeSubmit
           type="button"
-          value="Betal nå"
+          value="Gå til PayPal"
           onClick={() => {
             document.getElementById("single-paypal-submit")?.click();
           }}
@@ -48,7 +48,6 @@ export const PaypalPane: React.FC = () => {
 
   const recurringForm = (
     <PayPalFormWrapper>
-      <UnderTitle>Månedlig donasjon</UnderTitle>
       <form
         action="https://www.paypal.com/cgi-bin/webscr"
         method="post"
@@ -82,7 +81,7 @@ export const PaypalPane: React.FC = () => {
         />
         <OrangeSubmit
           type="button"
-          value="Abonner nå"
+          value="Gå til PayPal"
           onClick={() => {
             document.getElementById("recurring-paypal-submit")?.click();
           }}
@@ -94,9 +93,8 @@ export const PaypalPane: React.FC = () => {
   return (
     <Pane>
       <PaneContainer>
-        <PaneTitle>Gå til PayPal</PaneTitle>
-        {!isRecurring && singleForm}
-        {isRecurring && recurringForm}
+        <HistoryBar />
+        {isRecurring === 0 ? recurringForm : singleForm}
       </PaneContainer>
     </Pane>
   );

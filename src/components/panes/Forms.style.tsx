@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { gray18 } from "../../config/colors";
+import { gray18, orange15 } from "../../config/colors";
 
 export const Form = styled.form`
   display: flex;
@@ -34,8 +34,7 @@ export const CheckBox = styled.input`
     cursor: pointer;
   }
   &:focus ~ label > span {
-    border: 2px solid black;
-    border-radius: 5px;
+    box-shadow: 0px 0px 0px 1.5px ${orange15};
     z-index: 2;
   }
 `;
