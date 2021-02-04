@@ -24,7 +24,7 @@ export const TextField = styled.input`
   box-sizing: border-box;
 `;
 
-export const CheckBox = styled.input`
+export const HiddenCheckBox = styled.input`
   margin: 5px;
   margin-left: 0;
   width: 100%;

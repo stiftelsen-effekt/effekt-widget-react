@@ -8,11 +8,8 @@ export const ProgressBar: React.FC = () => {
   const hasAnswerredReferral = useSelector(
     (state: State) => state.layout.answeredReferral
   );
-  const donorEmail = useSelector((state: State) => state.donation.donor?.email);
 
-  const progressPercentage =
-    paneNumber * 25 +
-    (hasAnswerredReferral && donorEmail !== "anon@gieffektivt.no" ? 25 : 0);
+  const progressPercentage = paneNumber * 25 + (hasAnswerredReferral ? 25 : 0);
 
   return (
     <OrangeLine style={{ width: `${progressPercentage}%`, height: "0.5vw" }} />

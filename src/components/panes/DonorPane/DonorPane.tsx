@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 import { OrangeLink, Pane } from "../Panes.style";
 import { DonorInput } from "../../../store/state";
 import { submitDonorInfo } from "../../../store/donation/actions";
-import { InputFieldWrapper, InputLabel, CheckBox } from "../Forms.style";
+import { InputFieldWrapper, InputLabel, HiddenCheckBox } from "../Forms.style";
 import ErrorField from "../../shared/Error/ErrorField";
 import { DonorForm } from "./DonorPane.style";
 import { RichSelect } from "../../shared/RichSelect/RichSelect";
@@ -131,7 +131,7 @@ export const DonorPane: React.FC = () => {
             </InputFieldWrapper>
             <div>
               <div>
-                <CheckBox
+                <HiddenCheckBox
                   name="taxDeduction"
                   type="checkbox"
                   ref={register}
@@ -170,7 +170,7 @@ export const DonorPane: React.FC = () => {
                 )}
               </div>
               <div>
-                <CheckBox
+                <HiddenCheckBox
                   name="newsletter"
                   type="checkbox"
                   ref={register}
@@ -183,7 +183,7 @@ export const DonorPane: React.FC = () => {
                 {privacyPolicyErrorAnimation && (
                   <ErrorField text="Du må godta personvernerklæringen" />
                 )}
-                <CheckBox
+                <HiddenCheckBox
                   name="privacyPolicy"
                   type="checkbox"
                   ref={register({ required: true })}

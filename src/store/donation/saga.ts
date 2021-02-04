@@ -51,7 +51,9 @@ export function* registerDonation(
 
     yield put(
       setAnsweredReferral(
-        (result.content as RegisterDonationResponse).hasAnsweredReferral
+        data.donor?.email === "anon@gieffektivt.no"
+          ? false
+          : (result.content as RegisterDonationResponse).hasAnsweredReferral
       )
     );
 
