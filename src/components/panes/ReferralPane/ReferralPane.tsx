@@ -6,14 +6,12 @@ import {
   ReferralButton,
   ReferralsWrapper,
   ReferralButtonsWrapper,
-  OtherInput,
-  OtherLabel,
-  OtherInputWrapper,
 } from "./ReferralPane.style";
 import { submitReferralAction } from "../../../store/referrals/actions";
 import { NextButton } from "../../shared/Buttons/NavigationButtons.style";
 import { nextPane } from "../../../store/layout/actions";
 import { HistoryBar } from "../../shared/HistoryBar/HistoryBar";
+import { TextInput } from "../../shared/Input/TextInput";
 
 export const ReferralPane: React.FC = () => {
   const referrals = useSelector((state: State) => state.referrals.referrals);
@@ -42,15 +40,14 @@ export const ReferralPane: React.FC = () => {
                 {ref.name}
               </ReferralButton>
             ))}
-            <OtherInputWrapper>
-              <OtherLabel>Annet</OtherLabel>
-              <OtherInput
-                value={otherInputValue}
-                placeholder="Skriv inn"
-                onChange={(e) => setOtherInputValue(e.target.value)}
-              />
-            </OtherInputWrapper>
           </ReferralButtonsWrapper>
+          <TextInput
+            label="Annet"
+            value={otherInputValue}
+            type="text"
+            placeholder="Skriv inn"
+            onChange={(e) => setOtherInputValue(e.target.value)}
+          />
         </ReferralsWrapper>
         {otherInputValue === "" ? (
           <NextButton

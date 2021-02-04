@@ -131,6 +131,7 @@ export const DonorPane: React.FC = () => {
             </InputFieldWrapper>
             <div>
               <div>
+                <CustomCheckBox checked={taxDeductionChecked} />
                 <CheckBox
                   name="taxDeduction"
                   type="checkbox"
@@ -140,7 +141,6 @@ export const DonorPane: React.FC = () => {
                     setTaxDeductionChecked(!taxDeductionChecked);
                   }}
                 />
-                <CustomCheckBox checked={taxDeductionChecked} />
                 <ToolTip
                   text={tooltipText}
                   marginTop="10px"
@@ -170,26 +170,26 @@ export const DonorPane: React.FC = () => {
                 )}
               </div>
               <div>
+                <CustomCheckBox checked={newsletterChecked} />
                 <CheckBox
                   name="newsletter"
                   type="checkbox"
                   ref={register}
                   onClick={() => setNewsletterChecked(!newsletterChecked)}
                 />
-                <CustomCheckBox checked={newsletterChecked} />
                 <InputLabel>Jeg ønsker å melde meg på nyhetsbrevet</InputLabel>
               </div>
               <div>
                 {privacyPolicyErrorAnimation && (
                   <ErrorField text="Du må godta personvernerklæringen" />
                 )}
+                <CustomCheckBox checked={privacyPolicyChecked} />
                 <CheckBox
                   name="privacyPolicy"
                   type="checkbox"
                   ref={register({ required: true })}
                   onClick={() => setPrivacyPolicyChecked(!privacyPolicyChecked)}
                 />
-                <CustomCheckBox checked={privacyPolicyChecked} />
                 <InputLabel>Jeg godtar</InputLabel>
                 <OrangeLink
                   target="_blank"

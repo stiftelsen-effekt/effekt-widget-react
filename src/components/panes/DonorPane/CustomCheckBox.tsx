@@ -7,13 +7,9 @@ interface CheckBoxProps {
   checked: boolean;
 }
 
-export const CustomCheckBox: React.FC<CheckBoxProps> = (props) => (
+export const CustomCheckBox: React.FC<CheckBoxProps> = ({ checked }) => (
   <label className="container">
-    {props.checked ? (
-      <input type="checkbox" tabIndex={-1} checked />
-    ) : (
-      <input type="checkbox" tabIndex={-1} />
-    )}
+    <input type="checkbox" tabIndex={-1} checked={checked} readOnly />
     <span className="checkmark" />
   </label>
 );

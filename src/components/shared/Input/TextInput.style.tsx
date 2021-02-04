@@ -9,6 +9,8 @@ export interface TextInputProps extends TextInputWrapperProps {
   defaultValue?: string | number;
   selectOnClick?: boolean;
   innerRef?: React.Ref<HTMLInputElement>;
+  value?: string | undefined;
+  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 export interface TextInputWrapperProps {
@@ -29,7 +31,7 @@ export const TextInputWrapper = styled.div`
     content: "${(props: TextInputWrapperProps) => props.label}";
     height: 100%;
     position: absolute;
-    left: 30px;
+    left: 15px;
     top: 0;
     color: black;
     display: flex;

@@ -15,6 +15,8 @@ export const TextInput: React.FC<TextInputProps> = ({
   defaultValue,
   innerRef,
   selectOnClick,
+  value,
+  onChange,
 }) => {
   return (
     <TextInputWrapper label={label} denomination={denomination}>
@@ -27,6 +29,8 @@ export const TextInput: React.FC<TextInputProps> = ({
         defaultValue={defaultValue}
         denomination={denomination}
         ref={innerRef}
+        value={value}
+        onChange={onChange}
         onClick={(e) => {
           if (selectOnClick) e.currentTarget.select();
         }}
