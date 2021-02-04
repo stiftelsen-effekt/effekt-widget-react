@@ -42,7 +42,7 @@ export const SharesSelection: React.FC = () => {
       <form>
         <div>
           {organizations.map((org: Organization) => (
-            <div>
+            <div key={org.id}>
               <TextInput
                 label={org.name}
                 name={org.id.toString()}
