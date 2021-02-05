@@ -23,7 +23,7 @@ export const TextInput: React.FC<TextInputProps> = ({
 }) => {
   return (
     <TextInputWrapper denomination={denomination}>
-      <TextInputLabel>{label}</TextInputLabel>
+      {label && <TextInputLabel>{label}</TextInputLabel>}
       {tooltipText && <ToolTip text={tooltipText} />}
       <TextInputField
         tooltipText={tooltipText}

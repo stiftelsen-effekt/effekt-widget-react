@@ -3,6 +3,8 @@ import React from "react";
 import styled from "styled-components";
 
 const StyledSVG = styled.svg`
+  pointer-events: all;
+  z-index: 4;
   &:hover {
     cursor: pointer;
     opacity: 0.5;

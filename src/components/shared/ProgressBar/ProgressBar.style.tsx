@@ -3,6 +3,7 @@ import { orange20 } from "../../../config/colors";
 
 export const OrangeLine = styled.div`
   position: relative;
-  bottom: 0.5vw;
+  bottom: 10px;
+  height: 10px;
   background-color: ${orange20};
 `;

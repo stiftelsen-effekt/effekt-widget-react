@@ -3,10 +3,10 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Validate from "validator";
 import { useForm } from "react-hook-form";
-import { OrangeLink, Pane } from "../Panes.style";
+import { Pane } from "../Panes.style";
 import { DonorInput, State } from "../../../store/state";
 import { submitDonorInfo } from "../../../store/donation/actions";
-import { InputFieldWrapper, InputLabel, HiddenCheckBox } from "../Forms.style";
+import { InputFieldWrapper, HiddenCheckBox } from "../Forms.style";
 import ErrorField from "../../shared/Error/ErrorField";
 import { DonorForm } from "./DonorPane.style";
 import { RichSelect } from "../../shared/RichSelect/RichSelect";
@@ -17,7 +17,6 @@ import { nextPane, selectPrivacyPolicy } from "../../../store/layout/actions";
 import { TextInput } from "../../shared/Input/TextInput";
 import { HistoryBar } from "../../shared/HistoryBar/HistoryBar";
 import { CustomCheckBox } from "./CustomCheckBox";
-import { ToolTip } from "../../shared/ToolTip/ToolTip";
 
 interface DonorFormValues extends DonorInput {
   privacyPolicy: boolean;
@@ -156,7 +155,11 @@ export const DonorPane: React.FC = () => {
             </InputFieldWrapper>
             <div>
               <div>
-                <CustomCheckBox checked={taxDeductionChecked} />
+                <CustomCheckBox
+                  label="Jeg ønsker skattefradrag"
+                  checked={taxDeductionChecked}
+                  tooltipText={tooltipText}
+                />
                 <HiddenCheckBox
                   name="taxDeduction"
                   type="checkbox"
@@ -166,14 +169,6 @@ export const DonorPane: React.FC = () => {
                     setTaxDeductionChecked(!taxDeductionChecked);
                   }}
                 />
-                <ToolTip
-                  text={tooltipText}
-                  marginTop="10px"
-                  marginLeft="-195px"
-                  textMarginTop="-115px"
-                  textMarginLeft="-105px"
-                />
-                <InputLabel>Jeg ønsker skattefradrag</InputLabel>
                 {watchAllFields.taxDeduction && (
                   <InputFieldWrapper>
                     {ssnErrorAnimation && (
@@ -183,7 +178,9 @@ export const DonorPane: React.FC = () => {
                       name="ssn"
                       type="tel"
                       placeholder="Personnummer"
-                      defaultValue={donor?.ssn}
+                      defaultValue={
+                        donor?.ssn === 12345678910 ? "" : donor?.ssn
+                      }
                       innerRef={register({
                         required: false,
                         validate: (val) =>
@@ -196,34 +193,31 @@ export const DonorPane: React.FC = () => {
                 )}
               </div>
               <div>
-                <CustomCheckBox checked={newsletterChecked} />
+                <CustomCheckBox
+                  label="Jeg ønsker å melde meg på nyhetsbrevet"
+                  checked={newsletterChecked}
+                />
                 <HiddenCheckBox
                   name="newsletter"
                   type="checkbox"
                   ref={register}
                   onClick={() => setNewsletterChecked(!newsletterChecked)}
                 />
-                <InputLabel>Jeg ønsker å melde meg på nyhetsbrevet</InputLabel>
               </div>
               <div>
                 {privacyPolicyErrorAnimation && (
                   <ErrorField text="Du må godta personvernerklæringen" />
                 )}
-                <CustomCheckBox checked={privacyPolicyChecked} />
+                <CustomCheckBox
+                  label="Jeg godtar"
+                  checked={privacyPolicyChecked}
+                />
                 <HiddenCheckBox
                   name="privacyPolicy"
                   type="checkbox"
                   ref={register({ required: true })}
                   onClick={() => setPrivacyPolicyChecked(!privacyPolicyChecked)}
                 />
-                <InputLabel>Jeg godtar</InputLabel>
-                <OrangeLink
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  href="https://gieffektivt.no/samarbeid-drift#personvern"
-                >
-                  personvernerklæringen
-                </OrangeLink>
               </div>
             </div>
           </RichSelectOption>

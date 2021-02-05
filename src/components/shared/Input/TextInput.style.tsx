@@ -27,6 +27,8 @@ export const TextInputWrapper = styled.div`
   border-radius: 5px;
   box-sizing: border-box;
   position: relative;
+  height: 60px;
+  z-index: 1;
 
   ${(props: TextInputWrapperProps) => {
     if (props.denomination) {
@@ -55,6 +57,7 @@ export const TextInputWrapper = styled.div`
 `;
 
 export const TextInputField = styled.input`
+  z-index: 1;
   font-size: inherit;
   padding: 20px;
   ${(props: TextInputProps) => {
@@ -71,10 +74,9 @@ export const TextInputField = styled.input`
   width: 100%;
   background: transparent;
   box-shadow: none;
-  position: relative;
-  z-index: 2;
+  position: absolute;
   border-radius: 5px;
-  display: block;
+  left: 0px;
 
   transition: box-shadow 180ms;
   &:focus {
@@ -85,7 +87,7 @@ export const TextInputField = styled.input`
 
 export const TextInputLabel = styled.p`
   display: inline-block;
-  position: absolute;
   padding: 5px;
+  padding-left: 10px;
   font-weight: bold;
 `;
