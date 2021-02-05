@@ -52,7 +52,11 @@ export const DonorPane: React.FC = () => {
   const [taxDeductionChecked, setTaxDeductionChecked] = useState(
     donor?.taxDeduction ? donor.taxDeduction : false
   );
-  const [donorType, setDonorType] = useState<DonorType>(DonorType.DONOR);
+  const [donorType, setDonorType] = useState<DonorType>(
+    donor?.email === "anon@gieffektivt.no"
+      ? DonorType.ANONYMOUS
+      : DonorType.DONOR
+  );
   const [
     privacyPolicyErrorAnimation,
     setPrivacyPolicyErrorAnimation,
@@ -133,7 +137,7 @@ export const DonorPane: React.FC = () => {
                 name="name"
                 type="text"
                 placeholder="Navn"
-                defaultValue={donor?.name}
+                defaultValue={donor?.name === "Anonym Giver" ? "" : donor?.name}
                 innerRef={register({ required: true, minLength: 3 })}
               />
               {emailErrorAnimation && <ErrorField text="Ugyldig epost" />}
@@ -141,7 +145,9 @@ export const DonorPane: React.FC = () => {
                 name="email"
                 type="text"
                 placeholder="Epost"
-                defaultValue={donor?.email}
+                defaultValue={
+                  donor?.email === "anon@gieffektivt.no" ? "" : donor?.email
+                }
                 innerRef={register({
                   required: true,
                   validate: (val) => Validate.isEmail(val),
