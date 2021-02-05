@@ -7,7 +7,6 @@ import { setShares } from "../../../store/donation/actions";
 import { State } from "../../../store/state";
 import { TextInput } from "../../shared/Input/TextInput";
 import { OrganizationShare } from "../../../types/Temp";
-import { ToolTip } from "../../shared/ToolTip/ToolTip";
 
 export const SharesSelection: React.FC = () => {
   const dispatch = useDispatch();
@@ -45,6 +44,7 @@ export const SharesSelection: React.FC = () => {
             <div key={org.id}>
               <TextInput
                 label={org.name}
+                tooltipText={org.shortDesc}
                 name={org.id.toString()}
                 key={org.id}
                 type="number"
@@ -53,13 +53,6 @@ export const SharesSelection: React.FC = () => {
                 denomination="%"
                 selectOnClick
                 innerRef={register}
-              />
-              <ToolTip
-                text={org.shortDesc}
-                marginLeft="10px"
-                marginTop="-44px"
-                textMarginLeft="17px"
-                textMarginTop="2px"
               />
             </div>
           ))}

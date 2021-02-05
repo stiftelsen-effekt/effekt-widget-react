@@ -4,9 +4,9 @@ import styled from "styled-components";
 import { ToolTipIcon } from "./ToolTipIcon";
 
 const ToolTipWrapper = styled.div`
-  position: absolute;
   display: inline;
-  z-index: 2;
+  position: absolute;
+  z-index: 5;
 `;
 
 const ToolTipText = styled.span`
