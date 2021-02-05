@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Validate from "validator";
 import { useForm } from "react-hook-form";
 import { OrangeLink, Pane } from "../Panes.style";
-import { DonorInput } from "../../../store/state";
+import { DonorInput, State } from "../../../store/state";
 import { submitDonorInfo } from "../../../store/donation/actions";
 import { InputFieldWrapper, InputLabel, HiddenCheckBox } from "../Forms.style";
 import ErrorField from "../../shared/Error/ErrorField";
@@ -13,7 +13,7 @@ import { RichSelect } from "../../shared/RichSelect/RichSelect";
 import { DonorType } from "../../../types/Temp";
 import { RichSelectOption } from "../../shared/RichSelect/RichSelectOption";
 import { NextButton } from "../../shared/Buttons/NavigationButtons.style";
-import { nextPane } from "../../../store/layout/actions";
+import { nextPane, selectPrivacyPolicy } from "../../../store/layout/actions";
 import { TextInput } from "../../shared/Input/TextInput";
 import { HistoryBar } from "../../shared/HistoryBar/HistoryBar";
 import { CustomCheckBox } from "./CustomCheckBox";
@@ -37,13 +37,21 @@ const anonDonor: DonorFormValues = {
 
 export const DonorPane: React.FC = () => {
   const dispatch = useDispatch();
+  const donor = useSelector((state: State) => state.donation.donor);
+  const layoutState = useSelector((state: State) => state.layout);
   const [nextDisabled, setNextDisabled] = useState(true);
   const [nameErrorAnimation, setNameErrorAnimation] = useState(false);
   const [emailErrorAnimation, setEmailErrorAnimation] = useState(false);
   const [ssnErrorAnimation, setSsnErrorAnimation] = useState(false);
-  const [privacyPolicyChecked, setPrivacyPolicyChecked] = useState(false);
-  const [newsletterChecked, setNewsletterChecked] = useState(false);
-  const [taxDeductionChecked, setTaxDeductionChecked] = useState(false);
+  const [privacyPolicyChecked, setPrivacyPolicyChecked] = useState(
+    layoutState.privacyPolicy
+  );
+  const [newsletterChecked, setNewsletterChecked] = useState(
+    donor?.newsletter ? donor.newsletter : false
+  );
+  const [taxDeductionChecked, setTaxDeductionChecked] = useState(
+    donor?.taxDeduction ? donor.taxDeduction : false
+  );
   const [donorType, setDonorType] = useState<DonorType>(DonorType.DONOR);
   const [
     privacyPolicyErrorAnimation,
@@ -55,8 +63,15 @@ export const DonorPane: React.FC = () => {
     errors,
     handleSubmit,
     clearErrors,
+    setValue,
   } = useForm<DonorFormValues>();
   const watchAllFields = watch();
+
+  useEffect(() => {
+    setValue("taxDeduction", donor?.taxDeduction);
+    setValue("newsletter", donor?.newsletter);
+    setValue("privacyPolicy", layoutState.privacyPolicy);
+  }, []);
 
   useEffect(() => {
     errors.name ? setNameErrorAnimation(true) : setNameErrorAnimation(false);
@@ -85,6 +100,7 @@ export const DonorPane: React.FC = () => {
         data.newsletter ? data.newsletter : false
       )
     );
+    dispatch(selectPrivacyPolicy(watchAllFields.privacyPolicy));
     dispatch(nextPane());
   };
 
@@ -98,6 +114,7 @@ export const DonorPane: React.FC = () => {
         anonDonor.newsletter ? anonDonor.newsletter : false
       )
     );
+    dispatch(selectPrivacyPolicy(watchAllFields.privacyPolicy));
     dispatch(nextPane());
   };
 
@@ -116,6 +133,7 @@ export const DonorPane: React.FC = () => {
                 name="name"
                 type="text"
                 placeholder="Navn"
+                defaultValue={donor?.name}
                 innerRef={register({ required: true, minLength: 3 })}
               />
               {emailErrorAnimation && <ErrorField text="Ugyldig epost" />}
@@ -123,6 +141,7 @@ export const DonorPane: React.FC = () => {
                 name="email"
                 type="text"
                 placeholder="Epost"
+                defaultValue={donor?.email}
                 innerRef={register({
                   required: true,
                   validate: (val) => Validate.isEmail(val),
@@ -158,6 +177,7 @@ export const DonorPane: React.FC = () => {
                       name="ssn"
                       type="tel"
                       placeholder="Personnummer"
+                      defaultValue={donor?.ssn}
                       innerRef={register({
                         required: false,
                         validate: (val) =>
