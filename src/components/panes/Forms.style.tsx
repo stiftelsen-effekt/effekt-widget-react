@@ -35,7 +35,6 @@ export const HiddenCheckBox = styled.input`
   }
   &:focus ~ label > span {
     box-shadow: 0px 0px 0px 1.5px ${orange15};
-    z-index: 2;
   }
 `;
 
@@ -49,13 +48,10 @@ export const RadioButton = styled.input`
 `;
 
 export const InputLabel = styled.p`
-  left: -370px;
-  top: -12px;
+  position: absolute;
   align-self: start;
   font-size: 15px;
-  display: inline;
-  position: relative;
-  bottom: 2px;
   margin-left: 5px;
+  display: inline-block;
   pointer-events: none;
 `;

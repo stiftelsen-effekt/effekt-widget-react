@@ -11,7 +11,5 @@ export const ProgressBar: React.FC = () => {
 
   const progressPercentage = paneNumber * 25 + (hasAnswerredReferral ? 25 : 0);
 
-  return (
-    <OrangeLine style={{ width: `${progressPercentage}%`, height: "0.5vw" }} />
-  );
+  return <OrangeLine style={{ width: `${progressPercentage}%` }} />;
 };

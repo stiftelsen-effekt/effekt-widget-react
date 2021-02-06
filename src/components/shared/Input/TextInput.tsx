@@ -1,11 +1,14 @@
 import React from "react";
+import { ToolTip } from "../ToolTip/ToolTip";
 import {
   TextInputField,
+  TextInputLabel,
   TextInputProps,
   TextInputWrapper,
 } from "./TextInput.style";
 
 export const TextInput: React.FC<TextInputProps> = ({
+  tooltipText,
   label,
   denomination,
   name,
@@ -19,8 +22,11 @@ export const TextInput: React.FC<TextInputProps> = ({
   onChange,
 }) => {
   return (
-    <TextInputWrapper label={label} denomination={denomination}>
+    <TextInputWrapper denomination={denomination}>
+      {label && <TextInputLabel>{label}</TextInputLabel>}
+      {tooltipText && <ToolTip text={tooltipText} />}
       <TextInputField
+        tooltipText={tooltipText}
         label={label}
         name={name}
         type={type}

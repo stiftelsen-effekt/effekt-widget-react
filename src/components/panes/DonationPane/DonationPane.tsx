@@ -1,6 +1,5 @@
-import React, { useEffect } from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useForm } from "react-hook-form";
 import Validator from "validator";
 import {
   registerDonationAction,
@@ -17,87 +16,73 @@ import { SharesSelection } from "./ShareSelection";
 import { TextInput } from "../../shared/Input/TextInput";
 import { SumWrapper } from "./DonationPane.style";
 import { SharesSum } from "./SharesSum";
-import { HistoryBar } from "../../shared/HistoryBar/HistoryBar";
-
-interface DonationFormValues {
-  recurring: string;
-  customShare: string;
-  sum: string;
-}
+import { LoadingCircle } from "../../shared/LoadingCircle/LoadingCircle";
 
 export const DonationPane: React.FC = () => {
   const dispatch = useDispatch();
   const shareType = useSelector((state: State) => state.donation.shareType);
   const donationMethod = useSelector((state: State) => state.donation.method);
   const donationValid = useSelector((state: State) => state.donation.isValid);
-
-  const {
-    register,
-    watch,
-    errors,
-    handleSubmit,
-  } = useForm<DonationFormValues>();
-  const watchAllFields = watch();
-
-  useEffect(() => {
-    /**
-     * TODO:
-     * Handle errors, set donation valid
-     */
-
-    const values = watchAllFields;
-    if (values.sum)
-      dispatch(setSum(Validator.isInt(values.sum) ? parseInt(values.sum) : 0));
-  }, [dispatch, errors, watchAllFields]);
+  const donationSum = useSelector((state: State) => state.donation.sum);
+  const [loadingAnimation, setLoadingAnimation] = useState(false);
 
   function onSubmit() {
+    setLoadingAnimation(true);
     dispatch(registerDonationAction.started(undefined));
   }
 
   return (
     <Pane>
-      <HistoryBar />
       <PaneContainer>
-        <form onSubmit={handleSubmit(onSubmit)}>
-          {(donationMethod === PaymentMethod.VIPPS ||
-            donationMethod === PaymentMethod.PAYPAL) && (
-            <SumWrapper>
-              <TextInput
-                label="Sum"
-                denomination="kr"
-                name="sum"
-                type="tel"
-                placeholder="0"
-                innerRef={register({
-                  required: true,
-                  validate: (val) => Validator.isInt(val) && val > 0,
-                })}
-              />
-            </SumWrapper>
-          )}
+        {!loadingAnimation && (
+          <form onSubmit={onSubmit}>
+            {(donationMethod === PaymentMethod.VIPPS ||
+              donationMethod === PaymentMethod.PAYPAL) && (
+              <SumWrapper>
+                <TextInput
+                  label="Sum"
+                  denomination="kr"
+                  name="sum"
+                  type="tel"
+                  placeholder="0"
+                  defaultValue={
+                    donationSum && donationSum > 0 ? donationSum : 0
+                  }
+                  onChange={(e) => {
+                    if (Validator.isInt(e.target.value) === true) {
+                      dispatch(setSum(parseInt(e.target.value)));
+                    } else {
+                      dispatch(setSum(-1));
+                    }
+                  }}
+                />
+              </SumWrapper>
+            )}
 
-          <RichSelect
-            selected={shareType}
-            onChange={(type: ShareType) => dispatch(setShareType(type))}
-          >
-            <RichSelectOption
-              label="Bruk vår anbefalte fordeling"
-              sublabel="La midlene dine bli brukt der GiveWell mener det trengs"
-              value={ShareType.STANDARD}
-            />
-            <RichSelectOption
-              label="Jeg vil velge fordeling selv"
-              sublabel="Valgt blant våre anbefalte organisasjoner"
-              value={ShareType.CUSTOM}
+            <RichSelect
+              selected={shareType}
+              onChange={(type: ShareType) => dispatch(setShareType(type))}
             >
-              <SharesSelection />
-              <SharesSum />
-            </RichSelectOption>
-          </RichSelect>
-          <NextButton type="submit" disabled={!donationValid}>
-            Neste
-          </NextButton>
-        </form>
+              <RichSelectOption
+                label="Bruk vår anbefalte fordeling"
+                sublabel="La midlene dine bli brukt der GiveWell mener det trengs"
+                value={ShareType.STANDARD}
+              />
+              <RichSelectOption
+                label="Jeg vil velge fordeling selv"
+                sublabel="Valgt blant våre anbefalte organisasjoner"
+                value={ShareType.CUSTOM}
+              >
+                <SharesSelection />
+                <SharesSum />
+              </RichSelectOption>
+            </RichSelect>
+            <NextButton type="submit" disabled={!donationValid}>
+              Neste
+            </NextButton>
+          </form>
+        )}
+        {loadingAnimation && <LoadingCircle>Hey</LoadingCircle>}
       </PaneContainer>
     </Pane>
   );

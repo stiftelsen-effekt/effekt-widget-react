@@ -1,23 +1,21 @@
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Validate from "validator";
 import { useForm } from "react-hook-form";
-import { OrangeLink, Pane } from "../Panes.style";
-import { DonorInput } from "../../../store/state";
+import { Pane } from "../Panes.style";
+import { DonorInput, State } from "../../../store/state";
 import { submitDonorInfo } from "../../../store/donation/actions";
-import { InputFieldWrapper, InputLabel, HiddenCheckBox } from "../Forms.style";
+import { InputFieldWrapper, HiddenCheckBox } from "../Forms.style";
 import ErrorField from "../../shared/Error/ErrorField";
 import { DonorForm } from "./DonorPane.style";
 import { RichSelect } from "../../shared/RichSelect/RichSelect";
 import { DonorType } from "../../../types/Temp";
 import { RichSelectOption } from "../../shared/RichSelect/RichSelectOption";
 import { NextButton } from "../../shared/Buttons/NavigationButtons.style";
-import { nextPane } from "../../../store/layout/actions";
+import { nextPane, selectPrivacyPolicy } from "../../../store/layout/actions";
 import { TextInput } from "../../shared/Input/TextInput";
-import { HistoryBar } from "../../shared/HistoryBar/HistoryBar";
 import { CustomCheckBox } from "./CustomCheckBox";
-import { ToolTip } from "../../shared/ToolTip/ToolTip";
 
 interface DonorFormValues extends DonorInput {
   privacyPolicy: boolean;
@@ -37,14 +35,26 @@ const anonDonor: DonorFormValues = {
 
 export const DonorPane: React.FC = () => {
   const dispatch = useDispatch();
+  const donor = useSelector((state: State) => state.donation.donor);
+  const layoutState = useSelector((state: State) => state.layout);
   const [nextDisabled, setNextDisabled] = useState(true);
   const [nameErrorAnimation, setNameErrorAnimation] = useState(false);
   const [emailErrorAnimation, setEmailErrorAnimation] = useState(false);
   const [ssnErrorAnimation, setSsnErrorAnimation] = useState(false);
-  const [privacyPolicyChecked, setPrivacyPolicyChecked] = useState(false);
-  const [newsletterChecked, setNewsletterChecked] = useState(false);
-  const [taxDeductionChecked, setTaxDeductionChecked] = useState(false);
-  const [donorType, setDonorType] = useState<DonorType>(DonorType.DONOR);
+  const [privacyPolicyChecked, setPrivacyPolicyChecked] = useState(
+    layoutState.privacyPolicy
+  );
+  const [newsletterChecked, setNewsletterChecked] = useState(
+    donor?.newsletter ? donor.newsletter : false
+  );
+  const [taxDeductionChecked, setTaxDeductionChecked] = useState(
+    donor?.taxDeduction ? donor.taxDeduction : false
+  );
+  const [donorType, setDonorType] = useState<DonorType>(
+    donor?.email === "anon@gieffektivt.no"
+      ? DonorType.ANONYMOUS
+      : DonorType.DONOR
+  );
   const [
     privacyPolicyErrorAnimation,
     setPrivacyPolicyErrorAnimation,
@@ -55,8 +65,15 @@ export const DonorPane: React.FC = () => {
     errors,
     handleSubmit,
     clearErrors,
+    setValue,
   } = useForm<DonorFormValues>();
   const watchAllFields = watch();
+
+  useEffect(() => {
+    setValue("taxDeduction", donor?.taxDeduction);
+    setValue("newsletter", donor?.newsletter);
+    setValue("privacyPolicy", layoutState.privacyPolicy);
+  }, []);
 
   useEffect(() => {
     errors.name ? setNameErrorAnimation(true) : setNameErrorAnimation(false);
@@ -85,6 +102,7 @@ export const DonorPane: React.FC = () => {
         data.newsletter ? data.newsletter : false
       )
     );
+    dispatch(selectPrivacyPolicy(watchAllFields.privacyPolicy));
     dispatch(nextPane());
   };
 
@@ -98,12 +116,12 @@ export const DonorPane: React.FC = () => {
         anonDonor.newsletter ? anonDonor.newsletter : false
       )
     );
+    dispatch(selectPrivacyPolicy(watchAllFields.privacyPolicy));
     dispatch(nextPane());
   };
 
   return (
     <Pane>
-      <HistoryBar />
       <DonorForm onSubmit={handleSubmit(paneSubmitted)}>
         <RichSelect
           selected={donorType}
@@ -116,6 +134,7 @@ export const DonorPane: React.FC = () => {
                 name="name"
                 type="text"
                 placeholder="Navn"
+                defaultValue={donor?.name === "Anonym Giver" ? "" : donor?.name}
                 innerRef={register({ required: true, minLength: 3 })}
               />
               {emailErrorAnimation && <ErrorField text="Ugyldig epost" />}
@@ -123,6 +142,9 @@ export const DonorPane: React.FC = () => {
                 name="email"
                 type="text"
                 placeholder="Epost"
+                defaultValue={
+                  donor?.email === "anon@gieffektivt.no" ? "" : donor?.email
+                }
                 innerRef={register({
                   required: true,
                   validate: (val) => Validate.isEmail(val),
@@ -131,7 +153,11 @@ export const DonorPane: React.FC = () => {
             </InputFieldWrapper>
             <div>
               <div>
-                <CustomCheckBox checked={taxDeductionChecked} />
+                <CustomCheckBox
+                  label="Jeg ønsker skattefradrag"
+                  checked={taxDeductionChecked}
+                  tooltipText={tooltipText}
+                />
                 <HiddenCheckBox
                   name="taxDeduction"
                   type="checkbox"
@@ -141,14 +167,6 @@ export const DonorPane: React.FC = () => {
                     setTaxDeductionChecked(!taxDeductionChecked);
                   }}
                 />
-                <ToolTip
-                  text={tooltipText}
-                  marginTop="10px"
-                  marginLeft="-195px"
-                  textMarginTop="-115px"
-                  textMarginLeft="-105px"
-                />
-                <InputLabel>Jeg ønsker skattefradrag</InputLabel>
                 {watchAllFields.taxDeduction && (
                   <InputFieldWrapper>
                     {ssnErrorAnimation && (
@@ -158,6 +176,9 @@ export const DonorPane: React.FC = () => {
                       name="ssn"
                       type="tel"
                       placeholder="Personnummer"
+                      defaultValue={
+                        donor?.ssn === 12345678910 ? "" : donor?.ssn
+                      }
                       innerRef={register({
                         required: false,
                         validate: (val) =>
@@ -170,34 +191,35 @@ export const DonorPane: React.FC = () => {
                 )}
               </div>
               <div>
-                <CustomCheckBox checked={newsletterChecked} />
+                <CustomCheckBox
+                  label="Jeg ønsker å melde meg på nyhetsbrevet"
+                  checked={newsletterChecked}
+                />
                 <HiddenCheckBox
                   name="newsletter"
                   type="checkbox"
                   ref={register}
                   onClick={() => setNewsletterChecked(!newsletterChecked)}
                 />
-                <InputLabel>Jeg ønsker å melde meg på nyhetsbrevet</InputLabel>
               </div>
               <div>
                 {privacyPolicyErrorAnimation && (
                   <ErrorField text="Du må godta personvernerklæringen" />
                 )}
-                <CustomCheckBox checked={privacyPolicyChecked} />
+                <CustomCheckBox
+                  label="Jeg godtar"
+                  checked={privacyPolicyChecked}
+                  hyperlink={{
+                    text: "personvernerklæringen",
+                    url: "https://gieffektivt.no/samarbeid-drift#personvern",
+                  }}
+                />
                 <HiddenCheckBox
                   name="privacyPolicy"
                   type="checkbox"
                   ref={register({ required: true })}
                   onClick={() => setPrivacyPolicyChecked(!privacyPolicyChecked)}
                 />
-                <InputLabel>Jeg godtar</InputLabel>
-                <OrangeLink
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  href="https://gieffektivt.no/samarbeid-drift#personvern"
-                >
-                  personvernerklæringen
-                </OrangeLink>
               </div>
             </div>
           </RichSelectOption>

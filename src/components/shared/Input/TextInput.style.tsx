@@ -10,6 +10,7 @@ export interface TextInputProps extends TextInputWrapperProps {
   selectOnClick?: boolean;
   innerRef?: React.Ref<HTMLInputElement>;
   value?: string | undefined;
+  tooltipText?: string;
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
@@ -26,19 +27,8 @@ export const TextInputWrapper = styled.div`
   border-radius: 5px;
   box-sizing: border-box;
   position: relative;
-
-  &:before {
-    content: "${(props: TextInputWrapperProps) => props.label}";
-    height: 100%;
-    position: absolute;
-    left: 15px;
-    top: 0;
-    color: black;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-weight: normal;
-  }
+  height: 60px;
+  z-index: 1;
 
   ${(props: TextInputWrapperProps) => {
     if (props.denomination) {
@@ -67,6 +57,7 @@ export const TextInputWrapper = styled.div`
 `;
 
 export const TextInputField = styled.input`
+  z-index: 1;
   font-size: inherit;
   padding: 20px;
   ${(props: TextInputProps) => {
@@ -83,14 +74,20 @@ export const TextInputField = styled.input`
   width: 100%;
   background: transparent;
   box-shadow: none;
-  position: relative;
-  z-index: 2;
+  position: absolute;
   border-radius: 5px;
-  display: block;
+  left: 0px;
 
   transition: box-shadow 180ms;
   &:focus {
     outline: none;
     box-shadow: 0px 0px 0px 1.5px ${orange15};
   }
+`;
+
+export const TextInputLabel = styled.p`
+  display: inline-block;
+  padding: 5px;
+  padding-left: 10px;
+  font-weight: bold;
 `;

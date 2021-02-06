@@ -1,19 +1,6 @@
 import styled from "styled-components";
 import { gray18 } from "../../../../config/colors";
 
-export const PaymentTitle = styled.p`
-  margin: 0;
-  font-size: 20px;
-  font-weight: bold;
-  margin-left: 5px;
-`;
-
-export const UnderTitle = styled.p`
-  margin: 15px;
-  margin-left: 5px;
-  font-size: 15px;
-`;
-
 export const ResultWrapper = styled.div`
   display: flex;
   flex-direction: column;

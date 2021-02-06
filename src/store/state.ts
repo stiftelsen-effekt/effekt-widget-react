@@ -67,9 +67,6 @@ export enum PaneNumber {
   MethodPane = 0,
   DonorPane = 1,
   DonationPane = 2,
-  SharesPane = 3,
-  ReferralPane = 4,
-  PayPalPane = 5,
-  VippsPane = 6,
-  ResultPane = 7,
+  ReferralPane = 3,
+  ResultPane = 4,
 }

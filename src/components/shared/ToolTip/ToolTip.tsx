@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { ToolTipIcon } from "./ToolTipIcon";
 
 const ToolTipWrapper = styled.div`
-  position: absolute;
+  position: relative;
   display: inline;
   z-index: 2;
 `;
@@ -12,7 +12,7 @@ const ToolTipWrapper = styled.div`
 const ToolTipText = styled.span`
   font-size: 14px;
   background-color: white;
-  margin-left: -100px;
+  margin-left: 5px;
   bottom: 25px;
   height: auto;
   width: 230px;
@@ -21,11 +21,11 @@ const ToolTipText = styled.span`
   display: none;
   white-space: pre-wrap;
   box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.2);
-  z-index: 3;
+  z-index: 5;
 `;
 
 interface ToolTipProps {
-  text: string;
+  text?: string;
   textMarginLeft?: string;
   textMarginTop?: string;
   marginLeft?: string;

@@ -2,32 +2,37 @@ import styled from "styled-components";
 
 export const Pane = styled.div`
   padding: 20px;
+  padding-top: 10px;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
 `;
 
-// TODO: REMOVE
 export const PaneContainer = styled.div`
   align-items: center;
   justify-content: center;
-  padding: 10px 0;
+  padding: 0;
 `;
 
 export const PaneTitle = styled.p`
   font-size: 25px;
-  margin-top: 5px;
+  margin-top: 0;
   margin-bottom: 10px;
   margin-left: 5px;
   align-self: center;
 `;
 
+export const BoldTitle = styled.p`
+  margin: 0;
+  font-size: 20px;
+  font-weight: bold;
+  margin-left: 5px;
+`;
+
 export const UnderTitle = styled.p`
+  margin: 15px;
+  margin-left: 5px;
   font-size: 15px;
-  align-self: center;
-  margin: 5px;
-  text-align: center;
-  color: gray;
 `;
 
 export const OrangeLink = styled.a`

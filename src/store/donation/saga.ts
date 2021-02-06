@@ -2,11 +2,15 @@ import { SagaIterator } from "redux-saga";
 import { call, put, select } from "redux-saga/effects";
 import { Action } from "typescript-fsa";
 import { API_URL } from "../../config/api";
-import { ShareType } from "../../types/Enums";
+import { PaymentMethod, ShareType } from "../../types/Enums";
 import { IServerResponse } from "../../types/Temp";
 import { nextPane, setAnsweredReferral, setLoading } from "../layout/actions";
 import { Donation, State } from "../state";
-import { registerDonationAction, RegisterDonationResponse } from "./actions";
+import {
+  registerDonationAction,
+  RegisterDonationResponse,
+  setPaymentProviderURL,
+} from "./actions";
 
 export function* registerDonation(
   action: Action<undefined>
@@ -18,20 +22,29 @@ export function* registerDonation(
     /**
      * TODO: Ugly solution, in need of refactor
      */
+    const paymentMethod = donation.method ? PaymentMethod[donation.method] : "";
     let data;
     if (donation.shareType === ShareType.STANDARD) {
       data = {
-        donor: donation.donor,
-        method: donation.method,
+        donor: {
+          name: donation.donor?.name,
+          email: donation.donor?.email,
+          ssn: donation.donor?.ssn,
+        },
+        method: paymentMethod,
         recurring: donation.recurring,
-        sum: donation.sum,
+        amount: donation.sum,
       };
     } else {
       data = {
-        donor: donation.donor,
-        method: donation.method,
+        donor: {
+          name: donation.donor?.name,
+          email: donation.donor?.email,
+          ssn: donation.donor?.ssn,
+        },
+        method: paymentMethod,
         recurring: donation.recurring,
-        sum: donation.sum,
+        amount: donation.sum,
         shares: donation.shares,
       };
     }
@@ -54,6 +67,12 @@ export function* registerDonation(
         data.donor?.email === "anon@gieffektivt.no"
           ? false
           : (result.content as RegisterDonationResponse).hasAnsweredReferral
+      )
+    );
+
+    yield put(
+      setPaymentProviderURL(
+        (result.content as RegisterDonationResponse).paymentProviderUrl
       )
     );
 
