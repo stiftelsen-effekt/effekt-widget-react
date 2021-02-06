@@ -1,12 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useForm } from "react-hook-form";
 import Validator from "validator";
 import {
   registerDonationAction,
   setSum,
   setShareType,
-  setDonationValid,
 } from "../../../store/donation/actions";
 import { Pane, PaneContainer } from "../Panes.style";
 import { State } from "../../../store/state";
@@ -20,12 +18,6 @@ import { SumWrapper } from "./DonationPane.style";
 import { SharesSum } from "./SharesSum";
 import { LoadingCircle } from "../../shared/LoadingCircle/LoadingCircle";
 
-interface DonationFormValues {
-  recurring: string;
-  customShare: string;
-  sum: string;
-}
-
 export const DonationPane: React.FC = () => {
   const dispatch = useDispatch();
   const shareType = useSelector((state: State) => state.donation.shareType);
@@ -33,27 +25,6 @@ export const DonationPane: React.FC = () => {
   const donationValid = useSelector((state: State) => state.donation.isValid);
   const donationSum = useSelector((state: State) => state.donation.sum);
   const [loadingAnimation, setLoadingAnimation] = useState(false);
-
-  const {
-    register,
-    watch,
-    errors,
-    handleSubmit,
-  } = useForm<DonationFormValues>();
-  const watchAllFields = watch();
-
-  useEffect(() => {
-    /**
-     * TODO:
-     * Handle errors, set donation valid
-     */
-
-    // eslint-disable-next-line no-console
-    const values = watchAllFields;
-    if (values.sum) {
-      dispatch(setSum(Validator.isInt(values.sum) ? parseInt(values.sum) : 0));
-    }
-  }, [dispatch, errors, watchAllFields]);
 
   function onSubmit() {
     setLoadingAnimation(true);
@@ -64,7 +35,7 @@ export const DonationPane: React.FC = () => {
     <Pane>
       <PaneContainer>
         {!loadingAnimation && (
-          <form onSubmit={handleSubmit(onSubmit)}>
+          <form onSubmit={onSubmit}>
             {(donationMethod === PaymentMethod.VIPPS ||
               donationMethod === PaymentMethod.PAYPAL) && (
               <SumWrapper>
@@ -75,16 +46,11 @@ export const DonationPane: React.FC = () => {
                   type="tel"
                   placeholder="0"
                   defaultValue={donationSum}
-                  innerRef={register({
-                    required: true,
-                    validate: (val) => Validator.isInt(val) && val > 0,
-                  })}
                   onChange={(e) => {
                     if (Validator.isInt(e.target.value) === true) {
-                      dispatch(setDonationValid(true));
-                    }
-                    if (Validator.isInt(e.target.value) === false) {
-                      dispatch(setDonationValid(false));
+                      dispatch(setSum(parseInt(e.target.value)));
+                    } else {
+                      dispatch(setSum(-1));
                     }
                   }}
                 />

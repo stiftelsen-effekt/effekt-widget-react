@@ -1,14 +1,12 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { State } from "../../../../store/state";
-import { Pane, PaneContainer } from "../../Panes.style";
+import { BoldTitle, Pane, PaneContainer, UnderTitle } from "../../Panes.style";
 import {
   InfoText,
   RoundedBorder,
   TextWrapper,
   HorizontalLine,
-  PaymentTitle,
-  UnderTitle,
 } from "./ResultPane.style";
 
 export const ResultPane: React.FC = () => {
@@ -18,7 +16,7 @@ export const ResultPane: React.FC = () => {
   return (
     <Pane>
       <PaneContainer>
-        <PaymentTitle>Tusen takk!</PaymentTitle>
+        <BoldTitle>Tusen takk!</BoldTitle>
         <UnderTitle>Du kan nå overføre til oss</UnderTitle>
         <RoundedBorder>
           <TextWrapper>

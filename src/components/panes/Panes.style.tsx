@@ -22,12 +22,17 @@ export const PaneTitle = styled.p`
   align-self: center;
 `;
 
+export const BoldTitle = styled.p`
+  margin: 0;
+  font-size: 20px;
+  font-weight: bold;
+  margin-left: 5px;
+`;
+
 export const UnderTitle = styled.p`
+  margin: 15px;
+  margin-left: 5px;
   font-size: 15px;
-  align-self: center;
-  margin: 5px;
-  text-align: center;
-  color: gray;
 `;
 
 export const OrangeLink = styled.a`

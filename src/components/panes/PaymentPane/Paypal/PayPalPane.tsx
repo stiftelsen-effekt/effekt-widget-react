@@ -1,7 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { State } from "../../../../store/state";
-import { Pane, PaneContainer } from "../../Panes.style";
+import { BoldTitle, Pane, PaneContainer, UnderTitle } from "../../Panes.style";
 import { PayPalFormWrapper, OrangeSubmit } from "./PayPalPane.style";
 
 export const PaypalPane: React.FC = () => {
@@ -92,6 +92,8 @@ export const PaypalPane: React.FC = () => {
   return (
     <Pane>
       <PaneContainer>
+        <BoldTitle>Tusen takk!</BoldTitle>
+        <UnderTitle>Donasjonen din er klar for betaling</UnderTitle>
         {isRecurring === 0 ? recurringForm : singleForm}
       </PaneContainer>
     </Pane>

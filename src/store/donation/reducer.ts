@@ -118,7 +118,7 @@ export const donationReducer: Reducer<Donation, DonationActionTypes> = (
       state = { ...state, shareType: ShareType.CUSTOM };
       break;
     case SET_DONATION_VALID:
-      state = { ...state, isValid: action.payload.isValid };
+      state = { ...state };
       break;
     default:
       return state;
@@ -145,7 +145,9 @@ export const donationReducer: Reducer<Donation, DonationActionTypes> = (
     return { ...state, isValid: false };
   }
 
-  if (state.sum === 0) {
+  // Sum is checked for being an integer in DonorPane
+  // If it is not an integer, sum is set to -1
+  if (state.sum && state.sum <= 0) {
     return { ...state, isValid: false };
   }
 
