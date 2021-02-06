@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import Validator from "validator";
@@ -18,6 +18,7 @@ import { TextInput } from "../../shared/Input/TextInput";
 import { SumWrapper } from "./DonationPane.style";
 import { SharesSum } from "./SharesSum";
 import { HistoryBar } from "../../shared/HistoryBar/HistoryBar";
+import { LoadingCircle } from "../../shared/LoadingCircle/LoadingCircle";
 
 interface DonationFormValues {
   recurring: string;
@@ -30,6 +31,7 @@ export const DonationPane: React.FC = () => {
   const shareType = useSelector((state: State) => state.donation.shareType);
   const donationMethod = useSelector((state: State) => state.donation.method);
   const donationValid = useSelector((state: State) => state.donation.isValid);
+  const [loadingAnimation, setLoadingAnimation] = useState(false);
 
   const {
     register,
@@ -51,6 +53,7 @@ export const DonationPane: React.FC = () => {
   }, [dispatch, errors, watchAllFields]);
 
   function onSubmit() {
+    setLoadingAnimation(true);
     dispatch(registerDonationAction.started(undefined));
   }
 
@@ -58,46 +61,49 @@ export const DonationPane: React.FC = () => {
     <Pane>
       <HistoryBar />
       <PaneContainer>
-        <form onSubmit={handleSubmit(onSubmit)}>
-          {(donationMethod === PaymentMethod.VIPPS ||
-            donationMethod === PaymentMethod.PAYPAL) && (
-            <SumWrapper>
-              <TextInput
-                label="Sum"
-                denomination="kr"
-                name="sum"
-                type="tel"
-                placeholder="0"
-                innerRef={register({
-                  required: true,
-                  validate: (val) => Validator.isInt(val) && val > 0,
-                })}
-              />
-            </SumWrapper>
-          )}
+        {!loadingAnimation && (
+          <form onSubmit={handleSubmit(onSubmit)}>
+            {(donationMethod === PaymentMethod.VIPPS ||
+              donationMethod === PaymentMethod.PAYPAL) && (
+              <SumWrapper>
+                <TextInput
+                  label="Sum"
+                  denomination="kr"
+                  name="sum"
+                  type="tel"
+                  placeholder="0"
+                  innerRef={register({
+                    required: true,
+                    validate: (val) => Validator.isInt(val) && val > 0,
+                  })}
+                />
+              </SumWrapper>
+            )}
 
-          <RichSelect
-            selected={shareType}
-            onChange={(type: ShareType) => dispatch(setShareType(type))}
-          >
-            <RichSelectOption
-              label="Bruk vår anbefalte fordeling"
-              sublabel="La midlene dine bli brukt der GiveWell mener det trengs"
-              value={ShareType.STANDARD}
-            />
-            <RichSelectOption
-              label="Jeg vil velge fordeling selv"
-              sublabel="Valgt blant våre anbefalte organisasjoner"
-              value={ShareType.CUSTOM}
+            <RichSelect
+              selected={shareType}
+              onChange={(type: ShareType) => dispatch(setShareType(type))}
             >
-              <SharesSelection />
-              <SharesSum />
-            </RichSelectOption>
-          </RichSelect>
-          <NextButton type="submit" disabled={!donationValid}>
-            Neste
-          </NextButton>
-        </form>
+              <RichSelectOption
+                label="Bruk vår anbefalte fordeling"
+                sublabel="La midlene dine bli brukt der GiveWell mener det trengs"
+                value={ShareType.STANDARD}
+              />
+              <RichSelectOption
+                label="Jeg vil velge fordeling selv"
+                sublabel="Valgt blant våre anbefalte organisasjoner"
+                value={ShareType.CUSTOM}
+              >
+                <SharesSelection />
+                <SharesSum />
+              </RichSelectOption>
+            </RichSelect>
+            <NextButton type="submit" disabled={!donationValid}>
+              Neste
+            </NextButton>
+          </form>
+        )}
+        {loadingAnimation && <LoadingCircle>Hey</LoadingCircle>}
       </PaneContainer>
     </Pane>
   );
