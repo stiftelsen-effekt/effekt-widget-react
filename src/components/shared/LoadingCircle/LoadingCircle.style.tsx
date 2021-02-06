@@ -6,6 +6,7 @@ export const LoadingCircleWrapper = styled.div`
   justify-content: center;
   align-items: center;
   height: 100%;
+  overflow: hidden; /* Prevent scrollbar from showing when circle rotates */
 `;
 
 export const SpinningCircle = styled.div`

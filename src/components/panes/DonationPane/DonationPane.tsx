@@ -6,6 +6,7 @@ import {
   registerDonationAction,
   setSum,
   setShareType,
+  setDonationValid,
 } from "../../../store/donation/actions";
 import { Pane, PaneContainer } from "../Panes.style";
 import { State } from "../../../store/state";
@@ -30,6 +31,7 @@ export const DonationPane: React.FC = () => {
   const shareType = useSelector((state: State) => state.donation.shareType);
   const donationMethod = useSelector((state: State) => state.donation.method);
   const donationValid = useSelector((state: State) => state.donation.isValid);
+  const donationSum = useSelector((state: State) => state.donation.sum);
   const [loadingAnimation, setLoadingAnimation] = useState(false);
 
   const {
@@ -46,9 +48,11 @@ export const DonationPane: React.FC = () => {
      * Handle errors, set donation valid
      */
 
+    // eslint-disable-next-line no-console
     const values = watchAllFields;
-    if (values.sum)
+    if (values.sum) {
       dispatch(setSum(Validator.isInt(values.sum) ? parseInt(values.sum) : 0));
+    }
   }, [dispatch, errors, watchAllFields]);
 
   function onSubmit() {
@@ -70,10 +74,19 @@ export const DonationPane: React.FC = () => {
                   name="sum"
                   type="tel"
                   placeholder="0"
+                  defaultValue={donationSum}
                   innerRef={register({
                     required: true,
                     validate: (val) => Validator.isInt(val) && val > 0,
                   })}
+                  onChange={(e) => {
+                    if (Validator.isInt(e.target.value) === true) {
+                      dispatch(setDonationValid(true));
+                    }
+                    if (Validator.isInt(e.target.value) === false) {
+                      dispatch(setDonationValid(false));
+                    }
+                  }}
                 />
               </SumWrapper>
             )}

@@ -18,6 +18,7 @@ import {
   SET_PAYMENT_PROVIDER_URL,
   SET_SHARE_TYPE,
   SELECT_CUSTOM_SHARE,
+  SET_DONATION_VALID,
 } from "./types";
 
 const initialState: Donation = {
@@ -116,13 +117,18 @@ export const donationReducer: Reducer<Donation, DonationActionTypes> = (
     case SELECT_CUSTOM_SHARE:
       state = { ...state, shareType: ShareType.CUSTOM };
       break;
+    case SET_DONATION_VALID:
+      state = { ...state, isValid: action.payload.isValid };
+      break;
     default:
       return state;
   }
 
   /**
-   * Validate donation
+   * Validate donation below
+   * Parts of the validation is done directly inside DonationPane
    */
+
   if (
     state.shareType === ShareType.CUSTOM &&
     state.shares.reduce((acc, curr) => acc + curr.share, 0) !== 100
@@ -136,6 +142,10 @@ export const donationReducer: Reducer<Donation, DonationActionTypes> = (
     }
   });
   if (negativeShare) {
+    return { ...state, isValid: false };
+  }
+
+  if (state.sum === 0) {
     return { ...state, isValid: false };
   }
 
