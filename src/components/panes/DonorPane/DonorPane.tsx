@@ -209,6 +209,10 @@ export const DonorPane: React.FC = () => {
                 <CustomCheckBox
                   label="Jeg godtar"
                   checked={privacyPolicyChecked}
+                  hyperlink={{
+                    text: "personvernerklæringen",
+                    url: "https://gieffektivt.no/samarbeid-drift#personvern",
+                  }}
                 />
                 <HiddenCheckBox
                   name="privacyPolicy"

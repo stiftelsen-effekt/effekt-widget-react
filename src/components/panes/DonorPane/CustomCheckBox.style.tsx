@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { orange20 } from "../../../config/colors";
 
 export const CustomCheckBoxWrapper = styled.span`
   position: absolute;
@@ -67,4 +68,17 @@ export const CheckBoxLabel = styled.p`
   margin: 0;
   padding-left: 35px;
   padding-right: 5px;
+`;
+
+export const OrangeLink = styled.a`
+  color: ${orange20};
+  pointer-events: all;
+
+  &&:visited {
+    color: ${orange20};
+  }
+
+  &&:hover {
+    opacity: 0.5;
+  }
 `;

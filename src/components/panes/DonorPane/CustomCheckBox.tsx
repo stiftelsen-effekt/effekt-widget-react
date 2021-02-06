@@ -7,25 +7,39 @@ import {
   CheckBoxLabelWrapper,
   CheckMark,
   CustomCheckBoxWrapper,
+  OrangeLink,
   StyledInput,
 } from "./CustomCheckBox.style";
 
+interface HyperLink {
+  text: string;
+  url: string;
+}
 interface CheckBoxProps {
   checked: boolean;
   label?: string;
   tooltipText?: string;
+  hyperlink?: HyperLink;
 }
 
 export const CustomCheckBox: React.FC<CheckBoxProps> = ({
   checked,
   label,
   tooltipText,
+  hyperlink,
 }) => (
   <CustomCheckBoxWrapper>
     <StyledInput type="checkbox" tabIndex={-1} checked={checked} readOnly />
     <CheckMark className="checkmark" />
     <CheckBoxLabelWrapper>
-      <CheckBoxLabel>{label}</CheckBoxLabel>
+      <CheckBoxLabel>
+        {`${label} `}
+        {hyperlink && (
+          <OrangeLink target="_blank" href={hyperlink.url}>
+            {hyperlink.text}
+          </OrangeLink>
+        )}
+      </CheckBoxLabel>
       {tooltipText && <ToolTip text={tooltipText} />}
     </CheckBoxLabelWrapper>
   </CustomCheckBoxWrapper>
