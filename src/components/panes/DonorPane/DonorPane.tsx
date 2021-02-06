@@ -15,7 +15,6 @@ import { RichSelectOption } from "../../shared/RichSelect/RichSelectOption";
 import { NextButton } from "../../shared/Buttons/NavigationButtons.style";
 import { nextPane, selectPrivacyPolicy } from "../../../store/layout/actions";
 import { TextInput } from "../../shared/Input/TextInput";
-import { HistoryBar } from "../../shared/HistoryBar/HistoryBar";
 import { CustomCheckBox } from "./CustomCheckBox";
 
 interface DonorFormValues extends DonorInput {
@@ -123,7 +122,6 @@ export const DonorPane: React.FC = () => {
 
   return (
     <Pane>
-      <HistoryBar />
       <DonorForm onSubmit={handleSubmit(paneSubmitted)}>
         <RichSelect
           selected={donorType}

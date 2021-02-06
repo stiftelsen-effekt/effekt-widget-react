@@ -2,12 +2,12 @@ import styled from "styled-components";
 
 export const Pane = styled.div`
   padding: 20px;
+  padding-top: 5px;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
 `;
 
-// TODO: REMOVE
 export const PaneContainer = styled.div`
   align-items: center;
   justify-content: center;

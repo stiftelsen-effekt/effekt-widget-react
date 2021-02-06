@@ -1,7 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { State } from "../../../../store/state";
-import { HistoryBar } from "../../../shared/HistoryBar/HistoryBar";
 import { Pane, PaneContainer } from "../../Panes.style";
 import { PayPalFormWrapper, OrangeSubmit } from "./PayPalPane.style";
 
@@ -93,7 +92,6 @@ export const PaypalPane: React.FC = () => {
   return (
     <Pane>
       <PaneContainer>
-        <HistoryBar />
         {isRecurring === 0 ? recurringForm : singleForm}
       </PaneContainer>
     </Pane>

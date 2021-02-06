@@ -17,7 +17,6 @@ import { SharesSelection } from "./ShareSelection";
 import { TextInput } from "../../shared/Input/TextInput";
 import { SumWrapper } from "./DonationPane.style";
 import { SharesSum } from "./SharesSum";
-import { HistoryBar } from "../../shared/HistoryBar/HistoryBar";
 import { LoadingCircle } from "../../shared/LoadingCircle/LoadingCircle";
 
 interface DonationFormValues {
@@ -59,7 +58,6 @@ export const DonationPane: React.FC = () => {
 
   return (
     <Pane>
-      <HistoryBar />
       <PaneContainer>
         {!loadingAnimation && (
           <form onSubmit={handleSubmit(onSubmit)}>
