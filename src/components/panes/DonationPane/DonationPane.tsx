@@ -45,7 +45,9 @@ export const DonationPane: React.FC = () => {
                   name="sum"
                   type="tel"
                   placeholder="0"
-                  defaultValue={donationSum}
+                  defaultValue={
+                    donationSum && donationSum > 0 ? donationSum : 0
+                  }
                   onChange={(e) => {
                     if (Validator.isInt(e.target.value) === true) {
                       dispatch(setSum(parseInt(e.target.value)));

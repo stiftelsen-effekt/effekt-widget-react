@@ -27,6 +27,7 @@ export const SharesSelection: React.FC = () => {
               key={share.id}
               type="number"
               inputMode="numeric"
+              placeholder="0"
               value={share.share.toString()}
               onChange={(e) => {
                 const newShareState = [...shareState];
