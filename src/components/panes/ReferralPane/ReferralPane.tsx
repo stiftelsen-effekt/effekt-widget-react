@@ -11,63 +11,71 @@ import { submitReferralAction } from "../../../store/referrals/actions";
 import { NextButton } from "../../shared/Buttons/NavigationButtons.style";
 import { nextPane } from "../../../store/layout/actions";
 import { TextInput } from "../../shared/Input/TextInput";
+import { LoadingCircle } from "../../shared/LoadingCircle/LoadingCircle";
 
 export const ReferralPane: React.FC = () => {
   const referrals = useSelector((state: State) => state.referrals.referrals);
   const [otherInputValue, setOtherInputValue] = useState("");
+  const [loadingAnimation, setLoadingAnimation] = useState(false);
   const dispatch = useDispatch();
 
   return (
     <Pane>
       <PaneContainer>
-        <ReferralsWrapper>
-          <PaneTitle>Hvor hørte du om oss?</PaneTitle>
-          <ReferralButtonsWrapper>
-            {referrals?.map((ref) => (
-              <ReferralButton
-                key={ref.id}
+        {!loadingAnimation && (
+          <div>
+            <ReferralsWrapper>
+              <PaneTitle>Hvor hørte du om oss?</PaneTitle>
+              <ReferralButtonsWrapper>
+                {referrals?.map((ref) => (
+                  <ReferralButton
+                    key={ref.id}
+                    onClick={() => {
+                      dispatch(
+                        submitReferralAction.started({
+                          referralID: ref.id,
+                        })
+                      );
+                    }}
+                  >
+                    {ref.name}
+                  </ReferralButton>
+                ))}
+              </ReferralButtonsWrapper>
+              <TextInput
+                label="Annet"
+                value={otherInputValue}
+                type="text"
+                placeholder="Skriv inn"
+                onChange={(e) => setOtherInputValue(e.target.value)}
+              />
+            </ReferralsWrapper>
+            {otherInputValue === "" ? (
+              <NextButton
                 onClick={() => {
+                  dispatch(nextPane());
+                }}
+              >
+                Hopp over
+              </NextButton>
+            ) : (
+              <NextButton
+                onClick={() => {
+                  setLoadingAnimation(true);
                   dispatch(
                     submitReferralAction.started({
-                      referralID: ref.id,
+                      referralID: 10,
+                      comment: otherInputValue,
                     })
                   );
                 }}
               >
-                {ref.name}
-              </ReferralButton>
-            ))}
-          </ReferralButtonsWrapper>
-          <TextInput
-            label="Annet"
-            value={otherInputValue}
-            type="text"
-            placeholder="Skriv inn"
-            onChange={(e) => setOtherInputValue(e.target.value)}
-          />
-        </ReferralsWrapper>
-        {otherInputValue === "" ? (
-          <NextButton
-            onClick={() => {
-              dispatch(nextPane());
-            }}
-          >
-            Hopp over
-          </NextButton>
-        ) : (
-          <NextButton
-            onClick={() => {
-              dispatch(
-                submitReferralAction.started({
-                  referralID: 10,
-                  comment: otherInputValue,
-                })
-              );
-            }}
-          >
-            Send inn
-          </NextButton>
+                Send inn
+              </NextButton>
+            )}
+          </div>
         )}
+        {loadingAnimation && <LoadingCircle>Hey</LoadingCircle>}
       </PaneContainer>
     </Pane>
   );

@@ -5,14 +5,15 @@ export const LoadingCircleWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  height: 100%;
 `;
 
 export const SpinningCircle = styled.div`
   border: 16px solid #f3f3f3;
   border-radius: 50%;
   border-top: 16px solid ${orange20};
-  width: 120px;
-  height: 120px;
+  width: 100px;
+  height: 100px;
   -webkit-animation: spin 2s linear infinite; /* Safari */
   animation: spin 2s linear infinite;
 

@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const Pane = styled.div`
   padding: 20px;
-  padding-top: 5px;
+  padding-top: 10px;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
@@ -11,12 +11,12 @@ export const Pane = styled.div`
 export const PaneContainer = styled.div`
   align-items: center;
   justify-content: center;
-  padding: 10px 0;
+  padding: 0;
 `;
 
 export const PaneTitle = styled.p`
   font-size: 25px;
-  margin-top: 5px;
+  margin-top: 0;
   margin-bottom: 10px;
   margin-left: 5px;
   align-self: center;
