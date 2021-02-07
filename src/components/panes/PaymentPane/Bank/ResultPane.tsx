@@ -2,12 +2,8 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { State } from "../../../../store/state";
 import { BoldTitle, Pane, PaneContainer, UnderTitle } from "../../Panes.style";
-import {
-  InfoText,
-  RoundedBorder,
-  TextWrapper,
-  HorizontalLine,
-} from "./ResultPane.style";
+import { InfoText } from "../PaymentPane.style";
+import { RoundedBorder, TextWrapper, HorizontalLine } from "./ResultPane.style";
 
 export const ResultPane: React.FC = () => {
   const donorEmail = useSelector((state: State) => state.donation.donor?.email);
