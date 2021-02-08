@@ -7,7 +7,6 @@ import { Pane } from "../Panes.style";
 import { DonorInput, State } from "../../../store/state";
 import { submitDonorInfo } from "../../../store/donation/actions";
 import { InputFieldWrapper, HiddenCheckBox } from "../Forms.style";
-import ErrorField from "../../shared/Error/ErrorField";
 import { DonorForm } from "./DonorPane.style";
 import { RichSelect } from "../../shared/RichSelect/RichSelect";
 import { DonorType } from "../../../types/Temp";
@@ -16,6 +15,7 @@ import { NextButton } from "../../shared/Buttons/NavigationButtons.style";
 import { nextPane, selectPrivacyPolicy } from "../../../store/layout/actions";
 import { TextInput } from "../../shared/Input/TextInput";
 import { CustomCheckBox } from "./CustomCheckBox";
+import { ErrorField } from "../../shared/Error/ErrorField";
 
 interface DonorFormValues extends DonorInput {
   privacyPolicy: boolean;
@@ -114,7 +114,7 @@ export const DonorPane: React.FC = () => {
         anonDonor.name ? anonDonor.name : "",
         anonDonor.email ? anonDonor.email : "",
         anonDonor.taxDeduction ? anonDonor.taxDeduction : false,
-        anonDonor.ssn ? anonDonor.ssn : 1,
+        anonDonor.ssn ? anonDonor.ssn : -1,
         anonDonor.newsletter ? anonDonor.newsletter : false
       )
     );
@@ -131,7 +131,6 @@ export const DonorPane: React.FC = () => {
         >
           <RichSelectOption label="Info om deg" value={DonorType.DONOR}>
             <InputFieldWrapper>
-              {nameErrorAnimation && <ErrorField text="Ugyldig navn" />}
               <TextInput
                 name="name"
                 type="text"
@@ -139,7 +138,7 @@ export const DonorPane: React.FC = () => {
                 defaultValue={donor?.name === "Anonym Giver" ? "" : donor?.name}
                 innerRef={register({ required: true, minLength: 3 })}
               />
-              {emailErrorAnimation && <ErrorField text="Ugyldig epost" />}
+              {nameErrorAnimation && <ErrorField text="Ugyldig navn" />}
               <TextInput
                 name="email"
                 type="text"
@@ -155,6 +154,7 @@ export const DonorPane: React.FC = () => {
                   },
                 })}
               />
+              {emailErrorAnimation && <ErrorField text="Ugyldig epost" />}
             </InputFieldWrapper>
             <div>
               <div>
@@ -174,9 +174,6 @@ export const DonorPane: React.FC = () => {
                 />
                 {watchAllFields.taxDeduction && (
                   <InputFieldWrapper>
-                    {ssnErrorAnimation && (
-                      <ErrorField text="Ugyldig personnummer" />
-                    )}
                     <TextInput
                       name="ssn"
                       type="tel"
@@ -200,6 +197,9 @@ export const DonorPane: React.FC = () => {
                         },
                       })}
                     />
+                    {ssnErrorAnimation && (
+                      <ErrorField text="Ugyldig personnummer" />
+                    )}
                   </InputFieldWrapper>
                 )}
               </div>
@@ -216,9 +216,6 @@ export const DonorPane: React.FC = () => {
                 />
               </div>
               <div>
-                {privacyPolicyErrorAnimation && (
-                  <ErrorField text="Du må godta personvernerklæringen" />
-                )}
                 <CustomCheckBox
                   label="Jeg godtar"
                   checked={privacyPolicyChecked}
@@ -233,6 +230,9 @@ export const DonorPane: React.FC = () => {
                   ref={register({ required: true })}
                   onClick={() => setPrivacyPolicyChecked(!privacyPolicyChecked)}
                 />
+                {privacyPolicyErrorAnimation && (
+                  <ErrorField text="Du må godta personvernerklæringen" />
+                )}
               </div>
             </div>
           </RichSelectOption>
