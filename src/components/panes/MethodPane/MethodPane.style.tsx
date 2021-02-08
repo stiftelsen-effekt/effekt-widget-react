@@ -13,6 +13,7 @@ export const TextWrapper = styled.div`
 `;
 
 export const InfoText = styled.p`
+  white-space: normal;
   font-size: 12px;
   line-height: 150%;
   color: ${gray20};

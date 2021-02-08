@@ -15,6 +15,7 @@ export const Wrapper = styled.div`
     font-size: 14px;
     margin: 0;
     margin-bottom: 4px;
+    white-space: normal;
   }
 
   h3 {
@@ -22,6 +23,7 @@ export const Wrapper = styled.div`
     color: ${gray20};
     font-weight: 300;
     margin: 0;
+    white-space: normal;
   }
 `;
 
@@ -42,11 +44,13 @@ export const LabelWrapper = styled.div`
 `;
 
 export const HeaderWrapper = styled.div`
+  width: 90%;
   padding-top: 4px;
   margin-left: 10px;
 `;
 
 export const RadioBall = styled.div`
+  display: block;
   width: 24px;
   height: 24px;
   background: white;
