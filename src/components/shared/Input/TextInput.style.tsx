@@ -88,6 +88,6 @@ export const TextInputField = styled.input`
 export const TextInputLabel = styled.p`
   display: inline-block;
   padding: 5px;
-  padding-left: 10px;
+  padding-left: 15px;
   font-weight: bold;
 `;
