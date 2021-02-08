@@ -30,7 +30,6 @@ export const Widget: React.FC = () => {
         <HistoryBar />
         <Carousel>
           <MethodPane />
-          <PaymentPane />
           <DonorPane />
           <DonationPane />
           {answeredReferral !== true && <ReferralPane />}

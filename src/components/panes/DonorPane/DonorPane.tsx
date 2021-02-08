@@ -95,10 +95,12 @@ export const DonorPane: React.FC = () => {
   const paneSubmitted = (data: DonorFormValues) => {
     dispatch(
       submitDonorInfo(
-        data.name ? data.name : "",
-        data.email ? data.email : "",
+        data.name ? data.name.trim() : "",
+        data.email ? data.email.trim() : "",
         data.taxDeduction ? data.taxDeduction : false,
-        data.taxDeduction && data.ssn ? data.ssn : 1,
+        data.taxDeduction && data.ssn
+          ? parseInt(data.ssn.toString().trim())
+          : 1,
         data.newsletter ? data.newsletter : false
       )
     );
@@ -147,7 +149,10 @@ export const DonorPane: React.FC = () => {
                 }
                 innerRef={register({
                   required: true,
-                  validate: (val) => Validate.isEmail(val),
+                  validate: (val) => {
+                    const trimmed = val.trim();
+                    return Validate.isEmail(trimmed);
+                  },
                 })}
               />
             </InputFieldWrapper>
@@ -181,10 +186,18 @@ export const DonorPane: React.FC = () => {
                       }
                       innerRef={register({
                         required: false,
-                        validate: (val) =>
-                          !watchAllFields.taxDeduction ||
-                          (Validate.isInt(val) &&
-                            Validate.isLength(val, { min: 9, max: 11 })),
+                        validate: (val) => {
+                          const trimmed = val.toString().trim();
+                          // eslint-disable-next-line no-console
+                          console.log(trimmed.length);
+                          // eslint-disable-next-line no-console
+                          console.log(trimmed);
+                          return (
+                            !watchAllFields.taxDeduction ||
+                            (Validate.isInt(trimmed) &&
+                              (trimmed.length === 9 || trimmed.length === 11))
+                          );
+                        },
                       })}
                     />
                   </InputFieldWrapper>
