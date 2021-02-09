@@ -27,22 +27,6 @@ export const Wrapper = styled.div`
   }
 `;
 
-export const LabelWrapper = styled.div`
-  display: flex;
-  flex-direction: row;
-  cursor: pointer;
-  padding: 16px 0;
-  user-select: none;
-
-  &:active {
-    & > div:first-child {
-      &::after {
-        border: 3px solid ${orange15};
-      }
-    }
-  }
-`;
-
 export const HeaderWrapper = styled.div`
   width: 90%;
   padding-top: 4px;
@@ -69,6 +53,31 @@ export const RadioBall = styled.div`
     transition: all 100ms;
     border: ${(props: RadioBallProps) =>
       props.selected ? `7px solid ${orange20}` : `1px solid ${gray18}`};
+  }
+`;
+
+export const LabelWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  cursor: pointer;
+  padding: 16px 0;
+  user-select: none;
+
+  &:focus {
+    outline: none;
+  }
+
+  &:focus > ${RadioBall} {
+    outline: none;
+    box-shadow: 0px 0px 0px 1.5px ${orange15};
+  }
+
+  &:active {
+    & > div:first-child {
+      &::after {
+        border: 3px solid ${orange15};
+      }
+    }
   }
 `;
 
