@@ -206,6 +206,7 @@ export const DonorPane: React.FC = () => {
               <div>
                 <CustomCheckBox
                   label="Jeg ønsker å melde meg på nyhetsbrevet"
+                  mobileLabel="Jeg vil melde meg på nyhetsbrevet"
                   checked={newsletterChecked}
                 />
                 <HiddenCheckBox

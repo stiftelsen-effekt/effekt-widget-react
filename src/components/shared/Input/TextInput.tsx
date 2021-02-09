@@ -2,9 +2,10 @@ import React from "react";
 import { ToolTip } from "../ToolTip/ToolTip";
 import {
   TextInputField,
-  TextInputLabel,
+  ComputerInputLabel,
   TextInputProps,
   TextInputWrapper,
+  MobileInputLabel,
 } from "./TextInput.style";
 
 export const TextInput: React.FC<TextInputProps> = ({
@@ -21,9 +22,20 @@ export const TextInput: React.FC<TextInputProps> = ({
   value,
   onChange,
 }) => {
+  let mobileLabel;
+  // Labels longer than 6 characters are abbreviated
+  if (label && label.length > 6) {
+    mobileLabel =
+      label === "Drift av gieffektivt.no"
+        ? "Egen drift"
+        : label?.match(/[A-Z]/g)?.join("");
+  } else {
+    mobileLabel = label;
+  }
   return (
     <TextInputWrapper denomination={denomination}>
-      {label && <TextInputLabel>{label}</TextInputLabel>}
+      {label && <ComputerInputLabel>{label}</ComputerInputLabel>}
+      {label && <MobileInputLabel>{mobileLabel}</MobileInputLabel>}
       {tooltipText && <ToolTip text={tooltipText} />}
       <TextInputField
         tooltipText={tooltipText}

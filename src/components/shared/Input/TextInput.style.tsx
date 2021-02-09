@@ -85,9 +85,26 @@ export const TextInputField = styled.input`
   }
 `;
 
-export const TextInputLabel = styled.p`
+export const ComputerInputLabel = styled.p`
   display: inline-block;
   padding: 5px;
   padding-left: 15px;
   font-weight: bold;
+
+  @media only screen and (max-width: 385px) {
+    display: none;
+  }
+`;
+
+export const MobileInputLabel = styled.p`
+  margin-top: 13px;
+  font-size: 18px;
+  padding: 5px;
+  padding-left: 15px;
+  font-weight: bold;
+  display: none;
+
+  @media only screen and (max-width: 385px) {
+    display: inline-block;
+  }
 `;

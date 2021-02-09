@@ -8,6 +8,7 @@ import {
   BackArrowSVG,
   HistoryBarWrapper,
   HistoryText,
+  ResponsiveText,
   TextWrapper,
 } from "./HistoryBar.style";
 
@@ -62,7 +63,9 @@ export const HistoryBar: React.FC<HistoryBarProps> = () => {
           <HistoryText>
             {paneNumber > PaneNumber.MethodPane &&
               `${recurringText} / ${methodName}`}
-            {paneNumber > PaneNumber.DonorPane && ` / ${donorName}`}
+            {paneNumber > PaneNumber.DonorPane && (
+              <ResponsiveText>{`/ ${donorName}`}</ResponsiveText>
+            )}
             {paneNumber > PaneNumber.DonationPane && donationSum
               ? ` / ${donationSum}kr`
               : ""}

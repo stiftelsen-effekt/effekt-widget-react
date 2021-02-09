@@ -70,6 +70,24 @@ export const CheckBoxLabel = styled.p`
   padding-right: 5px;
 `;
 
+export const ComputerLabel = styled.p`
+  display: inline-block;
+  margin: 0;
+  font-size: 14px;
+  @media only screen and (max-width: 350px) {
+    display: none;
+  }
+`;
+
+export const MobileLabel = styled.p`
+  display: none;
+  margin: 0;
+  font-size: 12px;
+  @media only screen and (max-width: 350px) {
+    display: inline-block;
+  }
+`;
+
 export const OrangeLink = styled.a`
   color: ${orange20};
   pointer-events: all;
@@ -80,5 +98,10 @@ export const OrangeLink = styled.a`
 
   &&:hover {
     opacity: 0.5;
+  }
+
+  @media only screen and (max-width: 350px) {
+    display: inline-block;
+    font-size: 12px;
   }
 `;

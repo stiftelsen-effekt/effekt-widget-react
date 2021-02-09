@@ -11,6 +11,7 @@ export const ReferralButtonsWrapper = styled.div`
 
 export const ReferralButton = styled.button`
   width: 100%;
+  height: 70px;
   padding-top: 19px;
   padding-bottom: 19px;
   padding-left: 15px;

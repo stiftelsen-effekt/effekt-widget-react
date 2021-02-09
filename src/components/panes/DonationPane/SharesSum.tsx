@@ -8,6 +8,10 @@ const RedFont = styled.p`
   font-style: italic;
   margin-top: 5px;
   margin-left: 7px;
+
+  @media only screen and (max-width: 350px) {
+    font-size: 14px;
+  }
 `;
 
 export const SharesSum: React.FC = () => {

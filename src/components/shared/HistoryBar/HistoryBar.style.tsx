@@ -18,9 +18,20 @@ export const TextWrapper = styled.div`
 `;
 
 export const HistoryText = styled.p`
+  display: inline-block;
   color: black;
   font-weight: 600;
   font-size: 14px;
+  @media only screen and (max-width: 400px) {
+    padding-left: 10px;
+  }
+`;
+
+export const ResponsiveText = styled(HistoryText)`
+  display: inline-block;
+  @media only screen and (max-width: 400px) {
+    display: none;
+  }
 `;
 
 export const BackArrowSVG = styled.svg`
