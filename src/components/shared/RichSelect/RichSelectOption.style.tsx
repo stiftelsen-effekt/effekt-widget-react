@@ -76,14 +76,6 @@ export const LabelWrapper = styled.div`
       box-shadow: 0px 0px 0px 1.5px ${orange15};
     }
   }
-
-  &:active {
-    & > ${RadioBall} {
-      &::after {
-        border: 3px solid ${orange15};
-      }
-    }
-  }
 `;
 
 interface RadioBallProps {

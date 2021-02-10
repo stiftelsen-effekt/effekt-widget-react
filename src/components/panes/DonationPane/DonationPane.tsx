@@ -46,7 +46,7 @@ export const DonationPane: React.FC = () => {
                   type="tel"
                   placeholder="0"
                   defaultValue={
-                    donationSum && donationSum > 0 ? donationSum : 0
+                    donationSum && donationSum > 0 ? donationSum : ""
                   }
                   onChange={(e) => {
                     if (Validator.isInt(e.target.value) === true) {

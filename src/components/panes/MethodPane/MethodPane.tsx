@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-curly-newline */
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -50,17 +51,32 @@ export const MethodPane: React.FC = () => {
       </RecurringSelectWrapper>
       <MethodWrapper>
         <MethodButton
+          tabIndex={0}
           className="bank"
+          onKeyDown={(e) =>
+            (e.key === " " || e.key === "Enter") &&
+            selectMethod(PaymentMethod.BANK)
+          }
           onClick={() => selectMethod(PaymentMethod.BANK)}
         />
         <MethodButton
+          tabIndex={0}
+          onKeyDown={(e) =>
+            (e.key === " " || e.key === "Enter") &&
+            selectMethod(PaymentMethod.VIPPS)
+          }
           className="vipps"
           onClick={() => selectMethod(PaymentMethod.VIPPS)}
         >
           2,99%
         </MethodButton>
         <MethodButton
+          tabIndex={0}
           className="paypal"
+          onKeyDown={(e) =>
+            (e.key === " " || e.key === "Enter") &&
+            selectMethod(PaymentMethod.PAYPAL)
+          }
           onClick={() => selectMethod(PaymentMethod.PAYPAL)}
         >
           1,90%
