@@ -70,7 +70,7 @@ export const CheckBoxLabel = styled.p`
   padding-right: 5px;
 `;
 
-export const ComputerLabel = styled.p`
+export const ComputerLabel = styled.span`
   display: inline-block;
   margin: 0;
   font-size: 14px;
@@ -79,7 +79,7 @@ export const ComputerLabel = styled.p`
   }
 `;
 
-export const MobileLabel = styled.p`
+export const MobileLabel = styled.span`
   display: none;
   margin: 0;
   font-size: 12px;

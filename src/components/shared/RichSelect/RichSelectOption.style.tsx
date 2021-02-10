@@ -52,7 +52,11 @@ export const RadioBall = styled.div`
     border-radius: 50%;
     transition: all 100ms;
     border: ${(props: RadioBallProps) =>
-      props.selected ? `7px solid ${orange20}` : `1px solid ${gray18}`};
+      props.selected
+        ? `7px solid ${orange20}`
+        : `1px solid ${gray18}`} !important;
+    box-shadow: ${(props: RadioBallProps) =>
+      props.selected && "none"} !important;
   }
 `;
 
@@ -68,12 +72,13 @@ export const LabelWrapper = styled.div`
   }
 
   &:focus > ${RadioBall} {
-    outline: none;
-    box-shadow: 0px 0px 0px 1.5px ${orange15};
+    &::after {
+      box-shadow: 0px 0px 0px 1.5px ${orange15};
+    }
   }
 
   &:active {
-    & > div:first-child {
+    & > ${RadioBall} {
       &::after {
         border: 3px solid ${orange15};
       }

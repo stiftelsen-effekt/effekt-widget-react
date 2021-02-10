@@ -27,8 +27,11 @@ export const HistoryText = styled.p`
   }
 `;
 
-export const ResponsiveText = styled(HistoryText)`
+export const ResponsiveText = styled.span`
   display: inline-block;
+  color: black;
+  font-weight: 600;
+  font-size: 14px;
   @media only screen and (max-width: 400px) {
     display: none;
   }
