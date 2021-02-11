@@ -36,7 +36,7 @@ export const CustomCheckBox: React.FC<CheckBoxProps> = ({
 }) => (
   <CustomCheckBoxWrapper>
     <StyledInput type="checkbox" tabIndex={-1} checked={checked} readOnly />
-    <CheckMark className="checkmark" />
+    <CheckMark checked={checked} className="checkmark" />
     <CheckBoxLabelWrapper>
       <CheckBoxLabel>
         <ComputerLabel>

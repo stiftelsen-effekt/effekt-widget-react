@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-curly-newline */
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -6,7 +7,11 @@ import { useForm } from "react-hook-form";
 import { Pane } from "../Panes.style";
 import { DonorInput, State } from "../../../store/state";
 import { submitDonorInfo } from "../../../store/donation/actions";
-import { InputFieldWrapper, HiddenCheckBox } from "../Forms.style";
+import {
+  InputFieldWrapper,
+  HiddenCheckBox,
+  CheckBoxWrapper,
+} from "../Forms.style";
 import { DonorForm } from "./DonorPane.style";
 import { RichSelect } from "../../shared/RichSelect/RichSelect";
 import { DonorType } from "../../../types/Temp";
@@ -158,20 +163,22 @@ export const DonorPane: React.FC = () => {
             </InputFieldWrapper>
             <div>
               <div>
-                <CustomCheckBox
-                  label="Jeg ønsker skattefradrag"
-                  checked={taxDeductionChecked}
-                  tooltipText={tooltipText}
-                />
-                <HiddenCheckBox
-                  name="taxDeduction"
-                  type="checkbox"
-                  ref={register}
-                  onChange={(e) => {
-                    !e.target.checked && clearErrors(["ssn"]);
-                    setTaxDeductionChecked(!taxDeductionChecked);
-                  }}
-                />
+                <CheckBoxWrapper>
+                  <HiddenCheckBox
+                    name="taxDeduction"
+                    type="checkbox"
+                    ref={register}
+                    onChange={(e) => {
+                      !e.target.checked && clearErrors(["ssn"]);
+                      setTaxDeductionChecked(!taxDeductionChecked);
+                    }}
+                  />
+                  <CustomCheckBox
+                    label="Jeg ønsker skattefradrag"
+                    checked={taxDeductionChecked}
+                    tooltipText={tooltipText}
+                  />
+                </CheckBoxWrapper>
                 {watchAllFields.taxDeduction && (
                   <InputFieldWrapper>
                     <TextInput
@@ -203,34 +210,38 @@ export const DonorPane: React.FC = () => {
                   </InputFieldWrapper>
                 )}
               </div>
-              <div>
-                <CustomCheckBox
-                  label="Jeg ønsker å melde meg på nyhetsbrevet"
-                  mobileLabel="Jeg vil melde meg på nyhetsbrevet"
-                  checked={newsletterChecked}
-                />
+              <CheckBoxWrapper>
                 <HiddenCheckBox
                   name="newsletter"
                   type="checkbox"
                   ref={register}
                   onClick={() => setNewsletterChecked(!newsletterChecked)}
                 />
-              </div>
-              <div>
                 <CustomCheckBox
-                  label="Jeg godtar"
-                  checked={privacyPolicyChecked}
-                  hyperlink={{
-                    text: "personvernerklæringen",
-                    url: "https://gieffektivt.no/samarbeid-drift#personvern",
-                  }}
+                  label="Jeg ønsker å melde meg på nyhetsbrevet"
+                  mobileLabel="Jeg vil melde meg på nyhetsbrevet"
+                  checked={newsletterChecked}
                 />
-                <HiddenCheckBox
-                  name="privacyPolicy"
-                  type="checkbox"
-                  ref={register({ required: true })}
-                  onClick={() => setPrivacyPolicyChecked(!privacyPolicyChecked)}
-                />
+              </CheckBoxWrapper>
+              <div>
+                <CheckBoxWrapper>
+                  <HiddenCheckBox
+                    name="privacyPolicy"
+                    type="checkbox"
+                    ref={register({ required: true })}
+                    onClick={() =>
+                      setPrivacyPolicyChecked(!privacyPolicyChecked)
+                    }
+                  />
+                  <CustomCheckBox
+                    label="Jeg godtar"
+                    checked={privacyPolicyChecked}
+                    hyperlink={{
+                      text: "personvernerklæringen",
+                      url: "https://gieffektivt.no/samarbeid-drift#personvern",
+                    }}
+                  />
+                </CheckBoxWrapper>
                 {privacyPolicyErrorAnimation && (
                   <ErrorField text="Du må godta personvernerklæringen" />
                 )}

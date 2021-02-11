@@ -22,6 +22,8 @@ export const CheckMark = styled.span`
   border: 1px solid #b9b9b9;
   border-radius: 5px;
 
+  box-shadow: ${(props: CheckMarkProps) => props.checked && "none"} !important;
+
   &&:after {
     content: "";
     position: absolute;
@@ -105,3 +107,7 @@ export const OrangeLink = styled.a`
     font-size: 12px;
   }
 `;
+
+interface CheckMarkProps {
+  checked: boolean;
+}
