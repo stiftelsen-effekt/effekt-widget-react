@@ -32,7 +32,7 @@ export const ResponsiveText = styled.span`
   color: black;
   font-weight: 600;
   font-size: 14px;
-  @media only screen and (max-width: 400px) {
+  @media only screen and (max-width: 350px) {
     display: none;
   }
 `;
