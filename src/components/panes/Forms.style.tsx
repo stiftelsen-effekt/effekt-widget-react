@@ -24,7 +24,13 @@ export const TextField = styled.input`
   box-sizing: border-box;
 `;
 
+export const CheckBoxWrapper = styled.div`
+  display: block;
+  height: 40px;
+`;
+
 export const HiddenCheckBox = styled.input`
+  position: absolute;
   margin: 5px;
   margin-left: 0;
   width: 100%;
@@ -33,7 +39,7 @@ export const HiddenCheckBox = styled.input`
   &:hover {
     cursor: pointer;
   }
-  &:focus ~ label > span {
+  &:focus + span > span {
     box-shadow: 0px 0px 0px 1.5px ${orange15};
   }
 `;

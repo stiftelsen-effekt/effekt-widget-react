@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { gray20 } from "../../../config/colors";
+import { gray20, orange15 } from "../../../config/colors";
 
 export const MethodWrapper = styled.div`
   display: flex;
@@ -13,6 +13,7 @@ export const TextWrapper = styled.div`
 `;
 
 export const InfoText = styled.p`
+  white-space: normal;
   font-size: 12px;
   line-height: 150%;
   color: ${gray20};
@@ -36,8 +37,9 @@ export const MethodButton = styled.div`
   color: ${gray20};
   position: relative;
 
-  &:active {
-    box-shadow: 0px 1px 2px 0 rgba(0, 0, 0, 0.3);
+  &:focus {
+    outline: none;
+    box-shadow: 0px 0px 0px 1.5px ${orange15};
   }
 
   &.bank {
