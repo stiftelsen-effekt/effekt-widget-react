@@ -25,8 +25,12 @@ export const HistoryBar: React.FC<HistoryBarProps> = () => {
   const donationSum = useSelector((state: State) => state.donation.sum);
   const donorName = useSelector((state: State) => state.donation.donor?.name);
   const dispatch = useDispatch();
-
   let recurringText = "";
+  let donorFirstName = "";
+  if (donorName) {
+    [donorFirstName] = donorName?.split(" ").slice(0, 1);
+  }
+
   if (isRecurring === RecurringDonation.RECURRING) {
     recurringText = "Månedlig";
   } else {
@@ -62,10 +66,12 @@ export const HistoryBar: React.FC<HistoryBarProps> = () => {
         <TextWrapper>
           <HistoryText>
             {paneNumber > PaneNumber.MethodPane &&
-              `${recurringText} / ${methodName}`}
-            {paneNumber > PaneNumber.DonorPane && (
-              <ResponsiveText>{`/ ${donorName}`}</ResponsiveText>
-            )}
+              `${recurringText} / ${methodName} `}
+            {paneNumber > PaneNumber.DonorPane &&
+              donorFirstName &&
+              donorFirstName.length < 18 && (
+                <ResponsiveText>{`/ ${donorFirstName}`}</ResponsiveText>
+              )}
             {paneNumber > PaneNumber.DonationPane && donationSum
               ? ` / ${donationSum}kr`
               : ""}
