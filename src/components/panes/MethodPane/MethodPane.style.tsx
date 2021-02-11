@@ -37,10 +37,6 @@ export const MethodButton = styled.div`
   color: ${gray20};
   position: relative;
 
-  &:active {
-    box-shadow: 0px 1px 2px 0 rgba(0, 0, 0, 0.3);
-  }
-
   &:focus {
     outline: none;
     box-shadow: 0px 0px 0px 1.5px ${orange15};
