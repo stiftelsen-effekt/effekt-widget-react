@@ -1,1 +1,1 @@
-export const API_URL = "https://dev.data.gieffektivt.no";
+export const API_URL = "https://stage.data.gieffektivt.no";
