@@ -8,4 +8,4 @@ steps:
   env: ['CI=true']
   args: ['run', 'build']
 - name: 'gcr.io/cloud-builders/gsutil'
-  args: ['-m', 'cp', '-r', 'build/*', 'gs://effekt-widget-react-dev/']
+  args: ['-m', 'cp', '-r', 'build/*', 'gs://effekt-widget-react-stage/']
