@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { orange15 } from "../../../config/colors";
 
 export const HistoryBarWrapper = styled.div`
   width: 100%;
@@ -44,11 +45,18 @@ export const BackArrowSVG = styled.svg`
   margin-left: 25px;
 
   &:active {
+    box-shadow: none !important;
     outline: none !important;
   }
 
   &:hover {
     opacity: 0.5;
     cursor: pointer;
+  }
+
+  &:focus {
+    outline: none;
+    border-radius: 5px;
+    box-shadow: 0px 0px 0px 2px ${orange15};
   }
 `;
