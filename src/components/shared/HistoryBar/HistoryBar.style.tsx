@@ -43,6 +43,10 @@ export const BackArrowSVG = styled.svg`
   position: absolute;
   margin-left: 25px;
 
+  &:active {
+    outline: none !important;
+  }
+
   &:hover {
     opacity: 0.5;
     cursor: pointer;
