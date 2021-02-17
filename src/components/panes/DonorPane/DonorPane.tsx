@@ -171,6 +171,7 @@ export const DonorPane: React.FC = () => {
                     onChange={(e) => {
                       !e.target.checked && clearErrors(["ssn"]);
                       setTaxDeductionChecked(!taxDeductionChecked);
+                      (document.activeElement as HTMLElement).blur();
                     }}
                   />
                   <CustomCheckBox
@@ -192,10 +193,6 @@ export const DonorPane: React.FC = () => {
                         required: false,
                         validate: (val) => {
                           const trimmed = val.toString().trim();
-                          // eslint-disable-next-line no-console
-                          console.log(trimmed.length);
-                          // eslint-disable-next-line no-console
-                          console.log(trimmed);
                           return (
                             !watchAllFields.taxDeduction ||
                             (Validate.isInt(trimmed) &&
@@ -215,7 +212,10 @@ export const DonorPane: React.FC = () => {
                   name="newsletter"
                   type="checkbox"
                   ref={register}
-                  onClick={() => setNewsletterChecked(!newsletterChecked)}
+                  onChange={() => {
+                    (document.activeElement as HTMLElement).blur();
+                    setNewsletterChecked(!newsletterChecked);
+                  }}
                 />
                 <CustomCheckBox
                   label="Jeg ønsker å melde meg på nyhetsbrevet"
@@ -229,9 +229,10 @@ export const DonorPane: React.FC = () => {
                     name="privacyPolicy"
                     type="checkbox"
                     ref={register({ required: true })}
-                    onClick={() =>
-                      setPrivacyPolicyChecked(!privacyPolicyChecked)
-                    }
+                    onChange={() => {
+                      (document.activeElement as HTMLElement).blur();
+                      setPrivacyPolicyChecked(!privacyPolicyChecked);
+                    }}
                   />
                   <CustomCheckBox
                     label="Jeg godtar"

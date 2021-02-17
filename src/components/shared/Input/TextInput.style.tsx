@@ -92,19 +92,31 @@ export const ComputerInputLabel = styled.p`
   font-weight: bold;
 
   @media only screen and (max-width: 385px) {
+    font-size: 13px;
+    padding-top: 10px;
+  }
+
+  @media only screen and (max-width: 355px) {
     display: none;
   }
 `;
 
 export const MobileInputLabel = styled.p`
-  margin-top: 13px;
-  font-size: 18px;
+  display: inline-block;
   padding: 5px;
   padding-left: 15px;
   font-weight: bold;
+  padding-top: 10px;
+  font-size: 14px;
   display: none;
 
-  @media only screen and (max-width: 385px) {
+  @media only screen and (max-width: 355px) {
     display: inline-block;
+  }
+
+  @media only screen and (max-width: 355px) {
+    display: inline-block;
+    font-size: 11px;
+    padding-top: 12px;
   }
 `;

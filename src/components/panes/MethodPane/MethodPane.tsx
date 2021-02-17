@@ -10,13 +10,13 @@ import { nextPane } from "../../../store/layout/actions";
 import { Pane } from "../Panes.style";
 import {
   MethodWrapper,
-  MethodButton,
   InfoText,
   RecurringSelectWrapper,
 } from "./MethodPane.style";
 import { RichSelect } from "../../shared/RichSelect/RichSelect";
 import { RichSelectOption } from "../../shared/RichSelect/RichSelectOption";
 import { PaymentMethod, RecurringDonation } from "../../../types/Enums";
+import { MethodButton } from "./MethodButton";
 
 export const MethodPane: React.FC = () => {
   const dispatch = useDispatch();
@@ -51,32 +51,20 @@ export const MethodPane: React.FC = () => {
       </RecurringSelectWrapper>
       <MethodWrapper>
         <MethodButton
-          tabIndex={0}
           className="bank"
-          onKeyDown={(e) =>
-            (e.key === " " || e.key === "Enter") &&
-            selectMethod(PaymentMethod.BANK)
-          }
+          onKeyDown={() => selectMethod(PaymentMethod.BANK)}
           onClick={() => selectMethod(PaymentMethod.BANK)}
         />
         <MethodButton
-          tabIndex={0}
-          onKeyDown={(e) =>
-            (e.key === " " || e.key === "Enter") &&
-            selectMethod(PaymentMethod.VIPPS)
-          }
           className="vipps"
+          onKeyDown={() => selectMethod(PaymentMethod.VIPPS)}
           onClick={() => selectMethod(PaymentMethod.VIPPS)}
         >
           2,99%
         </MethodButton>
         <MethodButton
-          tabIndex={0}
           className="paypal"
-          onKeyDown={(e) =>
-            (e.key === " " || e.key === "Enter") &&
-            selectMethod(PaymentMethod.PAYPAL)
-          }
+          onKeyDown={() => selectMethod(PaymentMethod.PAYPAL)}
           onClick={() => selectMethod(PaymentMethod.PAYPAL)}
         >
           1,90%

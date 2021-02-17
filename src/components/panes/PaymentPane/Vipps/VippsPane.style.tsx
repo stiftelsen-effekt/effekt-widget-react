@@ -13,7 +13,7 @@ export const VippsButtonWrapper = styled.div`
 
 export const VippsButton = styled.div`
   width: 250px;
-  height: 100px;
+  height: 70px;
   background-image: url(https://storage.googleapis.com/effekt-widget/assets/vipps/vipps-btn.svg);
   background-size: 95%;
   background-position: center;

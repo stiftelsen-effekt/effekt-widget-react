@@ -4,7 +4,7 @@ import { gray18, orange15 } from "../../../config/colors";
 export const ReferralsWrapper = styled.div``;
 
 export const ReferralButtonsWrapper = styled.div`
-  margin-top: 24px;
+  margin-top: 20px;
   white-space: normal;
   columns: 2;
 `;
@@ -15,7 +15,8 @@ export const ReferralButton = styled.button`
   padding-top: 19px;
   padding-bottom: 19px;
   padding-left: 15px;
-  margin-bottom: 15px;
+  margin-top: 5px;
+  margin-bottom: 10px;
   background-color: white;
   font-size: 14px;
   color: black;
