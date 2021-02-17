@@ -23,8 +23,8 @@ export const TextInput: React.FC<TextInputProps> = ({
   onChange,
 }) => {
   let mobileLabel;
-  // Labels longer than 6 characters are abbreviated
-  if (label && label.length > 6) {
+  // Mobile labels longer than 25 characters are abbreviated
+  if (label && label.length > 25) {
     mobileLabel =
       label === "Drift av gieffektivt.no"
         ? "Egen drift"
