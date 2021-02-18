@@ -42,7 +42,8 @@ export const PaypalPane: React.FC = () => {
         <PayPalButton
           type="button"
           onClick={() => {
-            document.getElementById("recurring-paypal-submit")?.click();
+            document.getElementById("single-paypal-submit")?.click();
+            (document.activeElement as HTMLElement).blur();
           }}
         />
       </PayPalForm>
@@ -86,6 +87,7 @@ export const PaypalPane: React.FC = () => {
           type="button"
           onClick={() => {
             document.getElementById("recurring-paypal-submit")?.click();
+            (document.activeElement as HTMLElement).blur();
           }}
         />
       </PayPalForm>

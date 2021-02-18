@@ -12,6 +12,10 @@ export const PayPalButton = styled.input`
   height: 100px;
   border: none;
 
+  &:active {
+    outline: none;
+  }
+
   &:hover {
     opacity: 0.5;
     cursor: pointer;
