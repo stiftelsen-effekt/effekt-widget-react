@@ -5,15 +5,18 @@ interface MethodButtonProps {
   onClick: () => void;
   onKeyDown: () => void;
   className: string;
+  disabled?: boolean;
 }
 
 export const MethodButton: React.FC<MethodButtonProps> = ({
   onClick,
   onKeyDown,
   className,
+  disabled,
 }) => {
   return (
     <MethodButtonWrapper
+      style={disabled ? { opacity: 0.5 } : {}}
       tabIndex={0}
       className={className}
       onClick={() => {

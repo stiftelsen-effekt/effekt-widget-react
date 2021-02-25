@@ -19,6 +19,10 @@ export const VippsButton = styled.div`
   background-position: center;
   background-repeat: no-repeat;
 
+  &:active {
+    outline: none;
+  }
+
   &:hover {
     opacity: 0.5;
     cursor: pointer;

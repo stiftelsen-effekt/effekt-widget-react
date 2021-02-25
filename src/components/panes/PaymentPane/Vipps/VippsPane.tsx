@@ -20,7 +20,13 @@ export const VippsPane: React.FC = () => {
         <PaneTitle>Tusen takk!</PaneTitle>
         <UnderTitle>Du kan nå overføre til oss</UnderTitle>
         <VippsButtonWrapper>
-          <VippsButton tabIndex={0} onClick={openVipps} />
+          <VippsButton
+            tabIndex={0}
+            onClick={() => {
+              openVipps();
+              (document.activeElement as HTMLElement).blur();
+            }}
+          />
         </VippsButtonWrapper>
         <InfoText>
           Om du er usikker på hvordan du vil fordele dine donasjoner blant våre

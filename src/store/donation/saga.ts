@@ -2,7 +2,7 @@ import { SagaIterator } from "redux-saga";
 import { call, put, select } from "redux-saga/effects";
 import { Action } from "typescript-fsa";
 import { API_URL } from "../../config/api";
-import { PaymentMethod, ShareType } from "../../types/Enums";
+import { ShareType } from "../../types/Enums";
 import { IServerResponse } from "../../types/Temp";
 import { nextPane, setAnsweredReferral, setLoading } from "../layout/actions";
 import { Donation, State } from "../state";
@@ -22,7 +22,7 @@ export function* registerDonation(
     /**
      * TODO: Ugly solution, in need of refactor
      */
-    const paymentMethod = donation.method ? PaymentMethod[donation.method] : "";
+    const paymentMethod = donation.method;
     let data;
     if (donation.shareType === ShareType.STANDARD) {
       data = {
