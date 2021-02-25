@@ -5,7 +5,7 @@ steps:
   env: ['CI=true']
   args: ['run', 'test']
 - name: 'gcr.io/cloud-builders/npm'
-  env: ['CI=true', 'NODE_ENV=test']
+  env: ['CI=true', 'REACT_APP_EFFEKT_API_URL=https://stage.data.gieffektivt.no']
   args: ['run', 'build']
 - name: 'gcr.io/cloud-builders/gsutil'
   args: ['-m', 'cp', '-r', 'build/*', 'gs://effekt-widget-react-stage/']
