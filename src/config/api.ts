@@ -4,7 +4,7 @@ switch (process.env.NODE_ENV) {
   case "development":
     apiUrl = "https://dev.data.gieffektivt.no";
     break;
-  case "stage":
+  case "test":
     apiUrl = "https://stage.data.gieffektivt.no";
     break;
   case "production":
