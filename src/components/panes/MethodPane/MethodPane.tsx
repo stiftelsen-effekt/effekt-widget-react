@@ -22,6 +22,7 @@ import { MethodButton } from "./MethodButton";
 export const MethodPane: React.FC = () => {
   const dispatch = useDispatch();
   const recurring = useSelector((state: State) => state.donation.recurring);
+  // eslint-disable-next-line no-unneeded-ternary
   const [vippsDisabled, setVippsDisabled] = useState(true);
 
   const selectMethod = (method: PaymentMethod) => {
@@ -39,8 +40,8 @@ export const MethodPane: React.FC = () => {
         <RichSelect
           selected={recurring}
           onChange={(value: RecurringDonation) => {
+            setVippsDisabled(value === 0);
             dispatch(setRecurring(value));
-            setVippsDisabled(!vippsDisabled);
           }}
         >
           <RichSelectOption
