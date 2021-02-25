@@ -22,6 +22,8 @@ export const CheckMark = styled.span`
   border: 1px solid #b9b9b9;
   border-radius: 5px;
 
+  box-shadow: ${(props: CheckMarkProps) => props.checked && "none"} !important;
+
   &&:after {
     content: "";
     position: absolute;
@@ -70,6 +72,24 @@ export const CheckBoxLabel = styled.p`
   padding-right: 5px;
 `;
 
+export const ComputerLabel = styled.span`
+  display: inline-block;
+  margin: 0;
+  font-size: 14px;
+  @media only screen and (max-width: 350px) {
+    display: none;
+  }
+`;
+
+export const MobileLabel = styled.span`
+  display: none;
+  margin: 0;
+  font-size: 12px;
+  @media only screen and (max-width: 350px) {
+    display: inline-block;
+  }
+`;
+
 export const OrangeLink = styled.a`
   color: ${orange20};
   pointer-events: all;
@@ -81,4 +101,13 @@ export const OrangeLink = styled.a`
   &&:hover {
     opacity: 0.5;
   }
+
+  @media only screen and (max-width: 350px) {
+    display: inline-block;
+    font-size: 12px;
+  }
 `;
+
+interface CheckMarkProps {
+  checked: boolean;
+}

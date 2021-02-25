@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-curly-newline */
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -9,13 +10,13 @@ import { nextPane } from "../../../store/layout/actions";
 import { Pane } from "../Panes.style";
 import {
   MethodWrapper,
-  MethodButton,
   InfoText,
   RecurringSelectWrapper,
 } from "./MethodPane.style";
 import { RichSelect } from "../../shared/RichSelect/RichSelect";
 import { RichSelectOption } from "../../shared/RichSelect/RichSelectOption";
 import { PaymentMethod, RecurringDonation } from "../../../types/Enums";
+import { MethodButton } from "./MethodButton";
 
 export const MethodPane: React.FC = () => {
   const dispatch = useDispatch();
@@ -51,16 +52,19 @@ export const MethodPane: React.FC = () => {
       <MethodWrapper>
         <MethodButton
           className="bank"
+          onKeyDown={() => selectMethod(PaymentMethod.BANK)}
           onClick={() => selectMethod(PaymentMethod.BANK)}
         />
         <MethodButton
           className="vipps"
+          onKeyDown={() => selectMethod(PaymentMethod.VIPPS)}
           onClick={() => selectMethod(PaymentMethod.VIPPS)}
         >
           2,99%
         </MethodButton>
         <MethodButton
           className="paypal"
+          onKeyDown={() => selectMethod(PaymentMethod.PAYPAL)}
           onClick={() => selectMethod(PaymentMethod.PAYPAL)}
         >
           1,90%

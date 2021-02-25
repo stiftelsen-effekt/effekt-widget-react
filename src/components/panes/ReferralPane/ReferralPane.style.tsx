@@ -1,20 +1,22 @@
 import styled from "styled-components";
-import { gray18 } from "../../../config/colors";
+import { gray18, orange15 } from "../../../config/colors";
 
 export const ReferralsWrapper = styled.div``;
 
 export const ReferralButtonsWrapper = styled.div`
-  margin-top: 24px;
+  margin-top: 20px;
   white-space: normal;
   columns: 2;
 `;
 
 export const ReferralButton = styled.button`
   width: 100%;
+  height: 70px;
   padding-top: 19px;
   padding-bottom: 19px;
   padding-left: 15px;
-  margin-bottom: 15px;
+  margin-top: 5px;
+  margin-bottom: 10px;
   background-color: white;
   font-size: 14px;
   color: black;
@@ -26,6 +28,11 @@ export const ReferralButton = styled.button`
 
   &:hover {
     cursor: pointer;
-    background-color: #f0f0f0;
+    box-shadow: 0px 0px 0px 1.5px ${orange15};
+  }
+
+  &:focus {
+    box-shadow: 0px 0px 0px 1.5px ${orange15};
+    outline: none;
   }
 `;

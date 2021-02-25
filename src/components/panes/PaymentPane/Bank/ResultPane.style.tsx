@@ -26,10 +26,3 @@ export const TextWrapper = styled.div`
   display: flex;
   justify-content: space-between;
 `;
-
-export const InfoText = styled.div`
-  margin-left: 5px;
-  margin-top: 15px;
-  font-size: 15px;
-  white-space: pre-wrap;
-`;

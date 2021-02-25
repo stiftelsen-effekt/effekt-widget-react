@@ -15,6 +15,7 @@ export const Wrapper = styled.div`
     font-size: 14px;
     margin: 0;
     margin-bottom: 4px;
+    white-space: normal;
   }
 
   h3 {
@@ -22,31 +23,18 @@ export const Wrapper = styled.div`
     color: ${gray20};
     font-weight: 300;
     margin: 0;
-  }
-`;
-
-export const LabelWrapper = styled.div`
-  display: flex;
-  flex-direction: row;
-  cursor: pointer;
-  padding: 16px 0;
-  user-select: none;
-
-  &:active {
-    & > div:first-child {
-      &::after {
-        border: 3px solid ${orange15};
-      }
-    }
+    white-space: normal;
   }
 `;
 
 export const HeaderWrapper = styled.div`
+  width: 90%;
   padding-top: 4px;
   margin-left: 10px;
 `;
 
 export const RadioBall = styled.div`
+  display: block;
   width: 24px;
   height: 24px;
   background: white;
@@ -64,7 +52,29 @@ export const RadioBall = styled.div`
     border-radius: 50%;
     transition: all 100ms;
     border: ${(props: RadioBallProps) =>
-      props.selected ? `7px solid ${orange20}` : `1px solid ${gray18}`};
+      props.selected
+        ? `7px solid ${orange20}`
+        : `1px solid ${gray18}`} !important;
+    box-shadow: ${(props: RadioBallProps) =>
+      props.selected && "none"} !important;
+  }
+`;
+
+export const LabelWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  cursor: pointer;
+  padding: 16px 0;
+  user-select: none;
+
+  &:focus {
+    outline: none;
+  }
+
+  &:focus > ${RadioBall} {
+    &::after {
+      box-shadow: 0px 0px 0px 1.5px ${orange15};
+    }
   }
 `;
 

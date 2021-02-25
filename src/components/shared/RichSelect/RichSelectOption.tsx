@@ -1,3 +1,5 @@
+/* eslint-disable react/jsx-curly-newline */
+/* eslint-disable no-console */
 import React from "react";
 import {
   Content,
@@ -26,7 +28,15 @@ export const RichSelectOption: React.FC<OptionProps> = ({
 }) => {
   return (
     <Wrapper>
-      <LabelWrapper onClick={() => select && select(value)}>
+      <LabelWrapper
+        tabIndex={0}
+        role="button"
+        aria-pressed={selected}
+        onKeyDown={(e) =>
+          (e.key === " " || e.key === "Enter") && select && select(value)
+        }
+        onClick={() => select && select(value)}
+      >
         <RadioBall selected={selected} />
         <HeaderWrapper>
           <h2>{label}</h2>

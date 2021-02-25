@@ -20,6 +20,7 @@ export const PaneTitle = styled.p`
   margin-bottom: 10px;
   margin-left: 5px;
   align-self: center;
+  font-family: Arial, Helvetica, sans-serif;
 `;
 
 export const BoldTitle = styled.p`
@@ -33,6 +34,7 @@ export const UnderTitle = styled.p`
   margin: 15px;
   margin-left: 5px;
   font-size: 15px;
+  font-family: Arial, Helvetica, sans-serif;
 `;
 
 export const OrangeLink = styled.a`
