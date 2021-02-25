@@ -22,8 +22,10 @@ import { MethodButton } from "./MethodButton";
 export const MethodPane: React.FC = () => {
   const dispatch = useDispatch();
   const recurring = useSelector((state: State) => state.donation.recurring);
-  // eslint-disable-next-line no-unneeded-ternary
-  const [vippsDisabled, setVippsDisabled] = useState(true);
+  const [vippsDisabled, setVippsDisabled] = useState(
+    // eslint-disable-next-line no-unneeded-ternary
+    recurring === 0 ? true : false
+  );
 
   const selectMethod = (method: PaymentMethod) => {
     dispatch(selectPaymentMethod(method));
