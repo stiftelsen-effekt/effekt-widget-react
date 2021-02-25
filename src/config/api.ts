@@ -1,7 +1,7 @@
 let apiUrl;
 
 switch (process.env.NODE_ENV) {
-  case "dev":
+  case "development":
     apiUrl = "https://dev.data.gieffektivt.no";
     break;
   case "stage":
