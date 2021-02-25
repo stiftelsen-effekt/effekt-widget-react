@@ -10,6 +10,7 @@ import "./Carousel.style.css";
 import { fetchOrganizationsAction } from "../store/layout/actions";
 import { State } from "../store/state";
 import { fetchReferralsAction } from "../store/referrals/actions";
+import { HistoryBar } from "./shared/HistoryBar/HistoryBar";
 import { ProgressBar } from "./shared/ProgressBar/ProgressBar";
 
 export const Widget: React.FC = () => {
@@ -26,6 +27,7 @@ export const Widget: React.FC = () => {
   return (
     <div id="center-widget">
       <div id="widget">
+        <HistoryBar />
         <Carousel>
           <MethodPane />
           <DonorPane />

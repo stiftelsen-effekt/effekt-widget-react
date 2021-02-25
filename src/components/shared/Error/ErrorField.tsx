@@ -1,12 +1,11 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-/* eslint-disable react/destructuring-assignment */
 import React from "react";
 import styled from "styled-components";
 
 export const ErrorWrapper = styled.div`
   position: relative;
-  left: 10px;
+  left: 8px;
+  margin-top: 0px;
+  margin-bottom: 5px;
 `;
 
 export const ErrorMessage = styled.div`
@@ -18,7 +17,11 @@ export const ErrorMessage = styled.div`
   bottom: 1px;
 `;
 
-export default function ErrorField(props: any) {
+interface Props {
+  text: string;
+}
+
+export const ErrorField: React.FC<Props> = ({ text }) => {
   return (
     <ErrorWrapper>
       <svg
@@ -35,7 +38,7 @@ export default function ErrorField(props: any) {
         <path d="M9 13c0 0.552-0.448 1-1 1s-1-0.448-1-1c0-0.552 0.448-1 1-1s1 0.448 1 1z" />
         <path d="M8 11c-0.552 0-1-0.448-1-1v-3c0-0.552 0.448-1 1-1s1 0.448 1 1v3c0 0.552-0.448 1-1 1z" />
       </svg>
-      <ErrorMessage>{props.text}</ErrorMessage>
+      <ErrorMessage>{text}</ErrorMessage>
     </ErrorWrapper>
   );
-}
+};

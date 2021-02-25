@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { gray20 } from "../../../config/colors";
+import { gray20, orange15 } from "../../../config/colors";
 
 export const NextButton = styled.button`
   height: 45px;
@@ -14,6 +14,11 @@ export const NextButton = styled.button`
   width: 100%;
   border: none;
   cursor: pointer;
+
+  &:focus {
+    outline: none;
+    box-shadow: 0px 0px 0px 3px ${orange15};
+  }
 `;
 
 interface NextButtonProps {

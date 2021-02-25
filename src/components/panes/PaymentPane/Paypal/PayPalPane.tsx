@@ -1,9 +1,13 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { State } from "../../../../store/state";
-import { HistoryBar } from "../../../shared/HistoryBar/HistoryBar";
-import { Pane, PaneContainer } from "../../Panes.style";
-import { PayPalFormWrapper, OrangeSubmit } from "./PayPalPane.style";
+import { Pane, PaneContainer, PaneTitle, UnderTitle } from "../../Panes.style";
+import { InfoText } from "../PaymentPane.style";
+import {
+  PayPalButton,
+  PayPalForm,
+  PayPalFormWrapper,
+} from "./PayPalPane.style";
 
 export const PaypalPane: React.FC = () => {
   const isRecurring = useSelector((state: State) => state.donation.recurring);
@@ -12,7 +16,7 @@ export const PaypalPane: React.FC = () => {
 
   const singleForm = (
     <PayPalFormWrapper>
-      <form
+      <PayPalForm
         action="https://www.paypal.com/cgi-bin/webscr"
         method="post"
         target="_blank"
@@ -35,20 +39,19 @@ export const PaypalPane: React.FC = () => {
           style={{ display: "none" }}
         />
 
-        <OrangeSubmit
+        <PayPalButton
           type="button"
-          value="Gå til PayPal"
           onClick={() => {
-            document.getElementById("single-paypal-submit")?.click();
+            document.getElementById("recurring-paypal-submit")?.click();
           }}
         />
-      </form>
+      </PayPalForm>
     </PayPalFormWrapper>
   );
 
   const recurringForm = (
     <PayPalFormWrapper>
-      <form
+      <PayPalForm
         action="https://www.paypal.com/cgi-bin/webscr"
         method="post"
         target="_blank"
@@ -79,22 +82,30 @@ export const PaypalPane: React.FC = () => {
           id="recurring-paypal-submit"
           style={{ display: "none" }}
         />
-        <OrangeSubmit
+        <PayPalButton
           type="button"
-          value="Gå til PayPal"
           onClick={() => {
             document.getElementById("recurring-paypal-submit")?.click();
           }}
         />
-      </form>
+      </PayPalForm>
     </PayPalFormWrapper>
   );
 
   return (
     <Pane>
       <PaneContainer>
-        <HistoryBar />
+        <PaneTitle>Tusen takk!</PaneTitle>
+        <UnderTitle>Du kan nå overføre til oss</UnderTitle>
         {isRecurring === 0 ? recurringForm : singleForm}
+        <InfoText>
+          Om du er usikker på hvordan du vil fordele dine donasjoner blant våre
+          anbefalte organisasjoner, så er vår anbefaling å gi til GiveWell sitt
+          tildelingsfond, som betyr at GiveWell fordeler pengene til de
+          organisasjonene der de til enhver tid ser størst behov. Dette er vår
+          standardfordeling. Uansett hvilken fordeling du velger, så vil pengene
+          gå til noen av verdens mest effektive hjelpeorganisasjoner.
+        </InfoText>
       </PaneContainer>
     </Pane>
   );
