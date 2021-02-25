@@ -24,3 +24,11 @@ export const RecurringSelectWrapper = styled.div`
   padding-top: 10px;
   padding-bottom: 15px;
 `;
+
+export const VippsComingSoon = styled.span`
+  position: absolute;
+  font-style: italic;
+  opacity: 0.5;
+  left: 180px;
+  bottom: 160px;
+`;

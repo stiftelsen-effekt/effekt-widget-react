@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-curly-newline */
-import React from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   selectPaymentMethod,
@@ -12,6 +12,7 @@ import {
   MethodWrapper,
   InfoText,
   RecurringSelectWrapper,
+  VippsComingSoon,
 } from "./MethodPane.style";
 import { RichSelect } from "../../shared/RichSelect/RichSelect";
 import { RichSelectOption } from "../../shared/RichSelect/RichSelectOption";
@@ -21,6 +22,7 @@ import { MethodButton } from "./MethodButton";
 export const MethodPane: React.FC = () => {
   const dispatch = useDispatch();
   const recurring = useSelector((state: State) => state.donation.recurring);
+  const [vippsDisabled, setVippsDisabled] = useState(true);
 
   const selectMethod = (method: PaymentMethod) => {
     dispatch(selectPaymentMethod(method));
@@ -36,7 +38,10 @@ export const MethodPane: React.FC = () => {
       <RecurringSelectWrapper>
         <RichSelect
           selected={recurring}
-          onChange={(value: RecurringDonation) => dispatch(setRecurring(value))}
+          onChange={(value: RecurringDonation) => {
+            dispatch(setRecurring(value));
+            setVippsDisabled(!vippsDisabled);
+          }}
         >
           <RichSelectOption
             label="Gi en fast månedlig sum"
@@ -55,10 +60,14 @@ export const MethodPane: React.FC = () => {
           onKeyDown={() => selectMethod(PaymentMethod.BANK)}
           onClick={() => selectMethod(PaymentMethod.BANK)}
         />
+        {vippsDisabled && (
+          <VippsComingSoon>Kun engangsdonasjoner</VippsComingSoon>
+        )}
         <MethodButton
           className="vipps"
-          onKeyDown={() => selectMethod(PaymentMethod.VIPPS)}
-          onClick={() => selectMethod(PaymentMethod.VIPPS)}
+          disabled={vippsDisabled}
+          onKeyDown={() => !vippsDisabled && selectMethod(PaymentMethod.VIPPS)}
+          onClick={() => !vippsDisabled && selectMethod(PaymentMethod.VIPPS)}
         >
           2,99%
         </MethodButton>
