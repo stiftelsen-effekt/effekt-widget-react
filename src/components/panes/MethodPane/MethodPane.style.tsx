@@ -29,6 +29,11 @@ export const VippsComingSoon = styled.span`
   position: absolute;
   font-style: italic;
   opacity: 0.5;
-  left: 180px;
+  left: 175px;
   bottom: 160px;
+  word-wrap: normal;
+  @media only screen and (max-width: 400px) {
+    left: 35px;
+    bottom: 135px;
+  }
 `;
