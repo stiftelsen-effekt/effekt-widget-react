@@ -59,6 +59,7 @@ export const Widget: React.FC = () => {
           Uansett hvilken fordeling du velger, så vil pengene gå til noen av
           verdens mest effektive hjelpeorganisasjoner.
           <br />
+          <br />
           Om du har spørsmål kan du sende oss en e-post til
           <OrangeLink href="mailto:mailto:donasjon@gieffektivt.no">
             {` donasjon@gieffektivt.no`}

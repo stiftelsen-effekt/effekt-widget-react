@@ -5,14 +5,15 @@ export const Paragraph = styled.p`
   font-weight: 300;
   box-sizing: content-box;
   margin-top: 30px;
-  padding: 0;
+  padding: 20px;
   border: 0;
   font-size: 18px;
   line-height: 30px;
   text-align: left;
   font-family: "Roboto";
   color: #020202;
-  width: 700px;
+  max-width: 850px;
+  word-wrap: normal;
 `;
 
 export const OrangeLink = styled.a`
