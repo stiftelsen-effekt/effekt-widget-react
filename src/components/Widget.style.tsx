@@ -14,6 +14,9 @@ export const Paragraph = styled.p`
   color: #020202;
   max-width: 850px;
   word-wrap: normal;
+  @media only screen and (max-width: 410px) {
+    font-size: 12px;
+  }
 `;
 
 export const OrangeLink = styled.a`
