@@ -35,6 +35,7 @@
     "validator": "^13.1.17"
   },
   "devDependencies": {
+    "cypress-react-selector": "^2.3.6",
     "eslint-config-airbnb-typescript": "^11.4.0",
     "eslint-config-prettier": "^6.14.0",
     "eslint-plugin-import": "^2.22.1",
