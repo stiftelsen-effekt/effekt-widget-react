@@ -15,7 +15,7 @@ export const Paragraph = styled.p`
   width: 700px;
 `;
 
-export const EmailLink = styled.a`
+export const OrangeLink = styled.a`
   color: #fb8f29;
   text-decoration: none;
 `;
