@@ -15,7 +15,15 @@ export const Paragraph = styled.p`
   max-width: 850px;
   word-wrap: normal;
   @media only screen and (max-width: 410px) {
-    font-size: 12px;
+    margin-top: 10px;
+    font-size: 16px;
+    line-height: 20px;
+  }
+
+  @media only screen and (max-width: 350px) {
+    margin-top: 10px;
+    font-size: 14px;
+    line-height: 18px;
   }
 `;
 
