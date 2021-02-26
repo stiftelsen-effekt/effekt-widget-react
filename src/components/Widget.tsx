@@ -8,17 +8,20 @@ import { ReferralPane } from "./panes/ReferralPane/ReferralPane";
 import { Carousel } from "./Carousel";
 import "./Carousel.style.css";
 import { fetchOrganizationsAction } from "../store/layout/actions";
-import { State } from "../store/state";
+import { PaneNumber, State } from "../store/state";
 import { fetchReferralsAction } from "../store/referrals/actions";
 import { HistoryBar } from "./shared/HistoryBar/HistoryBar";
 import { ProgressBar } from "./shared/ProgressBar/ProgressBar";
-import { EmailLink, Paragraph } from "./Widget.style";
+import { OrangeLink, Paragraph } from "./Widget.style";
+import { ShareType } from "../types/Enums";
 
 export const Widget: React.FC = () => {
   const dispatch = useDispatch();
   const answeredReferral = useSelector(
     (state: State) => state.layout.answeredReferral
   );
+  const pane = useSelector((state: State) => state.layout.paneNumber);
+  const shareType = useSelector((state: State) => state.donation.shareType);
 
   useEffect(() => {
     dispatch(fetchOrganizationsAction.started(undefined));
@@ -38,20 +41,32 @@ export const Widget: React.FC = () => {
         </Carousel>
         <ProgressBar />
       </div>
-      <Paragraph>
-        Om du er usikker på hvordan du vil fordele dine donasjoner blant våre
-        anbefalte organisasjoner, så er vår anbefaling å gi til GiveWell sitt
-        tildelingsfond, som betyr at GiveWell fordeler pengene til de
-        organisasjonene der de til enhver tid ser størst behov. Dette er vår
-        standardfordeling. Uansett hvilken fordeling du velger, så vil pengene
-        gå til noen av verdens mest effektive hjelpeorganisasjoner.
-        <br />
-        Om du har spørsmål kan du sende oss en e-post til
-        <EmailLink href="mailto:mailto:donasjon@gieffektivt.no">
-          {` donasjon@gieffektivt.no`}
-        </EmailLink>
-        .
-      </Paragraph>
+      {/** Always show paragraph unless on DonationPane with ShareType.CUSTOM */}
+      {!(
+        pane === PaneNumber.DonationPane && shareType !== ShareType.STANDARD
+      ) && (
+        <Paragraph>
+          Om du er usikker på hvordan du vil fordele dine donasjoner blant våre
+          anbefalte organisasjoner, så er vår anbefaling å gi til
+          <OrangeLink
+            href="https://www.givewell.org/maximum-impact-fund"
+            target="_blank"
+          >
+            {` GiveWell sitt tildelingsfond`}
+          </OrangeLink>
+          , som betyr at GiveWell fordeler pengene til de organisasjonene der de
+          til enhver tid ser størst behov. Dette er vår standardfordeling.
+          Uansett hvilken fordeling du velger, så vil pengene gå til noen av
+          verdens mest effektive hjelpeorganisasjoner.
+          <br />
+          <br />
+          Om du har spørsmål kan du sende oss en e-post til
+          <OrangeLink href="mailto:mailto:donasjon@gieffektivt.no">
+            {` donasjon@gieffektivt.no`}
+          </OrangeLink>
+          .
+        </Paragraph>
+      )}
     </div>
   );
 };
