@@ -12,6 +12,7 @@ import { State } from "../store/state";
 import { fetchReferralsAction } from "../store/referrals/actions";
 import { HistoryBar } from "./shared/HistoryBar/HistoryBar";
 import { ProgressBar } from "./shared/ProgressBar/ProgressBar";
+import { EmailLink, Paragraph } from "./Widget.style";
 
 export const Widget: React.FC = () => {
   const dispatch = useDispatch();
@@ -37,6 +38,20 @@ export const Widget: React.FC = () => {
         </Carousel>
         <ProgressBar />
       </div>
+      <Paragraph>
+        Om du er usikker på hvordan du vil fordele dine donasjoner blant våre
+        anbefalte organisasjoner, så er vår anbefaling å gi til GiveWell sitt
+        tildelingsfond, som betyr at GiveWell fordeler pengene til de
+        organisasjonene der de til enhver tid ser størst behov. Dette er vår
+        standardfordeling. Uansett hvilken fordeling du velger, så vil pengene
+        gå til noen av verdens mest effektive hjelpeorganisasjoner.
+        <br />
+        Om du har spørsmål kan du sende oss en e-post til
+        <EmailLink href="mailto:mailto:donasjon@gieffektivt.no">
+          {` donasjon@gieffektivt.no`}
+        </EmailLink>
+        .
+      </Paragraph>
     </div>
   );
 };
