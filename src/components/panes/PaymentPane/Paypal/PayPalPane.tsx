@@ -112,7 +112,7 @@ export const PaypalPane: React.FC = () => {
         {isRecurring === 0 ? recurringForm : singleForm}
         <NextButton
           onClick={() => {
-            window.location.href = "https://gieffektivt.no/";
+            window.location.reload();
           }}
         >
           Tilbake til hovedsiden
