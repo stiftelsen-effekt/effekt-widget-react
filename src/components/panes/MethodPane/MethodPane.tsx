@@ -34,10 +34,7 @@ export const MethodPane: React.FC = () => {
 
   return (
     <Pane>
-      <InfoText>
-        Kostnadene angitt dekkes av oss, slik at 100% av din donasjon kommer
-        frem.
-      </InfoText>
+      <InfoText>Alle transaksjonskostnader dekkes av oss (se under)</InfoText>
       <RecurringSelectWrapper>
         <RichSelect
           selected={recurring}

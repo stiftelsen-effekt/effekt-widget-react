@@ -157,3 +157,9 @@ export const registerDonationAction = actionCreator.async<
   RegisterDonationResponse,
   Error
 >("REGISTER_DONATION");
+
+export const registerBankPendingAction = actionCreator.async<
+  undefined,
+  undefined,
+  Error
+>("REGISTER_BANK_PENDING");

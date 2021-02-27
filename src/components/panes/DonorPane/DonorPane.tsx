@@ -258,7 +258,11 @@ export const DonorPane: React.FC = () => {
           </NextButton>
         ) : null}
         {donorType === DonorType.ANONYMOUS ? (
-          <NextButton onClick={submitAnonymous} disabled={nextDisabled}>
+          <NextButton
+            type="button"
+            onClick={submitAnonymous}
+            disabled={nextDisabled}
+          >
             Neste
           </NextButton>
         ) : null}

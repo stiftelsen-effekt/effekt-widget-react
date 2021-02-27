@@ -1,14 +1,18 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { State } from "../../../../store/state";
+import { NextButton } from "../../../shared/Buttons/NavigationButtons.style";
 import { Pane, PaneContainer, PaneTitle, UnderTitle } from "../../Panes.style";
-import { InfoText } from "../PaymentPane.style";
 import { VippsButton, VippsButtonWrapper } from "./VippsPane.style";
 
 export const VippsPane: React.FC = () => {
   const vippsPaymentURL = useSelector(
     (state: State) => state.donation.paymentProviderURL
   );
+
+  useEffect(() => {
+    window.open(vippsPaymentURL, "_blank");
+  }, []);
 
   function openVipps() {
     window.open(vippsPaymentURL);
@@ -28,14 +32,13 @@ export const VippsPane: React.FC = () => {
             }}
           />
         </VippsButtonWrapper>
-        <InfoText>
-          Om du er usikker på hvordan du vil fordele dine donasjoner blant våre
-          anbefalte organisasjoner, så er vår anbefaling å gi til GiveWell sitt
-          tildelingsfond, som betyr at GiveWell fordeler pengene til de
-          organisasjonene der de til enhver tid ser størst behov. Dette er vår
-          standardfordeling. Uansett hvilken fordeling du velger, så vil pengene
-          gå til noen av verdens mest effektive hjelpeorganisasjoner.
-        </InfoText>
+        <NextButton
+          onClick={() => {
+            window.location.reload();
+          }}
+        >
+          Tilbake til hovedsiden
+        </NextButton>
       </PaneContainer>
     </Pane>
   );
