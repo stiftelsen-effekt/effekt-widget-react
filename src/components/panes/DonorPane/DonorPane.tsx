@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 /* eslint-disable react/jsx-curly-newline */
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 import React, { useEffect, useState } from "react";
@@ -111,7 +110,6 @@ export const DonorPane: React.FC = () => {
       )
     );
     dispatch(selectPrivacyPolicy(watchAllFields.privacyPolicy));
-    console.log("submitDonorRegular");
     dispatch(nextPane());
   };
 
@@ -126,7 +124,6 @@ export const DonorPane: React.FC = () => {
       )
     );
     dispatch(selectPrivacyPolicy(watchAllFields.privacyPolicy));
-    console.log("submitDonorAnon");
     dispatch(nextPane());
   };
 
