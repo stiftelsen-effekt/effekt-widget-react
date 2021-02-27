@@ -16,7 +16,7 @@ const RedFont = styled.p`
 
 export const SharesSum: React.FC = () => {
   const shares = useSelector((state: State) => state.donation.shares);
-  const sum = shares.reduce((acc, curr) => acc + curr.share, 0);
+  const sum = shares.reduce((acc, curr) => acc + curr.split, 0);
 
   if (sum === 100) return null;
 
