@@ -16,7 +16,7 @@ export const MethodButton: React.FC<MethodButtonProps> = ({
 }) => {
   return (
     <MethodButtonWrapper
-      style={disabled ? { opacity: 0.5 } : {}}
+      style={disabled ? { opacity: 0.5, cursor: "auto" } : {}}
       tabIndex={0}
       className={className}
       onClick={() => {

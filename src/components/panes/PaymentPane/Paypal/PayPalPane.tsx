@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { State } from "../../../../store/state";
+import { NextButton } from "../../../shared/Buttons/NavigationButtons.style";
 import { Pane, PaneContainer, PaneTitle, UnderTitle } from "../../Panes.style";
-import { InfoText } from "../PaymentPane.style";
 import {
   PayPalButton,
   PayPalForm,
@@ -13,6 +13,16 @@ export const PaypalPane: React.FC = () => {
   const isRecurring = useSelector((state: State) => state.donation.recurring);
   const donationAmount = useSelector((state: State) => state.donation.sum);
   const donationKID = useSelector((state: State) => state.donation.kid);
+
+  useEffect(() => {
+    if (isRecurring === 0) {
+      document.getElementById("recurring-paypal-submit")?.click();
+      (document.activeElement as HTMLElement).blur();
+    } else {
+      document.getElementById("single-paypal-submit")?.click();
+      (document.activeElement as HTMLElement).blur();
+    }
+  }, []);
 
   const singleForm = (
     <PayPalFormWrapper>
@@ -100,14 +110,13 @@ export const PaypalPane: React.FC = () => {
         <PaneTitle>Tusen takk!</PaneTitle>
         <UnderTitle>Du kan nå overføre til oss</UnderTitle>
         {isRecurring === 0 ? recurringForm : singleForm}
-        <InfoText>
-          Om du er usikker på hvordan du vil fordele dine donasjoner blant våre
-          anbefalte organisasjoner, så er vår anbefaling å gi til GiveWell sitt
-          tildelingsfond, som betyr at GiveWell fordeler pengene til de
-          organisasjonene der de til enhver tid ser størst behov. Dette er vår
-          standardfordeling. Uansett hvilken fordeling du velger, så vil pengene
-          gå til noen av verdens mest effektive hjelpeorganisasjoner.
-        </InfoText>
+        <NextButton
+          onClick={() => {
+            window.location.reload();
+          }}
+        >
+          Tilbake til hovedsiden
+        </NextButton>
       </PaneContainer>
     </Pane>
   );
