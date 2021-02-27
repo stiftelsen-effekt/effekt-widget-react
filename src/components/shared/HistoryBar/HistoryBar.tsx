@@ -44,14 +44,13 @@ export const HistoryBar: React.FC<HistoryBarProps> = () => {
 
   return (
     <HistoryBarWrapper>
-      {paneNumber > PaneNumber.MethodPane &&
-        paneNumber !== PaneNumber.ResultPane && (
-          <BackArrow
-            onClick={() => {
-              dispatch(prevPane());
-            }}
-          />
-        )}
+      {paneNumber > PaneNumber.MethodPane && (
+        <BackArrow
+          onClick={() => {
+            dispatch(prevPane());
+          }}
+        />
+      )}
       {paneNumber > PaneNumber.MethodPane && (
         <TextWrapper>
           <HistoryText>
