@@ -28,7 +28,7 @@ export const SharesSelection: React.FC = () => {
               type="number"
               inputMode="numeric"
               placeholder="0"
-              value={share.share.toString()}
+              value={share.split.toString()}
               onChange={(e) => {
                 const newShareState = [...shareState];
                 const index = newShareState
@@ -36,7 +36,7 @@ export const SharesSelection: React.FC = () => {
                     return s.id;
                   })
                   .indexOf(share.id);
-                newShareState[index].share = Validator.isInt(e.target.value)
+                newShareState[index].split = Validator.isInt(e.target.value)
                   ? parseInt(e.target.value)
                   : 0;
                 dispatch(setShares(newShareState));

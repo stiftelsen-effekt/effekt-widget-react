@@ -72,7 +72,7 @@ export function* registerDonation(
         method: paymentMethod,
         recurring: donation.recurring,
         amount: donation.sum,
-        shares: donation.shares,
+        organizations: donation.shares,
       };
     }
 

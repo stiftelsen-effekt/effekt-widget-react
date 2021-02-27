@@ -50,7 +50,7 @@ export const donationReducer: Reducer<Donation, DonationActionTypes> = (
       shares: action.payload.result.map(
         (org): OrganizationShare => ({
           id: org.id,
-          share: org.standardShare,
+          split: org.standardShare,
         })
       ),
     };
@@ -131,13 +131,13 @@ export const donationReducer: Reducer<Donation, DonationActionTypes> = (
 
   if (
     state.shareType === ShareType.CUSTOM &&
-    state.shares.reduce((acc, curr) => acc + curr.share, 0) !== 100
+    state.shares.reduce((acc, curr) => acc + curr.split, 0) !== 100
   )
     return { ...state, isValid: false };
 
   let negativeShare = false;
   state.shares.forEach((share) => {
-    if (share.share < 0) {
+    if (share.split < 0) {
       negativeShare = true;
     }
   });

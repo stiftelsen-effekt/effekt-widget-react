@@ -14,7 +14,7 @@ export interface IServerResponse<T> {
 
 export interface OrganizationShare {
   id: number;
-  share: number;
+  split: number;
 }
 
 export interface ReferralData {
