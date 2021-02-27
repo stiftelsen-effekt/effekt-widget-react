@@ -70,7 +70,7 @@ export const DonationPane: React.FC = () => {
               />
               <RichSelectOption
                 label="Jeg vil velge fordeling selv"
-                sublabel="Valgt blant våre anbefalte organisasjoner"
+                sublabel="Velg blant våre anbefalte organisasjoner"
                 value={ShareType.CUSTOM}
               >
                 <SharesSelection />

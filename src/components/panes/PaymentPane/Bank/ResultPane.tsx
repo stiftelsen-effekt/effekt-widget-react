@@ -1,6 +1,8 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { State } from "../../../../store/state";
+import { NextButton } from "../../../shared/Buttons/NavigationButtons.style";
+import { OrangeLink } from "../../../Widget.style";
 import { Pane, PaneContainer, PaneTitle, UnderTitle } from "../../Panes.style";
 import { InfoText } from "../PaymentPane.style";
 import { RoundedBorder, TextWrapper, HorizontalLine } from "./ResultPane.style";
@@ -31,7 +33,9 @@ export const ResultPane: React.FC = () => {
         ) : (
           <InfoText>
             {`Hvis du ønsker å donere med samme fordeling senere kan du bruke samme KID-nummer igjen. Dersom du har noen spørsmål eller tilbakemeldinger kan du alltid ta kontakt med oss ved å sende en mail til `}
-            <a href="mailto:donasjon@gieffektivt.no">donasjon@gieffektivt.no</a>
+            <OrangeLink href="mailto:donasjon@gieffektivt.no">
+              donasjon@gieffektivt.no
+            </OrangeLink>
           </InfoText>
         )}
         {recurring === 0 && (
@@ -42,6 +46,13 @@ export const ResultPane: React.FC = () => {
             melding, f.eks. &quot;KID: 12345678&quot;.
           </InfoText>
         )}
+        <NextButton
+          onClick={() => {
+            window.location.href = "https://gieffektivt.no/";
+          }}
+        >
+          Tilbake til hovedsiden
+        </NextButton>
       </PaneContainer>
     </Pane>
   );
