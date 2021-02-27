@@ -162,4 +162,4 @@ export const registerBankPendingAction = actionCreator.async<
   undefined,
   undefined,
   Error
->("REGISTER_BANK_PENDIG");
+>("REGISTER_BANK_PENDING");
