@@ -7,10 +7,41 @@ import { IServerResponse } from "../../types/Temp";
 import { nextPane, setAnsweredReferral, setLoading } from "../layout/actions";
 import { Donation, State } from "../state";
 import {
+  registerBankPendingAction,
   registerDonationAction,
   RegisterDonationResponse,
   setPaymentProviderURL,
 } from "./actions";
+
+export function* registerBankPending(
+  action: Action<undefined>
+): SagaIterator<void> {
+  try {
+    const KID: number = yield select((state: State) => state.donation.kid);
+
+    const request = yield call(fetch, `${API_URL}/donations/bank/pending`, {
+      method: "POST",
+      headers: {
+        Accept: "application/x-www-form-urlencoded",
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      body: `data={"KID":${KID}}`,
+    });
+    const result: IServerResponse<RegisterDonationResponse> = yield call(
+      request.json.bind(request)
+    );
+    if (result.status !== 200) throw new Error(result.content as string);
+
+    yield put(
+      registerDonationAction.done({
+        params: action.payload,
+        result: result.content as RegisterDonationResponse,
+      })
+    );
+  } catch (ex) {
+    // HEY
+  }
+}
 
 export function* registerDonation(
   action: Action<undefined>
@@ -89,4 +120,5 @@ export function* registerDonation(
   }
   yield put(setLoading(false));
   yield put(nextPane());
+  yield put(registerBankPendingAction.started(undefined));
 }
