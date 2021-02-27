@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable react/jsx-curly-newline */
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 import React, { useEffect, useState } from "react";
@@ -110,6 +111,7 @@ export const DonorPane: React.FC = () => {
       )
     );
     dispatch(selectPrivacyPolicy(watchAllFields.privacyPolicy));
+    console.log("submitDonorRegular");
     dispatch(nextPane());
   };
 
@@ -124,6 +126,7 @@ export const DonorPane: React.FC = () => {
       )
     );
     dispatch(selectPrivacyPolicy(watchAllFields.privacyPolicy));
+    console.log("submitDonorAnon");
     dispatch(nextPane());
   };
 
@@ -258,7 +261,11 @@ export const DonorPane: React.FC = () => {
           </NextButton>
         ) : null}
         {donorType === DonorType.ANONYMOUS ? (
-          <NextButton onClick={submitAnonymous} disabled={nextDisabled}>
+          <NextButton
+            type="button"
+            onClick={submitAnonymous}
+            disabled={nextDisabled}
+          >
             Neste
           </NextButton>
         ) : null}

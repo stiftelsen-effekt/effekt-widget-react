@@ -38,9 +38,7 @@ export const ReferralPane: React.FC = () => {
                       );
                     }}
                   >
-                    {/** TODO: Viktig! Fjern annet fra databasen og legg til en annen referral når vi bytter til den nye widgeten */}
-                    {/** TV referer til annet midlertidig for at det skal se penere ut */}
-                    {ref.name === "Annet" ? "TV" : ref.name}
+                    {ref.name}
                   </ReferralButton>
                 ))}
               </ReferralButtonsWrapper>
