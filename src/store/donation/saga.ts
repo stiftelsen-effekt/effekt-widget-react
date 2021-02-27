@@ -32,12 +32,8 @@ export function* registerBankPending(
     );
     if (result.status !== 200) throw new Error(result.content as string);
 
-    yield put(
-      registerDonationAction.done({
-        params: action.payload,
-        result: result.content as RegisterDonationResponse,
-      })
-    );
+    // eslint-disable-next-line no-console
+    console.log(action);
   } catch (ex) {
     // HEY
   }
