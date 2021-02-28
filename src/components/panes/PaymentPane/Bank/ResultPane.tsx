@@ -25,7 +25,7 @@ export const ResultPane: React.FC = () => {
           <HorizontalLine />
           <TextWrapper>
             <b>KID</b>
-            <span>{kid}</span>
+            <span data-cy="kidNumber">{kid}</span>
           </TextWrapper>
         </RoundedBorder>
         {donorEmail !== "anon@gieffektivt.no" ? (

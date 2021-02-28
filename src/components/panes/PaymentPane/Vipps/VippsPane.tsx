@@ -2,7 +2,9 @@ import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { State } from "../../../../store/state";
 import { NextButton } from "../../../shared/Buttons/NavigationButtons.style";
+import { OrangeLink } from "../../../Widget.style";
 import { Pane, PaneContainer, PaneTitle, UnderTitle } from "../../Panes.style";
+import { InfoText } from "../PaymentPane.style";
 import { VippsButton, VippsButtonWrapper } from "./VippsPane.style";
 
 export const VippsPane: React.FC = () => {
@@ -32,6 +34,13 @@ export const VippsPane: React.FC = () => {
             }}
           />
         </VippsButtonWrapper>
+        <InfoText>
+          {`Ønsker du å se hele donasjonshistorikken din? Gå til `}
+          <OrangeLink href="https://gieffektivt.no/historikk" target="_blank">
+            https://gieffektivt.no/historikk
+          </OrangeLink>
+          {` og tast inn eposten din, så mottar du straks en oversikt over alle dine donasjoner.`}
+        </InfoText>
         <NextButton
           onClick={() => {
             window.location.reload();
