@@ -5,7 +5,7 @@ import { API_URL } from "../../src/config/api";
 
 context("Window", () => {
   before(() => {
-    cy.visit(".build/index.html");
+    cy.visit("./build/index.html");
     cy.waitForReact();
   });
 
