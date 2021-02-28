@@ -1,7 +1,7 @@
 steps:
 - name: 'ubuntu'
   id: Build and run tests
-  env: ['DEBIAN_FRONTEND=noninteractive', 'NODE_ENV=dev']
+  env: ['DEBIAN_FRONTEND=noninteractive', 'REACT_APP_EFFEKT_API_URL=https://dev.data.gieffektivt.no']
   args:
       [   'bash', 
           './ci-test.sh'
