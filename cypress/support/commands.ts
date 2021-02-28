@@ -19,6 +19,7 @@ const pickAnonymous = () => {
   }).click();
 };
 
+// TODO: Use this in a test
 const inputDonorValues = () => {
   cy.react("TextInput", { props: { name: "name" } }).type("Cypress Test");
   cy.react("TextInput", { props: { name: "email" } }).type(

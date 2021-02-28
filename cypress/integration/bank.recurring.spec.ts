@@ -5,13 +5,13 @@ import { API_URL } from "../../src/config/api";
 
 context("Window", () => {
   before(() => {
-    cy.visit("./build/index.html");
+    cy.visit("http://localhost:3000");
     cy.waitForReact();
   });
 
   it("End-2-End recurring bank donation", () => {
     cy.pickMethod("bank");
-    cy.inputDonorValues();
+    cy.pickAnonymous();
 
     cy.intercept("POST", `${API_URL}/donations/register`).as(
       "registerDonation"

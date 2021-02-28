@@ -10,7 +10,7 @@ context("Window", () => {
       "getOrganizations"
     );
 
-    cy.visit("./build/index.html");
+    cy.visit("http://localhost:3000");
     cy.waitForReact();
 
     cy.wait("@getOrganizations")

@@ -5,7 +5,7 @@ import { API_URL } from "../../src/config/api";
 
 context("Window", () => {
   before(() => {
-    cy.visit("./build/index.html");
+    cy.visit("http://localhost:3000");
     cy.waitForReact();
   });
 
@@ -17,7 +17,7 @@ context("Window", () => {
     );
 
     cy.pickMethod("paypal");
-    cy.inputDonorValues();
+    cy.pickAnonymous();
 
     cy.get("button").click();
     cy.wait(500);
