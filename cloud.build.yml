@@ -1,0 +1,8 @@
+steps:
+- name: 'ubuntu'
+  id: Build and run tests
+  env: ['DEBIAN_FRONTEND=noninteractive', 'NODE_ENV=dev']
+  args:
+      [   'bash', 
+          './ci-test.sh'
+      ]
