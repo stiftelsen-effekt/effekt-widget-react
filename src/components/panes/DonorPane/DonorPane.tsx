@@ -165,6 +165,7 @@ export const DonorPane: React.FC = () => {
               <div>
                 <CheckBoxWrapper>
                   <HiddenCheckBox
+                    data-cy="checkboxTaxDeduction"
                     name="taxDeduction"
                     type="checkbox"
                     ref={register}
@@ -209,6 +210,7 @@ export const DonorPane: React.FC = () => {
               </div>
               <CheckBoxWrapper>
                 <HiddenCheckBox
+                  data-cy="checkboxNewsletter"
                   name="newsletter"
                   type="checkbox"
                   ref={register}
@@ -226,6 +228,7 @@ export const DonorPane: React.FC = () => {
               <div>
                 <CheckBoxWrapper>
                   <HiddenCheckBox
+                    data-cy="checkboxPrivacyPolicy"
                     name="privacyPolicy"
                     type="checkbox"
                     ref={register({ required: true })}

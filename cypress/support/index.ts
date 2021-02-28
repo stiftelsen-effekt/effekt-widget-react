@@ -13,6 +13,4 @@
 // https://on.cypress.io/configuration
 // ***********************************************************
 
-import './commands'
-import 'cypress-react-selector';
-
+import "./commands";

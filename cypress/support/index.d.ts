@@ -1,12 +1,11 @@
-// load type definitions that come with Cypress module
-// <reference types="cypress" />
+/// <reference types="cypress" />
 
 declare namespace Cypress {
-    interface Chainable {
-      /**
-       * Custom command to select DOM element by data-cy attribute.
-       * @example cy.dataCy('greeting')
-      */
-      dataCy(value: string): Chainable<Element>
-    }
+  export interface Chainable {
+    getState(): Chainable<Element>;
+    pickRecurring(recurring: boolean): Chainable<Element>;
+    pickMethod(methodName: string): Chainable<Element>;
+    pickAnonymous(): Chainable<Element>;
+    inputDonorValues(): Chainable<Element>;
   }
+}
