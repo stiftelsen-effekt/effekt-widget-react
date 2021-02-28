@@ -33,6 +33,14 @@ export interface Donation extends DonationInput {
   isValid: boolean;
 }
 
+export interface RegisterDonationObject {
+  donor: Donor;
+  method: PaymentMethod;
+  recurring: RecurringDonation;
+  amount: number;
+  organizations?: OrganizationShare[];
+}
+
 export interface DonorInput {
   name?: string;
   email?: string;

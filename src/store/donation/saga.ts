@@ -2,10 +2,10 @@ import { SagaIterator } from "redux-saga";
 import { call, put, select } from "redux-saga/effects";
 import { Action } from "typescript-fsa";
 import { API_URL } from "../../config/api";
-import { ShareType } from "../../types/Enums";
+import { PaymentMethod, ShareType } from "../../types/Enums";
 import { IServerResponse } from "../../types/Temp";
 import { nextPane, setAnsweredReferral, setLoading } from "../layout/actions";
-import { Donation, State } from "../state";
+import { Donation, RegisterDonationObject, State } from "../state";
 import {
   registerBankPendingAction,
   registerDonationAction,
@@ -13,9 +13,8 @@ import {
   setPaymentProviderURL,
 } from "./actions";
 
-export function* registerBankPending(
-  action: Action<undefined>
-): SagaIterator<void> {
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+export function* registerBankPending() {
   try {
     const KID: number = yield select((state: State) => state.donation.kid);
 
@@ -27,15 +26,14 @@ export function* registerBankPending(
       },
       body: `data={"KID":${KID}}`,
     });
-    const result: IServerResponse<RegisterDonationResponse> = yield call(
+
+    const result: IServerResponse<never> = yield call(
       request.json.bind(request)
     );
-    if (result.status !== 200) throw new Error(result.content as string);
 
-    // eslint-disable-next-line no-console
-    console.log(action);
+    if (result.status !== 200) throw new Error(result.content as string);
   } catch (ex) {
-    // HEY
+    console.error(ex);
   }
 }
 
@@ -46,34 +44,19 @@ export function* registerDonation(
   try {
     const donation: Donation = yield select((state: State) => state.donation);
 
-    /**
-     * TODO: Ugly solution, in need of refactor
-     */
-    const paymentMethod = donation.method;
-    let data;
-    if (donation.shareType === ShareType.STANDARD) {
-      data = {
-        donor: {
-          name: donation.donor?.name,
-          email: donation.donor?.email,
-          ssn: donation.donor?.ssn,
-        },
-        method: paymentMethod,
-        recurring: donation.recurring,
-        amount: donation.sum,
-      };
-    } else {
-      data = {
-        donor: {
-          name: donation.donor?.name,
-          email: donation.donor?.email,
-          ssn: donation.donor?.ssn,
-        },
-        method: paymentMethod,
-        recurring: donation.recurring,
-        amount: donation.sum,
-        organizations: donation.shares,
-      };
+    const data: RegisterDonationObject = {
+      donor: {
+        name: donation.donor?.name,
+        email: donation.donor?.email,
+        ssn: donation.donor?.ssn,
+      },
+      method: donation.method ? donation.method : PaymentMethod.BANK,
+      amount: donation.sum ? donation.sum : 0,
+      recurring: donation.recurring,
+    };
+
+    if (donation.shareType === ShareType.CUSTOM) {
+      data.organizations = donation.shares;
     }
 
     const request = yield call(fetch, `${API_URL}/donations/register`, {
@@ -84,6 +67,7 @@ export function* registerDonation(
       },
       body: JSON.stringify(data),
     });
+
     const result: IServerResponse<RegisterDonationResponse> = yield call(
       request.json.bind(request)
     );
@@ -109,12 +93,16 @@ export function* registerDonation(
         result: result.content as RegisterDonationResponse,
       })
     );
+
+    if (donation.method === PaymentMethod.BANK) {
+      yield put(registerBankPendingAction.started(undefined));
+    }
+
+    yield put(setLoading(false));
+    yield put(nextPane());
   } catch (ex) {
     yield put(
       registerDonationAction.failed({ params: action.payload, error: ex })
     );
   }
-  yield put(setLoading(false));
-  yield put(nextPane());
-  yield put(registerBankPendingAction.started(undefined));
 }
