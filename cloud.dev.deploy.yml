@@ -1,12 +1,16 @@
 steps:
+- name: 'ubuntu'
+  id: Build and run tests
+  env: ['DEBIAN_FRONTEND=noninteractive', 'REACT_APP_EFFEKT_API_URL=https://dev.data.gieffektivt.no']
+  args:
+      [   'bash', 
+          './ci-test.sh'
+      ]
 - name: 'gcr.io/cloud-builders/npm'
   args: ['install']
 - name: 'gcr.io/cloud-builders/npm'
   env: ['CI=true']
   args: ['run', 'test']
-- name: 'gcr.io/cloud-builders/npm'
-  env: ['CI=true', 'REACT_APP_EFFEKT_API_URL=https://dev.data.gieffektivt.no']
-  args: ['run', 'cy:run']
 - name: 'gcr.io/cloud-builders/npm'
   env: ['CI=true', 'REACT_APP_EFFEKT_API_URL=https://dev.data.gieffektivt.no']
   args: ['run', 'build']
