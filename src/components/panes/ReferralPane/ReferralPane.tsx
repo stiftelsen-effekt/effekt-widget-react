@@ -52,6 +52,7 @@ export const ReferralPane: React.FC = () => {
             </ReferralsWrapper>
             {otherInputValue === "" ? (
               <NextButton
+                data-cy="nextReferral"
                 onClick={() => {
                   dispatch(nextPane());
                 }}
@@ -60,6 +61,7 @@ export const ReferralPane: React.FC = () => {
               </NextButton>
             ) : (
               <NextButton
+                data-cy="nextReferral"
                 onClick={() => {
                   setLoadingAnimation(true);
                   dispatch(
