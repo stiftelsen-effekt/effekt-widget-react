@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "lib": [
+      "esnext",
+      "dom"
+    ],
+    "types": [
+      "node",
+      "cypress",
+      "cypress-react-selector"
+    ],
+    "baseUrl": "."
+  },
+  "include": [
+    "**/*.ts"
+  ]
+}

@@ -9,7 +9,13 @@ const StyledSVG = styled.svg`
     cursor: pointer;
     opacity: 0.5;
   }
+  &:focus {
+    outline: none;
+  }
   &:hover ~ span {
+    display: block;
+  }
+  &:focus ~ span {
     display: block;
   }
 `;
@@ -17,12 +23,14 @@ const StyledSVG = styled.svg`
 export function ToolTipIcon() {
   return (
     <StyledSVG
+      onPointerOut={() => (document.activeElement as HTMLElement).blur()}
+      tabIndex={0}
       stroke="currentColor"
       fill="currentColor"
       strokeWidth={0}
       viewBox="0 0 16 16"
-      height="13px"
-      width="13px"
+      height="14px"
+      width="14px"
     >
       <path
         fillRule="evenodd"

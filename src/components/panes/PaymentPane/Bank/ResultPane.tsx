@@ -25,11 +25,11 @@ export const ResultPane: React.FC = () => {
           <HorizontalLine />
           <TextWrapper>
             <b>KID</b>
-            <span>{kid}</span>
+            <span data-cy="kidNumber">{kid}</span>
           </TextWrapper>
         </RoundedBorder>
         {donorEmail !== "anon@gieffektivt.no" ? (
-          <InfoText>{`Vi har også sendt en mail til ${donorEmail} med informasjon om din donasjon. Sjekk søppelpost-mappen om du ikke har mottatt eposten i løpet av noen timer.`}</InfoText>
+          <InfoText>{`Vi har også sendt en mail til ${donorEmail} med informasjon om din donasjon. Sjekk søppelpost-mappen om du ikke har mottatt eposten i løpet av noen minutter.`}</InfoText>
         ) : (
           <InfoText>
             {`Hvis du ønsker å donere med samme fordeling senere kan du bruke samme KID-nummer igjen. Dersom du har noen spørsmål eller tilbakemeldinger kan du alltid ta kontakt med oss ved å sende en mail til `}

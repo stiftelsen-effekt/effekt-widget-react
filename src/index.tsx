@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
@@ -39,6 +40,12 @@ ReactDOM.render(
   </React.StrictMode>,
   document.getElementById("root")
 );
+
+// @ts-ignore
+if (window.Cypress) {
+  // @ts-ignore
+  window.store = store;
+}
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
