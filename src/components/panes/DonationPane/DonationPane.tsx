@@ -27,15 +27,19 @@ export const DonationPane: React.FC = () => {
   const [loadingAnimation, setLoadingAnimation] = useState(false);
 
   function onSubmit() {
-    setLoadingAnimation(true);
-    dispatch(registerDonationAction.started(undefined));
+    if (donationSum && donationSum > 0) {
+      setLoadingAnimation(true);
+      dispatch(registerDonationAction.started(undefined));
+    } else {
+      dispatch(setSum(-1));
+    }
   }
 
   return (
     <Pane>
       <PaneContainer>
         {!loadingAnimation && (
-          <form onSubmit={onSubmit}>
+          <form>
             {(donationMethod === PaymentMethod.VIPPS ||
               donationMethod === PaymentMethod.PAYPAL) && (
               <SumWrapper>
@@ -49,7 +53,10 @@ export const DonationPane: React.FC = () => {
                     donationSum && donationSum > 0 ? donationSum : ""
                   }
                   onChange={(e) => {
-                    if (Validator.isInt(e.target.value) === true) {
+                    if (
+                      Validator.isInt(e.target.value) === true &&
+                      parseInt(e.target.value) > 0
+                    ) {
                       dispatch(setSum(parseInt(e.target.value)));
                     } else {
                       dispatch(setSum(-1));
@@ -77,7 +84,11 @@ export const DonationPane: React.FC = () => {
                 <SharesSum />
               </RichSelectOption>
             </RichSelect>
-            <NextButton type="submit" disabled={!donationValid}>
+            <NextButton
+              type="button"
+              onClick={() => onSubmit()}
+              disabled={!donationValid}
+            >
               Neste
             </NextButton>
           </form>
