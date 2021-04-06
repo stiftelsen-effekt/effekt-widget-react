@@ -32,10 +32,7 @@ export const DonationPane: React.FC = () => {
   }, []);
 
   function onSubmit() {
-    if (
-      donationMethod === PaymentMethod.BANK ||
-      (donationSum && donationSum > 0)
-    ) {
+    if (donationSum && donationSum > 0) {
       setLoadingAnimation(true);
       dispatch(registerDonationAction.started(undefined));
     } else {
