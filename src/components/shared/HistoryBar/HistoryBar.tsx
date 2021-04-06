@@ -61,7 +61,9 @@ export const HistoryBar: React.FC<HistoryBarProps> = () => {
               donorFirstName.length < 18 && (
                 <ResponsiveText>{`/ ${donorFirstName}`}</ResponsiveText>
               )}
-            {paneNumber > PaneNumber.DonationPane && donationSum
+            {paneNumber > PaneNumber.DonationPane &&
+            donationSum &&
+            PaymentMethod.BANK !== methodEnum
               ? ` / ${donationSum}kr`
               : ""}
           </HistoryText>

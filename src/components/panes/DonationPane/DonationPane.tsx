@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Validator from "validator";
 import {
@@ -26,8 +26,16 @@ export const DonationPane: React.FC = () => {
   const donationSum = useSelector((state: State) => state.donation.sum);
   const [loadingAnimation, setLoadingAnimation] = useState(false);
 
+  useEffect(() => {
+    if (donationMethod === PaymentMethod.BANK) dispatch(setSum(1));
+    else dispatch(setSum(0));
+  }, []);
+
   function onSubmit() {
-    if (donationSum && donationSum > 0) {
+    if (
+      donationMethod === PaymentMethod.BANK ||
+      (donationSum && donationSum > 0)
+    ) {
       setLoadingAnimation(true);
       dispatch(registerDonationAction.started(undefined));
     } else {
@@ -50,7 +58,7 @@ export const DonationPane: React.FC = () => {
                   type="tel"
                   placeholder="0"
                   defaultValue={
-                    donationSum && donationSum > 0 ? donationSum : ""
+                    donationSum && donationSum > 1 ? donationSum : ""
                   }
                   onChange={(e) => {
                     if (
