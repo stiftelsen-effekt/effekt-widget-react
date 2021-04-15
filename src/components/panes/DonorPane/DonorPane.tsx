@@ -134,7 +134,7 @@ export const DonorPane: React.FC = () => {
           selected={donorType}
           onChange={(type: DonorType) => setDonorType(type)}
         >
-          <RichSelectOption label="Info om deg" value={DonorType.DONOR}>
+          <RichSelectOption label="Info om giver" value={DonorType.DONOR}>
             <InputFieldWrapper>
               <TextInput
                 name="name"
@@ -186,7 +186,7 @@ export const DonorPane: React.FC = () => {
                     <TextInput
                       name="ssn"
                       type="tel"
-                      placeholder="Personnummer"
+                      placeholder="Fødselsnummer"
                       defaultValue={
                         donor?.ssn === 12345678910 ? "" : donor?.ssn
                       }
@@ -203,7 +203,7 @@ export const DonorPane: React.FC = () => {
                       })}
                     />
                     {ssnErrorAnimation && (
-                      <ErrorField text="Ugyldig personnummer" />
+                      <ErrorField text="Ugyldig fødselsnummer" />
                     )}
                   </InputFieldWrapper>
                 )}
