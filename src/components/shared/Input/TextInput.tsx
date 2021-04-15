@@ -38,6 +38,7 @@ export const TextInput: React.FC<TextInputProps> = ({
       {label && <MobileInputLabel>{mobileLabel}</MobileInputLabel>}
       {tooltipText && <ToolTip text={tooltipText} />}
       <TextInputField
+        autoComplete={name}
         tooltipText={tooltipText}
         label={label}
         name={name}

@@ -129,7 +129,7 @@ export const DonorPane: React.FC = () => {
 
   return (
     <Pane>
-      <DonorForm onSubmit={handleSubmit(paneSubmitted)}>
+      <DonorForm onSubmit={handleSubmit(paneSubmitted)} autoComplete="on">
         <RichSelect
           selected={donorType}
           onChange={(type: DonorType) => setDonorType(type)}
