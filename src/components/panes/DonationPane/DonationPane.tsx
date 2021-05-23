@@ -45,31 +45,26 @@ export const DonationPane: React.FC = () => {
       <PaneContainer>
         {!loadingAnimation && (
           <form>
-            {(donationMethod === PaymentMethod.VIPPS ||
-              donationMethod === PaymentMethod.PAYPAL) && (
-              <SumWrapper>
-                <TextInput
-                  label="Sum"
-                  denomination="kr"
-                  name="sum"
-                  type="tel"
-                  placeholder="0"
-                  defaultValue={
-                    donationSum && donationSum > 1 ? donationSum : ""
+            <SumWrapper>
+              <TextInput
+                label="Sum"
+                denomination="kr"
+                name="sum"
+                type="tel"
+                placeholder="0"
+                defaultValue={donationSum && donationSum > 1 ? donationSum : ""}
+                onChange={(e) => {
+                  if (
+                    Validator.isInt(e.target.value) === true &&
+                    parseInt(e.target.value) > 0
+                  ) {
+                    dispatch(setSum(parseInt(e.target.value)));
+                  } else {
+                    dispatch(setSum(-1));
                   }
-                  onChange={(e) => {
-                    if (
-                      Validator.isInt(e.target.value) === true &&
-                      parseInt(e.target.value) > 0
-                    ) {
-                      dispatch(setSum(parseInt(e.target.value)));
-                    } else {
-                      dispatch(setSum(-1));
-                    }
-                  }}
-                />
-              </SumWrapper>
-            )}
+                }}
+              />
+            </SumWrapper>
 
             <RichSelect
               selected={shareType}
