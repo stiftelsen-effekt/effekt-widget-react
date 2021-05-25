@@ -42,7 +42,7 @@ export const PaypalPane: React.FC = () => {
         <input
           type="hidden"
           name="notify_url"
-          value="https://api.gieffektivt.no/paypal/ipn"
+          value="https://data.gieffektivt.no/paypal/ipn"
         />
         <input type="hidden" name="custom" value={`${donationKID}`} />
         <input
@@ -81,7 +81,7 @@ export const PaypalPane: React.FC = () => {
         <input
           type="hidden"
           name="notify_url"
-          value="https://api.gieffektivt.no/paypal/ipn"
+          value="https://data.gieffektivt.no/paypal/ipn"
         />
         <input type="hidden" name="custom" value={`${donationKID}`} />
         <input type="hidden" name="a3" value={donationAmount} />
