@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Validator from "validator";
 import {
@@ -8,7 +8,7 @@ import {
 } from "../../../store/donation/actions";
 import { Pane, PaneContainer } from "../Panes.style";
 import { State } from "../../../store/state";
-import { PaymentMethod, ShareType } from "../../../types/Enums";
+import { ShareType } from "../../../types/Enums";
 import { RichSelectOption } from "../../shared/RichSelect/RichSelectOption";
 import { RichSelect } from "../../shared/RichSelect/RichSelect";
 import { NextButton } from "../../shared/Buttons/NavigationButtons.style";
@@ -21,15 +21,9 @@ import { LoadingCircle } from "../../shared/LoadingCircle/LoadingCircle";
 export const DonationPane: React.FC = () => {
   const dispatch = useDispatch();
   const shareType = useSelector((state: State) => state.donation.shareType);
-  const donationMethod = useSelector((state: State) => state.donation.method);
   const donationValid = useSelector((state: State) => state.donation.isValid);
   const donationSum = useSelector((state: State) => state.donation.sum);
   const [loadingAnimation, setLoadingAnimation] = useState(false);
-
-  useEffect(() => {
-    if (donationMethod === PaymentMethod.BANK) dispatch(setSum(1));
-    else dispatch(setSum(0));
-  }, []);
 
   function onSubmit() {
     if (donationSum && donationSum > 0) {
