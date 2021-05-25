@@ -203,7 +203,7 @@ export const DonorPane: React.FC = () => {
                       })}
                     />
                     {ssnErrorAnimation && (
-                      <ErrorField text="Ugyldig fødselsnummer" />
+                      <ErrorField text="Ugyldig fødselsnummer eller org.nr." />
                     )}
                   </InputFieldWrapper>
                 )}
