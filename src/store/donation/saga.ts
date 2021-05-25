@@ -17,6 +17,7 @@ import {
 export function* registerBankPending() {
   try {
     const KID: number = yield select((state: State) => state.donation.kid);
+    const sum: number = yield select((state: State) => state.donation.sum);
 
     const request = yield call(fetch, `${API_URL}/donations/bank/pending`, {
       method: "POST",
@@ -24,7 +25,7 @@ export function* registerBankPending() {
         Accept: "application/x-www-form-urlencoded",
         "Content-Type": "application/x-www-form-urlencoded",
       },
-      body: `data={"KID":${KID}}`,
+      body: `data={"KID":${KID}, "sum":${sum}}`,
     });
 
     const result: IServerResponse<never> = yield call(
