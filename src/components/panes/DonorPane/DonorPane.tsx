@@ -27,7 +27,7 @@ interface DonorFormValues extends DonorInput {
 }
 
 const tooltipText =
-  "Vi trenger ditt fødselsnummer eller organisasjonsnummer for å rapportere skattefradrag til Skatteetaten for at du skal få skattefradrag for donasjonen din.";
+  "Vi trenger ditt fødselsnummer eller organisasjonsnummer så vi kan rapportere til Skatteetaten for skattefradrag på din donasjon.";
 // const tooltipLink = "https://gieffektivt.no/skattefradrag";
 const anonDonor: DonorFormValues = {
   name: "Anonym Giver",
@@ -186,7 +186,7 @@ export const DonorPane: React.FC = () => {
                     <TextInput
                       name="ssn"
                       type="tel"
-                      placeholder="Fødelsnummer eller org.nr."
+                      placeholder="Fødselsnummer eller org.nr."
                       defaultValue={
                         donor?.ssn === 12345678910 ? "" : donor?.ssn
                       }
