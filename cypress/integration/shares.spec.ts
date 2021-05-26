@@ -19,6 +19,7 @@ context("Window", () => {
   });
 
   it("End-2-End shared donation", () => {
+    const randomSum = Math.floor(Math.random() * 1000) + 100;
     cy.intercept("POST", `${API_URL}/donations/register`).as(
       "registerDonation"
     );
@@ -27,6 +28,10 @@ context("Window", () => {
     cy.pickAnonymous();
     cy.get("button").click();
     cy.wait(500);
+
+    cy.react("TextInput", { props: { name: "sum" } }).type(
+      randomSum.toString()
+    );
 
     // DonationPane
     cy.react("RichSelectOption", {
