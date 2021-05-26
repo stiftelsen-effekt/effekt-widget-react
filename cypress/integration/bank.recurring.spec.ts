@@ -10,6 +10,7 @@ context("Window", () => {
   });
 
   it("End-2-End recurring bank donation", () => {
+    const randomSum = Math.floor(Math.random() * 1000) + 100;
     cy.pickMethod("bank");
     cy.pickAnonymous();
 
@@ -19,6 +20,10 @@ context("Window", () => {
 
     cy.get("button").click();
     cy.wait(500);
+
+    cy.react("TextInput", { props: { name: "sum" } }).type(
+      randomSum.toString()
+    );
 
     cy.get("button").click();
     cy.wait("@registerDonation")
