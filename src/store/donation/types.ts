@@ -13,6 +13,7 @@ export const SET_PAYMENT_PROVIDER_URL = "SET_PAYMENT_PROVIDER_URL";
 export const SELECT_CUSTOM_SHARE = "SELECT_CUSTOM_SHARE";
 export const SET_SHARE_TYPE = "SET_SHARE_TYPE";
 export const SET_DONATION_VALID = "SET_DONATION_VALID";
+export const SET_VIPPS_INITIAL_CHARGE = "SET_VIPPS_INITIAL_CHARGE";
 
 interface SelectPaymentMethod {
   type: typeof SELECT_PAYMENT_METHOD;
@@ -102,6 +103,13 @@ interface SetDonationValid {
   };
 }
 
+interface SetVippsInitialCharge {
+  type: typeof SET_VIPPS_INITIAL_CHARGE;
+  payload: {
+    vippsInitialCharge: boolean;
+  };
+}
+
 export type DonationActionTypes =
   | SelectPaymentMethod
   | SelectTaxDeduction
@@ -114,4 +122,5 @@ export type DonationActionTypes =
   | SetPaymentProviderURL
   | SelectCustomShare
   | SetShareType
-  | SetDonationValid;
+  | SetDonationValid
+  | SetVippsInitialCharge;

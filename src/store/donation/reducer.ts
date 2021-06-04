@@ -19,6 +19,7 @@ import {
   SET_SHARE_TYPE,
   SELECT_CUSTOM_SHARE,
   SET_DONATION_VALID,
+  SET_VIPPS_INITIAL_CHARGE,
 } from "./types";
 
 const initialState: Donation = {
@@ -30,6 +31,7 @@ const initialState: Donation = {
   },
   isValid: true,
   shares: [],
+  vippsInitialCharge: true,
 };
 
 /**
@@ -119,6 +121,12 @@ export const donationReducer: Reducer<Donation, DonationActionTypes> = (
       break;
     case SET_DONATION_VALID:
       state = { ...state };
+      break;
+    case SET_VIPPS_INITIAL_CHARGE:
+      state = {
+        ...state,
+        vippsInitialCharge: action.payload.vippsInitialCharge,
+      };
       break;
     default:
       return state;

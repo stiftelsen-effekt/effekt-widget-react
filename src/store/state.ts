@@ -25,6 +25,7 @@ export interface DonationInput {
   recurring: RecurringDonation;
   donor?: Donor;
   shares: OrganizationShare[];
+  vippsInitialCharge: boolean;
 }
 
 export interface Donation extends DonationInput {

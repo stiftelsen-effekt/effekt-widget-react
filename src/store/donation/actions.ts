@@ -13,6 +13,7 @@ import {
   SELECT_CUSTOM_SHARE,
   SET_SHARE_TYPE,
   SET_DONATION_VALID,
+  SET_VIPPS_INITIAL_CHARGE,
 } from "./types";
 import { PaymentMethod, RecurringDonation, ShareType } from "../../types/Enums";
 import { OrganizationShare } from "../../types/Temp";
@@ -137,6 +138,17 @@ export function setDonationValid(isValid: boolean): DonationActionTypes {
     type: SET_DONATION_VALID,
     payload: {
       isValid,
+    },
+  };
+}
+
+export function setVippsInitialCharge(
+  vippsInitialCharge: boolean
+): DonationActionTypes {
+  return {
+    type: SET_VIPPS_INITIAL_CHARGE,
+    payload: {
+      vippsInitialCharge,
     },
   };
 }
