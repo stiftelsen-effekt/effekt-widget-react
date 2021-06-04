@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-curly-newline */
-import React from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setVippsInitialCharge } from "../../../../store/donation/actions";
 import { State } from "../../../../store/state";
@@ -13,6 +13,7 @@ import { VippsButton, VippsButtonWrapper } from "./VippsPane.style";
 
 export const VippsPane: React.FC = () => {
   const dispatch = useDispatch();
+  const [pressedVippsButton, setPressedVippsButton] = useState<boolean>(false);
   const donationState = useSelector((state: State) => state.donation);
   const { vippsInitialCharge } = donationState;
   const { paymentProviderURL } = donationState;
@@ -48,18 +49,22 @@ export const VippsPane: React.FC = () => {
           <VippsButton
             tabIndex={0}
             onClick={() => {
+              // Dispatch register donation
               openVipps();
               (document.activeElement as HTMLElement).blur();
+              setPressedVippsButton(true);
             }}
           />
         </VippsButtonWrapper>
-        <NextButton
-          onClick={() => {
-            window.location.reload();
-          }}
-        >
-          Tilbake til hovedsiden
-        </NextButton>
+        {pressedVippsButton && (
+          <NextButton
+            onClick={() => {
+              window.location.reload();
+            }}
+          >
+            Tilbake til hovedsiden
+          </NextButton>
+        )}
       </PaneContainer>
     </Pane>
   );
