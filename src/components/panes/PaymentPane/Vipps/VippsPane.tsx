@@ -1,7 +1,11 @@
 /* eslint-disable react/jsx-curly-newline */
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setVippsInitialCharge } from "../../../../store/donation/actions";
+import {
+  draftAgreementAction,
+  setVippsAgreement,
+} from "../../../../store/donation/actions";
+import { setLoading } from "../../../../store/layout/actions";
 import { State } from "../../../../store/state";
 import { RecurringDonation } from "../../../../types/Enums";
 import { NextButton } from "../../../shared/Buttons/NavigationButtons.style";
@@ -15,22 +19,22 @@ export const VippsPane: React.FC = () => {
   const dispatch = useDispatch();
   const [pressedVippsButton, setPressedVippsButton] = useState<boolean>(false);
   const donationState = useSelector((state: State) => state.donation);
-  const { vippsInitialCharge } = donationState;
-  const { paymentProviderURL } = donationState;
-  const { recurring } = donationState;
-
-  function openVipps() {
-    window.open(paymentProviderURL);
-  }
+  const { paymentProviderURL, vippsAgreement, recurring } = donationState;
 
   return (
     <Pane>
       <PaneContainer>
         <RichSelect
-          selected={vippsInitialCharge ? 1 : 0}
-          onChange={(initialCharge: number) =>
-            dispatch(setVippsInitialCharge(initialCharge === 1))
-          }
+          selected={vippsAgreement?.initialCharge ? 0 : 1}
+          onChange={(value: number) => {
+            if (vippsAgreement)
+              dispatch(
+                setVippsAgreement({
+                  ...vippsAgreement,
+                  initialCharge: value === 0,
+                })
+              );
+          }}
         >
           <RichSelectOption
             label="Begynn i dag"
@@ -48,10 +52,12 @@ export const VippsPane: React.FC = () => {
         <VippsButtonWrapper>
           <VippsButton
             tabIndex={0}
-            onClick={() => {
-              // Dispatch register donation
-              openVipps();
+            onClick={async () => {
+              setLoading(true);
+              await dispatch(draftAgreementAction.started(undefined));
+              window.open(paymentProviderURL);
               (document.activeElement as HTMLElement).blur();
+              // Stop loading
               setPressedVippsButton(true);
             }}
           />

@@ -1,17 +1,33 @@
 import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { orange20 } from "../../../../../config/colors";
+import { setVippsAgreement } from "../../../../../store/donation/actions";
+import { State } from "../../../../../store/state";
 import { Datebox, DateBoxWrapper, DateText, Wrapper } from "./DatePicker.style";
 import { formatDate, getNewChargeDayResults } from "./dates";
 
 export const DatePicker: React.FC = () => {
+  const dispatch = useDispatch();
   const [selectedChargeDay, setSelectedChargeDay] = useState<number>(1);
   const [nextChargeDate, setNextChargeDate] = useState<Date>();
   const [forcedChargeDate, setForcedChargeDate] = useState<Date | false>(false);
+  const vippsAgreement = useSelector(
+    (state: State) => state.donation.vippsAgreement
+  );
 
   useEffect(() => {
     const results = getNewChargeDayResults(selectedChargeDay);
     setNextChargeDate(results.nextChargeDate);
     setForcedChargeDate(results.forcedChargeDate);
+    if (vippsAgreement && results.forcedChargeDate) {
+      dispatch(
+        setVippsAgreement({
+          ...vippsAgreement,
+          forceChargeDate: results.forcedChargeDate,
+          chargeDay: selectedChargeDay,
+        })
+      );
+    }
   }, [selectedChargeDay]);
 
   const dateBoxes: JSX.Element[] = [];

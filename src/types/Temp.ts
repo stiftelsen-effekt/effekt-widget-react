@@ -28,3 +28,8 @@ export type ReferralType = {
   name: string;
   ordering: number;
 };
+
+export interface DraftAgreementResponse {
+  vippsConfirmationUrl: string;
+  agreementCode: string;
+}
