@@ -20,6 +20,7 @@ import {
   SELECT_CUSTOM_SHARE,
   SET_DONATION_VALID,
   SET_DUE_DAY,
+  SET_VIPPS_AGREEMENT,
 } from "./types";
 
 const initialState: Donation = {
@@ -35,6 +36,9 @@ const initialState: Donation = {
     new Date().getDate() + 5 <= 28
       ? new Date().getDate() + 5
       : new Date().getDate() + 5 - 28,
+  vippsAgreement: {
+    initialCharge: true,
+  },
 };
 
 /**
@@ -127,6 +131,12 @@ export const donationReducer: Reducer<Donation, DonationActionTypes> = (
       break;
     case SET_DONATION_VALID:
       state = { ...state };
+      break;
+    case SET_VIPPS_AGREEMENT:
+      state = {
+        ...state,
+        vippsAgreement: action.payload.vippsAgreement,
+      };
       break;
     default:
       return state;

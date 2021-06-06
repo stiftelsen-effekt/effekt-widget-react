@@ -116,7 +116,7 @@ export const DonationPane: React.FC = () => {
             </NextButton>
           </form>
         )}
-        {loadingAnimation && <LoadingCircle>Hey</LoadingCircle>}
+        {loadingAnimation && <LoadingCircle />}
       </PaneContainer>
     </Pane>
   );

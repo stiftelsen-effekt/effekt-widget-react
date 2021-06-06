@@ -14,9 +14,11 @@ import {
   SET_SHARE_TYPE,
   SET_DONATION_VALID,
   SET_DUE_DAY,
+  SET_VIPPS_AGREEMENT,
 } from "./types";
 import { PaymentMethod, RecurringDonation, ShareType } from "../../types/Enums";
 import { OrganizationShare } from "../../types/Temp";
+import { VippsAgreement } from "../state";
 
 const actionCreator = actionCreatorFactory();
 
@@ -151,6 +153,17 @@ export function setDonationValid(isValid: boolean): DonationActionTypes {
   };
 }
 
+export function setVippsAgreement(
+  vippsAgreement: VippsAgreement
+): DonationActionTypes {
+  return {
+    type: SET_VIPPS_AGREEMENT,
+    payload: {
+      vippsAgreement,
+    },
+  };
+}
+
 /**
  * TODO: Find a place this can live
  */
@@ -161,6 +174,12 @@ export type RegisterDonationResponse = {
   hasAnsweredReferral: boolean;
   paymentProviderUrl: string;
 };
+
+export const draftAgreementAction = actionCreator.async<
+  undefined,
+  undefined,
+  Error
+>("DRAFT_AGREEMENT");
 
 export const registerDonationAction = actionCreator.async<
   undefined,

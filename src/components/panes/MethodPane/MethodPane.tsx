@@ -12,7 +12,6 @@ import {
   MethodWrapper,
   InfoText,
   RecurringSelectWrapper,
-  VippsComingSoon,
 } from "./MethodPane.style";
 import { RichSelect } from "../../shared/RichSelect/RichSelect";
 import { RichSelectOption } from "../../shared/RichSelect/RichSelectOption";
@@ -55,20 +54,10 @@ export const MethodPane: React.FC = () => {
           onKeyDown={() => selectMethod(PaymentMethod.BANK)}
           onClick={() => selectMethod(PaymentMethod.BANK)}
         />
-        {recurring === RecurringDonation.RECURRING && (
-          <VippsComingSoon>Kun engangsdonasjoner</VippsComingSoon>
-        )}
         <MethodButton
           className="vipps"
-          disabled={recurring === RecurringDonation.RECURRING}
-          onKeyDown={() =>
-            recurring === RecurringDonation.NON_RECURRING &&
-            selectMethod(PaymentMethod.VIPPS)
-          }
-          onClick={() =>
-            recurring === RecurringDonation.NON_RECURRING &&
-            selectMethod(PaymentMethod.VIPPS)
-          }
+          onKeyDown={() => selectMethod(PaymentMethod.VIPPS)}
+          onClick={() => selectMethod(PaymentMethod.VIPPS)}
         >
           2,99%
         </MethodButton>
