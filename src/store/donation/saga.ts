@@ -25,8 +25,8 @@ export function* draftVippsAgreement(): SagaIterator<void> {
     const forcedChargeDate: Date = yield select(
       (state: State) => state.donation.vippsAgreement?.forceChargeDate
     );
-    const chargeday: Date = yield select(
-      (state: State) => state.donation.vippsAgreement?.forceChargeDate
+    const chargeDay: Date = yield select(
+      (state: State) => state.donation.vippsAgreement?.chargeDay
     );
     const data = { KID, amount, initialCharge };
 
@@ -53,10 +53,17 @@ export function* draftVippsAgreement(): SagaIterator<void> {
       )
     );
 
-    const { agreementCode } = draftResponse.content as DraftAgreementResponse;
+    // eslint-disable-next-line no-console
+    console.log(draftResponse.content);
 
-    if (chargeday && initialCharge === false) {
-      const body = { agreementCode, chargeday };
+    const {
+      agreementUrlCode,
+    } = draftResponse.content as DraftAgreementResponse;
+
+    if (chargeDay && initialCharge === false) {
+      const body = { agreementCode: agreementUrlCode, chargeDay };
+      // eslint-disable-next-line no-console
+      console.log(body);
 
       const request = yield call(
         fetch,
@@ -75,8 +82,9 @@ export function* draftVippsAgreement(): SagaIterator<void> {
     }
 
     if (forcedChargeDate && initialCharge === false) {
-      const body = { agreementCode, forcedChargeDate };
-
+      const body = { agreementCode: agreementUrlCode, forcedChargeDate };
+      // eslint-disable-next-line no-console
+      console.log(body);
       const request = yield call(
         fetch,
         `${API_URL}/vipps/agreement/forcedcharge`,

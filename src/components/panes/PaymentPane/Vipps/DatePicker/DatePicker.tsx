@@ -19,11 +19,15 @@ export const DatePicker: React.FC = () => {
     const results = getNewChargeDayResults(selectedChargeDay);
     setNextChargeDate(results.nextChargeDate);
     setForcedChargeDate(results.forcedChargeDate);
-    if (vippsAgreement && results.forcedChargeDate) {
+    if (vippsAgreement) {
+      // eslint-disable-next-line no-console
+      console.log(selectedChargeDay);
       dispatch(
         setVippsAgreement({
           ...vippsAgreement,
-          forceChargeDate: results.forcedChargeDate,
+          forceChargeDate: results.forcedChargeDate
+            ? results.forcedChargeDate
+            : undefined,
           chargeDay: selectedChargeDay,
         })
       );

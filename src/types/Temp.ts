@@ -31,5 +31,5 @@ export type ReferralType = {
 
 export interface DraftAgreementResponse {
   vippsConfirmationUrl: string;
-  agreementCode: string;
+  agreementUrlCode: string;
 }
