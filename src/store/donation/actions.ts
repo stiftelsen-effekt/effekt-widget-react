@@ -13,6 +13,7 @@ import {
   SELECT_CUSTOM_SHARE,
   SET_SHARE_TYPE,
   SET_DONATION_VALID,
+  SET_DUE_DAY,
 } from "./types";
 import { PaymentMethod, RecurringDonation, ShareType } from "../../types/Enums";
 import { OrganizationShare } from "../../types/Temp";
@@ -72,6 +73,15 @@ export function setSum(sum: number): DonationActionTypes {
     type: SET_SUM,
     payload: {
       sum,
+    },
+  };
+}
+
+export function setDueDay(day: number): DonationActionTypes {
+  return {
+    type: SET_DUE_DAY,
+    payload: {
+      day,
     },
   };
 }

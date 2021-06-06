@@ -1,6 +1,6 @@
 import { Reducer } from "redux";
 import { isType } from "typescript-fsa";
-import { RecurringDonation, ShareType } from "../../types/Enums";
+import { PaymentMethod, RecurringDonation, ShareType } from "../../types/Enums";
 import { OrganizationShare } from "../../types/Temp";
 import { fetchOrganizationsAction } from "../layout/actions";
 import { Donation } from "../state";
@@ -19,6 +19,7 @@ import {
   SET_SHARE_TYPE,
   SELECT_CUSTOM_SHARE,
   SET_DONATION_VALID,
+  SET_DUE_DAY,
 } from "./types";
 
 const initialState: Donation = {
@@ -30,6 +31,10 @@ const initialState: Donation = {
   },
   isValid: true,
   shares: [],
+  dueDay:
+    new Date().getDate() + 5 <= 28
+      ? new Date().getDate() + 5
+      : new Date().getDate() + 5 - 28,
 };
 
 /**
@@ -96,6 +101,9 @@ export const donationReducer: Reducer<Donation, DonationActionTypes> = (
     case SET_SUM:
       state = { ...state, sum: action.payload.sum };
       break;
+    case SET_DUE_DAY:
+      state = { ...state, dueDay: action.payload.day };
+      break;
     case SET_RECURRING:
       state = { ...state, recurring: action.payload.recurring };
       break;
@@ -148,6 +156,14 @@ export const donationReducer: Reducer<Donation, DonationActionTypes> = (
   // Sum is checked for being an integer in DonorPane
   // If it is not an integer, sum is set to -1
   if (state.sum && state.sum <= 0) {
+    return { ...state, isValid: false };
+  }
+
+  if (
+    state.recurring === RecurringDonation.RECURRING &&
+    state.method === PaymentMethod.BANK &&
+    (!state.dueDay || state.dueDay < 0 || state.dueDay > 28)
+  ) {
     return { ...state, isValid: false };
   }
 

@@ -25,6 +25,7 @@ export interface DonationInput {
   recurring: RecurringDonation;
   donor?: Donor;
   shares: OrganizationShare[];
+  dueDay?: number;
 }
 
 export interface Donation extends DonationInput {
@@ -39,6 +40,7 @@ export interface RegisterDonationObject {
   recurring: RecurringDonation;
   amount: number;
   organizations?: OrganizationShare[];
+  dueDay?: number;
 }
 
 export interface DonorInput {
@@ -47,6 +49,7 @@ export interface DonorInput {
   taxDeduction?: boolean;
   ssn?: number;
   newsletter?: boolean;
+  dueDay?: number;
 }
 
 export interface Donor extends DonorInput {

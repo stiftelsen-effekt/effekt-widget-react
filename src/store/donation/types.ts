@@ -6,6 +6,7 @@ export const SELECT_TAX_DEDUCTION = "SELECT_TAX_DEDUCTION";
 export const SUBMIT_DONOR_INFO = "SUBMIT_DONOR_INFO";
 export const SET_SHARES = "SET_SHARES";
 export const SET_SUM = "SET_SUM";
+export const SET_DUE_DAY = "SET_DUE_DAY";
 export const SET_RECURRING = "SET_RECURRING";
 export const SET_KID = "SET_KID";
 export const SET_DONOR_ID = "SET_DONOR_ID";
@@ -50,6 +51,13 @@ interface SetSum {
   type: typeof SET_SUM;
   payload: {
     sum: number;
+  };
+}
+
+interface SetDueDay {
+  type: typeof SET_DUE_DAY;
+  payload: {
+    day: number;
   };
 }
 
@@ -108,6 +116,7 @@ export type DonationActionTypes =
   | SubmitDonorInfo
   | SetShares
   | SetSum
+  | SetDueDay
   | SetRecurring
   | SetKID
   | SetDonorID
