@@ -1,5 +1,6 @@
 import { PaymentMethod, RecurringDonation, ShareType } from "../../types/Enums";
 import { OrganizationShare } from "../../types/Temp";
+import { VippsAgreement } from "../state";
 
 export const SELECT_PAYMENT_METHOD = "SELECT_PAYMENT_METHOD";
 export const SELECT_TAX_DEDUCTION = "SELECT_TAX_DEDUCTION";
@@ -13,6 +14,7 @@ export const SET_PAYMENT_PROVIDER_URL = "SET_PAYMENT_PROVIDER_URL";
 export const SELECT_CUSTOM_SHARE = "SELECT_CUSTOM_SHARE";
 export const SET_SHARE_TYPE = "SET_SHARE_TYPE";
 export const SET_DONATION_VALID = "SET_DONATION_VALID";
+export const SET_VIPPS_AGREEMENT = "SET_VIPPS_AGREEMENT";
 
 interface SelectPaymentMethod {
   type: typeof SELECT_PAYMENT_METHOD;
@@ -102,6 +104,13 @@ interface SetDonationValid {
   };
 }
 
+interface SetVippsAgreement {
+  type: typeof SET_VIPPS_AGREEMENT;
+  payload: {
+    vippsAgreement: VippsAgreement;
+  };
+}
+
 export type DonationActionTypes =
   | SelectPaymentMethod
   | SelectTaxDeduction
@@ -114,4 +123,5 @@ export type DonationActionTypes =
   | SetPaymentProviderURL
   | SelectCustomShare
   | SetShareType
-  | SetDonationValid;
+  | SetDonationValid
+  | SetVippsAgreement;

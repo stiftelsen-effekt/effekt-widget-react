@@ -25,12 +25,19 @@ export interface DonationInput {
   recurring: RecurringDonation;
   donor?: Donor;
   shares: OrganizationShare[];
+  vippsAgreement?: VippsAgreement;
 }
 
 export interface Donation extends DonationInput {
   kid?: string;
   paymentProviderURL?: string;
   isValid: boolean;
+}
+
+export interface VippsAgreement {
+  initialCharge: boolean;
+  forceChargeDate?: Date;
+  chargeDay?: number;
 }
 
 export interface RegisterDonationObject {
