@@ -43,18 +43,13 @@ export function* draftVippsAgreement(): SagaIterator<void> {
       draftRequest.json.bind(draftRequest)
     );
 
-    window.open(
-      (draftResponse.content as DraftAgreementResponse).vippsConfirmationUrl
-    );
+    window.location.href = (draftResponse.content as DraftAgreementResponse).vippsConfirmationUrl;
 
     yield put(
       setPaymentProviderURL(
         (draftResponse.content as DraftAgreementResponse).vippsConfirmationUrl
       )
     );
-
-    // eslint-disable-next-line no-console
-    console.log(draftResponse.content);
 
     const {
       agreementUrlCode,

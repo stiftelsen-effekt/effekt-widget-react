@@ -54,10 +54,13 @@ export const VippsPane: React.FC = () => {
             tabIndex={0}
             onClick={async () => {
               setLoading(true);
-              await dispatch(draftAgreementAction.started(undefined));
-              window.open(paymentProviderURL);
+              if (recurring === RecurringDonation.RECURRING) {
+                dispatch(draftAgreementAction.started(undefined));
+              }
+              if (recurring === RecurringDonation.NON_RECURRING) {
+                window.open(paymentProviderURL);
+              }
               (document.activeElement as HTMLElement).blur();
-              // Stop loading
               setPressedVippsButton(true);
             }}
           />
