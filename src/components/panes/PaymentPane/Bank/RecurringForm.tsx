@@ -12,7 +12,7 @@ export const RecurringBankDonationForm: React.FC<{
       <form
         action="https://pvu.nets.no/ecsa/start"
         method="post"
-        target="_blank"
+        target="_parent"
       >
         <input
           type="hidden"
