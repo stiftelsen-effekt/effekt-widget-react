@@ -9,7 +9,11 @@ export const RecurringBankDonationForm: React.FC<{
 }> = ({ donation }) => {
   return (
     <RoundedBorder style={{ marginBottom: 10 }}>
-      <form action="https://pvu.nets.no/ecsa/start" method="post">
+      <form
+        action="https://pvu.nets.no/ecsa/start"
+        method="post"
+        target="_blank"
+      >
         <input
           type="hidden"
           name="companyName"
