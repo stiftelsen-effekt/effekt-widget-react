@@ -31,7 +31,7 @@ export const RecurringBankDonationForm: React.FC<{
           type="hidden"
           name="amountLimit"
           id="amountLimit"
-          value={(donation.sum || 0) * 100}
+          value={donation.sum || 1000}
         />
         <input
           type="hidden"
