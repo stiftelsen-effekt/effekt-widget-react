@@ -2,7 +2,7 @@ import { SagaIterator } from "redux-saga";
 import { call, put, select } from "redux-saga/effects";
 import { Action } from "typescript-fsa";
 import { API_URL } from "../../config/api";
-import { PaymentMethod, ShareType } from "../../types/Enums";
+import { PaymentMethod, ShareType, RecurringDonation } from "../../types/Enums";
 import { DraftAgreementResponse, IServerResponse } from "../../types/Temp";
 import { nextPane, setAnsweredReferral, setLoading } from "../layout/actions";
 import { Donation, RegisterDonationObject, State } from "../state";
@@ -117,14 +117,18 @@ export function* registerBankPending(): SagaIterator<void> {
     const KID: number = yield select((state: State) => state.donation.kid);
     const sum: number = yield select((state: State) => state.donation.sum);
 
-    const request = yield call(fetch, `${API_URL}/donations/bank/pending`, {
-      method: "POST",
-      headers: {
-        Accept: "application/x-www-form-urlencoded",
-        "Content-Type": "application/x-www-form-urlencoded",
-      },
-      body: `data={"KID":${KID}, "sum":${sum}}`,
-    });
+    const request: Response = yield call(
+      fetch,
+      `${API_URL}/donations/bank/pending`,
+      {
+        method: "POST",
+        headers: {
+          Accept: "application/x-www-form-urlencoded",
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+        body: `data={"KID":"${KID}", "sum":${sum}}`,
+      }
+    );
 
     const result: IServerResponse<never> = yield call(
       request.json.bind(request)
@@ -152,6 +156,7 @@ export function* registerDonation(
       method: donation.method ? donation.method : PaymentMethod.BANK,
       amount: donation.sum ? donation.sum : 0,
       recurring: donation.recurring,
+      dueDay: donation.dueDay,
     };
 
     if (donation.shareType === ShareType.CUSTOM) {
@@ -193,7 +198,10 @@ export function* registerDonation(
       })
     );
 
-    if (donation.method === PaymentMethod.BANK) {
+    if (
+      donation.method === PaymentMethod.BANK &&
+      donation.recurring === RecurringDonation.NON_RECURRING
+    ) {
       yield put(registerBankPendingAction.started(undefined));
     }
 

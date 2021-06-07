@@ -5,10 +5,15 @@ import {
   registerDonationAction,
   setSum,
   setShareType,
+  setDueDay,
 } from "../../../store/donation/actions";
 import { Pane, PaneContainer } from "../Panes.style";
 import { State } from "../../../store/state";
-import { ShareType } from "../../../types/Enums";
+import {
+  PaymentMethod,
+  RecurringDonation,
+  ShareType,
+} from "../../../types/Enums";
 import { RichSelectOption } from "../../shared/RichSelect/RichSelectOption";
 import { RichSelect } from "../../shared/RichSelect/RichSelect";
 import { NextButton } from "../../shared/Buttons/NavigationButtons.style";
@@ -23,6 +28,9 @@ export const DonationPane: React.FC = () => {
   const shareType = useSelector((state: State) => state.donation.shareType);
   const donationValid = useSelector((state: State) => state.donation.isValid);
   const donationSum = useSelector((state: State) => state.donation.sum);
+  const method = useSelector((state: State) => state.donation.method);
+  const dueDay = useSelector((state: State) => state.donation.dueDay);
+  const recurring = useSelector((state: State) => state.donation.recurring);
   const [loadingAnimation, setLoadingAnimation] = useState(false);
 
   function onSubmit() {
@@ -58,6 +66,27 @@ export const DonationPane: React.FC = () => {
                   }
                 }}
               />
+
+              {recurring === RecurringDonation.RECURRING &&
+                method === PaymentMethod.BANK && (
+                  <TextInput
+                    label="Trekkdag"
+                    defaultValue={dueDay}
+                    name="dueDay"
+                    type="tel"
+                    onChange={(e) => {
+                      if (
+                        Validator.isInt(e.target.value) === true &&
+                        parseInt(e.target.value) < 29 &&
+                        parseInt(e.target.value) > 0
+                      ) {
+                        dispatch(setDueDay(parseInt(e.target.value)));
+                      } else {
+                        dispatch(setDueDay(-1));
+                      }
+                    }}
+                  />
+                )}
             </SumWrapper>
 
             <RichSelect

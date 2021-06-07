@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { State } from "../../../../store/state";
+import { RecurringDonation } from "../../../../types/Enums";
 import { NextButton } from "../../../shared/Buttons/NavigationButtons.style";
 import { OrangeLink } from "../../../Widget.style";
 import { Pane, PaneContainer, PaneTitle, UnderTitle } from "../../Panes.style";
@@ -12,12 +13,12 @@ import {
 } from "./PayPalPane.style";
 
 export const PaypalPane: React.FC = () => {
-  const isRecurring = useSelector((state: State) => state.donation.recurring);
+  const recurring = useSelector((state: State) => state.donation.recurring);
   const donationAmount = useSelector((state: State) => state.donation.sum);
   const donationKID = useSelector((state: State) => state.donation.kid);
 
   useEffect(() => {
-    if (isRecurring === 0) {
+    if (recurring === RecurringDonation.RECURRING) {
       document.getElementById("recurring-paypal-submit")?.click();
       (document.activeElement as HTMLElement).blur();
     } else {
@@ -111,7 +112,7 @@ export const PaypalPane: React.FC = () => {
       <PaneContainer>
         <PaneTitle>Tusen takk!</PaneTitle>
         <UnderTitle>Du kan nå overføre til oss</UnderTitle>
-        {isRecurring === 0 ? recurringForm : singleForm}
+        {recurring === RecurringDonation.RECURRING ? recurringForm : singleForm}
         <InfoText>
           {`Ønsker du å se hele donasjonshistorikken din? Gå til `}
           <OrangeLink href="https://gieffektivt.no/historikk" target="_blank">
