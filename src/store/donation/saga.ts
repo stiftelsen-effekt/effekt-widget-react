@@ -62,8 +62,6 @@ export function* draftVippsAgreement(): SagaIterator<void> {
 
     if (chargeDay && initialCharge === false) {
       const body = { agreementCode: agreementUrlCode, chargeDay };
-      // eslint-disable-next-line no-console
-      console.log(body);
 
       const request = yield call(
         fetch,
@@ -83,8 +81,6 @@ export function* draftVippsAgreement(): SagaIterator<void> {
 
     if (forcedChargeDate && initialCharge === false) {
       const body = { agreementCode: agreementUrlCode, forcedChargeDate };
-      // eslint-disable-next-line no-console
-      console.log(body);
       const request = yield call(
         fetch,
         `${API_URL}/vipps/agreement/forcedcharge`,
