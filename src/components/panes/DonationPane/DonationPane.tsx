@@ -82,6 +82,7 @@ export const DonationPane: React.FC = () => {
                     denomination="."
                     selectOnClick
                     autoComplete="off"
+                    tooltipText="Vi belaster din konto én gang i måneden på valgte dato."
                     onChange={(e) => {
                       if (
                         Validator.isInt(e.target.value) === true &&
