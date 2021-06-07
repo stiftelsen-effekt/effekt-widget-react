@@ -1,6 +1,7 @@
 import React from "react";
 import { Donation } from "../../../../store/state";
-import { HorizontalLine, RoundedBorder, TextWrapper } from "./ResultPane.style";
+import { RoundedBorder } from "../../../shared/Layout/Layout.style";
+import { HorizontalLine, TextWrapper } from "./ResultPane.style";
 
 export const PaymentInformation: React.FC<{
   donation: Donation;

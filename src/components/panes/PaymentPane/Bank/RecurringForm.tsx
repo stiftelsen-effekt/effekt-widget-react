@@ -1,8 +1,9 @@
 import React from "react";
 import { Donation } from "../../../../store/state";
-import { RoundedBorder } from "./ResultPane.style";
 import AvtaleGiroLogo from "../../../../assets/avtalegiro.jpeg";
 import { AvtaleGiroButton } from "./RecurringForm.style";
+import { API_URL } from "../../../../config/api";
+import { RoundedBorder } from "../../../shared/Layout/Layout.style";
 
 export const RecurringBankDonationForm: React.FC<{
   donation: Donation;
@@ -37,7 +38,7 @@ export const RecurringBankDonationForm: React.FC<{
           type="hidden"
           name="returnUrl"
           id="returnUrl"
-          value="https://gieffektivt.no/donation-recieved"
+          value={`${API_URL}/donations/status`}
         />
         <input
           type="hidden"
