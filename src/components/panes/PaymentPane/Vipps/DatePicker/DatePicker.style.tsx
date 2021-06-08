@@ -14,7 +14,7 @@ export const DateBoxWrapper = styled.div`
 `;
 
 export const Datebox = styled.button`
-  min-width: 26px;
+  width: 26px;
   height: 26px;
   padding: 0;
   margin: 4px;
@@ -24,6 +24,11 @@ export const Datebox = styled.button`
   box-shadow: 0px 0px 0px 1.5px ${orange20};
   background-color: white;
   cursor: pointer;
+
+  @media only screen and (max-width: 355px) {
+    width: 22px;
+    height: 22px;
+  }
 
   &:hover {
     background-color: ${orange10};
@@ -40,4 +45,7 @@ export const DateText = styled.p`
   font-family: "Roboto", Arial, sans-serif;
   padding-left: 3px;
   margin-bottom: 5px;
+  margin-top: 5px;
+  white-space: pre-wrap;
+  line-height: 14px;
 `;

@@ -5,10 +5,9 @@ import {
   draftAgreementAction,
   setVippsAgreement,
 } from "../../../../store/donation/actions";
-import { setLoading } from "../../../../store/layout/actions";
 import { State } from "../../../../store/state";
 import { RecurringDonation } from "../../../../types/Enums";
-import { NextButton } from "../../../shared/Buttons/NavigationButtons.style";
+import { LoadingCircle } from "../../../shared/LoadingCircle/LoadingCircle";
 import { RichSelect } from "../../../shared/RichSelect/RichSelect";
 import { RichSelectOption } from "../../../shared/RichSelect/RichSelectOption";
 import { Pane, PaneContainer } from "../../Panes.style";
@@ -17,62 +16,57 @@ import { VippsButton, VippsButtonWrapper } from "./VippsPane.style";
 
 export const VippsPane: React.FC = () => {
   const dispatch = useDispatch();
-  const [pressedVippsButton, setPressedVippsButton] = useState<boolean>(false);
   const donationState = useSelector((state: State) => state.donation);
   const { paymentProviderURL, vippsAgreement, recurring } = donationState;
+  const [loading, setLoading] = useState(false);
 
   return (
     <Pane>
       <PaneContainer>
-        <RichSelect
-          selected={vippsAgreement?.initialCharge ? 0 : 1}
-          onChange={(value: number) => {
-            if (vippsAgreement)
-              dispatch(
-                setVippsAgreement({
-                  ...vippsAgreement,
-                  initialCharge: value === 0,
-                })
-              );
-          }}
-        >
-          <RichSelectOption
-            label="Begynn i dag"
-            sublabel="Du kan endre månedlig trekkdag senere"
-            value={recurring === RecurringDonation.NON_RECURRING ? 1 : 0}
-          />
-          <RichSelectOption
-            label="Velg fast trekkdag"
-            sublabel="Velg startdato og månedlig trekkdag"
-            value={recurring === RecurringDonation.RECURRING ? 1 : 0}
-          >
-            <DatePicker />
-          </RichSelectOption>
-        </RichSelect>
-        <VippsButtonWrapper>
-          <VippsButton
-            tabIndex={0}
-            onClick={async () => {
-              setLoading(true);
-              if (recurring === RecurringDonation.RECURRING) {
-                dispatch(draftAgreementAction.started(undefined));
-              }
-              if (recurring === RecurringDonation.NON_RECURRING) {
-                window.open(paymentProviderURL);
-              }
-              (document.activeElement as HTMLElement).blur();
-              setPressedVippsButton(true);
-            }}
-          />
-        </VippsButtonWrapper>
-        {pressedVippsButton && (
-          <NextButton
-            onClick={() => {
-              window.location.reload();
-            }}
-          >
-            Tilbake til hovedsiden
-          </NextButton>
+        {loading && <LoadingCircle />}
+        {!loading && (
+          <div>
+            <RichSelect
+              selected={vippsAgreement?.initialCharge ? 0 : 1}
+              onChange={(value: number) => {
+                if (vippsAgreement)
+                  dispatch(
+                    setVippsAgreement({
+                      ...vippsAgreement,
+                      initialCharge: value === 0,
+                    })
+                  );
+              }}
+            >
+              <RichSelectOption
+                label="Begynn i dag"
+                sublabel="Du kan endre månedlig trekkdag senere"
+                value={recurring === RecurringDonation.NON_RECURRING ? 1 : 0}
+              />
+              <RichSelectOption
+                label="Velg fast trekkdag"
+                sublabel="Velg startdato og månedlig trekkdag"
+                value={recurring === RecurringDonation.RECURRING ? 1 : 0}
+              >
+                <DatePicker />
+              </RichSelectOption>
+            </RichSelect>
+            <VippsButtonWrapper>
+              <VippsButton
+                tabIndex={0}
+                onClick={async () => {
+                  setLoading(true);
+                  if (recurring === RecurringDonation.RECURRING) {
+                    dispatch(draftAgreementAction.started(undefined));
+                  }
+                  if (recurring === RecurringDonation.NON_RECURRING) {
+                    window.open(paymentProviderURL);
+                  }
+                  (document.activeElement as HTMLElement).blur();
+                }}
+              />
+            </VippsButtonWrapper>
+          </div>
         )}
       </PaneContainer>
     </Pane>
