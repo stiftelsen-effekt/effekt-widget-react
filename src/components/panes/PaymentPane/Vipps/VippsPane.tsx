@@ -13,7 +13,13 @@ import { LoadingCircle } from "../../../shared/LoadingCircle/LoadingCircle";
 import { RichSelect } from "../../../shared/RichSelect/RichSelect";
 import { RichSelectOption } from "../../../shared/RichSelect/RichSelectOption";
 import { OrangeLink } from "../../../Widget.style";
-import { Pane, PaneContainer, PaneTitle, UnderTitle } from "../../Panes.style";
+import {
+  CenterDiv,
+  Pane,
+  PaneContainer,
+  PaneTitle,
+  UnderTitle,
+} from "../../Panes.style";
 import { InfoText } from "../PaymentPane.style";
 import { DatePicker } from "./DatePicker/DatePicker";
 import { VippsButton, VippsButtonWrapper } from "./VippsPane.style";
@@ -53,7 +59,7 @@ export const VippsPane: React.FC = () => {
               <RichSelectOption
                 label="Velg annen trekkdag"
                 sublabel="Velg startdato og månedlig trekkdag"
-                value={0}
+                value={1}
               >
                 <DatePicker />
               </RichSelectOption>
@@ -63,30 +69,46 @@ export const VippsPane: React.FC = () => {
             )}
           </div>
         )}
-        <VippsButtonWrapper>
-          <VippsButton
-            tabIndex={0}
-            onClick={async () => {
-              setLoading(true);
-              if (recurring === RecurringDonation.RECURRING) {
-                dispatch(draftAgreementAction.started(undefined));
-                setDraftError(true);
-              }
-              if (recurring === RecurringDonation.NON_RECURRING) {
-                window.open(paymentProviderURL);
-              }
-              (document.activeElement as HTMLElement).blur();
-            }}
-          />
-        </VippsButtonWrapper>
+        {!isLoading && recurring === RecurringDonation.RECURRING && (
+          <CenterDiv>
+            <VippsButton
+              tabIndex={0}
+              onClick={async () => {
+                setLoading(true);
+                if (recurring === RecurringDonation.RECURRING) {
+                  dispatch(draftAgreementAction.started(undefined));
+                  setDraftError(true);
+                }
+                (document.activeElement as HTMLElement).blur();
+              }}
+            />
+          </CenterDiv>
+        )}
         {!isLoading && recurring === RecurringDonation.NON_RECURRING && (
-          <InfoText>
-            {`Ønsker du å se hele donasjonshistorikken din? Gå til `}
-            <OrangeLink href="https://gieffektivt.no/historikk" target="_blank">
-              https://gieffektivt.no/historikk
-            </OrangeLink>
-            {` og tast inn eposten din, så mottar du straks en oversikt over alle dine donasjoner.`}
-          </InfoText>
+          <div>
+            <VippsButtonWrapper>
+              <VippsButton
+                tabIndex={0}
+                onClick={async () => {
+                  setLoading(true);
+                  if (recurring === RecurringDonation.NON_RECURRING) {
+                    window.open(paymentProviderURL);
+                  }
+                  (document.activeElement as HTMLElement).blur();
+                }}
+              />
+            </VippsButtonWrapper>
+            <InfoText>
+              {`Ønsker du å se hele donasjonshistorikken din? Gå til `}
+              <OrangeLink
+                href="https://gieffektivt.no/historikk"
+                target="_blank"
+              >
+                https://gieffektivt.no/historikk
+              </OrangeLink>
+              {` og tast inn eposten din, så mottar du straks en oversikt over alle dine donasjoner.`}
+            </InfoText>
+          </div>
         )}
       </PaneContainer>
     </Pane>
