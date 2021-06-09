@@ -43,61 +43,61 @@ export function* draftVippsAgreement(): SagaIterator<void> {
       draftRequest.json.bind(draftRequest)
     );
 
-    window.location.href = (draftResponse.content as DraftAgreementResponse).vippsConfirmationUrl;
+    if (draftResponse.content) {
+      window.location.href = (draftResponse.content as DraftAgreementResponse).vippsConfirmationUrl;
 
-    yield put(
-      setPaymentProviderURL(
-        (draftResponse.content as DraftAgreementResponse).vippsConfirmationUrl
-      )
-    );
-
-    const {
-      agreementUrlCode,
-    } = draftResponse.content as DraftAgreementResponse;
-
-    if (chargeDay && initialCharge === false) {
-      const body = { agreementCode: agreementUrlCode, chargeDay };
-
-      const request = yield call(
-        fetch,
-        `${API_URL}/vipps/agreement/chargeday`,
-        {
-          method: "PUT",
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(body),
-        }
+      yield put(
+        setPaymentProviderURL(
+          (draftResponse.content as DraftAgreementResponse).vippsConfirmationUrl
+        )
       );
 
-      yield call(request.json.bind(request));
+      const {
+        agreementUrlCode,
+      } = draftResponse.content as DraftAgreementResponse;
+
+      if (chargeDay && initialCharge === false) {
+        const body = { agreementCode: agreementUrlCode, chargeDay };
+
+        const request = yield call(
+          fetch,
+          `${API_URL}/vipps/agreement/chargeday`,
+          {
+            method: "PUT",
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(body),
+          }
+        );
+
+        yield call(request.json.bind(request));
+      }
+
+      if (forcedChargeDate && initialCharge === false) {
+        const body = { agreementCode: agreementUrlCode, forcedChargeDate };
+        const request = yield call(
+          fetch,
+          `${API_URL}/vipps/agreement/forcedcharge`,
+          {
+            method: "PUT",
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(body),
+          }
+        );
+
+        yield call(request.json.bind(request));
+      }
     }
 
-    if (forcedChargeDate && initialCharge === false) {
-      const body = { agreementCode: agreementUrlCode, forcedChargeDate };
-      const request = yield call(
-        fetch,
-        `${API_URL}/vipps/agreement/forcedcharge`,
-        {
-          method: "PUT",
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(body),
-        }
-      );
-
-      yield call(request.json.bind(request));
-    }
-
-    // Check for new charge day and force charge date
-    // update charge day request (no email)
-    // update force charge date request (no email)
-
-    if (draftResponse.status !== 200)
+    if (draftResponse.status !== 200) {
+      yield put(setLoading(false));
       throw new Error(draftResponse.content as string);
+    }
   } catch (ex) {
     console.error(ex);
   }

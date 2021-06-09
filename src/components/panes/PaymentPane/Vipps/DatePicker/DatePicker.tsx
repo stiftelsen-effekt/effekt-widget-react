@@ -72,7 +72,7 @@ export const DatePicker: React.FC = () => {
         Første trekk blir
         {nextChargeDate && ` ${formatDate(nextChargeDate)}`}
         <br />
-        {forcedChargeDate && `Etterfølgende måneder trekkes på ny trekkdag`}
+        {forcedChargeDate && `Etterfølgende måneder trekkes på valgt trekkdag`}
       </DateText>
     </Wrapper>
   );
