@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { State } from "../../../../store/state";
 import { RecurringDonation } from "../../../../types/Enums";
-import { NextButton } from "../../../shared/Buttons/NavigationButtons.style";
 import { OrangeLink } from "../../../Widget.style";
 import { Pane, PaneContainer, PaneTitle, UnderTitle } from "../../Panes.style";
 import { InfoText } from "../PaymentPane.style";
@@ -120,13 +119,6 @@ export const PaypalPane: React.FC = () => {
           </OrangeLink>
           {` og tast inn eposten din, så mottar du straks en oversikt over alle dine donasjoner.`}
         </InfoText>
-        <NextButton
-          onClick={() => {
-            window.location.reload();
-          }}
-        >
-          Tilbake til hovedsiden
-        </NextButton>
       </PaneContainer>
     </Pane>
   );

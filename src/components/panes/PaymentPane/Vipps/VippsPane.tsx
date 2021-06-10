@@ -8,71 +8,107 @@ import {
 import { setLoading } from "../../../../store/layout/actions";
 import { State } from "../../../../store/state";
 import { RecurringDonation } from "../../../../types/Enums";
-import { NextButton } from "../../../shared/Buttons/NavigationButtons.style";
+import { ErrorField } from "../../../shared/Error/ErrorField";
+import { LoadingCircle } from "../../../shared/LoadingCircle/LoadingCircle";
 import { RichSelect } from "../../../shared/RichSelect/RichSelect";
 import { RichSelectOption } from "../../../shared/RichSelect/RichSelectOption";
-import { Pane, PaneContainer } from "../../Panes.style";
+import { OrangeLink } from "../../../Widget.style";
+import {
+  CenterDiv,
+  Pane,
+  PaneContainer,
+  PaneTitle,
+  UnderTitle,
+} from "../../Panes.style";
+import { InfoText } from "../PaymentPane.style";
 import { DatePicker } from "./DatePicker/DatePicker";
 import { VippsButton, VippsButtonWrapper } from "./VippsPane.style";
 
 export const VippsPane: React.FC = () => {
   const dispatch = useDispatch();
-  const [pressedVippsButton, setPressedVippsButton] = useState<boolean>(false);
   const donationState = useSelector((state: State) => state.donation);
+  const isLoading = useSelector((state: State) => state.layout.loading);
   const { paymentProviderURL, vippsAgreement, recurring } = donationState;
+  const [draftError, setDraftError] = useState(false);
 
   return (
     <Pane>
       <PaneContainer>
-        <RichSelect
-          selected={vippsAgreement?.initialCharge ? 0 : 1}
-          onChange={(value: number) => {
-            if (vippsAgreement)
-              dispatch(
-                setVippsAgreement({
-                  ...vippsAgreement,
-                  initialCharge: value === 0,
-                })
-              );
-          }}
-        >
-          <RichSelectOption
-            label="Begynn i dag"
-            sublabel="Du kan endre månedlig trekkdag senere"
-            value={recurring === RecurringDonation.NON_RECURRING ? 1 : 0}
-          />
-          <RichSelectOption
-            label="Velg fast trekkdag"
-            sublabel="Velg startdato og månedlig trekkdag"
-            value={recurring === RecurringDonation.RECURRING ? 1 : 0}
-          >
-            <DatePicker />
-          </RichSelectOption>
-        </RichSelect>
-        <VippsButtonWrapper>
-          <VippsButton
-            tabIndex={0}
-            onClick={async () => {
-              setLoading(true);
-              if (recurring === RecurringDonation.RECURRING) {
-                dispatch(draftAgreementAction.started(undefined));
-              }
-              if (recurring === RecurringDonation.NON_RECURRING) {
-                window.open(paymentProviderURL);
-              }
-              (document.activeElement as HTMLElement).blur();
-              setPressedVippsButton(true);
-            }}
-          />
-        </VippsButtonWrapper>
-        {pressedVippsButton && (
-          <NextButton
-            onClick={() => {
-              window.location.reload();
-            }}
-          >
-            Tilbake til hovedsiden
-          </NextButton>
+        <PaneTitle>Tusen takk!</PaneTitle>
+        <UnderTitle>Du kan nå overføre til oss</UnderTitle>
+        {isLoading && <LoadingCircle />}
+        {!isLoading && recurring === RecurringDonation.RECURRING && (
+          <div>
+            <RichSelect
+              selected={vippsAgreement?.initialCharge ? 0 : 1}
+              onChange={(value: number) => {
+                if (vippsAgreement)
+                  dispatch(
+                    setVippsAgreement({
+                      ...vippsAgreement,
+                      initialCharge: value === 0,
+                    })
+                  );
+              }}
+            >
+              <RichSelectOption
+                label="Begynn i dag"
+                sublabel="Du kan endre månedlig trekkdag senere"
+                value={0}
+              />
+              <RichSelectOption
+                label="Velg annen trekkdag"
+                sublabel="Velg startdato og månedlig trekkdag"
+                value={1}
+              >
+                <DatePicker />
+              </RichSelectOption>
+            </RichSelect>
+            {draftError && (
+              <ErrorField text="Det har skjedd en feil, vennligst prøv på nytt" />
+            )}
+          </div>
+        )}
+        {!isLoading && recurring === RecurringDonation.RECURRING && (
+          <CenterDiv>
+            <VippsButton
+              tabIndex={0}
+              onClick={async () => {
+                setLoading(true);
+                if (recurring === RecurringDonation.RECURRING) {
+                  dispatch(draftAgreementAction.started(undefined));
+                  setDraftError(true);
+                }
+                (document.activeElement as HTMLElement).blur();
+              }}
+            />
+          </CenterDiv>
+        )}
+        {!isLoading && recurring === RecurringDonation.NON_RECURRING && (
+          <div>
+            <VippsButtonWrapper>
+              <VippsButton
+                tabIndex={0}
+                onClick={async () => {
+                  setLoading(true);
+                  if (recurring === RecurringDonation.NON_RECURRING) {
+                    window.open(paymentProviderURL);
+                  }
+                  (document.activeElement as HTMLElement).blur();
+                }}
+              />
+            </VippsButtonWrapper>
+            <InfoText>
+              {`Ønsker du å se hele donasjonshistorikken din? Gå til `}
+              <OrangeLink
+                href="https://gieffektivt.no/historikk"
+                target="_blank"
+              >
+                https://gieffektivt.no/historikk
+              </OrangeLink>
+              {` og tast inn eposten din, så mottar du straks en oversikt over alle dine donasjoner.`}
+            </InfoText>
+          </div>
         )}
       </PaneContainer>
     </Pane>
