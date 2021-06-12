@@ -26,7 +26,7 @@ export interface DonationInput {
   donor?: Donor;
   shares: OrganizationShare[];
   dueDay?: number;
-  vippsAgreement?: VippsAgreement;
+  vippsAgreement: VippsAgreement;
 }
 
 export interface Donation extends DonationInput {
@@ -37,8 +37,8 @@ export interface Donation extends DonationInput {
 
 export interface VippsAgreement {
   initialCharge: boolean;
-  forceChargeDate?: Date;
-  chargeDay?: number;
+  captureChargeDate: Date | false;
+  monthlyChargeDay: number;
 }
 
 export interface RegisterDonationObject {

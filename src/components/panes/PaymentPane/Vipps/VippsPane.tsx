@@ -28,8 +28,9 @@ export const VippsPane: React.FC = () => {
   const dispatch = useDispatch();
   const donationState = useSelector((state: State) => state.donation);
   const isLoading = useSelector((state: State) => state.layout.loading);
-  const { paymentProviderURL, vippsAgreement, recurring } = donationState;
+  const { paymentProviderURL, recurring, vippsAgreement } = donationState;
   const [draftError, setDraftError] = useState(false);
+  const [chooseChargeDay, setChooseChargeDay] = useState(0);
 
   return (
     <Pane>
@@ -40,15 +41,17 @@ export const VippsPane: React.FC = () => {
         {!isLoading && recurring === RecurringDonation.RECURRING && (
           <div>
             <RichSelect
-              selected={vippsAgreement?.initialCharge ? 0 : 1}
+              selected={chooseChargeDay}
               onChange={(value: number) => {
-                if (vippsAgreement)
+                setChooseChargeDay(value);
+                if (vippsAgreement) {
                   dispatch(
                     setVippsAgreement({
                       ...vippsAgreement,
                       initialCharge: value === 0,
                     })
                   );
+                }
               }}
             >
               <RichSelectOption

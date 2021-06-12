@@ -10,12 +10,11 @@ export const Wrapper = styled.div`
 export const DateBoxWrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
-  justify-content: flex-start;
 `;
 
 export const Datebox = styled.button`
-  width: 26px;
-  height: 26px;
+  width: 28px;
+  height: 28px;
   padding: 0;
   margin: 4px;
   font-family: "Roboto", Arial, sans-serif;
@@ -40,6 +39,7 @@ export const Datebox = styled.button`
 `;
 
 export const DateText = styled.p`
+  display: block;
   margin: 0;
   font-size: 12px;
   font-family: "Roboto", Arial, sans-serif;
@@ -48,4 +48,9 @@ export const DateText = styled.p`
   margin-top: 5px;
   white-space: pre-wrap;
   line-height: 14px;
+`;
+
+export const DateTextWrapper = styled.div`
+  padding-left: 3px;
+  padding-bottom: 4px;
 `;

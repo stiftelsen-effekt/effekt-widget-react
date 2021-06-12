@@ -3,36 +3,40 @@ import { useDispatch, useSelector } from "react-redux";
 import { orange20 } from "../../../../../config/colors";
 import { setVippsAgreement } from "../../../../../store/donation/actions";
 import { State } from "../../../../../store/state";
-import { Datebox, DateBoxWrapper, DateText, Wrapper } from "./DatePicker.style";
-import { formatDate, getNewChargeDayResults } from "./dates";
+import { CustomCheckBox } from "../../../DonorPane/CustomCheckBox";
+import { CheckBoxWrapper, HiddenCheckBox } from "../../../Forms.style";
+import {
+  Datebox,
+  DateBoxWrapper,
+  DateText,
+  DateTextWrapper,
+  Wrapper,
+} from "./DatePicker.style";
+import { calculateNextCharge, formatDate } from "./dates";
 
 export const DatePicker: React.FC = () => {
   const dispatch = useDispatch();
-  const [selectedChargeDay, setSelectedChargeDay] = useState<number>(1);
-  const [nextChargeDate, setNextChargeDate] = useState<Date>();
-  const [forcedChargeDate, setForcedChargeDate] = useState<Date | false>(false);
   const vippsAgreement = useSelector(
     (state: State) => state.donation.vippsAgreement
   );
+  const [selectedChargeDay, setSelectedChargeDay] = useState<number>(
+    vippsAgreement.monthlyChargeDay
+  );
+  const [nextChargeDate, setNextChargeDate] = useState<Date>();
+  const [chargeThisMonth, setChargeThisMonth] = useState<boolean>(true);
 
   useEffect(() => {
-    const results = getNewChargeDayResults(selectedChargeDay);
-    setNextChargeDate(results.nextChargeDate);
-    setForcedChargeDate(results.forcedChargeDate);
-    if (vippsAgreement) {
-      // eslint-disable-next-line no-console
-      console.log(selectedChargeDay);
-      dispatch(
-        setVippsAgreement({
-          ...vippsAgreement,
-          forceChargeDate: results.forcedChargeDate
-            ? results.forcedChargeDate
-            : undefined,
-          chargeDay: selectedChargeDay,
-        })
-      );
-    }
-  }, [selectedChargeDay]);
+    const nextCharge = calculateNextCharge(selectedChargeDay, chargeThisMonth);
+    dispatch(
+      setVippsAgreement({
+        ...vippsAgreement,
+        monthlyChargeDay: selectedChargeDay,
+        initialCharge: nextCharge.initialCharge,
+        captureChargeDate: nextCharge.captureChargeDate,
+      })
+    );
+    setNextChargeDate(nextCharge.nextChargeDate);
+  }, [selectedChargeDay, chargeThisMonth]);
 
   const dateBoxes: JSX.Element[] = [];
   for (let i = 1; i <= 28; i += 1) {
@@ -42,7 +46,12 @@ export const DatePicker: React.FC = () => {
         style={{
           backgroundColor: selectedChargeDay === i ? orange20 : "white",
         }}
-        onClick={() => setSelectedChargeDay(i)}
+        onClick={() => {
+          if (i > new Date().getDate() + 3) {
+            setChargeThisMonth(false);
+          }
+          setSelectedChargeDay(i);
+        }}
       >
         {i}
       </Datebox>
@@ -68,12 +77,33 @@ export const DatePicker: React.FC = () => {
           Siste hver måned
         </Datebox>
       </DateBoxWrapper>
-      <DateText>
-        Første trekk blir
-        {nextChargeDate && ` ${formatDate(nextChargeDate)}`}
-        <br />
-        {forcedChargeDate && `Etterfølgende måneder trekkes på valgt trekkdag`}
-      </DateText>
+      <DateTextWrapper>
+        <DateText>
+          {selectedChargeDay < new Date().getDate() &&
+          selectedChargeDay !== 0 &&
+          vippsAgreement.initialCharge
+            ? "Første trekk blir i dag"
+            : nextChargeDate &&
+              `Første trekk blir ${formatDate(nextChargeDate)}`}
+          <br />
+        </DateText>
+        {selectedChargeDay < new Date().getDate() && selectedChargeDay !== 0 && (
+          <CheckBoxWrapper>
+            <HiddenCheckBox
+              name="initialCharge"
+              type="checkbox"
+              onChange={() => {
+                (document.activeElement as HTMLElement).blur();
+                setChargeThisMonth(!chargeThisMonth);
+              }}
+            />
+            <CustomCheckBox
+              label="Trekk meg denne måneden også"
+              checked={chargeThisMonth}
+            />
+          </CheckBoxWrapper>
+        )}
+      </DateTextWrapper>
     </Wrapper>
   );
 };
