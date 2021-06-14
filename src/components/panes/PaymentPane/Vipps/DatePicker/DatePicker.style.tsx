@@ -39,9 +39,9 @@ export const Datebox = styled.button`
 `;
 
 export const DateText = styled.p`
-  display: block;
+  display: inline-block;
   margin: 0;
-  font-size: 12px;
+  font-size: 13px;
   font-family: "Roboto", Arial, sans-serif;
   padding-left: 3px;
   margin-bottom: 5px;

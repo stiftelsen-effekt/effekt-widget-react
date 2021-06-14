@@ -1,6 +1,21 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import moment from "moment";
 
+const months = [
+  "januar",
+  "februar",
+  "mars",
+  "april",
+  "mai",
+  "juni",
+  "juli",
+  "august",
+  "september",
+  "oktober",
+  "november",
+  "desember",
+];
+
 export const dayMs = 86400000;
 const thisYear = new Date().getFullYear();
 const thisMonth = new Date().getMonth();
@@ -26,15 +41,18 @@ export function formatDate(date: Date): string {
   return moment(date).format("DD.MM.YYYY");
 }
 
+export function formatDateText(date: Date): string {
+  return `${date.getDate()}. ${months[date.getMonth()]}`;
+}
+
 export interface NextCharge {
   nextChargeDate: Date;
-  captureChargeDate: Date | false;
   initialCharge: boolean;
 }
 
 export function calculateNextCharge(
   newChargeDay: number,
-  chargeThisMonth: boolean
+  willChargeThisMonth: boolean
 ): NextCharge {
   const todayDate = new Date();
 
@@ -52,30 +70,21 @@ export function calculateNextCharge(
 
   let initialCharge = false;
   let nextChargeDate = newChargeDateThisMonth;
-  let captureChargeDate: Date | false = false;
 
   if (newChargeDay === new Date().getDate()) {
     initialCharge = true;
     nextChargeDate = todayDate;
   }
 
-  if (newChargeDay > new Date().getDate()) {
-    if (!isThreeDaysAfterToday(newChargeDateThisMonth, todayDate)) {
-      initialCharge = true;
-      captureChargeDate = newChargeDateThisMonth;
-    }
-    nextChargeDate = newChargeDateThisMonth;
-  }
-
-  if (newChargeDay < new Date().getDate()) {
-    if (chargeThisMonth) {
+  if (newChargeDay < new Date().getDate() + 4) {
+    if (willChargeThisMonth) {
       initialCharge = true;
       nextChargeDate = todayDate;
     }
 
-    if (!chargeThisMonth) {
+    if (!willChargeThisMonth) {
       nextChargeDate = newChargeDateNextMonth;
     }
   }
-  return { nextChargeDate, captureChargeDate, initialCharge };
+  return { nextChargeDate, initialCharge };
 }

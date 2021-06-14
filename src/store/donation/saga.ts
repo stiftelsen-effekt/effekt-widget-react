@@ -22,9 +22,6 @@ export function* draftVippsAgreement(): SagaIterator<void> {
     const initialCharge: boolean = yield select(
       (state: State) => state.donation.vippsAgreement?.initialCharge
     );
-    const captureChargeDate: Date = yield select(
-      (state: State) => state.donation.vippsAgreement?.captureChargeDate
-    );
     const monthlyChargeDay: Date = yield select(
       (state: State) => state.donation.vippsAgreement?.monthlyChargeDay
     );
@@ -32,7 +29,6 @@ export function* draftVippsAgreement(): SagaIterator<void> {
       KID,
       amount,
       initialCharge,
-      captureChargeDate,
       monthlyChargeDay,
     };
 

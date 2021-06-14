@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { orange20 } from "../../../../../config/colors";
 import { setVippsAgreement } from "../../../../../store/donation/actions";
 import { State } from "../../../../../store/state";
+import { ToolTip } from "../../../../shared/ToolTip/ToolTip";
 import { CustomCheckBox } from "../../../DonorPane/CustomCheckBox";
 import { CheckBoxWrapper, HiddenCheckBox } from "../../../Forms.style";
 import {
@@ -12,7 +13,10 @@ import {
   DateTextWrapper,
   Wrapper,
 } from "./DatePicker.style";
-import { calculateNextCharge, formatDate } from "./dates";
+import { calculateNextCharge, formatDateText } from "./dates";
+
+const tooltipText =
+  "Vi kan av tekniske grunner ikke melde trekk 1-3 dager i forveien, så første trekk blir neste måned. Du kan velge en senere dato eller krysse av for også å bli trukket i dag.";
 
 export const DatePicker: React.FC = () => {
   const dispatch = useDispatch();
@@ -27,12 +31,13 @@ export const DatePicker: React.FC = () => {
 
   useEffect(() => {
     const nextCharge = calculateNextCharge(selectedChargeDay, chargeThisMonth);
+    // eslint-disable-next-line no-console
+    console.log(nextCharge);
     dispatch(
       setVippsAgreement({
         ...vippsAgreement,
         monthlyChargeDay: selectedChargeDay,
         initialCharge: nextCharge.initialCharge,
-        captureChargeDate: nextCharge.captureChargeDate,
       })
     );
     setNextChargeDate(nextCharge.nextChargeDate);
@@ -79,30 +84,34 @@ export const DatePicker: React.FC = () => {
       </DateBoxWrapper>
       <DateTextWrapper>
         <DateText>
-          {selectedChargeDay < new Date().getDate() &&
+          {selectedChargeDay <= new Date().getDate() + 4 &&
           selectedChargeDay !== 0 &&
           vippsAgreement.initialCharge
-            ? "Første trekk blir i dag"
+            ? `Første trekk blir i dag, deretter den ${selectedChargeDay}. hver måned `
             : nextChargeDate &&
-              `Første trekk blir ${formatDate(nextChargeDate)}`}
-          <br />
+              `Første trekk blir ${formatDateText(nextChargeDate)} `}
         </DateText>
-        {selectedChargeDay < new Date().getDate() && selectedChargeDay !== 0 && (
-          <CheckBoxWrapper>
-            <HiddenCheckBox
-              name="initialCharge"
-              type="checkbox"
-              onChange={() => {
-                (document.activeElement as HTMLElement).blur();
-                setChargeThisMonth(!chargeThisMonth);
-              }}
-            />
-            <CustomCheckBox
-              label="Trekk meg denne måneden også"
-              checked={chargeThisMonth}
-            />
-          </CheckBoxWrapper>
-        )}
+        {selectedChargeDay < new Date().getDate() + 4 &&
+          selectedChargeDay > new Date().getDate() &&
+          selectedChargeDay !== 0 && <ToolTip text={tooltipText} />}
+        {selectedChargeDay < new Date().getDate() + 4 &&
+          selectedChargeDay !== new Date().getDate() &&
+          selectedChargeDay !== 0 && (
+            <CheckBoxWrapper>
+              <HiddenCheckBox
+                name="initialCharge"
+                type="checkbox"
+                onChange={() => {
+                  (document.activeElement as HTMLElement).blur();
+                  setChargeThisMonth(!chargeThisMonth);
+                }}
+              />
+              <CustomCheckBox
+                label="Trekk meg for denne måneden også"
+                checked={chargeThisMonth}
+              />
+            </CheckBoxWrapper>
+          )}
       </DateTextWrapper>
     </Wrapper>
   );

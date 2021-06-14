@@ -37,7 +37,6 @@ export interface Donation extends DonationInput {
 
 export interface VippsAgreement {
   initialCharge: boolean;
-  captureChargeDate: Date | false;
   monthlyChargeDay: number;
 }
 
