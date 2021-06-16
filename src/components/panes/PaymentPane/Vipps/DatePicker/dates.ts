@@ -45,78 +45,7 @@ export function formatDateText(date: Date): string {
   return `${date.getDate()}. ${months[date.getMonth()]}`;
 }
 
-export interface NextCharge {
-  nextChargeDate: Date;
-  initialCharge: boolean;
-}
-
-export function calculateNextCharge(
-  newChargeDay: number,
-  willChargeThisMonth: boolean
-): NextCharge {
-  const todayDate = new Date();
-
-  // Gets the last day of this month
-  if (newChargeDay === 0) {
-    newChargeDay = new Date(thisYear, thisMonth + 1, 0).getDate();
-  }
-
-  const newChargeDateThisMonth = new Date(thisYear, thisMonth, newChargeDay);
-  const newChargeDateNextMonth = new Date(
-    thisYear,
-    thisMonth + 1,
-    newChargeDay
-  );
-
-  let initialCharge = false;
-  let nextChargeDate = newChargeDateThisMonth;
-
-  if (newChargeDay === new Date().getDate()) {
-    initialCharge = true;
-    nextChargeDate = todayDate;
-  }
-
-  if (newChargeDay < new Date().getDate() + 4) {
-    if (willChargeThisMonth) {
-      initialCharge = true;
-      nextChargeDate = todayDate;
-    }
-
-    if (!willChargeThisMonth) {
-      nextChargeDate = newChargeDateNextMonth;
-    }
-  }
-  return { nextChargeDate, initialCharge };
-}
-
-export function showCheckBox(
-  selectedChargeDay: number,
-  todayDate: Date = new Date()
-): boolean {
-  const chargeDateThisMonth = new Date(thisYear, thisMonth, selectedChargeDay);
-  const chargeDateNextMonth = new Date(
-    thisYear,
-    thisMonth + 1,
-    selectedChargeDay
-  );
-
-  if (selectedChargeDay === todayDate.getDate()) return false;
-
-  if (isThreeDaysAfterToday(chargeDateThisMonth)) {
-    return false;
-  }
-
-  if (
-    !isThreeDaysAfterToday(chargeDateThisMonth) ||
-    !isThreeDaysAfterToday(chargeDateNextMonth)
-  ) {
-    return true;
-  }
-
-  return false;
-}
-
-export function showTooltip(
+export function isIrregularChargeDay(
   selectedChargeDay: number,
   todayDate: Date = new Date()
 ): boolean {
@@ -142,6 +71,75 @@ export function showTooltip(
   }
 
   if (!isThreeDaysAfterToday(chargeDateNextMonth)) return true;
+
+  return false;
+}
+
+export function getNextChargeDate(
+  newChargeDay: number,
+  initialCharge: boolean
+): Date {
+  const todayDate = new Date();
+
+  // Gets the last day of this month
+  if (newChargeDay === 0) {
+    newChargeDay = new Date(thisYear, thisMonth + 1, 0).getDate();
+  }
+
+  if (initialCharge) return todayDate;
+  if (newChargeDay === new Date().getDate()) return todayDate;
+
+  const newChargeDateThisMonth = new Date(thisYear, thisMonth, newChargeDay);
+  const newChargeDateNextMonth = new Date(
+    thisYear,
+    thisMonth + 1,
+    newChargeDay
+  );
+  const newChargeDateFurtherNextMonth = new Date(
+    thisYear,
+    thisMonth + 2,
+    newChargeDay
+  );
+
+  if (isThreeDaysAfterToday(newChargeDateThisMonth)) {
+    return newChargeDateThisMonth;
+  }
+
+  if (isThreeDaysAfterToday(newChargeDateNextMonth)) {
+    return newChargeDateNextMonth;
+  }
+
+  return newChargeDateFurtherNextMonth;
+}
+
+export function showCheckBox(
+  selectedChargeDay: number,
+  todayDate: Date = new Date()
+): boolean {
+  // Gets the last day of this month
+  if (selectedChargeDay === 0) {
+    selectedChargeDay = new Date(thisYear, thisMonth + 1, 0).getDate();
+  }
+
+  const chargeDateThisMonth = new Date(thisYear, thisMonth, selectedChargeDay);
+  const chargeDateNextMonth = new Date(
+    thisYear,
+    thisMonth + 1,
+    selectedChargeDay
+  );
+
+  if (selectedChargeDay === todayDate.getDate()) return false;
+
+  if (isThreeDaysAfterToday(chargeDateThisMonth)) {
+    return false;
+  }
+
+  if (
+    !isThreeDaysAfterToday(chargeDateThisMonth) ||
+    !isThreeDaysAfterToday(chargeDateNextMonth)
+  ) {
+    return true;
+  }
 
   return false;
 }

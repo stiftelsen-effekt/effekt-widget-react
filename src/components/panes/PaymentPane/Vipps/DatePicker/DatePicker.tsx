@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-indent */
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { orange20 } from "../../../../../config/colors";
@@ -14,10 +15,10 @@ import {
   Wrapper,
 } from "./DatePicker.style";
 import {
-  calculateNextCharge,
   formatDateText,
+  getNextChargeDate,
+  isIrregularChargeDay,
   showCheckBox,
-  showTooltip,
 } from "./dates";
 
 const tooltipText =
@@ -32,26 +33,23 @@ export const DatePicker: React.FC = () => {
     vippsAgreement.monthlyChargeDay
   );
   const [nextChargeDate, setNextChargeDate] = useState<Date>();
-  const [shouldChargeThisMonth, setshouldChargeThisMonth] = useState<boolean>(
-    true
-  );
+  const [initialCharge, setinitialCharge] = useState<boolean>(true);
 
   useEffect(() => {
-    const nextCharge = calculateNextCharge(
-      selectedChargeDay,
-      shouldChargeThisMonth
-    );
+    setNextChargeDate(getNextChargeDate(selectedChargeDay, initialCharge));
     // eslint-disable-next-line no-console
-    console.log(nextCharge);
+    console.log(
+      getNextChargeDate(selectedChargeDay, initialCharge),
+      initialCharge
+    );
     dispatch(
       setVippsAgreement({
         ...vippsAgreement,
         monthlyChargeDay: selectedChargeDay,
-        initialCharge: nextCharge.initialCharge,
+        initialCharge,
       })
     );
-    setNextChargeDate(nextCharge.nextChargeDate);
-  }, [selectedChargeDay, shouldChargeThisMonth]);
+  }, [selectedChargeDay, initialCharge]);
 
   const dateBoxes: JSX.Element[] = [];
   for (let i = 1; i <= 28; i += 1) {
@@ -62,8 +60,8 @@ export const DatePicker: React.FC = () => {
           backgroundColor: selectedChargeDay === i ? orange20 : "white",
         }}
         onClick={() => {
-          if (i > new Date().getDate() + 3) {
-            setshouldChargeThisMonth(false);
+          if (!showCheckBox(i)) {
+            setinitialCharge(false);
           }
           setSelectedChargeDay(i);
         }}
@@ -86,6 +84,9 @@ export const DatePicker: React.FC = () => {
             width: "120px",
           }}
           onClick={() => {
+            if (!showCheckBox(0)) {
+              setinitialCharge(false);
+            }
             setSelectedChargeDay(0);
           }}
         >
@@ -94,14 +95,25 @@ export const DatePicker: React.FC = () => {
       </DateBoxWrapper>
       <DateTextWrapper>
         <DateText>
-          {selectedChargeDay <= new Date().getDate() + 4 &&
-          selectedChargeDay !== 0 &&
-          vippsAgreement.initialCharge
-            ? `Første trekk blir i dag, deretter den ${selectedChargeDay}. hver måned `
-            : nextChargeDate &&
-              `Første trekk blir ${formatDateText(nextChargeDate)} `}
+          {vippsAgreement.initialCharge &&
+            `Første trekk blir i dag, deretter den ${
+              selectedChargeDay === 0 ? "siste" : `${selectedChargeDay}.`
+            } hver måned `}
+          {!vippsAgreement.initialCharge &&
+            nextChargeDate &&
+            "Første trekk blir "}
+          {!vippsAgreement.initialCharge &&
+          isIrregularChargeDay(selectedChargeDay)
+            ? nextChargeDate && (
+                <strong>{`${formatDateText(nextChargeDate)} `}</strong>
+              )
+            : !vippsAgreement.initialCharge &&
+              nextChargeDate &&
+              `${formatDateText(nextChargeDate)} `}
         </DateText>
-        {showTooltip(selectedChargeDay) && <ToolTip text={tooltipText} />}
+        {isIrregularChargeDay(selectedChargeDay) && (
+          <ToolTip text={tooltipText} />
+        )}
         {showCheckBox(selectedChargeDay) && (
           <CheckBoxWrapper>
             <HiddenCheckBox
@@ -109,12 +121,12 @@ export const DatePicker: React.FC = () => {
               type="checkbox"
               onChange={() => {
                 (document.activeElement as HTMLElement).blur();
-                setshouldChargeThisMonth(!shouldChargeThisMonth);
+                setinitialCharge(!initialCharge);
               }}
             />
             <CustomCheckBox
               label="Trekk meg for denne måneden også"
-              checked={shouldChargeThisMonth}
+              checked={initialCharge}
             />
           </CheckBoxWrapper>
         )}
