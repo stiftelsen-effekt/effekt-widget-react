@@ -88,3 +88,53 @@ export function calculateNextCharge(
   }
   return { nextChargeDate, initialCharge };
 }
+
+export function showCheckBox(selectedChargeDay: number): boolean {
+  const chargeDateThisMonth = new Date(thisYear, thisMonth, selectedChargeDay);
+  const chargeDateNextMonth = new Date(
+    thisYear,
+    thisMonth + 1,
+    selectedChargeDay
+  );
+
+  if (selectedChargeDay === new Date().getDate()) return false;
+
+  if (isThreeDaysAfterToday(chargeDateThisMonth)) {
+    return false;
+  }
+
+  if (
+    !isThreeDaysAfterToday(chargeDateThisMonth) ||
+    !isThreeDaysAfterToday(chargeDateNextMonth)
+  ) {
+    return true;
+  }
+
+  return false;
+}
+
+export function showTooltip(selectedChargeDay: number): boolean {
+  const chargeDateThisMonth = new Date(thisYear, thisMonth, selectedChargeDay);
+  const chargeDateNextMonth = new Date(
+    thisYear,
+    thisMonth + 1,
+    selectedChargeDay
+  );
+
+  if (selectedChargeDay === new Date().getDate()) return false;
+
+  if (selectedChargeDay < new Date().getDate()) return false;
+
+  if (isThreeDaysAfterToday(chargeDateThisMonth)) {
+    return false;
+  }
+
+  if (
+    !isThreeDaysAfterToday(chargeDateThisMonth) ||
+    !isThreeDaysAfterToday(chargeDateNextMonth)
+  ) {
+    return true;
+  }
+
+  return false;
+}
