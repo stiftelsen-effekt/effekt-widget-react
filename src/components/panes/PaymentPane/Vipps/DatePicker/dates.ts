@@ -89,7 +89,10 @@ export function calculateNextCharge(
   return { nextChargeDate, initialCharge };
 }
 
-export function showCheckBox(selectedChargeDay: number): boolean {
+export function showCheckBox(
+  selectedChargeDay: number,
+  todayDate: Date = new Date()
+): boolean {
   const chargeDateThisMonth = new Date(thisYear, thisMonth, selectedChargeDay);
   const chargeDateNextMonth = new Date(
     thisYear,
@@ -97,7 +100,7 @@ export function showCheckBox(selectedChargeDay: number): boolean {
     selectedChargeDay
   );
 
-  if (selectedChargeDay === new Date().getDate()) return false;
+  if (selectedChargeDay === todayDate.getDate()) return false;
 
   if (isThreeDaysAfterToday(chargeDateThisMonth)) {
     return false;
@@ -113,28 +116,32 @@ export function showCheckBox(selectedChargeDay: number): boolean {
   return false;
 }
 
-export function showTooltip(selectedChargeDay: number): boolean {
+export function showTooltip(
+  selectedChargeDay: number,
+  todayDate: Date = new Date()
+): boolean {
   const chargeDateThisMonth = new Date(thisYear, thisMonth, selectedChargeDay);
+
   const chargeDateNextMonth = new Date(
     thisYear,
     thisMonth + 1,
     selectedChargeDay
   );
 
-  if (selectedChargeDay === new Date().getDate()) return false;
-
-  if (selectedChargeDay < new Date().getDate()) return false;
+  if (selectedChargeDay === todayDate.getDate()) return false;
 
   if (isThreeDaysAfterToday(chargeDateThisMonth)) {
     return false;
   }
 
   if (
-    !isThreeDaysAfterToday(chargeDateThisMonth) ||
-    !isThreeDaysAfterToday(chargeDateNextMonth)
+    !isThreeDaysAfterToday(chargeDateThisMonth) &&
+    selectedChargeDay > todayDate.getDate()
   ) {
     return true;
   }
+
+  if (!isThreeDaysAfterToday(chargeDateNextMonth)) return true;
 
   return false;
 }
