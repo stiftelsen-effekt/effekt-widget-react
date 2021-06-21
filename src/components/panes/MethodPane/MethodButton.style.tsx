@@ -36,7 +36,7 @@ export const MethodButtonWrapper = styled.div`
 
   &.vipps {
     background-image: url("https://storage.googleapis.com/effekt-widget/assets/logos/vipps.png");
-    background-position: 16px center;
+    background-position: 16px 25px;
     background-size: 120px;
     background-repeat: no-repeat;
   }

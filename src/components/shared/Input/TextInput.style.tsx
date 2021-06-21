@@ -9,14 +9,17 @@ export interface TextInputProps extends TextInputWrapperProps {
   defaultValue?: string | number;
   selectOnClick?: boolean;
   innerRef?: React.Ref<HTMLInputElement>;
+  clustered?: boolean;
   value?: string | undefined;
   tooltipText?: string;
+  autoComplete?: "off";
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 export interface TextInputWrapperProps {
   label?: string;
   denomination?: string;
+  clustered?: boolean;
 }
 
 export const TextInputWrapper = styled.div`
@@ -31,17 +34,40 @@ export const TextInputWrapper = styled.div`
   z-index: 1;
 
   ${(props: TextInputWrapperProps) => {
+    if (props.clustered) {
+      return `
+        border-radius: 0px;
+        margin-bottom: 0px;
+        border-bottom-style: none;
+
+        &:first-child {
+          border-top-right-radius: 5px;
+          border-top-left-radius: 5px;
+        }
+
+        &:last-child {
+          border-bottom-right-radius: 5px;
+          border-bottom-left-radius: 5px;
+          border-bottom-style: solid;
+        }
+      `;
+    }
+    return "";
+  }}
+
+  ${(props: TextInputWrapperProps) => {
     if (props.denomination) {
       return `
         &:after {
           content: "${props.denomination}";
           height: 100%;
           position: absolute;
+          width: 14px;
           right: 12px;
           top: 0;
           color: ${gray18};
           display: flex;
-          justify-content: center;
+          justify-content: left;
           align-items: center;
           font-weight: normal;
         }

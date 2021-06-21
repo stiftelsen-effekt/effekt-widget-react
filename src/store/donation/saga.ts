@@ -2,8 +2,8 @@ import { SagaIterator } from "redux-saga";
 import { call, put, select } from "redux-saga/effects";
 import { Action } from "typescript-fsa";
 import { API_URL } from "../../config/api";
-import { PaymentMethod, ShareType } from "../../types/Enums";
-import { IServerResponse } from "../../types/Temp";
+import { PaymentMethod, ShareType, RecurringDonation } from "../../types/Enums";
+import { DraftAgreementResponse, IServerResponse } from "../../types/Temp";
 import { nextPane, setAnsweredReferral, setLoading } from "../layout/actions";
 import { Donation, RegisterDonationObject, State } from "../state";
 import {
@@ -13,20 +13,74 @@ import {
   setPaymentProviderURL,
 } from "./actions";
 
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-export function* registerBankPending() {
+export function* draftVippsAgreement(): SagaIterator<void> {
+  try {
+    yield put(setLoading(true));
+
+    const KID: number = yield select((state: State) => state.donation.kid);
+    const amount: number = yield select((state: State) => state.donation.sum);
+    const initialCharge: boolean = yield select(
+      (state: State) => state.donation.vippsAgreement?.initialCharge
+    );
+    const monthlyChargeDay: Date = yield select(
+      (state: State) => state.donation.vippsAgreement?.monthlyChargeDay
+    );
+    const data = {
+      KID,
+      amount,
+      initialCharge,
+      monthlyChargeDay,
+    };
+
+    const draftRequest = yield call(fetch, `${API_URL}/vipps/agreement/draft`, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+
+    const draftResponse: IServerResponse<DraftAgreementResponse> = yield call(
+      draftRequest.json.bind(draftRequest)
+    );
+
+    if (draftResponse.content) {
+      window.location.href = (draftResponse.content as DraftAgreementResponse).vippsConfirmationUrl;
+
+      yield put(
+        setPaymentProviderURL(
+          (draftResponse.content as DraftAgreementResponse).vippsConfirmationUrl
+        )
+      );
+    }
+
+    if (draftResponse.status !== 200) {
+      yield put(setLoading(false));
+      throw new Error(draftResponse.content as string);
+    }
+  } catch (ex) {
+    console.error(ex);
+  }
+}
+
+export function* registerBankPending(): SagaIterator<void> {
   try {
     const KID: number = yield select((state: State) => state.donation.kid);
     const sum: number = yield select((state: State) => state.donation.sum);
 
-    const request = yield call(fetch, `${API_URL}/donations/bank/pending`, {
-      method: "POST",
-      headers: {
-        Accept: "application/x-www-form-urlencoded",
-        "Content-Type": "application/x-www-form-urlencoded",
-      },
-      body: `data={"KID":${KID}, "sum":${sum}}`,
-    });
+    const request: Response = yield call(
+      fetch,
+      `${API_URL}/donations/bank/pending`,
+      {
+        method: "POST",
+        headers: {
+          Accept: "application/x-www-form-urlencoded",
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+        body: `data={"KID":"${KID}", "sum":${sum}}`,
+      }
+    );
 
     const result: IServerResponse<never> = yield call(
       request.json.bind(request)
@@ -54,6 +108,7 @@ export function* registerDonation(
       method: donation.method ? donation.method : PaymentMethod.BANK,
       amount: donation.sum ? donation.sum : 0,
       recurring: donation.recurring,
+      dueDay: donation.dueDay,
     };
 
     if (donation.shareType === ShareType.CUSTOM) {
@@ -95,7 +150,10 @@ export function* registerDonation(
       })
     );
 
-    if (donation.method === PaymentMethod.BANK) {
+    if (
+      donation.method === PaymentMethod.BANK &&
+      donation.recurring === RecurringDonation.NON_RECURRING
+    ) {
       yield put(registerBankPendingAction.started(undefined));
     }
 
