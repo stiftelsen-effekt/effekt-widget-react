@@ -38,6 +38,7 @@ const initialState: Donation = {
       : new Date().getDate() + 5 - 28,
   vippsAgreement: {
     initialCharge: true,
+    monthlyChargeDay: new Date().getDate() <= 28 ? new Date().getDate() : 0,
   },
 };
 
@@ -135,7 +136,10 @@ export const donationReducer: Reducer<Donation, DonationActionTypes> = (
     case SET_VIPPS_AGREEMENT:
       state = {
         ...state,
-        vippsAgreement: action.payload.vippsAgreement,
+        vippsAgreement: {
+          ...state.vippsAgreement,
+          ...action.payload.vippsAgreement,
+        },
       };
       break;
     default:

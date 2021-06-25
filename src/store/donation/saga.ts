@@ -22,13 +22,15 @@ export function* draftVippsAgreement(): SagaIterator<void> {
     const initialCharge: boolean = yield select(
       (state: State) => state.donation.vippsAgreement?.initialCharge
     );
-    const forcedChargeDate: Date = yield select(
-      (state: State) => state.donation.vippsAgreement?.forceChargeDate
+    const monthlyChargeDay: Date = yield select(
+      (state: State) => state.donation.vippsAgreement?.monthlyChargeDay
     );
-    const chargeDay: Date = yield select(
-      (state: State) => state.donation.vippsAgreement?.chargeDay
-    );
-    const data = { KID, amount, initialCharge };
+    const data = {
+      KID,
+      amount,
+      initialCharge,
+      monthlyChargeDay,
+    };
 
     const draftRequest = yield call(fetch, `${API_URL}/vipps/agreement/draft`, {
       method: "POST",
@@ -51,47 +53,6 @@ export function* draftVippsAgreement(): SagaIterator<void> {
           (draftResponse.content as DraftAgreementResponse).vippsConfirmationUrl
         )
       );
-
-      const {
-        agreementUrlCode,
-      } = draftResponse.content as DraftAgreementResponse;
-
-      if (chargeDay && initialCharge === false) {
-        const body = { agreementCode: agreementUrlCode, chargeDay };
-
-        const request = yield call(
-          fetch,
-          `${API_URL}/vipps/agreement/chargeday`,
-          {
-            method: "PUT",
-            headers: {
-              Accept: "application/json",
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(body),
-          }
-        );
-
-        yield call(request.json.bind(request));
-      }
-
-      if (forcedChargeDate && initialCharge === false) {
-        const body = { agreementCode: agreementUrlCode, forcedChargeDate };
-        const request = yield call(
-          fetch,
-          `${API_URL}/vipps/agreement/forcedcharge`,
-          {
-            method: "PUT",
-            headers: {
-              Accept: "application/json",
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(body),
-          }
-        );
-
-        yield call(request.json.bind(request));
-      }
     }
 
     if (draftResponse.status !== 200) {
