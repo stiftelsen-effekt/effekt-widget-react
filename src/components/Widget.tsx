@@ -60,11 +60,13 @@ export const Widget: React.FC = () => {
           verdens mest effektive hjelpeorganisasjoner.
           <br />
           <br />
-          Eventuelle transaksjonskostnader tilknyttet din donasjon dekkes av oss så 100% av din donasjon kommer frem. Les
-		      <OrangeLink href="https://gieffektivt.no/gi#transaksjonskostnader">
+          Eventuelle transaksjonskostnader tilknyttet din donasjon dekkes av oss
+          så 100% av din donasjon kommer frem. Les
+          <OrangeLink href="https://gieffektivt.no/gi#transaksjonskostnader">
             {` her `}
           </OrangeLink>
-          for mer om transaksjonskostnader ved de ulike betalingsmåtene. Om du har spørsmål kan du sende oss en e-post til
+          for mer om transaksjonskostnader ved de ulike betalingsmåtene. Om du
+          har spørsmål kan du sende oss en e-post til
           <OrangeLink href="mailto:mailto:donasjon@gieffektivt.no">
             {` donasjon@gieffektivt.no`}
           </OrangeLink>
