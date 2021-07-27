@@ -3,6 +3,7 @@ import { gray18 } from "../../../../config/colors";
 
 export const VippsButtonWrapper = styled.div`
   width: 100%;
+  height: 150px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -11,11 +12,10 @@ export const VippsButtonWrapper = styled.div`
 `;
 
 export const VippsButton = styled.div`
-  margin: 40px;
   width: 250px;
-  height: 50px;
+  height: 70px;
   background-image: url(https://storage.googleapis.com/effekt-widget/assets/vipps/vipps-btn.svg);
-  background-size: 100%;
+  background-size: 95%;
   background-position: center;
   background-repeat: no-repeat;
 

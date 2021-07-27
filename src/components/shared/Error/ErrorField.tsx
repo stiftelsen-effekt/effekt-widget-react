@@ -19,12 +19,11 @@ export const ErrorMessage = styled.div`
 
 interface Props {
   text: string;
-  center?: boolean;
 }
 
-export const ErrorField: React.FC<Props> = ({ text, center }) => {
+export const ErrorField: React.FC<Props> = ({ text }) => {
   return (
-    <ErrorWrapper style={{ textAlign: center ? "center" : "start" }}>
+    <ErrorWrapper>
       <svg
         stroke="currentColor"
         fill="currentColor"

@@ -25,8 +25,6 @@ export interface DonationInput {
   recurring: RecurringDonation;
   donor?: Donor;
   shares: OrganizationShare[];
-  dueDay?: number;
-  vippsAgreement: VippsAgreement;
 }
 
 export interface Donation extends DonationInput {
@@ -35,18 +33,12 @@ export interface Donation extends DonationInput {
   isValid: boolean;
 }
 
-export interface VippsAgreement {
-  initialCharge: boolean;
-  monthlyChargeDay: number;
-}
-
 export interface RegisterDonationObject {
   donor: Donor;
   method: PaymentMethod;
   recurring: RecurringDonation;
   amount: number;
   organizations?: OrganizationShare[];
-  dueDay?: number;
 }
 
 export interface DonorInput {
@@ -55,7 +47,6 @@ export interface DonorInput {
   taxDeduction?: boolean;
   ssn?: number;
   newsletter?: boolean;
-  dueDay?: number;
 }
 
 export interface Donor extends DonorInput {
