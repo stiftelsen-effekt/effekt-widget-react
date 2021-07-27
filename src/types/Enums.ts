@@ -1,6 +1,6 @@
 export enum RecurringDonation {
-  RECURRING,
-  NON_RECURRING,
+  RECURRING = 1,
+  NON_RECURRING = 0,
 }
 
 export enum ShareType {

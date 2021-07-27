@@ -20,13 +20,11 @@ import { LoadingCircle } from "../../shared/LoadingCircle/LoadingCircle";
 
 export const DonationPane: React.FC = () => {
   const dispatch = useDispatch();
-  const shareType = useSelector((state: State) => state.donation.shareType);
-  const donationValid = useSelector((state: State) => state.donation.isValid);
-  const donationSum = useSelector((state: State) => state.donation.sum);
+  const donation = useSelector((state: State) => state.donation);
   const [loadingAnimation, setLoadingAnimation] = useState(false);
 
   function onSubmit() {
-    if (donationSum && donationSum > 0) {
+    if (donation.isValid) {
       setLoadingAnimation(true);
       dispatch(registerDonationAction.started(undefined));
     } else {
@@ -46,7 +44,12 @@ export const DonationPane: React.FC = () => {
                 name="sum"
                 type="tel"
                 placeholder="0"
-                defaultValue={donationSum && donationSum > 1 ? donationSum : ""}
+                defaultValue={
+                  donation.sum && donation.sum > 1 ? donation.sum : ""
+                }
+                clustered
+                selectOnClick
+                autoComplete="off"
                 onChange={(e) => {
                   if (
                     Validator.isInt(e.target.value) === true &&
@@ -61,7 +64,7 @@ export const DonationPane: React.FC = () => {
             </SumWrapper>
 
             <RichSelect
-              selected={shareType}
+              selected={donation.shareType}
               onChange={(type: ShareType) => dispatch(setShareType(type))}
             >
               <RichSelectOption
@@ -81,13 +84,13 @@ export const DonationPane: React.FC = () => {
             <NextButton
               type="button"
               onClick={() => onSubmit()}
-              disabled={!donationValid}
+              disabled={!donation.isValid}
             >
               Neste
             </NextButton>
           </form>
         )}
-        {loadingAnimation && <LoadingCircle>Hey</LoadingCircle>}
+        {loadingAnimation && <LoadingCircle />}
       </PaneContainer>
     </Pane>
   );

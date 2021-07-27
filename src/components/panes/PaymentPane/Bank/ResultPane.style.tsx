@@ -7,14 +7,6 @@ export const ResultWrapper = styled.div`
   align-items: center;
 `;
 
-export const RoundedBorder = styled.div`
-  width: 92%;
-  border: 1px solid ${gray18};
-  border-radius: 5px;
-  padding-left: 4%;
-  padding-right: 4%;
-`;
-
 export const HorizontalLine = styled.div`
   height: 1px;
   background-color: ${gray18};

@@ -2,10 +2,11 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { State } from "../../../../store/state";
 import { NextButton } from "../../../shared/Buttons/NavigationButtons.style";
+import { RoundedBorder } from "../../../shared/Layout/Layout.style";
 import { OrangeLink } from "../../../Widget.style";
 import { Pane, PaneContainer, PaneTitle, UnderTitle } from "../../Panes.style";
 import { InfoText } from "../PaymentPane.style";
-import { RoundedBorder, TextWrapper, HorizontalLine } from "./ResultPane.style";
+import { TextWrapper, HorizontalLine } from "./ResultPane.style";
 
 export const ResultPane: React.FC = () => {
   const donorEmail = useSelector((state: State) => state.donation.donor?.email);
