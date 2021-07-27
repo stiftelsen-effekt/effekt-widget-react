@@ -7,20 +7,22 @@ const ToolTipWrapper = styled.div`
   position: relative;
   display: inline;
   z-index: 2;
+  vertical-align: middle;
 `;
 
 const ToolTipText = styled.span`
   font-size: 14px;
   background-color: white;
-  margin-left: 10px;
+  margin-left: -10px;
+  line-height: 150%;
   bottom: 25px;
   height: auto;
-  width: 210px;
-  padding: 10px;
+  width: 250px;
+  padding: 20px;
   position: absolute;
   display: none;
   white-space: pre-wrap;
-  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.3);
   z-index: 5;
 `;
 
