@@ -3,13 +3,12 @@ import { Donation } from "../../../../store/state";
 import AvtaleGiroLogo from "../../../../assets/avtalegiro.jpeg";
 import { AvtaleGiroButton } from "./RecurringForm.style";
 import { API_URL } from "../../../../config/api";
-import { RoundedBorder } from "../../../shared/Layout/Layout.style";
 
 export const RecurringBankDonationForm: React.FC<{
   donation: Donation;
 }> = ({ donation }) => {
   return (
-    <RoundedBorder style={{ marginBottom: 10 }}>
+    <div>
       <form
         action="https://pvu.nets.no/ecsa/start"
         method="post"
@@ -51,6 +50,6 @@ export const RecurringBankDonationForm: React.FC<{
           <img src={AvtaleGiroLogo} alt="AvtaleGiro logo" height={20} />
         </AvtaleGiroButton>
       </form>
-    </RoundedBorder>
+    </div>
   );
 };

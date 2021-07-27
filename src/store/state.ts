@@ -25,7 +25,7 @@ export interface DonationInput {
   recurring: RecurringDonation;
   donor?: Donor;
   shares: OrganizationShare[];
-  dueDay?: number;
+  dueDay: number;
   vippsAgreement: VippsAgreement;
 }
 
