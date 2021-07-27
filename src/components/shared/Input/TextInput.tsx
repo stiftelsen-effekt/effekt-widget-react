@@ -19,8 +19,6 @@ export const TextInput: React.FC<TextInputProps> = ({
   defaultValue,
   innerRef,
   selectOnClick,
-  clustered,
-  autoComplete,
   value,
   onChange,
 }) => {
@@ -35,12 +33,12 @@ export const TextInput: React.FC<TextInputProps> = ({
     mobileLabel = label;
   }
   return (
-    <TextInputWrapper denomination={denomination} clustered={clustered}>
+    <TextInputWrapper denomination={denomination}>
       {label && <ComputerInputLabel>{label}</ComputerInputLabel>}
       {label && <MobileInputLabel>{mobileLabel}</MobileInputLabel>}
       {tooltipText && <ToolTip text={tooltipText} />}
       <TextInputField
-        autoComplete={autoComplete}
+        autoComplete={name}
         tooltipText={tooltipText}
         label={label}
         name={name}
@@ -52,7 +50,7 @@ export const TextInput: React.FC<TextInputProps> = ({
         ref={innerRef}
         value={value}
         onChange={onChange}
-        onFocus={(e) => {
+        onClick={(e) => {
           if (selectOnClick) e.currentTarget.select();
         }}
       />

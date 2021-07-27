@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-curly-newline */
-import React from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   selectPaymentMethod,
@@ -12,6 +12,7 @@ import {
   MethodWrapper,
   InfoText,
   RecurringSelectWrapper,
+  VippsComingSoon,
 } from "./MethodPane.style";
 import { RichSelect } from "../../shared/RichSelect/RichSelect";
 import { RichSelectOption } from "../../shared/RichSelect/RichSelectOption";
@@ -21,6 +22,10 @@ import { MethodButton } from "./MethodButton";
 export const MethodPane: React.FC = () => {
   const dispatch = useDispatch();
   const recurring = useSelector((state: State) => state.donation.recurring);
+  const [vippsDisabled, setVippsDisabled] = useState(
+    // eslint-disable-next-line no-unneeded-ternary
+    recurring === 0 ? true : false
+  );
 
   const selectMethod = (method: PaymentMethod) => {
     dispatch(selectPaymentMethod(method));
@@ -34,6 +39,7 @@ export const MethodPane: React.FC = () => {
         <RichSelect
           selected={recurring}
           onChange={(value: RecurringDonation) => {
+            setVippsDisabled(value === 0);
             dispatch(setRecurring(value));
           }}
         >
@@ -54,10 +60,14 @@ export const MethodPane: React.FC = () => {
           onKeyDown={() => selectMethod(PaymentMethod.BANK)}
           onClick={() => selectMethod(PaymentMethod.BANK)}
         />
+        {vippsDisabled && (
+          <VippsComingSoon>Kun engangsdonasjoner</VippsComingSoon>
+        )}
         <MethodButton
           className="vipps"
-          onKeyDown={() => selectMethod(PaymentMethod.VIPPS)}
-          onClick={() => selectMethod(PaymentMethod.VIPPS)}
+          disabled={vippsDisabled}
+          onKeyDown={() => !vippsDisabled && selectMethod(PaymentMethod.VIPPS)}
+          onClick={() => !vippsDisabled && selectMethod(PaymentMethod.VIPPS)}
         >
           2,99%
         </MethodButton>
