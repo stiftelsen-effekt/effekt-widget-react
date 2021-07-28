@@ -12,10 +12,12 @@ import {
   MethodWrapper,
   InfoText,
   RecurringSelectWrapper,
+  AvtaleGiroLogo,
 } from "./MethodPane.style";
 import { RichSelect } from "../../shared/RichSelect/RichSelect";
 import { RichSelectOption } from "../../shared/RichSelect/RichSelectOption";
 import { PaymentMethod, RecurringDonation } from "../../../types/Enums";
+import AvtaleGiroImage from "../../../assets/avtalegiro.jpeg";
 import { MethodButton } from "./MethodButton";
 
 export const MethodPane: React.FC = () => {
@@ -54,6 +56,9 @@ export const MethodPane: React.FC = () => {
           onKeyDown={() => selectMethod(PaymentMethod.BANK)}
           onClick={() => selectMethod(PaymentMethod.BANK)}
         />
+        {recurring === 1 && (
+          <AvtaleGiroLogo src={AvtaleGiroImage} alt="AvtaleGiro logo" />
+        )}
         <MethodButton
           className="vipps"
           onKeyDown={() => selectMethod(PaymentMethod.VIPPS)}

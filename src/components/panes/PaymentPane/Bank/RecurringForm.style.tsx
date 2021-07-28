@@ -12,11 +12,14 @@ export const AvtaleGiroButton = styled.button`
   text-align: right;
   width: 80%;
   background: rgba(93, 56, 0, 1);
-  box-shadow: 0px 1px 5px 2px #00000030;
   border-radius: 5px;
   color: white;
   font-family: "Roboto";
   font-weight: 600;
   font-size: 16px;
   cursor: pointer;
+
+  &:hover {
+    opacity: 0.8;
+  }
 `;

@@ -21,7 +21,7 @@ import {
   UnderTitle,
 } from "../../Panes.style";
 import { InfoText } from "../PaymentPane.style";
-import { DatePicker } from "./DatePicker/DatePicker";
+import { VippsDatePicker } from "./VippsDatePicker/VippsDatePicker";
 import { VippsButton, VippsButtonWrapper } from "./VippsPane.style";
 
 export const VippsPane: React.FC = () => {
@@ -64,7 +64,7 @@ export const VippsPane: React.FC = () => {
                 sublabel="Velg startdato og månedlig trekkdag"
                 value={1}
               >
-                <DatePicker />
+                <VippsDatePicker />
               </RichSelectOption>
             </RichSelect>
             {draftError && (
