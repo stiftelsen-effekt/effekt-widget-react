@@ -1,6 +1,14 @@
 import styled from "styled-components";
 import { gray20 } from "../../../config/colors";
 
+export const AvtaleGiroLogo = styled.img`
+  position: absolute;
+  height: 20px;
+  left: 160px;
+  top: 215px;
+  pointer-events: none;
+`;
+
 export const MethodWrapper = styled.div`
   display: flex;
   flex-direction: column;

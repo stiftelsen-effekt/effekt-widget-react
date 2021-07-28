@@ -1,12 +1,16 @@
 import React from "react";
+import { useDispatch } from "react-redux";
 import { Donation } from "../../../../store/state";
 import AvtaleGiroLogo from "../../../../assets/avtalegiro.jpeg";
 import { AvtaleGiroButton } from "./RecurringForm.style";
 import { API_URL } from "../../../../config/api";
+import { draftAvtaleGiroAction } from "../../../../store/donation/actions";
 
 export const RecurringBankDonationForm: React.FC<{
   donation: Donation;
 }> = ({ donation }) => {
+  const dispatch = useDispatch();
+
   return (
     <div>
       <form
@@ -45,7 +49,10 @@ export const RecurringBankDonationForm: React.FC<{
           id="notificationDisabled"
           value="false"
         />
-        <AvtaleGiroButton type="submit">
+        <AvtaleGiroButton
+          type="submit"
+          onClick={() => dispatch(draftAvtaleGiroAction.started(undefined))}
+        >
           Opprett avtale
           <img src={AvtaleGiroLogo} alt="AvtaleGiro logo" height={20} />
         </AvtaleGiroButton>

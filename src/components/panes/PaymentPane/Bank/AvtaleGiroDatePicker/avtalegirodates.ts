@@ -48,7 +48,7 @@ export function formatDateText(date: Date): string {
 
 export function getEarliestPossibleChargeDate(): number {
   const d = new Date();
-  d.setDate(d.getDate() + 5);
+  d.setDate(d.getDate() + processingDays + 1);
   return d.getDate();
 }
 
