@@ -17,7 +17,7 @@ import {
   SET_VIPPS_AGREEMENT,
 } from "./types";
 import { PaymentMethod, RecurringDonation, ShareType } from "../../types/Enums";
-import { OrganizationShare } from "../../types/Temp";
+import { DraftAgreementResponse, OrganizationShare } from "../../types/Temp";
 import { VippsAgreement } from "../state";
 
 const actionCreator = actionCreatorFactory();
@@ -177,9 +177,15 @@ export type RegisterDonationResponse = {
 
 export const draftAgreementAction = actionCreator.async<
   undefined,
-  undefined,
+  DraftAgreementResponse,
   Error
 >("DRAFT_AGREEMENT");
+
+export const draftAvtaleGiroAction = actionCreator.async<
+  undefined,
+  undefined,
+  Error
+>("DRAFT_AVTALEGIRO");
 
 export const registerDonationAction = actionCreator.async<
   undefined,

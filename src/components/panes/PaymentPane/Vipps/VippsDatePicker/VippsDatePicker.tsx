@@ -13,7 +13,7 @@ import {
   DateText,
   DateTextWrapper,
   Wrapper,
-} from "./DatePicker.style";
+} from "./VippsDatePicker.style";
 import {
   formatDateText,
   getNextChargeDate,
@@ -22,9 +22,9 @@ import {
 } from "./dates";
 
 const tooltipText =
-  "Vi kan av tekniske grunner ikke melde trekk 1-3 dager i forveien, så første trekk blir neste måned. Du kan velge en senere dato eller krysse av for også å bli trukket i dag.";
+  "Vi kan av tekniske grunner ikke melde trekk 1-3 dager i forveien, så første trekkdato utsettes med én måned. Du kan velge en senere dato eller krysse av for også å bli trukket i dag.";
 
-export const DatePicker: React.FC = () => {
+export const VippsDatePicker: React.FC = () => {
   const dispatch = useDispatch();
   const vippsAgreement = useSelector(
     (state: State) => state.donation.vippsAgreement
@@ -37,11 +37,6 @@ export const DatePicker: React.FC = () => {
 
   useEffect(() => {
     setNextChargeDate(getNextChargeDate(selectedChargeDay, initialCharge));
-    // eslint-disable-next-line no-console
-    console.log(
-      getNextChargeDate(selectedChargeDay, initialCharge),
-      initialCharge
-    );
     dispatch(
       setVippsAgreement({
         ...vippsAgreement,

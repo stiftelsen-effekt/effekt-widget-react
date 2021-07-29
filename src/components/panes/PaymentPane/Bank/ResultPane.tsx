@@ -1,59 +1,68 @@
-import React from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { State } from "../../../../store/state";
-import { NextButton } from "../../../shared/Buttons/NavigationButtons.style";
-import { RoundedBorder } from "../../../shared/Layout/Layout.style";
+import { RecurringDonation } from "../../../../types/Enums";
+import { RichSelect } from "../../../shared/RichSelect/RichSelect";
+import { RichSelectOption } from "../../../shared/RichSelect/RichSelectOption";
 import { OrangeLink } from "../../../Widget.style";
 import { Pane, PaneContainer, PaneTitle, UnderTitle } from "../../Panes.style";
 import { InfoText } from "../PaymentPane.style";
-import { TextWrapper, HorizontalLine } from "./ResultPane.style";
+import { AvtaleGiroDatePicker } from "./AvtaleGiroDatePicker/AvtaleGiroDatePicker";
+import { getEarliestPossibleChargeDate } from "./AvtaleGiroDatePicker/avtalegirodates";
+import { PaymentInformation } from "./PaymentInformation";
+import { RecurringBankDonationForm } from "./RecurringForm";
 
 export const ResultPane: React.FC = () => {
-  const donorEmail = useSelector((state: State) => state.donation.donor?.email);
-  const recurring = useSelector((state: State) => state.donation.recurring);
-  const kid = useSelector((state: State) => state.donation.kid);
+  const donation = useSelector((state: State) => state.donation);
+  const [chooseChargeDay, setChooseChargeDay] = useState(0);
 
   return (
     <Pane>
       <PaneContainer>
         <PaneTitle>Tusen takk!</PaneTitle>
         <UnderTitle>Du kan nå overføre til oss</UnderTitle>
-        <RoundedBorder>
-          <TextWrapper>
-            <b>Kontonr</b>
-            <span>1506 29 95960</span>
-          </TextWrapper>
-          <HorizontalLine />
-          <TextWrapper>
-            <b>KID</b>
-            <span data-cy="kidNumber">{kid}</span>
-          </TextWrapper>
-        </RoundedBorder>
-        {donorEmail !== "anon@gieffektivt.no" ? (
-          <InfoText>{`Vi har også sendt en mail til ${donorEmail} med informasjon om din donasjon. Sjekk søppelpost-mappen om du ikke har mottatt eposten i løpet av noen minutter.`}</InfoText>
-        ) : (
-          <InfoText>
-            {`Hvis du ønsker å donere med samme fordeling senere kan du bruke samme KID-nummer igjen. Dersom du har noen spørsmål eller tilbakemeldinger kan du alltid ta kontakt med oss ved å sende en mail til `}
-            <OrangeLink href="mailto:donasjon@gieffektivt.no">
-              donasjon@gieffektivt.no
-            </OrangeLink>
-          </InfoText>
+
+        {donation.recurring === RecurringDonation.RECURRING && (
+          <div>
+            <RichSelect
+              selected={chooseChargeDay}
+              onChange={(value: number) => {
+                setChooseChargeDay(value);
+              }}
+            >
+              <RichSelectOption
+                label="Begynn tidligst mulig"
+                sublabel={`Månedlig trekkdag blir den ${getEarliestPossibleChargeDate()}. hver måned`}
+                value={0}
+              />
+              <RichSelectOption
+                label="Velg annen trekkdag"
+                sublabel="Velg startdato og månedlig trekkdag"
+                value={1}
+              >
+                <AvtaleGiroDatePicker />
+              </RichSelectOption>
+            </RichSelect>
+            <RecurringBankDonationForm donation={donation} />
+          </div>
         )}
-        {recurring === 0 && (
-          <InfoText>
-            Bruk KIDen til å sette opp en fast betaling i nettbanken din.
-            Enkelte banker tillater ikke bruk av KID ved faste overføringer.
-            Hvis det gjelder din bank kan du oppgi KIDen som en del av en
-            melding, f.eks. &quot;KID: 12345678&quot;.
-          </InfoText>
+
+        {donation.recurring === RecurringDonation.NON_RECURRING && (
+          <div>
+            <PaymentInformation donation={donation} />
+            <InfoText>
+              {`Hvis du ønsker å donere med samme fordeling senere kan du bruke samme KID-nummer igjen. Dersom du har noen spørsmål eller tilbakemeldinger kan du alltid ta kontakt med oss ved å sende en mail til `}
+              <OrangeLink href="mailto:donasjon@gieffektivt.no">
+                donasjon@gieffektivt.no
+              </OrangeLink>
+            </InfoText>
+          </div>
         )}
-        <NextButton
-          onClick={() => {
-            window.location.reload();
-          }}
-        >
-          Tilbake til hovedsiden
-        </NextButton>
+
+        {donation.recurring === RecurringDonation.NON_RECURRING &&
+          donation.donor?.email !== "anon@gieffektivt.no" && (
+            <InfoText>{`Vi har også sendt en mail til ${donation.donor?.email} med informasjon om din donasjon. Sjekk søppelpost-mappen om du ikke har mottatt eposten i løpet av noen minutter.`}</InfoText>
+          )}
       </PaneContainer>
     </Pane>
   );

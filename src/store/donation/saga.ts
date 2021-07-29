@@ -64,6 +64,42 @@ export function* draftVippsAgreement(): SagaIterator<void> {
   }
 }
 
+export function* draftAvtaleGiro(): SagaIterator<void> {
+  try {
+    yield put(setLoading(true));
+
+    const KID: number = yield select((state: State) => state.donation.kid);
+    const amount: number = yield select((state: State) => state.donation.sum);
+    const dueDay: Date = yield select((state: State) => state.donation.dueDay);
+
+    const data = {
+      KID,
+      amount,
+      dueDay,
+    };
+
+    const draftRequest = yield call(fetch, `${API_URL}/avtalegiro/draft`, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+
+    const draftResponse: IServerResponse<undefined> = yield call(
+      draftRequest.json.bind(draftRequest)
+    );
+
+    if (draftResponse.status !== 200) {
+      yield put(setLoading(false));
+      throw new Error("Drafting AvtaleGiro failed");
+    }
+  } catch (ex) {
+    console.error(ex);
+  }
+}
+
 export function* registerBankPending(): SagaIterator<void> {
   try {
     const KID: number = yield select((state: State) => state.donation.kid);
@@ -108,7 +144,6 @@ export function* registerDonation(
       method: donation.method ? donation.method : PaymentMethod.BANK,
       amount: donation.sum ? donation.sum : 0,
       recurring: donation.recurring,
-      dueDay: donation.dueDay,
     };
 
     if (donation.shareType === ShareType.CUSTOM) {

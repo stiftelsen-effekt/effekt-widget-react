@@ -1,5 +1,6 @@
 import { Reducer } from "redux";
 import { isType } from "typescript-fsa";
+import { getEarliestPossibleChargeDate } from "../../components/panes/PaymentPane/Bank/AvtaleGiroDatePicker/avtalegirodates";
 import { PaymentMethod, RecurringDonation, ShareType } from "../../types/Enums";
 import { OrganizationShare } from "../../types/Temp";
 import { fetchOrganizationsAction } from "../layout/actions";
@@ -32,10 +33,7 @@ const initialState: Donation = {
   },
   isValid: false,
   shares: [],
-  dueDay:
-    new Date().getDate() + 5 <= 28
-      ? new Date().getDate() + 5
-      : new Date().getDate() + 5 - 28,
+  dueDay: getEarliestPossibleChargeDate(),
   vippsAgreement: {
     initialCharge: true,
     monthlyChargeDay: new Date().getDate() <= 28 ? new Date().getDate() : 0,

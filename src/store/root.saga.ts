@@ -1,10 +1,12 @@
 import { all, takeLatest } from "redux-saga/effects";
 import {
   draftAgreementAction,
+  draftAvtaleGiroAction,
   registerBankPendingAction,
   registerDonationAction,
 } from "./donation/actions";
 import {
+  draftAvtaleGiro,
   draftVippsAgreement,
   registerBankPending,
   registerDonation,
@@ -26,6 +28,7 @@ function* watchAll() {
     takeLatest(submitReferralAction.started.type, submitReferral),
     takeLatest(registerBankPendingAction.started.type, registerBankPending),
     takeLatest(draftAgreementAction.started.type, draftVippsAgreement),
+    takeLatest(draftAvtaleGiroAction.started.type, draftAvtaleGiro),
   ]);
 }
 
