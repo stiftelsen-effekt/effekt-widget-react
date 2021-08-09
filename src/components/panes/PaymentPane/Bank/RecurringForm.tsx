@@ -52,9 +52,7 @@ export const RecurringBankDonationForm: React.FC<{
         />
         <AvtaleGiroButton
           type="button"
-          onClick={() => {
-            dispatch(draftAvtaleGiroAction.started(undefined));
-          }}
+          onClick={() => dispatch(draftAvtaleGiroAction.started(undefined))}
         >
           Opprett avtale
           <img src={AvtaleGiroLogo} alt="AvtaleGiro logo" height={20} />
