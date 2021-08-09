@@ -14,6 +14,7 @@ export const RecurringBankDonationForm: React.FC<{
   return (
     <div>
       <form
+        id="avtalegiro-form"
         action="https://pvu.nets.no/ecsa/start"
         method="post"
         target="_parent"
@@ -50,7 +51,7 @@ export const RecurringBankDonationForm: React.FC<{
           value="false"
         />
         <AvtaleGiroButton
-          type="submit"
+          type="button"
           onClick={() => dispatch(draftAvtaleGiroAction.started(undefined))}
         >
           Opprett avtale

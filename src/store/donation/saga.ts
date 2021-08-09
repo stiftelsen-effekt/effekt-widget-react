@@ -45,7 +45,7 @@ export function* draftVippsAgreement(): SagaIterator<void> {
       draftRequest.json.bind(draftRequest)
     );
 
-    if (draftResponse.content) {
+    if (draftResponse.status === 200) {
       window.location.href = (draftResponse.content as DraftAgreementResponse).vippsConfirmationUrl;
 
       yield put(
@@ -90,6 +90,13 @@ export function* draftAvtaleGiro(): SagaIterator<void> {
     const draftResponse: IServerResponse<undefined> = yield call(
       draftRequest.json.bind(draftRequest)
     );
+
+    if (draftResponse.status === 200) {
+      const form = document.getElementById(
+        "avtalegiro-form"
+      ) as HTMLFormElement;
+      form.submit();
+    }
 
     if (draftResponse.status !== 200) {
       yield put(setLoading(false));
