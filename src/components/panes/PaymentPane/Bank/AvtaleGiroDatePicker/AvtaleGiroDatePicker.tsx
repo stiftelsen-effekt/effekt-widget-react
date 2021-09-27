@@ -19,7 +19,7 @@ import {
 } from "./avtalegirodates";
 
 const tooltipText =
-  "Vi må av tekniske grunner melde inn trekk minst 6 arbeidsdager i forveien, så første trekkdato utsettes med én måned. Du kan velge en annen trekkdato om du ønsker å trekkes tidligere.";
+  "Vi må av tekniske grunner melde inn trekk til bankene tidligere enn din valgte trekkdato, derfor utsettes første trekk med én måned. Du kan velge en annen trekkdato om du ønsker å trekkes tidligere.";
 
 export const AvtaleGiroDatePicker: React.FC = () => {
   const dispatch = useDispatch();

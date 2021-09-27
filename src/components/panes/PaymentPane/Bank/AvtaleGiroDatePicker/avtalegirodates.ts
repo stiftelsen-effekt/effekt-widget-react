@@ -19,7 +19,7 @@ const months = [
 export const dayMs = 86400000;
 const thisYear = new Date().getFullYear();
 const thisMonth = new Date().getMonth();
-const processingDays = 7;
+const processingDays = 10;
 
 // Checks if the due date of a charge is at least three days ahead of today
 export function hasTimeToProcess(
