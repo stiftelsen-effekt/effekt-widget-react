@@ -1,5 +1,6 @@
-import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setDueDay } from "../../../../store/donation/actions";
 import { State } from "../../../../store/state";
 import { RecurringDonation } from "../../../../types/Enums";
 import { RichSelect } from "../../../shared/RichSelect/RichSelect";
@@ -8,13 +9,23 @@ import { OrangeLink } from "../../../Widget.style";
 import { Pane, PaneContainer, PaneTitle, UnderTitle } from "../../Panes.style";
 import { InfoText } from "../PaymentPane.style";
 import { AvtaleGiroDatePicker } from "./AvtaleGiroDatePicker/AvtaleGiroDatePicker";
-import { getEarliestPossibleChargeDate } from "./AvtaleGiroDatePicker/avtalegirodates";
+import {
+  formatChargeDay,
+  getEarliestPossibleChargeDate,
+} from "./AvtaleGiroDatePicker/avtalegirodates";
 import { PaymentInformation } from "./PaymentInformation";
 import { RecurringBankDonationForm } from "./RecurringForm";
 
 export const ResultPane: React.FC = () => {
   const donation = useSelector((state: State) => state.donation);
   const [chooseChargeDay, setChooseChargeDay] = useState(0);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (chooseChargeDay === 0) {
+      dispatch(setDueDay(getEarliestPossibleChargeDate()));
+    }
+  }, [chooseChargeDay]);
 
   return (
     <Pane>
@@ -32,7 +43,7 @@ export const ResultPane: React.FC = () => {
             >
               <RichSelectOption
                 label="Begynn tidligst mulig"
-                sublabel={`Månedlig trekkdag blir den ${getEarliestPossibleChargeDate()}. hver måned`}
+                sublabel={formatChargeDay(getEarliestPossibleChargeDate())}
                 value={0}
               />
               <RichSelectOption

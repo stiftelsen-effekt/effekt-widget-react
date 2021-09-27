@@ -46,10 +46,25 @@ export function formatDateText(date: Date): string {
   return `${date.getDate()}. ${months[date.getMonth()]}`;
 }
 
+export function formatChargeDay(chargeDay: number): string {
+  if (chargeDay === 0) {
+    return "Du vil trekkes den siste dagen hver måned";
+  }
+  return `Månedlig trekkdag blir den ${chargeDay}. hver måned`;
+}
+
 export function getEarliestPossibleChargeDate(): number {
-  const d = new Date();
-  d.setDate(d.getDate() + processingDays + 1);
-  return d.getDate();
+  const today = new Date().getDate();
+  const earliest = new Date();
+
+  earliest.setDate(today + processingDays + 1);
+
+  if (earliest.getDate() > 28) {
+    // Return chargeday 0 if next charge date is after the 28th
+    return 0;
+  }
+
+  return earliest.getDate();
 }
 
 export function isIrregularChargeDay(
