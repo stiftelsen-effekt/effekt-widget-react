@@ -34,7 +34,6 @@ export const MethodPane: React.FC = () => {
 
   return (
     <Pane>
-      <InfoText>Alle transaksjonskostnader dekkes av oss (se under)</InfoText>
       <RecurringSelectWrapper>
         <RichSelect
           selected={recurring}
@@ -45,7 +44,7 @@ export const MethodPane: React.FC = () => {
         >
           <RichSelectOption
             label="Gi en fast månedlig sum"
-            sublabel="Du vil bli varslet ved trekk og kan avslutte når som helst"
+            sublabel="Du kan avslutte når som helst og sette på varsling før trekk"
             value={RecurringDonation.RECURRING}
           />
           <RichSelectOption
@@ -79,6 +78,7 @@ export const MethodPane: React.FC = () => {
           1,90%
         </MethodButton>
       </MethodWrapper>
+      <InfoText>Alle transaksjonskostnader dekkes av oss (se under)</InfoText>
     </Pane>
   );
 };
