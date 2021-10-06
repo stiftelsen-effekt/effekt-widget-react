@@ -13,6 +13,8 @@ import {
   InfoText,
   RecurringSelectWrapper,
   AvtaleGiroLogo,
+  PrefferedAlternative,
+  AvtaleGiroLogoWrapper,
 } from "./MethodPane.style";
 import { RichSelect } from "../../shared/RichSelect/RichSelect";
 import { RichSelectOption } from "../../shared/RichSelect/RichSelectOption";
@@ -52,26 +54,29 @@ export const MethodPane: React.FC = () => {
       </RecurringSelectWrapper>
       <MethodWrapper>
         <MethodButton
-          className="bank"
-          onKeyDown={() => selectMethod(PaymentMethod.BANK)}
+          className="bank method-button--highlighted"
           onClick={() => selectMethod(PaymentMethod.BANK)}
-        />
-        {recurring === 1 && (
-          <AvtaleGiroLogo src={AvtaleGiroImage} alt="AvtaleGiro logo" />
-        )}
+        >
+          <AvtaleGiroLogoWrapper>
+            {recurring === 1 && (
+              <AvtaleGiroLogo src={AvtaleGiroImage} alt="AvtaleGiro logo" />
+            )}
+          </AvtaleGiroLogoWrapper>
+          <PrefferedAlternative>
+            Vårt foretrukne alternativ
+          </PrefferedAlternative>
+        </MethodButton>
         <MethodButton
           className="vipps"
-          onKeyDown={() => selectMethod(PaymentMethod.VIPPS)}
           onClick={() => selectMethod(PaymentMethod.VIPPS)}
         >
-          2,99%
+          {/* 2,99% */}
         </MethodButton>
         <MethodButton
           className="paypal"
-          onKeyDown={() => selectMethod(PaymentMethod.PAYPAL)}
           onClick={() => selectMethod(PaymentMethod.PAYPAL)}
         >
-          1,90%
+          {/* 1,90% */}
         </MethodButton>
       </MethodWrapper>
     </Pane>
