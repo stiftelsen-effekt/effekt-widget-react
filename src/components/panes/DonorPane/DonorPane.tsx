@@ -178,6 +178,7 @@ export const DonorPane: React.FC = () => {
                   <CustomCheckBox
                     label="Jeg ønsker skattefradrag"
                     checked={taxDeductionChecked}
+                    showTooltip={taxDeductionChecked}
                     tooltipText={tooltipText}
                   />
                 </CheckBoxWrapper>
