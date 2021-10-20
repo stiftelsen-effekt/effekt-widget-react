@@ -23,6 +23,7 @@ interface CheckBoxProps {
   checked: boolean;
   label?: string;
   mobileLabel?: string;
+  showTooltip?: boolean;
   tooltipText?: string;
   hyperlink?: HyperLink;
 }
@@ -30,6 +31,7 @@ interface CheckBoxProps {
 export const CustomCheckBox: React.FC<CheckBoxProps> = ({
   checked,
   label,
+  showTooltip,
   tooltipText,
   mobileLabel,
   hyperlink,
@@ -53,7 +55,7 @@ export const CustomCheckBox: React.FC<CheckBoxProps> = ({
           </OrangeLink>
         )}
       </CheckBoxLabel>
-      {tooltipText && <ToolTip text={tooltipText} />}
+      {showTooltip && tooltipText && <ToolTip text={tooltipText} />}
     </CheckBoxLabelWrapper>
   </CustomCheckBoxWrapper>
 );
