@@ -2,11 +2,17 @@ import styled from "styled-components";
 import { gray20 } from "../../../config/colors";
 
 export const AvtaleGiroLogo = styled.img`
-  position: absolute;
   height: 20px;
-  left: 160px;
-  top: 215px;
-  pointer-events: none;
+`;
+
+export const AvtaleGiroLogoWrapper = styled.span`
+  height: 20px;
+`;
+
+export const PrefferedAlternative = styled.span`
+  font-size: 11px;
+  font-weight: 300;
+  color: ${gray20};
 `;
 
 export const MethodWrapper = styled.div`
