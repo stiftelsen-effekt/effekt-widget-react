@@ -41,6 +41,7 @@ export const ToolTip: React.FC<ToolTipProps> = (props) => {
       style={{ marginLeft: props.marginLeft, marginTop: props.marginTop }}
     >
       <ToolTipIcon handleTouch={() => setIsOpen(!isOpen)} />
+
       <ToolTipText
         style={{
           display: isOpen ? "block" : "none",

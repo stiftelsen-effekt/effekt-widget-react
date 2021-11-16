@@ -28,7 +28,7 @@ interface ToolIconProps {
 }
 export function ToolTipIcon({ handleTouch }: ToolIconProps) {
   return (
-    <TooltipIconButton onTouchStart={handleTouch}>
+    <TooltipIconButton onTouchStart={handleTouch} onClick={handleTouch}>
       <StyledSVG
         onPointerOut={() => (document.activeElement as HTMLElement).blur()}
         tabIndex={0}
