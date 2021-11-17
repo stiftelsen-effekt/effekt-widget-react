@@ -40,7 +40,10 @@ export const ToolTip: React.FC<ToolTipProps> = (props) => {
     <ToolTipWrapper
       style={{ marginLeft: props.marginLeft, marginTop: props.marginTop }}
     >
-      <ToolTipIcon handleTouch={() => setIsOpen(!isOpen)} />
+      <ToolTipIcon
+        handleTouch={() => setIsOpen(!isOpen)}
+        handleHover={setIsOpen}
+      />
 
       <ToolTipText
         style={{

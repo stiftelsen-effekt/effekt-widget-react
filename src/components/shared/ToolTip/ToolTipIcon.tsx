@@ -25,10 +25,16 @@ const TooltipIconButton = styled.button.attrs({
 `;
 interface ToolIconProps {
   handleTouch: () => void;
+  handleHover: (open: boolean) => void;
 }
-export function ToolTipIcon({ handleTouch }: ToolIconProps) {
+export function ToolTipIcon({ handleTouch, handleHover }: ToolIconProps) {
   return (
-    <TooltipIconButton onTouchStart={handleTouch} onClick={handleTouch}>
+    <TooltipIconButton
+      onTouchStart={handleTouch}
+      onClick={handleTouch}
+      onMouseEnter={() => handleHover(true)}
+      onMouseLeave={() => handleHover(false)}
+    >
       <StyledSVG
         onPointerOut={() => (document.activeElement as HTMLElement).blur()}
         tabIndex={0}
