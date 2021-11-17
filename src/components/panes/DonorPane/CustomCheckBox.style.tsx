@@ -69,7 +69,7 @@ export const CheckBoxLabel = styled.p`
   font-size: 14px;
   margin: 0;
   padding-left: 35px;
-  padding-right: 5px;
+  padding-right: 0px;
 `;
 
 export const ComputerLabel = styled.span`

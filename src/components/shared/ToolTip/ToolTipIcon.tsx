@@ -10,7 +10,7 @@ const TooltipIconButton = styled.button.attrs({
   pointer-events: all;
   background: transparent;
   border: none;
-  padding: 5px 10px;
+  padding: 5px 7.5px;
 
   &:hover {
     cursor: pointer;
