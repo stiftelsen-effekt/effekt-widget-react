@@ -100,7 +100,10 @@ export const DonorPane: React.FC = () => {
   const paneSubmitted = (data: DonorFormValues) => {
     dispatch(
       submitDonorInfo(
-        data.name ? data.name.trim() : "",
+        data.name
+          ? data.name.trim().slice(0, 1).toUpperCase() +
+              data.name.trim().slice(1, data.name.trim().length)
+          : "",
         data.email ? data.email.trim() : "",
         data.taxDeduction ? data.taxDeduction : false,
         data.taxDeduction && data.ssn
