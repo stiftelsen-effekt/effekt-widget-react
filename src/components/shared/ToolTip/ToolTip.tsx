@@ -1,5 +1,5 @@
 /* eslint-disable react/destructuring-assignment */
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { ToolTipIcon } from "./ToolTipIcon";
 
@@ -35,13 +35,19 @@ interface ToolTipProps {
 }
 
 export const ToolTip: React.FC<ToolTipProps> = (props) => {
+  const [isOpen, setIsOpen] = useState(false);
   return (
     <ToolTipWrapper
       style={{ marginLeft: props.marginLeft, marginTop: props.marginTop }}
     >
-      <ToolTipIcon />
+      <ToolTipIcon
+        handleTouch={() => setIsOpen(!isOpen)}
+        handleHover={setIsOpen}
+      />
+
       <ToolTipText
         style={{
+          display: isOpen ? "block" : "none",
           marginLeft: props.textMarginLeft,
           marginTop: props.textMarginTop,
         }}
