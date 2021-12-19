@@ -13,7 +13,8 @@ import { fetchReferralsAction } from "../store/referrals/actions";
 import { HistoryBar } from "./shared/HistoryBar/HistoryBar";
 import { ProgressBar } from "./shared/ProgressBar/ProgressBar";
 import { OrangeLink, Paragraph } from "./Widget.style";
-import { ShareType } from "../types/Enums";
+import { PaymentMethod, ShareType } from "../types/Enums";
+import { BitCoinPane } from "./panes/PaymentPane/BitCoin/BitCoinPane";
 
 export const Widget: React.FC = () => {
   const dispatch = useDispatch();
@@ -22,6 +23,7 @@ export const Widget: React.FC = () => {
   );
   const pane = useSelector((state: State) => state.layout.paneNumber);
   const shareType = useSelector((state: State) => state.donation.shareType);
+  const method = useSelector((state: State) => state.donation.method);
 
   useEffect(() => {
     dispatch(fetchOrganizationsAction.started(undefined));
@@ -34,6 +36,7 @@ export const Widget: React.FC = () => {
         <HistoryBar />
         <Carousel>
           <MethodPane />
+          {method === PaymentMethod.BITCOIN && <BitCoinPane />}
           <DonorPane />
           <DonationPane />
           {answeredReferral !== true && <ReferralPane />}

@@ -44,6 +44,13 @@ export const MethodButtonWrapper = styled.button`
     background-repeat: no-repeat;
   }
 
+  &.bitcoin {
+    background-image: url("../../../bitcoin.png");
+    background-position: 16px 16px;
+    background-size: 50px;
+    background-repeat: no-repeat;
+  }
+
   &.paypal {
     background-image: url("https://storage.googleapis.com/effekt-widget/assets/logos/PayPal.png");
     background-position: 16px center;

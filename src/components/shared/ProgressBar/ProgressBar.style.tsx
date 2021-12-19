@@ -6,4 +6,5 @@ export const OrangeLine = styled.div`
   bottom: 0px;
   height: 10px;
   background-color: ${orange20};
+  transition: width 200ms;
 `;

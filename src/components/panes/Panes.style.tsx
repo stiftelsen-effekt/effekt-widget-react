@@ -12,6 +12,11 @@ export const PaneContainer = styled.div`
   align-items: center;
   justify-content: center;
   padding: 0;
+
+  p {
+    white-space: normal;
+    line-height: 150%;
+  }
 `;
 
 export const PaneTitle = styled.p`
