@@ -72,6 +72,12 @@ export const MethodPane: React.FC = () => {
           {/* 2,99% */}
         </MethodButton>
         <MethodButton
+          className="bitcoin"
+          onClick={() => selectMethod(PaymentMethod.BITCOIN)}
+        >
+          {/* Gas fees? */}
+        </MethodButton>
+        <MethodButton
           className="paypal"
           onClick={() => selectMethod(PaymentMethod.PAYPAL)}
         >
