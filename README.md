@@ -1,44 +1,84 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Effect Foundation Donation Widget
 
-## Available Scripts
+The Effect Foundation Donation Widget is the payment user interface for donations via gieffektivt.no, the app stored in a Google Cloud Storage bucket and is embedded into the website using an iframe. The widget is created with React and is written in TypeScript.
 
-In the project directory, you can run:
+---
 
-### `yarn start`
+**Table of contents**
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+* [Get started developing](#get-started-developing)
+  * [Cloning the repository and downloading software](#cloning-the-repository-and-downloading-software)
+  * [Installing packages and running the project](#installing-packages-and-running-the-project)
+  * [Connecting to the API](#connecting-to-the-api)
+  * [Testing](#testing)
+* [Build and deployment](#build-and-deployment)
+  * [Google cloud build](#google-cloud-build)
+  * [Environments](#environments)
+* [Code structure (TBD)](#code-structure)
+* [Payment processing (TBD)](#payment-processing)
+  * [Bank](#bank)
+  * [Vipps](#vipps)
+  * [PayPal](#paypal)
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+---
 
-### `yarn test`
+## Get started developing
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+To run the Widget locally and start developing, follow the steps below.
 
-### `yarn build`
+### Cloning the repository and downloading software
+Before proceeding, make sure [https://git-scm.com/downloads](Git), [https://nodejs.org/en/download/](Node.js) and [https://www.npmjs.com/](npm) is installed on your machine.
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Finally, we are ready to start the application. Clone this repository to your local machine.
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+```
+git clone https://github.com/stiftelsen-effekt/effekt-widget-react.git
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+> **Note** To clone the repository, you must have access and be part of the [Stiftelsen Effekt github organization](https://github.com/stiftelsen-effekt). You must also be logged in on git on your local machine. If you do not have access to clone the repository, enquire on our [tech](https://effektteam.slack.com/archives/G011BE3BG3H) channel.
 
-### `yarn eject`
+### Installing packages and running the project
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+After cloning the repository, install the requisite packages with the command 
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```
+npm install
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+in the root folder of the cloned repository. After the installer has finished, you are ready to run the application with the command
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+```
+npm start
+```
 
-## Learn More
+This will start an instance of the application running on localhost:3000 as long as the port is not occupied by another running instance.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### Connecting to the API
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+The Widget is configured to use [https://dev.data.gieffektivt.no](https://dev.data.gieffektivt.no) for all requests by default. To use the stage or production API instead, you need to define the environment variable `REACT_APP_EFFEKT_API_URL` with the api url as its value, e.g. [https://stage.data.gieffektivt.no](https://stage.data.gieffektivt.no).
+
+Code editors and IDEs need to be restarted after changing environment variables for the changes to take place.
+
+### Testing
+
+We use Cypress for end-to-end testing. For the test suite to run correctly, the widget needs to be running on localhost:3000. To run the test suite, use the command
+
+```
+npm run cypress
+```
+
+Cypress automatically installs itself the first time you run the test suite, which can take a couple of minutes.
+
+## Build and deployment
+
+### Google Cloud Build
+
+We have three main branches in the repository, `master`, `stage` and `dev`. Any commit to any of these branches will be automatically deployed to their respective [Google Cloud Storage buckets](https://cloud.google.com/storage/docs/key-terms#buckets) available on public urls, given that the build pipeline succeeds. After a successful deployment, it usually takes a few minutes for the url to update with the new version of the application, in rare cases it can take as long as an hour, the reason for this is unknown.
+
+### Environments
+
+**Production** or live is deployed from the `master` branch. The url for the deployment is https://storage.googleapis.com/effekt-widget-react-prod/index.html. This is the environment used by our actual donors.
+
+**Stage** is deployed from the `stage` branch. The url for the deployment is https://storage.googleapis.com/effekt-widget-react-stage/index.html. This environment is identical to production in terms of configuration, and uses the live production database. The intended usecase is to test new functionality in the same environment as the production api, without having to deploy the code to our users.
+
+**Dev** is deployed from the `dev` branch. The url for the deployment is https://storage.googleapis.com/effekt-widget-react-dev/index.html. This environment uses the development database, and is used for testing new functionality to make sure it works correctly without affecting the production database.
