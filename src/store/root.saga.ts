@@ -1,5 +1,6 @@
 import { Middleware } from "redux";
 import { all, takeLatest } from "redux-saga/effects";
+import { RecurringDonation } from "../types/Enums";
 import {
   draftAgreementAction,
   draftAvtaleGiroAction,
@@ -28,7 +29,10 @@ export const postMessageMiddleware: Middleware = ({ getState }) => (next) => (
     const eventData = {
       action: "Donation registered",
       category: "Donation",
-      label: donation.recurring,
+      label:
+        donation.recurring === RecurringDonation.RECURRING
+          ? "Recurring"
+          : "Non-recurring",
       value: donation.sum,
     };
     window.parent.postMessage(eventData, "https://gieffektivt.no/");
