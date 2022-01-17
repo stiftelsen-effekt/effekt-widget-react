@@ -33,7 +33,7 @@ const anonDonor: DonorFormValues = {
   name: "Anonym Giver",
   email: "anon@gieffektivt.no",
   taxDeduction: false,
-  ssn: 12345678910,
+  ssn: "12345678910",
   newsletter: false,
   privacyPolicy: true,
 };
@@ -103,9 +103,7 @@ export const DonorPane: React.FC = () => {
         data.name ? data.name.trim() : "",
         data.email ? data.email.trim() : "",
         data.taxDeduction ? data.taxDeduction : false,
-        data.taxDeduction && data.ssn
-          ? parseInt(data.ssn.toString().trim())
-          : 1,
+        data.taxDeduction && data.ssn ? data.ssn.toString().trim() : "",
         data.newsletter ? data.newsletter : false
       )
     );
@@ -119,7 +117,7 @@ export const DonorPane: React.FC = () => {
         anonDonor.name ? anonDonor.name : "",
         anonDonor.email ? anonDonor.email : "",
         anonDonor.taxDeduction ? anonDonor.taxDeduction : false,
-        anonDonor.ssn ? anonDonor.ssn : -1,
+        anonDonor.ssn ? anonDonor.ssn : "",
         anonDonor.newsletter ? anonDonor.newsletter : false
       )
     );
@@ -186,10 +184,12 @@ export const DonorPane: React.FC = () => {
                   <InputFieldWrapper>
                     <TextInput
                       name="ssn"
-                      type="tel"
+                      type="text"
+                      inputMode="numeric"
                       placeholder="Fødselsnummer eller org.nr."
                       defaultValue={
-                        donor?.ssn === 12345678910 ? "" : donor?.ssn
+                        // Hide SSN if anonymous donor
+                        donor?.ssn === "12345678910" ? "" : donor?.ssn
                       }
                       innerRef={register({
                         required: false,

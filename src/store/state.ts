@@ -53,7 +53,7 @@ export interface DonorInput {
   name?: string;
   email?: string;
   taxDeduction?: boolean;
-  ssn?: number;
+  ssn?: string;
   newsletter?: boolean;
   dueDay?: number;
 }

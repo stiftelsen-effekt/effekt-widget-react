@@ -46,7 +46,7 @@ export function submitDonorInfo(
   name: string,
   email: string,
   taxDeduction: boolean,
-  ssn: number,
+  ssn: string,
   newsletter: boolean
 ): DonationActionTypes {
   return {
