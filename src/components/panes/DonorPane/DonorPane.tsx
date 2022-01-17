@@ -188,6 +188,7 @@ export const DonorPane: React.FC = () => {
                       inputMode="numeric"
                       placeholder="Fødselsnummer eller org.nr."
                       defaultValue={
+                        // Hide SSN if anonymous donor
                         donor?.ssn === "12345678910" ? "" : donor?.ssn
                       }
                       innerRef={register({
