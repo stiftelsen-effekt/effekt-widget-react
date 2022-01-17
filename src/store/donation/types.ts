@@ -37,7 +37,7 @@ interface SubmitDonorInfo {
     name: string;
     email: string;
     taxDeduction: boolean;
-    ssn: number;
+    ssn: string;
     newsletter: boolean;
   };
 }
