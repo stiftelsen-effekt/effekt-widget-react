@@ -1,4 +1,6 @@
+import { Middleware } from "redux";
 import { all, takeLatest } from "redux-saga/effects";
+import { RecurringDonation } from "../types/Enums";
 import {
   draftAgreementAction,
   draftAvtaleGiroAction,
@@ -19,8 +21,28 @@ import {
 } from "./referrals/actions";
 import { fetchReferrals, submitReferral } from "./referrals/saga";
 
+export const postMessageMiddleware: Middleware = ({ getState }) => (next) => (
+  action
+) => {
+  if (action.type === "REGISTER_DONATION_DONE") {
+    const { donation } = getState();
+    const eventData = {
+      action: "Donation registered",
+      category: "Donation",
+      label:
+        donation.recurring === RecurringDonation.RECURRING
+          ? "Recurring"
+          : "Non-recurring",
+      value: donation.sum,
+    };
+    window.parent.postMessage(eventData, "https://gieffektivt.no/");
+  }
+
+  return next(action);
+};
+
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-function* watchAll() {
+export function* watchAll() {
   yield all([
     takeLatest(fetchOrganizationsAction.started.type, fetchOrganizations),
     takeLatest(fetchReferralsAction.started.type, fetchReferrals),
@@ -31,5 +53,3 @@ function* watchAll() {
     takeLatest(draftAvtaleGiroAction.started.type, draftAvtaleGiro),
   ]);
 }
-
-export default watchAll;
