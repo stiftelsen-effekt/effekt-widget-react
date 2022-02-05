@@ -22,7 +22,7 @@ import {
 import { fetchReferrals, submitReferral } from "./referrals/saga";
 import { State } from "./state";
 
-const postMessageToParent = (
+const postCustomEvent = (
   action: string,
   category: string,
   recurring: RecurringDonation,
@@ -40,6 +40,15 @@ const postMessageToParent = (
   );
 };
 
+const postPurchaseEvent = (kid?: string, value?: number) => {
+  const eventData = {
+    action: "purchase",
+    kid,
+    value,
+  };
+  window.parent.postMessage(eventData, "https://gieffektivt.no/");
+};
+
 export const postMessageMiddleware: Middleware = ({ getState }) => (next) => (
   action
 ) => {
@@ -47,7 +56,7 @@ export const postMessageMiddleware: Middleware = ({ getState }) => (next) => (
   switch (action.type) {
     case "SELECT_PAYMENT_METHOD":
       if (action.payload.method) {
-        postMessageToParent(
+        postCustomEvent(
           `Payment method selected: ${PaymentMethod[action.payload.method]}`,
           "Payment method selected",
           donation.recurring
@@ -55,22 +64,17 @@ export const postMessageMiddleware: Middleware = ({ getState }) => (next) => (
       }
       break;
     case "REGISTER_DONATION_DONE":
-      postMessageToParent(
-        "Donation registered",
-        "Donation registered",
-        donation.recurring,
-        donation.sum
-      );
+      postPurchaseEvent(action.payload.result.KID, donation.sum);
       break;
     case "INCREMENT_CURRENT_PANE":
-      postMessageToParent(
+      postCustomEvent(
         `Proceeded to step ${layout.paneNumber + 2}`,
         "Step change",
         donation.recurring
       );
       break;
     case "DECREMENT_CURRENT_PANE":
-      postMessageToParent(
+      postCustomEvent(
         `Went back to step ${layout.paneNumber}`,
         "Step change",
         donation.recurring
