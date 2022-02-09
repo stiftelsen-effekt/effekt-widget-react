@@ -27,7 +27,7 @@ interface DonorFormValues extends DonorInput {
 }
 
 const tooltipText =
-  "Gjelder donasjoner mellom 500 \nog 50 000 kr per år. Vi rapporterer direkte til Skatteetaten og trenger derfor fødsel- eller organisasjonsnummer til donor.";
+  "Gjelder donasjoner mellom 500 \nog 25 000 kr per år. Vi rapporterer direkte til Skatteetaten og trenger derfor fødsel- eller organisasjonsnummer til donor.";
 // const tooltipLink = "https://gieffektivt.no/skattefradrag";
 const anonDonor: DonorFormValues = {
   name: "Anonym Giver",
