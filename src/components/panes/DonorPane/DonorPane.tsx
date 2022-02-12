@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Validate from "validator";
+import { validateSsn, validateOrg } from "@ssfbank/norwegian-id-validators";
 import { useForm } from "react-hook-form";
 import { Pane } from "../Panes.style";
 import { DonorInput, State } from "../../../store/state";
@@ -198,7 +199,11 @@ export const DonorPane: React.FC = () => {
                           return (
                             !watchAllFields.taxDeduction ||
                             (Validate.isInt(trimmed) &&
-                              (trimmed.length === 9 || trimmed.length === 11))
+                              // Check if valid norwegian org or SSN (Social security number) based on check sum
+                              // Also accepts D numbers (which it probably should) and H numbers (which it probably should not)
+                              ((trimmed.length === 9 && validateOrg(trimmed)) ||
+                                (trimmed.length === 11 &&
+                                  validateSsn(trimmed))))
                           );
                         },
                       })}
