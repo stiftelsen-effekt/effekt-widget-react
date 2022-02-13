@@ -29,7 +29,7 @@ interface DonorFormValues extends DonorInput {
 
 const tooltipText =
   "Gjelder donasjoner mellom 500 \nog 25 000 kr per år. Vi rapporterer direkte til Skatteetaten og trenger derfor fødsel- eller organisasjonsnummer til donor.";
-// const tooltipLink = "https://gieffektivt.no/skattefradrag";
+
 const anonDonor: DonorFormValues = {
   name: "Anonym Giver",
   email: "anon@gieffektivt.no",
@@ -37,6 +37,11 @@ const anonDonor: DonorFormValues = {
   ssn: "12345678910",
   newsletter: false,
   privacyPolicy: true,
+};
+
+// Capitalizes each first letter of all first, middle and last names
+const capitalizeNames = (string: string) => {
+  return string.replace(/(^\w|\s\w)/g, (m: string) => m.toUpperCase());
 };
 
 export const DonorPane: React.FC = () => {
@@ -101,8 +106,8 @@ export const DonorPane: React.FC = () => {
   const paneSubmitted = (data: DonorFormValues) => {
     dispatch(
       submitDonorInfo(
-        data.name ? data.name.trim() : "",
-        data.email ? data.email.trim() : "",
+        data.name ? capitalizeNames(data.name.trim()) : "",
+        data.email ? data.email.trim().toLowerCase() : "",
         data.taxDeduction ? data.taxDeduction : false,
         data.taxDeduction && data.ssn ? data.ssn.toString().trim() : "",
         data.newsletter ? data.newsletter : false

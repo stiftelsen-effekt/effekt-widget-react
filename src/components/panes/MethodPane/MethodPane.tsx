@@ -15,11 +15,13 @@ import {
   AvtaleGiroLogo,
   PrefferedAlternative,
   AvtaleGiroLogoWrapper,
+  AcceptedCardLogos,
 } from "./MethodPane.style";
 import { RichSelect } from "../../shared/RichSelect/RichSelect";
 import { RichSelectOption } from "../../shared/RichSelect/RichSelectOption";
 import { PaymentMethod, RecurringDonation } from "../../../types/Enums";
 import AvtaleGiroImage from "../../../assets/avtalegiro.jpeg";
+import AcceptedCards from "../../../assets/accepted_cards.jpeg";
 import { MethodButton } from "./MethodButton";
 
 export const MethodPane: React.FC = () => {
@@ -75,6 +77,10 @@ export const MethodPane: React.FC = () => {
           className="paypal"
           onClick={() => selectMethod(PaymentMethod.PAYPAL)}
         >
+          <AcceptedCardLogos
+            src={AcceptedCards}
+            alt="Visa, MasterCard and American Express"
+          />
           {/* 1,90% */}
         </MethodButton>
       </MethodWrapper>

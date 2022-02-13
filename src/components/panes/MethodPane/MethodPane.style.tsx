@@ -9,6 +9,13 @@ export const AvtaleGiroLogoWrapper = styled.span`
   height: 20px;
 `;
 
+export const AcceptedCardLogos = styled.img`
+  position: relative;
+  bottom: 18px;
+  left: 32px;
+  height: 70px;
+`;
+
 export const PrefferedAlternative = styled.span`
   font-size: 11px;
   font-weight: 300;
